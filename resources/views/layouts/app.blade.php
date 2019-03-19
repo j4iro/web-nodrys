@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -51,10 +52,13 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a href="#"  class="nav-link">Restaurantes</a>
+                                <a href="{{ route('home')}}"  class="nav-link">Inicio</a>
                             </li class="nav-item">
                             <li>
                                 <a href="#"  class="nav-link">Discotecas</a>
+                            </li>
+                            <li class="ml-0 ml-sm-3">
+                                @include('includes.avatar')
                             </li>
 
                             <li class="nav-item dropdown">
@@ -65,11 +69,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     
-                                    <a class="dropdown-item" href="">
-                                        Mi Perfil
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('config') }}">
-                                        Configuración
+                                        Mi Perfil
                                     </a>
         
                                     <a class="dropdown-item" href="{{ route('logout') }}"

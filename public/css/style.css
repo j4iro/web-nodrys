@@ -1,0 +1,11 @@
+form .avatar
+{
+    width: 100px;
+}
+
+.navbar .avatar
+{
+    width: 35px;
+    border-radius: 900px;
+    overflow: hidden;
+}

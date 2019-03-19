@@ -19,7 +19,7 @@
                     <div class="card-header">Configuración de mi cuenta</div>
     
                     <div class="card-body">
-                    <form method="POST" action="{{ route('user.update') }}">
+                    <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
                             @csrf
     
                             <div class="form-group row">
@@ -91,6 +91,26 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="imagepath" class="col-md-4 col-form-label text-md-right">Avatar</label>
+    
+                                <div class="col-md-6">
+                                    <input id="imagepath" type="file" class="form-control-file {{ $errors->has('imagepath') ? ' is-invalid' : '' }}" name="image_path"   >
+    
+                                    @if ($errors->has('imagepath'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('imagepath') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row justify-content-center">
+                                <div class="col-md-4">
+                                    @include('includes.avatar')
+                                </div>
+                            </div>
     
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -99,6 +119,7 @@
                                     </button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
