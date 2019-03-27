@@ -1,0 +1,1 @@
+<img src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top" alt="{{$dish->name}} en Nodrys">

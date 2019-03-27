@@ -40,7 +40,7 @@
                                 <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required readonly>
+                                    <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required >
     
                                     @if ($errors->has('surname'))
                                         <span class="invalid-feedback" role="alert">

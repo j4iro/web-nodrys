@@ -62,6 +62,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'restaurants' => [
+            'driver' => 'local',
+            'root' => storage_path('app/restaurants'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'dishes' => [
+            'driver' => 'local',
+            'root' => storage_path('app/dishes'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

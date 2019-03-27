@@ -131,18 +131,19 @@ CREATE TABLE dishes
     image TEXT NOT NULL,
     created_at DATETIME,
     updated_at DATETIME,
-
+    type VARCHAR(20) NOT NULL,
     CONSTRAINT fk_dishes_restaurants FOREIGN KEY(restaurant_id) REFERENCES restaurants(id)
 );
 
+ALTER TABLE dishes ADD COLUMN type VARCHAR(20) NOT NULL;
 
 INSERT INTO dishes VALUES 
-(NULL, 1,'Arroz con pollo','Pollo traido de las granjas recien fresco',10,5,'arroz_pollo.jpg',CURTIME(),CURTIME()),
-(NULL, 1,'Chancho al cilindro','Chanchito criado por los dioses',50,15,'chancho_cilindro.jpg',CURTIME(),CURTIME());
+(NULL, 1,'Arroz con pollo','Pollo traido de las granjas recien fresco',10,5,'arroz_pollo.jpg',CURTIME(),CURTIME(),'second'),
+(NULL, 1,'Chancho al cilindro','Chanchito criado por los dioses',50,15,'chancho_cilindro.jpg',CURTIME(),CURTIME(),'second');
 
 INSERT INTO dishes VALUES 
-(NULL, 2,'Arroz con pato','Pato traido de las granjas recien fresco',15,5,'pato_pollo.jpg',CURTIME(),CURTIME()),
-(NULL, 2,'Cuy al cilindro','Cuy criado por los dioses',25,15,'cuy_cilindro.jpg',CURTIME(),CURTIME());
+(NULL, 2,'Arroz con pato','Pato traido de las granjas recien fresco',15,5,'arroz_pato.jpg',CURTIME(),CURTIME(),'second'),
+(NULL, 2,'Cuy al cilindro','Cuy criado por los dioses',25,15,'cuy_asado.jpg',CURTIME(),CURTIME(),'second');
 
 CREATE TABLE menus
 (

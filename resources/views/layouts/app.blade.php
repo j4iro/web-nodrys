@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> --}}
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
+
+    <title>Nodrys</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,7 +25,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{-- config('app.name', 'Laravel') --}}
@@ -55,7 +58,14 @@
                                 <a href="{{ route('home')}}"  class="nav-link">Inicio</a>
                             </li class="nav-item">
                             <li>
-                                <a href="#"  class="nav-link">Discotecas</a>
+                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito <span class="badge badge-warning mb-1">1</span></a>
+                                
+                            </li>
+                            <li>
+                                <a href="{{route('pedidos.index')}}"  class="nav-link">Mis Pedidos <span class="badge badge-warning mb-1">0</span></a>
+                            </li>
+                            <li>
+                                <a href="{{route('favoritos.index')}}"  class="nav-link">Mis Favoritos <span class="badge badge-warning mb-1">0</span></a>
                             </li>
                             <li class="ml-0 ml-sm-3">
                                 @include('includes.avatar')
@@ -76,7 +86,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Salir
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
