@@ -1,20 +1,6 @@
 <?php
-
-//use App\Restaurant;
-
+session_start();
 Route::get('/laravel', function () {
-/*
-    $restaurants=Restaurant::all();
-        foreach($restaurants as $restaurant){
-            echo $restaurant->name.'<br>';
-            echo $restaurant->category->name.'<br>';
-
-            foreach($restaurant->dishes as $dishe){
-                echo'----'.$dishe->name.'<br>';
-            }
-        }
-        die();
-*/
     return view('welcome');
 });
 
@@ -29,17 +15,13 @@ Route::get('/restaurant/avatar/{filename}','RestaurantController@getImage')->nam
 Route::get('/platos/{filename}','DishController@getImage')->name('dish.image');
 Route::get('/restaurant/{id}','DishController@dishes')->name('restaurant.detalle');
 
-Route::get('/carrito',function () {
-        return view('carrito.index');
-    })->name('carrito.index');
+Route::get('/carrito','CarritoController@index')->name('carrito.index');
+Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
+Route::get('/carrito/delete-one/{indice}','CarritoController@delete_one')->name('carrito.deleteone');
+Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.deleteall');
 
-Route::get('/pedidos',function () {
-        return view('pedidos.index');
-    })->name('pedidos.index');
-
-Route::get('/favoritos',function () {
-        return view('favoritos.index');
-    })->name('favoritos.index');
+Route::get('/pedidos','PedidosController@index')->name('pedidos.index');
+Route::get('/favoritos','FavoritosController@index')->name('favoritos.index');
 
 
 

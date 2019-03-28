@@ -58,7 +58,13 @@
                                 <a href="{{ route('home')}}"  class="nav-link">Inicio</a>
                             </li class="nav-item">
                             <li>
-                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito <span class="badge badge-warning mb-1">1</span></a>
+                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
+                                    @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
+                                        <span class="badge badge-warning">{{count($_SESSION['carrito'])}}</span>
+                                    @else
+                                        <span class="badge badge-warning mb-1">0</span>
+                                    @endif
+                                </a>
                                 
                             </li>
                             <li>

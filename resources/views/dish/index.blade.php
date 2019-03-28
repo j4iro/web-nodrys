@@ -3,7 +3,9 @@
 @section('content')
 
 <div class="container">
-    <form action="" method="post">
+    <form action="{{route('carrito.add')}}" method="post">
+    {{csrf_field()}}
+
     <!-- Titulo Superior -->
     <div class="row">
         <div class="col-12 text-center">

@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 class DishController extends Controller
 {
-    public function dishes(Request $request){
-
+    public function dishes(Request $request)
+    {
         $dishes = Dish::where('restaurant_id', $request->id)
                 ->get();
         
