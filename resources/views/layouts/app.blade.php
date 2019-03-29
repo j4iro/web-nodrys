@@ -46,23 +46,23 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item">
-                                <a href="{{ route('home')}}"  class="nav-link">Inicio</a>
+                                <a href="{{ route('home')}}"  class="nav-link">Restaurantes</a>
                             </li class="nav-item">
                             <li>
                                 <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
                                     @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
-                                        <span class="badge badge-warning">{{count($_SESSION['carrito'])}}</span>
+                                        <span class="badge badge-warning ">{{count($_SESSION['carrito'])}}</span>
                                     @else
-                                        <span class="badge badge-warning mb-1">0</span>
+                                        <span class="badge badge-warning">0</span>
                                     @endif
                                 </a>
                                 

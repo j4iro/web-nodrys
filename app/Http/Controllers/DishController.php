@@ -12,11 +12,8 @@ class DishController extends Controller
 {
     public function dishes(Request $request)
     {
-        $dishes = Dish::where('restaurant_id', $request->id)
-                ->get();
-        
-       $restaurant = Restaurant::select('name')->where('id', $request->id)
-        ->get();
+       $dishes = Dish::where('restaurant_id', $request->id)->get();
+       $restaurant = Restaurant::where('id', $request->id)->first();
 
         return view('dish.index',[
             'dishes' => $dishes,
