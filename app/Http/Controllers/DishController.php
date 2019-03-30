@@ -7,6 +7,8 @@ use App\Dish;
 use App\Restaurant;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+// use Illuminate\Support\Facades\DB;
 
 class DishController extends Controller
 {
@@ -25,5 +27,72 @@ class DishController extends Controller
     {
         $file = Storage::disk('dishes')->get($filename);
         return new Response($file,200);
+    }
+
+    public function new()
+    {
+        return view('admin-restaurant.nuevo-plato');
+    }
+
+    public function list()
+    {
+        $dishes= Dish::where('restaurant_id', 1)->get();
+        return view('admin-restaurant.list-plato',compact('dishes'));
+    }
+
+    public function edit($id)
+    {
+        $plato = Dish::findOrFail($id);
+        return view('admin-restaurant.nuevo-plato',compact('plato'));
+    }
+
+    public function delete($id)
+    {
+        $plato = Dish::findOrFail($id)->delete();
+        return redirect()->route('adminRestaurant.plato.list')->with('resultado','El plato se eliminó correctamente');
+    }
+ 
+    public function save(Request $request)
+    {
+
+      //Instanciar a la tabla platos para setear mas adelante
+      if ($request->input('editar')=='editar')
+      {
+        $id = $request->input('id');
+        $dish = Dish::where('id',$id)->first();
+      }
+      else
+      {
+        $dish = new Dish;
+      }
+
+      $dish->restaurant_id = $request->input('restaurant_id');
+      $dish->name = $request->input('name');
+      $dish->description = $request->input('description');
+      $dish->price = $request->input('price');
+      $dish->time = $request->input('time');
+      $dish->type = $request->input('type');
+
+      //Guardar la imagen del plato
+      $image_path =  $request->file('image');
+
+      if ($image_path)
+      {
+        $image_path_name = time().$image_path->getClientOriginalName();
+        Storage::disk('dishes')->put($image_path_name, File::get($image_path));
+        $dish->image = $image_path_name;
+      }
+
+      if ($request->input('editar')=='editar')
+      {
+        $dish->update();
+        return redirect()->route('adminRestaurant.plato.edit',compact('id'))->with('resultado','El plato se actualizó correctamente');
+      }
+      else
+      {
+        $dish->save();
+        return redirect()->route('adminRestaurant.plato.new')->with('resultado','El plato se insertó correctamente');
+      }
+
     }
 }
