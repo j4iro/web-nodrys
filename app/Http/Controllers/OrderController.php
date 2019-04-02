@@ -11,8 +11,19 @@ class OrderController extends Controller
 {
     public function index_r()
     {
-        $orders = Order::where('restaurant_id',1)->get();
-        return view('pedidos.index_r');
+        //Traigo los pedidos del restaurante identificado
+        $orders = Order::join('users','users.id','=','orders.user_id')
+        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+        ->where('restaurant_id',1)->get();
+        //  dd($orders);
+        return view('pedidos.index_r',[
+            "pedidos" => $orders
+        ]);
+    }
+
+    public function qr()
+    {
+        return view ('pedidos.qr');
     }
 
     public function index_c(Request $request)
@@ -22,16 +33,39 @@ class OrderController extends Controller
         $id_user = $user->id;
 
         //Traigo los pedidos del usuario identificado
-        $orders = Order::where('user_id',$id_user)->get();
+        $orders = Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+        ->select('restaurants.image','restaurants.name','orders.created_at','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+        ->where('user_id',$id_user)->get();
 
         return view('pedidos.index',[
             'pedidos' => $orders
         ]);
     }
 
-    public function detail($id)
+    public function detail_c($id)
     {
+        //Traigo los detalles del pedido que llega
+        $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.type')
+        ->where('details_orders.order_id',$id)
+        ->get();
 
+        return view('pedidos.detail_c',[
+            'pedidos' => $details
+        ]);
+    }
+
+    public function detail_r($id)
+    {
+        //Traigo los detalles del pedido que llega
+        $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.type')
+        ->where('details_orders.order_id',$id)
+        ->get();
+
+        return view('pedidos.detail_r',[
+            'pedidos' => $details
+        ]);
     }
 
     public function add(Request $request)
@@ -99,9 +133,7 @@ class OrderController extends Controller
             // var_dump($producto->id);
         }
 
-        // die();
         unset($_SESSION['carrito']);
         return redirect()->route('pedidos.index')->with('result','Pedido Registrado Correctamente');
-
     }
 }

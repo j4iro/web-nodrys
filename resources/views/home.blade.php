@@ -6,7 +6,7 @@
 
         @foreach ( $restaurants as $restaurant )
 
-            <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card shadow">
                     @include('includes.image_restaurante')
                     <div class="card-body">

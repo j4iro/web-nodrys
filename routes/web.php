@@ -27,8 +27,8 @@ Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.
 
 /*Rutas para los pedidos de los clientes*/
 Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
-Route::get('/mis-pedidos/detalles/{id}','OrderController@detalles')->name('pedidos.detail');
 Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
+Route::get('/mis-pedidos/detalle/{id}','OrderController@detail_c')->name('pedidos.detail_c');
 
 /*Recorrer los productos del carrito */
 Route::get('/detalle-pedido/save','DetailOrderController@saveDetail')->name('detailorder.save');
@@ -48,3 +48,7 @@ Route::get('/admin/restaurant/platos/delete/{id}','DishController@delete')->name
 
 /*Rutas para pedidos en la sección administrativa */
 Route::get('/admin/restaurant/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
+Route::get('/admin/restaurant/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
+
+/* Ruta para el Codigo QR */
+Route::get('/admin/restaurant/escanear-qr','OrderController@qr')->name('adminRestaurant.orders.qr');
