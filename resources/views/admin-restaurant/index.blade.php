@@ -12,7 +12,7 @@
             <a href="" class="btn btn-primary mt-2">Ver Pedidos Completados</a><br>
             <hr>
             <a href="" class="btn btn-primary mt-2">Datos de mi cuenta</a><br>
-            <a href="" class="btn btn-primary mt-2">Escanear el QR</a><br>
+            <a href="{{route('adminRestaurant.orders.qr')}}" class="btn btn-primary mt-2">Escanear el QR</a><br>
             <a href="" class="btn btn-primary mt-2">Reportes</a><br>
         </div>
     </div>

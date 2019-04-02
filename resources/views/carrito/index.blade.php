@@ -44,7 +44,7 @@
                     <th scope="row">
                         <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" class="img-thumbnail shadow" width="50">
                     </th>
-                    <td>{{$plato->type}}</td>
+                    <td class="text-capitalize">{{$plato->type}}</td>
                     <td>{{$plato->name}}</td>
                     <td>{{$plato->price}}</td>
                     <th scope="row">
