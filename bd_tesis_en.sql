@@ -98,7 +98,7 @@ CREATE TABLE orders(
     n_people INT NOT NULL,
     oca_special TEXT NULL,
     cod_promo CHAR(10) NULL,
-    state INT NOT NULL,
+    state VARCHAR(20) NOT NULL,
     total NUMERIC(20,2) NOT NULL,
     created_at DATETIME,
     updated_at DATETIME,

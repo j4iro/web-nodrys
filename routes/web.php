@@ -25,8 +25,13 @@ Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.dow
 Route::get('/carrito/delete-one/{indice}','CarritoController@delete_one')->name('carrito.deleteone');
 Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.deleteall');
 
-/*Rutas para los pedidos*/
-Route::get('/pedidos','PedidosController@index')->name('pedidos.index');
+/*Rutas para los pedidos de los clientes*/
+Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
+Route::get('/mis-pedidos/detalles/{id}','OrderController@detalles')->name('pedidos.detail');
+Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
+
+/*Recorrer los productos del carrito */
+Route::get('/detalle-pedido/save','DetailOrderController@saveDetail')->name('detailorder.save');
 
 /*Rutas para los favoritos*/
 Route::get('/favoritos','FavoritosController@index')->name('favoritos.index');
@@ -42,5 +47,4 @@ Route::get('/admin/restaurant/platos/edit/{id}','DishController@edit')->name('ad
 Route::get('/admin/restaurant/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
 
 /*Rutas para pedidos en la sección administrativa */
-
 Route::get('/admin/restaurant/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');

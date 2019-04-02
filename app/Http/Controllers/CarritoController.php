@@ -61,7 +61,6 @@ class CarritoController extends Controller
             return redirect()->route('restaurant.detalle',["id"=>$request->id_restaurant])->with('vacio','Seleccione al menos un plato para continuar');
         }
 
-        
     }
 
     public function up($indice)

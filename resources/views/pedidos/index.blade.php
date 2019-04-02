@@ -9,36 +9,52 @@
         </div>
     </div>
 
-    {{-- <div class="row mt-3">
+    <div class="row mt-3">
+
+        <div class="col-12 col-sm-7 ">
+            @if(session('result'))
+                <div class="alert alert-success">
+                    <strong>{{session('result')}}</strong>
+                </div>
+            @endif
+        </div>
+
         <div class="col-12 ">
             
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">
                     <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Plato</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Sub Total</th>
+                    <th scope="col" colspan="2">Restaurante</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Personas</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Total</th>
                     <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+
+                @foreach ($pedidos as $pedido)
                     <tr>
-                    <th scope="row">1</th>
-                    <td>Segundo</td>
-                    <td>Cuy Asado</td>
-                    <td>25.00</td>
-                    <td><input type="number" class="form-control form-control-sm" name="cantidad[]" value="1"></td>
-                    <th scope="row">25.00</th>
-                    <td><a href="" class="btn btn-danger btn-sm">Eliminar</a></td>
+                        <th scope="row">{{$pedido->restaurant_id}}</th>
+                        <th scope="row">El Buen Tomate</th>
+                        <td>{{$pedido->date}}</td>
+                        <td>{{$pedido->n_people}}</td>
+                        @if ($pedido->state=='pendiente')
+                            <td class="text-danger text-uppercase">{{$pedido->state}}</td>
+                        @else
+                            <td class="text-primary text-uppercase">{{$pedido->state}}</td>
+                        @endif
+                        <td>{{$pedido->total}}</td>
+                        <td><a href="{{route('pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-primary btn-sm">Detalles</a></td>
                     </tr>
+                @endforeach
+
                 </tbody>
             </table>
 
         </div>
-    </div> --}}
+    </div>
 
 
 

@@ -57,6 +57,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('home')}}"  class="nav-link">Restaurantes</a>
                             </li class="nav-item">
+                            <li class="nav-item">
+                                <a href="{{ route('home')}}"  class="nav-link">Platos</a>
+                            </li class="nav-item">
                             <li>
                                 <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
                                     @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
