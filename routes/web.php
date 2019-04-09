@@ -52,3 +52,6 @@ Route::get('/admin/restaurant/pedidos-pendientes/detalle/{id}','OrderController@
 
 /* Ruta para el Codigo QR */
 Route::get('/admin/restaurant/escanear-qr','OrderController@qr')->name('adminRestaurant.orders.qr');
+
+/* Ruta para Buscar restaurantes por su nombre */
+Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');

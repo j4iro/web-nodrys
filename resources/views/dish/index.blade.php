@@ -6,7 +6,7 @@
     <?php echo "<script>alert('".session('vacio')."');</script>" ?>
 @endif
 
-<div class="container">
+<div class="container mt-3">
     <form action="{{route('carrito.add')}}" method="post">
     {{csrf_field()}}
 
@@ -20,12 +20,12 @@
     <div class="row mt-3">
         @foreach ($dishes as $dish)
             <div class="col-6 col-md-4 col-lg-2 mb-4">
-                <div class="card shadow ">
+                <div class="card card-plato">
                     @include('includes.image_dish')
-                    <div class="card-body ">
-                        <h5 class="card-title">{{$dish->name}}</h5>
-                        <p class="card-text">{{$dish->time}} Min.</p>
-                        <p class="card-text">S/. {{$dish->price}}</p>
+                    <div class="card-body p-0 px-3 pt-2 pb-3">
+                        <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                        <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                        <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
                         <input class="form-check-input" type="checkbox" value="{{$dish->id}}" name="checkDish[]" >
                     </div>
                 </div>
