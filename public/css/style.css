@@ -36,6 +36,16 @@ form .avatar
     font-weight: 400;
 }
 
+.badge-restaurant
+{
+    height: 1.5rem;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+}
+
 .card-title-plato
 {
     font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -52,7 +62,7 @@ form .avatar
 {
     /* width: 500px; */
     height: 300px;
-    background-image: url('../images/img-intro.jpg');
+    background-image: url('../images/img-intro_dese2.png');
     object-fit: cover;
     /* background-repeat: no-repeat; */
 }

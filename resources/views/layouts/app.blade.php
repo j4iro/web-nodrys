@@ -19,6 +19,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"  href="{{asset('images/favicon/favicon.png')}}">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -47,6 +50,21 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
+                                <a href="{{ route('home')}}"  class="nav-link">Restaurantes</a>
+                            </li class="nav-item">
+                            <li class="nav-item">
+                                <a href="{{ route('home')}}"  class="nav-link">Platos</a>
+                            </li class="nav-item">
+                            <li>
+                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
+                                    @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
+                                        <span class="badge badge-warning ">{{count($_SESSION['carrito'])}}</span>
+                                    @else
+                                        <span class="badge badge-warning">0</span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                             </li>
                             @if (Route::has('register'))
@@ -69,7 +87,6 @@
                                         <span class="badge badge-warning">0</span>
                                     @endif
                                 </a>
-                                
                             </li>
                             <li>
                                 <a href="{{route('pedidos.index')}}"  class="nav-link">Mis Pedidos <span class="badge badge-warning mb-1">0</span></a>

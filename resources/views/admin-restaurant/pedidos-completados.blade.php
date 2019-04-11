@@ -6,7 +6,7 @@
     <!--Titulo-->
     <div class="row mt-3">
         <div class="col-12">
-            <h4>Pedidos Pendientes</h4>
+            <h4>Pedidos Completados</h4>
         </div>
 
         <div class="col-12 mt-3">
@@ -15,7 +15,7 @@
                 <thead class="thead-light">
                     <tr>
                     <th scope="col">Cliente</th>
-                    <th scope="col" >Celular</th>
+                    <th scope="col">Celular</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Hora</th>
                     <th scope="col">Ocasión Especial</th>
@@ -40,7 +40,7 @@
                         @if ($pedido->state=='pendiente')
                             <td class="text-danger text-uppercase"><span class="badge badge-danger">{{$pedido->state}}</span></td>
                         @else
-                            <td class="text-primary text-uppercase"><span class="badge badge-primary">{{$pedido->state}}</span></td>
+                            <td class="text-success text-uppercase"><span class="badge badge-success">{{$pedido->state}}</span></td>
                         @endif
                         
                         <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>

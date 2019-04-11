@@ -73,6 +73,11 @@ INSERT INTO restaurants VALUES
 (NULL, 1,1,'El buen tomate',NULL,'Manuel Candamo 852',50,100,'el_buen_tomate.jpg',CURTIME(),CURTIME()),
 (NULL, 1,1,'Embarcadero 41',NULL,'Juan de Miller 741',50,100,'embarcadero41.jpg',CURTIME(),CURTIME());
 
+INSERT INTO restaurants VALUES 
+(NULL, 2,2,'Las Palmeras',NULL,'Jr Torres 856 Espaldas Barranco',50,100,'las-palmeras.png',CURTIME(),CURTIME());
+INSERT INTO restaurants VALUES 
+(NULL, 2,2,'Asakusa',NULL,'San Borja Calle 856 Mz 52',50,100,'asakusa.png',CURTIME(),CURTIME());
+
 CREATE TABLE cards(
     card_id INT PRIMARY KEY AUTO_INCREMENT,
     num_card VARCHAR(255) NOT NULL,

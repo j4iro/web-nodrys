@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-r')
 
 @section('content')
 
@@ -16,17 +16,17 @@
                 @endif
 
                 <div class="card shadow">
-                    <div class="card-header">Configuración de mi cuenta</div>
+                <div class="card-header">Configuración de mis datos</div>
     
                     <div class="card-body">
-                    <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('adminRestaurant.update') }}" enctype="multipart/form-data">
                             @csrf
     
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ Auth::user()->name }}" required autofocus>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{$datos->name}}" required autofocus>
     
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
@@ -37,10 +37,10 @@
                             </div>
     
                             <div class="form-group row">
-                                <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
+                                <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Slogan') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required >
+                                    <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{$datos->slogan}}" required >
     
                                     @if ($errors->has('surname'))
                                         <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ Auth::user()->email }}" required >
+                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="" required >
     
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
@@ -65,10 +65,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="telephone" class="col-md-4 col-form-label text-md-right">Celular</label>
+                                <label for="telephone" class="col-md-4 col-form-label text-md-right">Telefono - Celular</label>
     
                                 <div class="col-md-6">
-                                    <input id="telephone" type="number" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" value="{{ Auth::user()->telephone }}"  >
+                                    <input id="telephone" type="number" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" value=""  >
     
                                     @if ($errors->has('telephone'))
                                         <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
                                 <label for="address" class="col-md-4 col-form-label text-md-right">Dirección</label>
     
                                 <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ Auth::user()->address }}"  >
+                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{$datos->address}}"  >
     
                                     @if ($errors->has('address'))
                                         <span class="invalid-feedback" role="alert">
@@ -96,7 +96,7 @@
                                 <label for="imagepath" class="col-md-4 col-form-label text-md-right">Foto</label>
     
                                 <div class="col-md-6">
-                                    <input id="imagepath" type="file" class="form-control-file {{ $errors->has('imagepath') ? ' is-invalid' : '' }}" name="image_path"   >
+                                    <input id="imagepath" type="file" class="form-control-file {{ $errors->has('imagepath') ? ' is-invalid' : '' }}" name="image_path" >
     
                                     @if ($errors->has('imagepath'))
                                         <span class="invalid-feedback" role="alert">
@@ -108,7 +108,7 @@
 
                             <div class="form-group row justify-content-center">
                                 <div class="col-md-4">
-                                    @include('includes.avatar')
+                                    <img src="{{ route('restaurant.image',['filename'=>$datos->image]) }}" class="img-fluid" alt="Foto de {{$datos->name}} en Nodrys">
                                 </div>
                             </div>
     

@@ -6,7 +6,7 @@
 <form action="{{route('restaurant.buscar')}}" method="post">
         {{csrf_field()}}
         <div class="row bg-intro d-flex justify-content-center align-items-center">
-            <div class="col-5">
+            <div class="col-12 col-sm-8 col-md-5">
                 <div class="input-group mb-3">
                     <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
                     <div class="input-group-append">
@@ -23,7 +23,7 @@
 
     <div class="row">
         <div class="col-12 ">
-            <h5>Restaurantes para tí</h5>
+            <h5>Busca entre {{count($restaurants)}} restaurantes para tí</h5>
         </div>
     </div>
 
@@ -43,13 +43,43 @@
                 <div class="card card-restaurant">
                     @include('includes.image_restaurante')
                     <div class="card-body p-0 px-3 pt-2 pb-5">
-                        <p class="card-title card-title-restaurant my-0">{{$restaurant->name}}</p>
-                        <p class="card-text my-2"><img src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14">  {{$restaurant->address}}</p>
+                        
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title card-title-restaurant my-0">{{$restaurant->name}}</p>
+                            <div class="badge badge-success badge-restaurant mt-1 ">
+                                {{$restaurant->categoria}}
+                            </div>
+                        </div>
+                        <p class="card-text my-2">
+                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14">  {{$restaurant->address}}</p>
                         <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id])}}" class="btn btn-primary stretched-link">Mirar platos</a>
                     </div>
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-center">
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+        </div>
     </div>
 
 </div>

@@ -4,7 +4,7 @@
 <form method="POST" action="{{route('pedidos.add')}}">
     {{csrf_field()}}
 
-<div class="container">
+<div class="container mt-4">
 
     <!--Titulo del carrito-->
     <div class="row mt-3">
@@ -107,7 +107,7 @@
 
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="number" placeholder="Número de personas" class="form-control" name="n_people">
+                        <input type="number" placeholder="Número de personas" value="1" class="form-control" name="n_people">
                     </div>
                 </div>
             

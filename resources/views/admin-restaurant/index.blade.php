@@ -9,11 +9,11 @@
             <a href="{{route('adminRestaurant.plato.list')}}" class="btn btn-primary mt-2">Ver Plato</a><br>
             <hr>
             <a href="{{route('adminRestaurant.orders.all')}}" class="btn btn-primary mt-2">Ver Pedidos Pendientes</a><br>
-            <a href="" class="btn btn-primary mt-2">Ver Pedidos Completados</a><br>
+            <a href="{{route('adminRestaurant.pedidos.completados')}}" class="btn btn-primary mt-2">Ver Pedidos Completados</a><br>
             <hr>
-            <a href="" class="btn btn-primary mt-2">Datos de mi cuenta</a><br>
+            <a href="{{route('adminRestaurant.datos')}}" class="btn btn-primary mt-2">Datos de mi cuenta</a><br>
             <a href="{{route('adminRestaurant.orders.qr')}}" class="btn btn-primary mt-2">Escanear el QR</a><br>
-            <a href="" class="btn btn-primary mt-2">Reportes</a><br>
+            <a href="{{route('adminRestaurant.reportes')}}" class="btn btn-primary mt-2">Reportes</a><br>
         </div>
     </div>
 </div>

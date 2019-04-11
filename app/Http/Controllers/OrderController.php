@@ -9,16 +9,31 @@ use App\Card;
 
 class OrderController extends Controller
 {
+    
     public function index_r()
     {
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('restaurant_id',1)->get();
-        //  dd($orders);
+        ->where('restaurant_id',1)
+        ->where('orders.state','pendiente')
+        ->get();
+        
         return view('pedidos.index_r',[
             "pedidos" => $orders
         ]);
+    }
+
+    public function pedidos_completados() 
+    {
+        //Traigo los pedidos del restaurante identificado
+        $orders = Order::join('users','users.id','=','orders.user_id')
+        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+        ->where('restaurant_id',1)
+        ->where('orders.state','completado')
+        ->get();
+
+        return view('admin-restaurant.pedidos-completados',["pedidos"=>$orders]);
     }
 
     public function qr()
