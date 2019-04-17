@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="container-fluid">
-<form action="{{route('restaurant.buscar')}}" method="post">
-        {{csrf_field()}}
+    <form action="{{route('restaurant.buscar')}}" method="post">
+            {{csrf_field()}}
         <div class="row bg-intro d-flex justify-content-center align-items-center">
             <div class="col-12 col-sm-8 col-md-5">
                 <div class="input-group mb-3">
@@ -19,13 +19,41 @@
     </form>
 </div>
 
+
+
 <div class="container my-4">
+    <form action="{{route('restaurants.filtro')}}" method="post">
 
     <div class="row">
         <div class="col-12 ">
             <h5>Busca entre {{count($restaurants)}} restaurantes para tí</h5>
         </div>
     </div>
+
+    <div class="row mb-4 mt-2">
+            {{csrf_field()}}
+        <div class="col-6 col-lg-3 pt-2">
+            <select name="categoria" class="form-control" id="">
+                <option value="" disabled selected >Filtra por categoria</option>
+                @foreach ($categorias as $categoria)
+                    <option value="{{$categoria->id}}"   >{{$categoria->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-6 col-lg-3 pt-2">
+            <select name="distrito" class="form-control" id="">
+                <option value="" disabled selected >Filtra por distrito</option>
+                @foreach ($distritos as $distrito)
+                    <option value="{{$distrito->id}}">{{$distrito->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-6 col-lg-2  pt-2">
+            <button class="btn btn-primary" name="filtrar" type="submit">Filtrar</button>
+        </div>
+        </form>
+    </div>
+
 
     @isset ($resultado)
         <div class="row">
@@ -50,8 +78,8 @@
                                 {{$restaurant->categoria}}
                             </div>
                         </div>
-                        <p class="card-text my-2">
-                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14">  {{$restaurant->address}}</p>
+                        <p class="my-2 font-weight-light">
+                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
                         <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id])}}" class="btn btn-primary stretched-link">Mirar platos</a>
                     </div>
                 </div>
@@ -59,6 +87,8 @@
         @endforeach
     </div>
 
+
+    {{-- Paginación --}}
     <div class="row mt-4">
         <div class="col-12 d-flex justify-content-center">
 
@@ -81,22 +111,10 @@
               </nav>
         </div>
     </div>
+    {{-- Paginación --}}
 
 </div>
+
+@include('includes/footer')
+
 @endsection
-
-
-{{-- <div class="card">
-        <div class="card-header">{{$restaurant->$name}}</div>
-        
-        <div class="card-body">
-            @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-            @endif
-            
-            You are logged in!
-        </div>
-    </div>
-</div> --}}

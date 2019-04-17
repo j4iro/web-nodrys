@@ -6,8 +6,14 @@
     <form action="{{route('adminRestaurant.plato.save')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
-    <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8">
+    <div class="row ">
+         
+    @include('includes/slidebar')
+
+    <div class="col-12 col-md-10 col-lg-8 ">
+
+       
+
     <div class="card shadow p-4 bg-light">
 
         <div class="row">

@@ -3,9 +3,13 @@
 @section('content') 
 <div class="container mt-3">
     <div class="row">
-        <div class="col-12">
+
+        @include('includes/slidebar')
+
+        <div class="col-10">
             <h3>Reportes</h3>
         </div>
+        
     </div>
     
 </div>

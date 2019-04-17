@@ -33,6 +33,7 @@
                 <a class="navbar-brand p-0" href="{{ url('/') }}">
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
+                    <strong>Nodrys</strong>
     
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -53,7 +54,7 @@
                                 <a href="{{ route('home')}}"  class="nav-link">Restaurantes</a>
                             </li class="nav-item">
                             <li class="nav-item">
-                                <a href="{{ route('home')}}"  class="nav-link">Platos</a>
+                                <a href="{{ route('getAllDishes')}}"  class="nav-link">Platos</a>
                             </li class="nav-item">
                             <li>
                                 <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
@@ -77,7 +78,7 @@
                                 <a href="{{ route('home')}}"  class="nav-link">Restaurantes</a>
                             </li class="nav-item">
                             <li class="nav-item">
-                                <a href="{{ route('home')}}"  class="nav-link">Platos</a>
+                                <a href="{{ route('getAllDishes')}}"  class="nav-link">Platos</a>
                             </li class="nav-item">
                             <li>
                                 <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 

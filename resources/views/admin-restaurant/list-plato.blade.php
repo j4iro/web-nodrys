@@ -3,15 +3,9 @@
 @section('content')
 <div class="container">
 
-    <!--Titulo del carrito-->
-    <div class="row mt-3">
-        <div class="col-12">
-            <h4>Lista de platos</h4>
-        </div>
-    </div>
-    <!--Titulo del carrito-->
+    
 
-    <!--Tabla Carrito de compras-->
+    <!--Tabla Lista de platos-->
     <div class="row mt-3">
 
         @if (session('resultado'))
@@ -22,7 +16,18 @@
             </div>
         @endif
 
-        <div class="col-12 col-sm-8">
+        
+        @include('includes/slidebar')
+
+        <div class="col-10 col-sm-8 ">
+
+        <!--Titulo-->
+        <div class="row mb-2">
+            <div class="col-12 ">
+                <h4>Lista de platos</h4>
+            </div>
+        </div>
+        <!--Titulo-->
 
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">
@@ -40,9 +45,9 @@
                     @foreach ($dishes as $dish)
                     <tr>
                         <td>
-                            <img src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="img-thumbnail shadow" width="50">
+                            <img src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="img-thumbnail " width="50">
                         </td>
-                        <td>{{$dish->type}}</td>
+                        <td class="text-capitalize">{{$dish->type}}</td>
                         <td>{{$dish->name}}</td>
                         <td>{{$dish->description}}</td>
                         <td>{{$dish->price}}</td>

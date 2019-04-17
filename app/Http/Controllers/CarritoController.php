@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Dish;
+// use App\User;
 
 class CarritoController extends Controller
 {
@@ -13,6 +14,20 @@ class CarritoController extends Controller
         return view('carrito.index',[
             'carrito' => $carrito
         ]);
+    }
+
+    public function auth()
+    {
+        $logeado = \Auth::user() ? true : false;
+
+        if ($logeado) 
+        {
+            return redirect()->route('carrito.index')->with('mostrarform',true);
+        }
+        else
+        {
+            return redirect('/login'); 
+        }
     }
 
     public function add(Request $request)
@@ -58,9 +73,15 @@ class CarritoController extends Controller
         }
         else
         {
-            return redirect()->route('restaurant.detalle',["id"=>$request->id_restaurant])->with('vacio','Seleccione al menos un plato para continuar');
+            if (isset($request->id_restaurant)) 
+            {
+                return redirect()->route('restaurant.detalle',["id"=>$request->id_restaurant])->with('vacio','Seleccione al menos un plato para continuar');
+            }
+            else
+            {
+                return redirect()->route('getAllDishes')->with('vacio','Seleccione al menos un plato para continuar');
+            }
         }
-
     }
 
     public function up($indice)

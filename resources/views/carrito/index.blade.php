@@ -2,7 +2,8 @@
 
 @section('content')
 <form method="POST" action="{{route('pedidos.add')}}">
-    {{csrf_field()}}
+{{csrf_field()}}
+
 
 <div class="container mt-4">
 
@@ -72,7 +73,9 @@
                     <td colspan="3"></td>
                     <th class="text-right">Total:</th>
                     <th>{{number_format($total,2,'.',' ')}}</th>
-                    <th><button type="button" onclick="aparecerformOcasionEspecial()" id="continuar_carrito" class="btn btn-primary btn-sm">Continuar</button></th>
+                    <th>
+                        <a href="{{route('carrito.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-sm" >Continuar</a>
+                    </th>
                 </tr>
             @endif
 
@@ -82,7 +85,7 @@
         </div>
 
         <!--Formulario Ocasión Especial-->
-        <div class="col-12 col-sm-4 d-none" id="formOcasionEspecial">
+        <div class="col-12 mb-3 col-sm-4 @if (session('mostrarform')) {{''}} @else {{'d-none'}} @endif " id="formOcasionEspecial">
             <div class="card shadow p-4 bg-light">
 
                 <div class="row">
@@ -218,16 +221,23 @@
         </div>
       </div>
     <!-- Modal Formulario de Pago -->
+</div>
 
+{{-- @include('includes/footer') --}}
 
-<script>
-    function aparecerformOcasionEspecial()
-    {
-        if (formOcasionEspecial.classList.contains('d-none')) {
-            formOcasionEspecial.classList.remove('d-none')
+    {{-- <script>
+        function aparecerformOcasionEspecial()
+        {
+            if (formOcasionEspecial.classList.contains('d-none')) {
+                formOcasionEspecial.classList.remove('d-none')
+            }
         }
-    }
-</script>
+    </script> --}}
+
 </form>
+
+
+
 @endsection
+
 

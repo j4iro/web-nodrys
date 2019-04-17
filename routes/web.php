@@ -9,6 +9,11 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+
+/*Rutas para listar los platos en la sección principal*/
+Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes');
+Route::post('/comidas', 'HomeController@getDishOne')->name('platos.buscar');
+
 /*Rutas del perfil de usuario y editar sus datos*/
 Route::get('/configuracion','UserController@config')->name('config');
 Route::post('/user/update','UserController@update')->name('user.update');
@@ -25,6 +30,8 @@ Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.dow
 Route::get('/carrito/delete-one/{indice}','CarritoController@delete_one')->name('carrito.deleteone');
 Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.deleteall');
 
+Route::get('/carrito/auth','CarritoController@auth')->name('carrito.auth');
+
 /*Rutas para los pedidos de los clientes*/
 Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
 Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
@@ -37,7 +44,7 @@ Route::get('/detalle-pedido/save','DetailOrderController@saveDetail')->name('det
 Route::get('/favoritos','FavoritosController@index')->name('favoritos.index');
 
 /*Rutas para la seccion administrativa de los restaurantes*/
-Route::get('/admin/restaurant', 'AdminRestaurant@index')->name('adminRestaurant.index');
+Route::get('/admin/restaurant', 'OrderController@index_r')->name('adminRestaurant.index');
 Route::get('/admin/restaurant/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
 Route::post('/admin/restaurant/update','AdminRestaurant@update')->name('adminRestaurant.update');
 Route::get('/admin/restaurant/reportes','AdminRestaurant@reportes')->name('adminRestaurant.reportes');
@@ -50,7 +57,7 @@ Route::get('/admin/restaurant/platos/edit/{id}','DishController@edit')->name('ad
 Route::get('/admin/restaurant/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
 
 /*Rutas para pedidos en la sección administrativa */
-Route::get('/admin/restaurant/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
+// Route::get('/admin/restaurant/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
 Route::get('/admin/restaurant/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
 Route::get('/admin/restaurant/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
 
@@ -60,6 +67,7 @@ Route::get('/admin/restaurant/escanear-qr','OrderController@qr')->name('adminRes
 
 /* Ruta para Buscar restaurantes por su nombre */
 Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
+Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
 
 /*Rutas para el administrador master*/
 Route::get('/admin/', 'AdminController@index')->name('admin.index');

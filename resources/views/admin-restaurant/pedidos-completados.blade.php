@@ -5,11 +5,20 @@
 
     <!--Titulo-->
     <div class="row mt-3">
-        <div class="col-12">
-            <h4>Pedidos Completados</h4>
-        </div>
 
-        <div class="col-12 mt-3">
+
+        @include('includes/slidebar')
+        
+
+        <div class="col-10 ">
+
+            <!--Titulo-->
+            <div class="row mb-2">
+                <div class="col-12 ">
+                    <h4>Pedidos completados</h4>
+                </div>
+            </div>
+            <!--Titulo-->
             
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">

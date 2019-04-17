@@ -3,8 +3,11 @@
 @section('content')
 
 <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+        <div class="row ">
+
+        @include('includes/slidebar')
+
+            <div class="col-md-10">
 
                 @if(session('message'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -16,7 +19,7 @@
                 @endif
 
                 <div class="card shadow">
-                <div class="card-header">Configuración de mis datos</div>
+                <div class="card-header"><strong>Configuración de mis datos</strong></div>
     
                     <div class="card-body">
                     <form method="POST" action="{{ route('adminRestaurant.update') }}" enctype="multipart/form-data">

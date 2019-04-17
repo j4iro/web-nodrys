@@ -19,7 +19,7 @@ class OrderController extends Controller
         ->where('orders.state','pendiente')
         ->get();
         
-        return view('pedidos.index_r',[
+        return view('admin-restaurant.index',[
             "pedidos" => $orders
         ]);
     }
@@ -38,7 +38,7 @@ class OrderController extends Controller
 
     public function qr()
     {
-        return view ('pedidos.qr');
+        return view('pedidos.qr');
     }
 
     public function index_c(Request $request)
@@ -85,6 +85,12 @@ class OrderController extends Controller
 
     public function add(Request $request)
     {
+        if(isset($_POST['validarAuth']))
+        {
+            echo "se presiono el boton";
+        }
+        die();
+
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
 
