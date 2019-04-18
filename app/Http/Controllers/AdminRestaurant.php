@@ -13,9 +13,14 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.index');
     }
 
-    public function reportes()
+    public function reportesClientes()
     {
-        return view('admin-restaurant.reportes');
+        return view('admin-restaurant.reportesclientes');
+    }
+
+    public function reportesPedidos()
+    {
+        return view('admin-restaurant.reportespedidos');
     }
 
     public function datos()

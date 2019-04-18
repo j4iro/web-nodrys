@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Dish;
-// use App\User;
+use App\User;
+use App\Util;
 
 class CarritoController extends Controller
 {
@@ -18,16 +19,7 @@ class CarritoController extends Controller
 
     public function auth()
     {
-        $logeado = \Auth::user() ? true : false;
-
-        if ($logeado) 
-        {
-            return redirect()->route('carrito.index')->with('mostrarform',true);
-        }
-        else
-        {
-            return redirect('/login'); 
-        }
+        Util::auth();
     }
 
     public function add(Request $request)
@@ -56,12 +48,20 @@ class CarritoController extends Controller
                 for ($i=0; $i < count($request->checkDish); $i++)
                 {
                     $id_plato = $request->checkDish[$i];
+
                     //Conseguir Datos del plato
-                    $dish = Dish::where('id',$id_plato)->first();
+                    $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
+                    ->select('dishes.*','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
+                    ->where('dishes.id',$id_plato)->first();
+                    
+                    
                     //Añadir al carrito
                     if (is_object($dish)) {
                         $_SESSION['carrito'][] = array(
                             "id_plato" => $dish->id,
+                            "restaurante" => $dish->restaurante,
+                            "restaurante_id" => $dish->restaurante_id,
+                            "precio" => $dish->price,
                             "unidades" => 1,
                             "plato" => $dish
                         );

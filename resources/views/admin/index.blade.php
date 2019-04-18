@@ -1,15 +1,48 @@
-@extends('layouts.app-r')
+@extends('layouts.app-a')
 
+@section('content') 
 @section('content') 
 <div class="container mt-3">
     <div class="row">
-        <div class="col-12">
-            <h3>Panel de control del administrador</h3>
-            <a href="{{route('adminRestaurant.plato.new')}}" class="btn btn-primary mt-2">Agregar Restaurante</a><br>
-            <a href="{{route('adminRestaurant.plato.list')}}" class="btn btn-primary mt-2">Ver Restaurantes</a><br>
-            
-            <a href="{{route('adminRestaurant.reportes')}}" class="btn btn-primary mt-2">Reportes</a><br>
+        
+        @include('includes/slidebar-admin')
+    <div class="col-10">
+
+            <!--Titulo-->
+            <div class="row ">
+            <div class="col-12">
+                <h4>Solicitudes Pendientes</h4>
+            </div>
+    
+            <div class="col-12 mt-2">
+                
+                <table class="table table-responsive table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                        <th scope="col">Cliente</th>
+                        <th scope="col" >Celular</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Ocasión Especial</th>
+                        <th scope="col">N° Personas</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Detalles</th>
+                        <th scope="col">Marcar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    
+                    {{-- Foreach --}}
+    
+                    </tbody>
+                </table>
+    
+            </div>
+        </div>
+        <!--Titulo-->
         </div>
     </div>
 </div>
+ @endsection
  @endsection

@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\DetailOrder;
 use App\Card;
+use App\Util;
 
 class OrderController extends Controller
 {
-    
     public function index_r()
     {
         //Traigo los pedidos del restaurante identificado
@@ -50,7 +50,9 @@ class OrderController extends Controller
         //Traigo los pedidos del usuario identificado
         $orders = Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
         ->select('restaurants.image','restaurants.name','orders.created_at','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('user_id',$id_user)->get();
+        ->where('user_id',$id_user)
+        ->orderBy('orders.state', 'DESC')
+        ->get();
 
         return view('pedidos.index',[
             'pedidos' => $orders
@@ -85,11 +87,8 @@ class OrderController extends Controller
 
     public function add(Request $request)
     {
-        if(isset($_POST['validarAuth']))
-        {
-            echo "se presiono el boton";
-        }
-        die();
+        
+        // die();
 
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
@@ -122,9 +121,11 @@ class OrderController extends Controller
             // dd($card);
         }
 
+        $stats = Util::statsCarrito();
+
         //Datos del pedido
         $order = new Order();
-        $order->restaurant_id = 1;
+        $order->restaurant_id = $stats['restaurant_id'];
         $order->user_id = $id_user;
         $order->date =  $fecha_actual;
         $order->hour = $hora_actual;
@@ -134,7 +135,7 @@ class OrderController extends Controller
         //Ver si hay codigo de promoción
         // $order->cod_promo = null;
         $order->state = 'pendiente';
-        $order->total = '45.3';
+        $order->total = $stats['total'];
 
         $order->save();
 

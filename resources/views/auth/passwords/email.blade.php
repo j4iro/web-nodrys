@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     
-    <div class="row mb-4">
+    <div class="row my-4">
         <div class="col-12 text-center">
-            <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="80" alt="">
+            <img class="img-fluid" src="{{asset('svg/logo.svg')}}" width="80" alt="">
         </div>
     </div>
             

@@ -10,7 +10,7 @@
 
     {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
 
-    <title>Panel Restaurantes</title>
+    <title>Panel Administrador</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -34,7 +34,7 @@
                 <a class="navbar-brand p-0" href="{{ route('adminRestaurant.index') }}">
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
-                    <strong>Nodrys - Restaurante</strong>
+                    <strong>Nodrys - Administrador</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

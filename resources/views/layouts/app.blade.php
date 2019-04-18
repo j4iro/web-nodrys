@@ -90,10 +90,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('pedidos.index')}}"  class="nav-link">Mis Pedidos <span class="badge badge-warning mb-1">0</span></a>
+                                <a href="{{route('pedidos.index')}}"  class="nav-link">Mis Pedidos 
+                                    {{-- <span class="badge badge-warning mb-1">0</span> --}}
+                                </a>
                             </li>
                             <li>
-                                <a href="{{route('favoritos.index')}}"  class="nav-link">Mis Favoritos <span class="badge badge-warning mb-1">0</span></a>
+                                <a href="{{route('favoritos.index')}}"  class="nav-link">Mis Favoritos
+                                    {{-- <span class="badge badge-warning mb-1">0</span> --}}
+                                </a>
                             </li>
                             <li class="ml-0 ml-sm-3">
                                 @include('includes.avatar')

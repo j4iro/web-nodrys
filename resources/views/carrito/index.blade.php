@@ -19,14 +19,17 @@
     </div>
     <!--Titulo del carrito-->
 
+
+
     <!--Tabla Carrito de compras-->
-    <div class="row mt-3">
-        <div class="col-12 col-sm-8">
+    <div class="row mt-4">
+        <div class="col-12 col-sm-9">
 
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Imagen</th>
+                        <th scope="col">Restaurante</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Plato</th>
                         <th scope="col">Precio</th>
@@ -45,6 +48,7 @@
                     <th scope="row">
                         <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" class="img-thumbnail shadow" width="50">
                     </th>
+                    <td>{{$plato->restaurante}}</td>
                     <td class="text-capitalize">{{$plato->type}}</td>
                     <td>{{$plato->name}}</td>
                     <td>{{$plato->price}}</td>
@@ -62,7 +66,7 @@
             @else
                 <tr>
                 <th scope="row">-</th>
-                <th scope="row" colspan="5" class="text-center">Aún no has agregado productos</th>
+                <th scope="row" colspan="6" class="text-center">Aún no has agregado productos</th>
                 <td>-</td>
                 </tr>
             @endif
@@ -70,11 +74,11 @@
             @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                 <tr>
                     <td><a href="{{route('carrito.deleteall')}}">Vaciar Carrito</a></td>
-                    <td colspan="3"></td>
-                    <th class="text-right">Total:</th>
+                    <td colspan="4"></td>
+                    <th class="text-right">Total: S/.</th>
                     <th>{{number_format($total,2,'.',' ')}}</th>
                     <th>
-                        <a href="{{route('carrito.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-sm" >Continuar</a>
+                        <a href="{{route('utils.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-sm" >Continuar</a>
                     </th>
                 </tr>
             @endif
@@ -85,7 +89,7 @@
         </div>
 
         <!--Formulario Ocasión Especial-->
-        <div class="col-12 mb-3 col-sm-4 @if (session('mostrarform')) {{''}} @else {{'d-none'}} @endif " id="formOcasionEspecial">
+        <div class="col-12 mb-3 col-sm-3 @if (session('mostrarform')) {{''}} @else {{'d-none'}} @endif " id="formOcasionEspecial">
             <div class="card shadow p-4 bg-light">
 
                 <div class="row">

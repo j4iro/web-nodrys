@@ -32,7 +32,6 @@
                     <th scope="col">Total</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Detalles</th>
-                    <th scope="col">Marcar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,7 +52,6 @@
                         @endif
                         
                         <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
-                        <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Marcar</a></td>
                     </tr>
                 @endforeach
 

@@ -50,7 +50,8 @@
                     <th scope="col">Personas</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Acciones</th>
+                    {{-- <th scope="col">Acciones</th> --}}
+                    <th scope="col" colspan="2">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,6 +71,11 @@
                         @endif
                         <td>{{$pedido->total}}</td>
                         <td><a href="{{route('pedidos.detail_c',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
+                        <td>
+                            @if ($pedido->state=='pendiente')
+                            <a href="{{route('pedidos.detail_c',["id"=>$pedido->id])}}" class="btn btn-outline-danger btn-sm">Cancelar</a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
 
