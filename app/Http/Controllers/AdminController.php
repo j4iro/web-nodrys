@@ -25,6 +25,10 @@ class AdminController extends Controller
         ]);
     }
 
+    public function reportes() {
+      return view('admin.reportes-rapidos');
+    }
+
     public function saveRestaurant(Request $request)
     {
     
@@ -69,6 +73,8 @@ class AdminController extends Controller
       }
 
     }
+
+    
 
     public function editRestaurant($id)
     {

@@ -1,9 +1,6 @@
 <?php
-session_start();
 
-Route::get('/laravel', function () {
-    return view('welcome');
-});
+session_start();
 
 Auth::routes();
 
@@ -19,7 +16,7 @@ Route::post('/user/update','UserController@update')->name('user.update');
 Route::get('/user/avatar/{filename}','UserController@getImage')->name('user.avatar');
 Route::get('/restaurant/avatar/{filename}','RestaurantController@getImage')->name('restaurant.image');
 Route::get('/platos/{filename}','DishController@getImage')->name('dish.image');
-Route::get('/restaurant/{id}','DishController@dishes')->name('restaurant.detalle');
+Route::get('/restaurante/{id}-{nombre}','DishController@dishes')->name('restaurant.detalle');
 
 /*Rutas del carrito de compras*/
 Route::get('/carrito','CarritoController@index')->name('carrito.index');
@@ -43,34 +40,50 @@ Route::get('/detalle-pedido/save','DetailOrderController@saveDetail')->name('det
 Route::get('/favoritos','FavoritosController@index')->name('favoritos.index');
 
 /*Rutas para la seccion administrativa de los restaurantes*/
-Route::get('/admin/restaurant', 'OrderController@index_r')->name('adminRestaurant.index');
-Route::get('/admin/restaurant/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
-Route::post('/admin/restaurant/update','AdminRestaurant@update')->name('adminRestaurant.update');
-Route::get('/admin/restaurant/reportes-clientes','AdminRestaurant@reportesClientes')->name('adminRestaurant.reportesclientes');
-Route::get('/admin/restaurant/reportes-pedidos','AdminRestaurant@reportesPedidos')->name('adminRestaurant.reportespedidos');
+Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRestaurant.index');
+Route::get('/admin-restaurante/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
+Route::post('/admin-restaurante/update','AdminRestaurant@update')->name('adminRestaurant.update');
+Route::get('/admin-restaurante/reportes-clientes','AdminRestaurant@reportesClientes')->name('adminRestaurant.reportesclientes');
+Route::get('/admin-restaurante/reportes-pedidos','AdminRestaurant@reportesPedidos')->name('adminRestaurant.reportespedidos');
 
 /*Rutas para mantenimiento de platos en la sección administrativa */
-Route::get('/admin/restaurant/platos/new','DishController@new')->name('adminRestaurant.plato.new');
-Route::post('/admin/restaurant/platos/save','DishController@save')->name('adminRestaurant.plato.save');
-Route::get('/admin/restaurant/platos/list','DishController@list')->name('adminRestaurant.plato.list');
-Route::get('/admin/restaurant/platos/edit/{id}','DishController@edit')->name('adminRestaurant.plato.edit');
-Route::get('/admin/restaurant/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
+Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
+Route::post('/admin-restaurante/platos/save','DishController@save')->name('adminRestaurant.plato.save');
+Route::get('/admin-restaurante/platos/list','DishController@list')->name('adminRestaurant.plato.list');
+Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('adminRestaurant.plato.edit');
+Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
 
 /*Rutas para pedidos en la sección administrativa */
-// Route::get('/admin/restaurant/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
-Route::get('/admin/restaurant/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
-Route::get('/admin/restaurant/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
+
+
+// Route::get('/admin-restaurante/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
+Route::get('/admin-restaurante/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
+Route::get('/admin-restaurante/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
 
 /* Ruta para el Codigo QR */
-Route::get('/admin/restaurant/escanear-qr','OrderController@qr')->name('adminRestaurant.orders.qr');
+Route::get('/admin-restaurante/escanear-qr','OrderController@qr')->name('adminRestaurant.orders.qr');
 
 /* Ruta para Buscar restaurantes por su nombre */
 Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
 Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
 
 /*Rutas para el administrador master*/
-Route::get('/admin', 'AdminController@index')->name('admin.index');
+Route::get('/admin/home', 'AdminController@index')->name('admin.index');
 Route::get('/admin/restaurantes', 'AdminController@showRestaurants')->name('admin.restaurants');
 Route::get('/admin/restaurantes/nuevo', 'AdminController@newRestaurant')->name('admin.restaurant.new');
 Route::post('/admin/restaurantes/save', 'AdminController@saveRestaurant')->name('admin.restaurant.save');
 Route::get('/admin/restaurantes/edit/{id}', 'AdminController@editRestaurant')->name('admin.restaurant.edit');
+
+
+Route::get('/admin/reportes/', 'AdminController@reportes')->name('admin.reportes');
+
+/*Reportes PDF para la sección administrativa*/
+Route::get('/admin/reportes/pdf/{tipo}', 'PdfController@reporteRestaurantes')->name('admin.resportes.restaurantes');
+
+/*Reportes EXCEL para la sección administrativa*/
+Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers');
+Route::get('/admin/reportes/excel/restaurantes', 'ExcelController@reporteRestaurants');
+
+Route::get('users/{id}', function ($id) {
+    return view('nu');
+});

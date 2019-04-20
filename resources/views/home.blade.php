@@ -2,23 +2,25 @@
 
 @section('content')
 
-<div class="container-fluid">
-    <form action="{{route('restaurant.buscar')}}" method="post">
+<form action="{{route('restaurant.buscar')}}" method="post">
+<div class="container-fluid ">
             {{csrf_field()}}
-        <div class="row bg-intro d-flex justify-content-center align-items-center">
-            <div class="col-12 col-sm-8 col-md-5">
-                <div class="input-group mb-3">
+
+        <div class="row bg-intro  d-flex justify-content-center align-items-center">
+            <div class="col-12 col-sm-8 col-md-5 text-center">
+                <div class="input-group mb-2">
                     <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
                     <div class="input-group-append">
                         <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
                     </div>
                 </div>
+                <strong><a class="" href="./">¿Tienes un restaurante? Registrate aquí</a></strong>
+
             </div>
         </div>
 
-    </form>
 </div>
-
+</form>
 
 
 <div class="container my-4">
@@ -75,12 +77,12 @@
                         <div class="d-flex justify-content-between">
                             <p class="card-title card-title-restaurant my-0">{{$restaurant->name}}</p>
                             <div class="badge badge-success badge-restaurant mt-1 ">
-                                {{$restaurant->categoria}}
+                                <strong>{{$restaurant->categoria}}</strong>
                             </div>
                         </div>
                         <p class="my-2 font-weight-light">
                             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
-                        <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id])}}" class="btn btn-primary stretched-link">Mirar platos</a>
+                        <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" class="btn btn-primary stretched-link">Mirar platos</a>
                     </div>
                 </div>
             </div>

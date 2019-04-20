@@ -1,7 +1,7 @@
 @extends('layouts.app-r')
 
 @section('content') 
-<div class="container mt-3">
+<div class="container-fluid mt-3">
 
     <!--Titulo-->
     <div class="row mt-3">

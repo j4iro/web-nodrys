@@ -1,27 +1,21 @@
 @extends('layouts.app-a')
 
 @section('content') 
-<div class="container mt-3">
+<div class="container-fluid mt-3">
     <div class="row">
-        
         @include('includes/slidebar-admin')
     <div class="col-10">
 
             <!--Titulo-->
             <div class="row ">
-            <div class="col-12">
-                <h4>Restaurantes Registrados</h4>
-            </div>
-            <div class="col-3">
-                <a href="" class="btn btn-outline-danger btn-sm">PDF</a>
-                <a href="" class="btn btn-outline-success btn-sm">Excel</a>
-            </div>
-            <div class="col-3">
-            </div>
+                <div class="col-12">
+                    <h4>Restaurantes Registrados</h4>
+                </div>
+          
     
             <div class="col-12 mt-2">
                 
-                <table class="table table-responsive table-hover">
+                <table class="table table-responsive table-sm table-hover">
                     <thead class="thead-light">
                         <tr>
                         <th scope="col">Imagen</th>

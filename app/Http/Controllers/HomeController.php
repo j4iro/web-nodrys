@@ -35,12 +35,23 @@ class HomeController extends Controller
         $categorias = Category::all();
         $distritos = District::all();
 
-        //  dd($restaurants);
+        /*
+            $nombres_separados_por_guion = array();
+            foreach ($restaurants as $restaurant) 
+            {
+                $nombre = $restaurant->name;
+                $palabras = explode(" ", $nombre);
+                array_push($nombres_separados_por_guion, strtolower(implode("-", $palabras)));
+                //VERSION CORTA
+                echo strtolower(implode("-",explode(" ",$restaurant->name)));
+            }
+            die();
+        */
 
         return view('home',[
             'restaurants' => $restaurants,
             'categorias' => $categorias,
-            'distritos' => $distritos
+            'distritos' => $distritos,
         ]);
     }
 
@@ -51,8 +62,6 @@ class HomeController extends Controller
         ->where('dishes.name',$request->name)
         ->orWhere('dishes.name','like','%'.$request->name.'%')
         ->get();
-
-        //dd($dishes);
 
         $mje = 'Se muestran '.count($dishes). ' resultados de "' .  $request->name . '".';
 
@@ -66,7 +75,6 @@ class HomeController extends Controller
     {
         $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
         ->select('dishes.*','restaurants.name as restaurante')->get();
-        //  dd($platos);
         return view('dish.getAll',[
             'platos' => $platos
         ]);

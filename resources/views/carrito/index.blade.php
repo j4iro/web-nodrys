@@ -229,18 +229,7 @@
 
 {{-- @include('includes/footer') --}}
 
-    {{-- <script>
-        function aparecerformOcasionEspecial()
-        {
-            if (formOcasionEspecial.classList.contains('d-none')) {
-                formOcasionEspecial.classList.remove('d-none')
-            }
-        }
-    </script> --}}
-
 </form>
-
-
 
 @endsection
 

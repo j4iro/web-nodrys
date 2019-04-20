@@ -30,7 +30,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel sticky-top">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand p-0" href="{{ route('adminRestaurant.index') }}">
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">

@@ -1,10 +1,11 @@
  @extends('layouts.app-r')
 
 @section('content') 
-<div class="container mt-3">
+<div class="container-fluid mt-3">
     <div class="row">
         
         @include('includes/slidebar')
+
     <div class="col-10">
 
             <!--Titulo-->
@@ -19,7 +20,7 @@
                     <thead class="thead-light">
                         <tr>
                         <th scope="col">Cliente</th>
-                        <th scope="col" >Celular</th>
+                        <th scope="col">Celular</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
                         <th scope="col">Ocasión Especial</th>

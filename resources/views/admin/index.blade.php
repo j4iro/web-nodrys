@@ -1,8 +1,8 @@
 @extends('layouts.app-a')
 
+
 @section('content') 
-@section('content') 
-<div class="container mt-3">
+<div class="container-fluid mt-3">
     <div class="row">
         
         @include('includes/slidebar-admin')
@@ -44,5 +44,4 @@
         </div>
     </div>
 </div>
- @endsection
  @endsection

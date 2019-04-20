@@ -2,7 +2,7 @@
 
 @section('content') 
 
-<div class="container mt-3">
+<div class="container-fluid mt-3">
     <form action="{{route('adminRestaurant.plato.save')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
