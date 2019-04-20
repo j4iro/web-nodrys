@@ -84,6 +84,3 @@ Route::get('/admin/reportes/pdf/{tipo}', 'PdfController@reporteRestaurantes')->n
 Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers');
 Route::get('/admin/reportes/excel/restaurantes', 'ExcelController@reporteRestaurants');
 
-Route::get('users/{id}', function ($id) {
-    return view('nu');
-});
