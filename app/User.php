@@ -55,4 +55,21 @@ class User extends Authenticatable
         return $this->hasMany('App\Favorite');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'asigned_roles');
+    }
+
+    public function hasRoles(array $roles){
+        //dd($this->roles->toArray());
+        foreach ($roles as $role) {
+            foreach ($this->roles as $userRole) {
+                if($userRole->name===$role){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

@@ -19,6 +19,7 @@ class CreateDishesTable extends Migration
             $table->string('name');
             $table->decimal('price',20,2);
             $table->integer('time');
+            $table->text('description')->nullable();
             $table->text('image');
             $table->string('type');
             $table->timestamps();

@@ -34,7 +34,7 @@
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
                     <strong>Nodrys</strong>
-    
+
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -57,7 +57,7 @@
                                 <a href="{{ route('getAllDishes')}}"  class="nav-link">Platos</a>
                             </li class="nav-item">
                             <li>
-                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
+                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito
                                     @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                                         <span class="badge badge-warning ">{{count($_SESSION['carrito'])}}</span>
                                     @else
@@ -81,7 +81,7 @@
                                 <a href="{{ route('getAllDishes')}}"  class="nav-link">Platos</a>
                             </li class="nav-item">
                             <li>
-                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito 
+                                <a href="{{route('carrito.index')}}"  class="nav-link">Mi Carrito
                                     @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                                         <span class="badge badge-warning ">{{count($_SESSION['carrito'])}}</span>
                                     @else
@@ -90,7 +90,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('pedidos.index')}}"  class="nav-link">Mis Pedidos 
+                                <a href="{{route('pedidos.index')}}"  class="nav-link">Mis Pedidos
                                     {{-- <span class="badge badge-warning mb-1">0</span> --}}
                                 </a>
                             </li>
@@ -99,22 +99,28 @@
                                     {{-- <span class="badge badge-warning mb-1">0</span> --}}
                                 </a>
                             </li>
+                            <li>
+                                @if(auth()->user()->hasRoles(['admin','adminMaster']))
+                                        <a target="_blank" href="{{route('admin.index')}}" class="nav-link">Panel Administrador Master</a>
+                                @endif
+                            </li>
+
                             <li class="ml-0 ml-sm-3">
                                 @include('includes.avatar')
                             </li>
 
                             <li class="nav-item dropdown">
-                                
+
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    
+
                                     <a class="dropdown-item" href="{{ route('config') }}">
                                         Mi Perfil
                                     </a>
-        
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -124,7 +130,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-
                                 </div>
                             </li>
                         @endguest

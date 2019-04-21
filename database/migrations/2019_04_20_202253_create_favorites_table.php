@@ -17,7 +17,7 @@ class CreateFavoritesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('restaurant_id');
-            $table->boolean('state');
+            $table->boolean('state')->default(1);
             $table->timestamps();
 
         });

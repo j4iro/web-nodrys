@@ -9,6 +9,12 @@ use App\Category;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('roles:adminMaster');
+    }
+
     public function index()
     {
         return view('admin.index');
@@ -31,7 +37,7 @@ class AdminController extends Controller
 
     public function saveRestaurant(Request $request)
     {
-    
+
         //Instanciar a la tabla platos para setear mas adelante
       if ($request->input('editar')=='editar')
       {
@@ -74,7 +80,7 @@ class AdminController extends Controller
 
     }
 
-    
+
 
     public function editRestaurant($id)
     {

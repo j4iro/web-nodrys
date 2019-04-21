@@ -17,7 +17,7 @@ class CreateAsignedRolesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('user_id');
-            $table->integer('roles_id');
+            $table->integer('role_id');
 
         });
     }

@@ -1,5 +1,19 @@
 <?php
 
+//AQUI SE INGRESA EN LA BD YA QUE TU NO SABES JAIRO
+
+// Route::get('rol', function () {
+//     $rol=new App\Role;
+//     $rol->id=1;
+//     $rol->name='adminMaster';
+//     $rol->display_name='permisos de administrador master';
+//     $rol->description='';
+//     $rol->save();
+//     return $rol;
+// });
+
+
+
 session_start();
 
 Auth::routes();
@@ -54,7 +68,6 @@ Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('a
 Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
 
 /*Rutas para pedidos en la sección administrativa */
-
 
 // Route::get('/admin-restaurante/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
 Route::get('/admin-restaurante/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');

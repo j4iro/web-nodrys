@@ -5,5 +5,6 @@
                 <p class="font-weight-bold text-light">2019 | Team 1</p>
             </div>
         </div>
+
     </div>
 </footer>

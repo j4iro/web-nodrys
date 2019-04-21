@@ -50,7 +50,7 @@ class UserController extends Controller
 
         //Recoger y Subir la imagen
         $image_path = $request->file('image_path');
-        if ($image_path) 
+        if ($image_path)
         {
             //Coloco nombre único
             $image_path_name = time().$image_path->getClientOriginalName();

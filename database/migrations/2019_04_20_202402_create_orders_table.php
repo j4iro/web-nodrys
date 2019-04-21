@@ -18,10 +18,10 @@ class CreateOrdersTable extends Migration
             $table->integer('restaurant_id');
             $table->integer('user_id');
             $table->date('date');
-            $table->time('time');
+            $table->time('hour');
             $table->integer('n_people');
             $table->text('oca_special');
-            $table->char('cod_promo');
+            $table->char('cod_promo')->nullable();
             $table->char('state',10);
             $table->decimal('total');
             $table->timestamps();
