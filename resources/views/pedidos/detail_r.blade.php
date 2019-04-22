@@ -8,7 +8,7 @@
             </div>
 
             <div class="col-12">
-            
+
                 <table class="table table-responsive table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-    
+
                     @foreach ($pedidos as $pedido)
                         <tr>
                             <th scope="row" class="p-0 pt-1 pl-2">
@@ -27,16 +27,16 @@
                             <th scope="row">{{$pedido->name}}</th>
                             <td>{{$pedido->price}}</td>
                             <td class="text-capitalize">{{$pedido->type}}</td>
-                          
+
                         </tr>
                     @endforeach
-    
+
                     </tbody>
                 </table>
-    
+
             </div>
 
-            
+
         </div>
     </div>
 @endsection

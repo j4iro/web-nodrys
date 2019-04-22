@@ -87,6 +87,7 @@ class AdminController extends Controller
         $restaurante = Restaurant::findOrFail($id);
         // dd($restaurante);
         //return view('admin-restaurant.nuevo-plato',compact('plato'));
+
         $distritos = District::all();
         $categorias = Category::all();
 

@@ -134,5 +134,6 @@ class InsertAllTablesSeeder extends Seeder
         ]);
 
 
+
     }
 }

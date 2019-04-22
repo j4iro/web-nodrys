@@ -104,6 +104,12 @@
                                         <a target="_blank" href="{{route('admin.index')}}" class="nav-link">Panel Administrador Master</a>
                                 @endif
                             </li>
+                            <li>
+                                @if(auth()->user()->hasRoles(['admin-restaurant']))
+                                        <a target="_blank" href="{{route('adminRestaurant.index')}}" class="nav-link">Restaurant administrator</a>
+                                @endif
+                            </li>
+
 
                             <li class="ml-0 ml-sm-3">
                                 @include('includes.avatar')

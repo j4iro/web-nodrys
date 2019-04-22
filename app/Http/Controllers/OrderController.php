@@ -18,13 +18,13 @@ class OrderController extends Controller
         ->where('restaurant_id',1)
         ->where('orders.state','pendiente')
         ->get();
-        
+
         return view('admin-restaurant.index',[
             "pedidos" => $orders
         ]);
     }
 
-    public function pedidos_completados() 
+    public function pedidos_completados()
     {
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
@@ -38,7 +38,7 @@ class OrderController extends Controller
 
     public function qr()
     {
-        return view('pedidos.qr');
+        return view ('admin-restaurant.confirmation');
     }
 
     public function index_c(Request $request)
@@ -87,13 +87,13 @@ class OrderController extends Controller
 
     public function add(Request $request)
     {
-        
+
         // die();
 
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
 
-        //Fecha y hora actual para 
+        //Fecha y hora actual para
         $fecha_actual = $now->format('Y-m-d');
         $hora_actual = $now->format('H:i:s');
 
@@ -114,7 +114,7 @@ class OrderController extends Controller
         $r = $request->input('recordarTarjeta');
         $recordar_tarjeta = isset($r) ? 'on' : 'off';
 
-        if ($recordar_tarjeta=='on') 
+        if ($recordar_tarjeta=='on')
         {
             //Guardar los datos de la tarjeta en la base de datos
             $card->save();

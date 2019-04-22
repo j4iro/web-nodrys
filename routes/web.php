@@ -74,8 +74,9 @@ Route::resource('dishes', 'DishController');
 Route::get('/admin-restaurante/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
 Route::get('/admin-restaurante/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
 
+
 /* Ruta para el Codigo QR */
-Route::get('/admin-restaurante/escanear-qr','OrderController@qr')->name('adminRestaurant.orders.qr');
+Route::get('/admin/restaurant/escanear-qr','OrderController@qr')->name('adminRestaurant.orders.qr');
 
 /* Ruta para Buscar restaurantes por su nombre */
 Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
@@ -99,4 +100,3 @@ Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers');
 Route::get('/admin/reportes/excel/restaurantes', 'ExcelController@reporteRestaurants');
 
 Route::get('/solicitud-unirse','HomeController@show_solicitud');
-
