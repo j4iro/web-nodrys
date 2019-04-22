@@ -12,8 +12,6 @@
 //     return $rol;
 // });
 
-
-
 session_start();
 
 Auth::routes();
@@ -61,11 +59,14 @@ Route::get('/admin-restaurante/reportes-clientes','AdminRestaurant@reportesClien
 Route::get('/admin-restaurante/reportes-pedidos','AdminRestaurant@reportesPedidos')->name('adminRestaurant.reportespedidos');
 
 /*Rutas para mantenimiento de platos en la sección administrativa */
-Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
-Route::post('/admin-restaurante/platos/save','DishController@save')->name('adminRestaurant.plato.save');
-Route::get('/admin-restaurante/platos/list','DishController@list')->name('adminRestaurant.plato.list');
-Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('adminRestaurant.plato.edit');
-Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
+
+// Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
+// Route::post('/admin-restaurante/platos/save','DishController@save')->name('adminRestaurant.plato.save');
+// Route::get('/admin-restaurante/platos/list','DishController@list')->name('adminRestaurant.plato.list');
+// Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('adminRestaurant.plato.edit');
+// Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
+
+Route::resource('dishes', 'DishController');
 
 /*Rutas para pedidos en la sección administrativa */
 
@@ -96,4 +97,6 @@ Route::get('/admin/reportes/pdf/{tipo}', 'PdfController@reporteRestaurantes')->n
 /*Reportes EXCEL para la sección administrativa*/
 Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers');
 Route::get('/admin/reportes/excel/restaurantes', 'ExcelController@reporteRestaurants');
+
+Route::get('/solicitud-unirse','HomeController@show_solicitud');
 

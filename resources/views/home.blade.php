@@ -14,7 +14,7 @@
                         <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
                     </div>
                 </div>
-                <strong><a class="" href="./">¿Tienes un restaurante? Registrate aquí</a></strong>
+                <strong><a class="" href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
 
             </div>
         </div>
@@ -73,7 +73,7 @@
                 <div class="card card-restaurant">
                     @include('includes.image_restaurante')
                     <div class="card-body p-0 px-3 pt-2 pb-5">
-                        
+
                         <div class="d-flex justify-content-between">
                             <p class="card-title card-title-restaurant my-0">{{$restaurant->name}}</p>
                             <div class="badge badge-success badge-restaurant mt-1 ">

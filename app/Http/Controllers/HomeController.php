@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         /*
             $nombres_separados_por_guion = array();
-            foreach ($restaurants as $restaurant) 
+            foreach ($restaurants as $restaurant)
             {
                 $nombre = $restaurant->name;
                 $palabras = explode(" ", $nombre);
@@ -71,12 +71,17 @@ class HomeController extends Controller
         ]);
     }
 
-    public function getAllDishes() 
+    public function getAllDishes()
     {
         $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
         ->select('dishes.*','restaurants.name as restaurante')->get();
         return view('dish.getAll',[
             'platos' => $platos
         ]);
+    }
+
+    public function show_solicitud()
+    {
+        return view('solicitud');
     }
 }

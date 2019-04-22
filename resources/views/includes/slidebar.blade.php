@@ -6,11 +6,11 @@
                     Platos
                 </a>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a href="{{route('adminRestaurant.plato.list')}}" class="dropdown-item">
+                    <a href="{{route('dishes.index')}}" class="dropdown-item">
                         Mis Platos 
                         <span class="badge badge-primary badge-pill ml-auto">14</span>
                     </a>
-                    <a href="{{route('adminRestaurant.plato.new')}}" class="dropdown-item">
+                    <a href="{{route('dishes.create')}}" class="dropdown-item">
                         Agregar
                     </a>
                 </div>
@@ -31,8 +31,8 @@
                     </a>
                 </div>
             </div>
-            
-           
+
+
             <a href="{{route('adminRestaurant.orders.qr')}}" class="list-group-item list-group-item-action">QR</a>
 
             <div class="btn-group dropright">

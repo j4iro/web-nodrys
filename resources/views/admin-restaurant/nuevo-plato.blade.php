@@ -1,18 +1,16 @@
 @extends('layouts.app-r')
 
-@section('content') 
+@section('content')
 
 <div class="container-fluid mt-3">
-    <form action="{{route('adminRestaurant.plato.save')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('dishes.store')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
     <div class="row ">
-         
+
     @include('includes/slidebar')
 
     <div class="col-12 col-md-10 col-lg-8 ">
-
-       
 
     <div class="card shadow p-4 bg-light">
 
@@ -27,7 +25,7 @@
                     <input type="hidden" name="editar" value="agregar">
                 @endif
 
-                
+
                 <hr>
             </dt>
         </div>
@@ -47,7 +45,7 @@
                 <div class="form-group col-12  col-md-6 ">
                     <label for="name">Nombre</label>
                     <input type="text" class="form-control" name="name" value="{{ $plato->name ?? '' }}" placeholder="Nombre" id="name" required>
-                    
+
                 </div>
                 <div class="form-group col-12  col-md-6 ">
                     <label for="description">Descripción</label>
@@ -74,7 +72,7 @@
                 <div class="form-group col-12  col-md-6 ">
                     <label for="type">Tipo</label>
                     <select class="form-control" name="type" id="type">
-                        
+
                         @if (isset($plato))
                             <option value="segundo" @if($plato->type=='segundo'){{'selected'}} @endif >Segundo</option>
                             <option value="entrada" @if($plato->type=='entrada'){{'selected'}} @endif >Entrada</option>
@@ -84,7 +82,7 @@
                             <option value="entrada" >Entrada</option>
                             <option value="bebida" >Bebida</option>
                         @endif
-                        
+
 
                     </select>
                 </div>
@@ -108,9 +106,9 @@
                 </div>
             </div>
 
-           
 
-            
+
+
         </div>
     </div>
 </div>
