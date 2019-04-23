@@ -1,7 +1,7 @@
 {{-- SLIDEBAR PARA LA SECCIÓN ADMIN --}}
 <div class="col-2">
         <div class="list-group border border-info rounded shadow-sm">
-
+            <a href="{{route('admin.index')}}" class="list-group-item list-group-item-action">Solicitudes</a>
             <div class="btn-group dropright">
                 <a  href="" class="list-group-item list-group-item-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Restaurantes
@@ -45,5 +45,11 @@
             </div>
 
             <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Categorias</a>
+            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();"  class="list-group-item list-group-item-action text-danger">Salir</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+
         </div>
     </div>

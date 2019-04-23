@@ -18,6 +18,11 @@ form .avatar
     object-fit: cover;
 }
 
+.list-group-slidebar
+{
+    font-size: 0.8rem;
+}
+
 .img-card-plato
 {
     height: 90px;

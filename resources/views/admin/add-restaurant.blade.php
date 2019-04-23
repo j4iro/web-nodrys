@@ -1,13 +1,13 @@
 @extends('layouts.app-a')
 
-@section('content') 
+@section('content')
 
 <div class="container-fluid mt-3">
     <form action="{{route('admin.restaurant.save')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
     <div class="row ">
-         
+
     @include('includes/slidebar-admin')
 
     <div class="col-12 col-md-10 col-lg-8 ">
@@ -16,7 +16,7 @@
 
         <div class="row">
             <dt class="col-12">
-                @if (isset($restaurante))
+                @if (isset($restaurante) && !isset($solicitud))
                     Editar Restaurante
                     <input type="hidden" name="editar" value="editar">
                     <input type="hidden" name="id" value="{{ $restaurante->id ?? '' }}">
@@ -43,7 +43,7 @@
                 <div class="form-group col-12  col-md-6 ">
                     <label for="name">Nombre</label>
                     <input type="text" class="form-control" name="name" value="{{ $restaurante->name ?? '' }}" placeholder="Nombre" id="name" required>
-                    
+
                 </div>
                 <div class="form-group col-12  col-md-6 ">
                     <label for="slogan">Eslogan</label>
@@ -82,12 +82,23 @@
             </div>
 
             <div class="form-row ">
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="type"><strong>Email de ingreso</strong></label>
+                    <input type="email" class="form-control" name="email_ingreso" value="{{ $user->email ?? '' }}" placeholder="Dirección" id="address" required>
+                </div>
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="type"><strong>Contraseña</strong></label>
+                <input type="text" class="form-control" name="password"  placeholder="Nueva contraseña" id="password"  @if(!isset($users)) {{'required'}} @endif >
+                </div>
+            </div>
+
+            <div class="form-row ">
                 <div class="form-group col-12 col-md-6 ">
                     <label for="image">Imagen</label>
                     <input type="file" class="form-control-file" name="image" id="image"  @if (!isset($restaurante)) {{'required'}} @endif >
                 </div>
                 <div class="form-group col-12 col-md-6 pt-4">
-                    <input type="submit" class="btn btn-primary btn-block" name="btnAgregar" value="@if(isset($restaurante)){{'Editar'}}@else{{'Agregar'}}@endif">
+                    <input type="submit" class="btn btn-primary btn-block" name="btnAgregar" value="Guardar">
                 </div>
             </div>
 
@@ -95,9 +106,12 @@
                 @if (isset($restaurante))
                     <div class="form-group col-12 col-md-6">
                         <img src="{{ route('restaurant.image',['filename'=>$restaurante->image]) }}" class="img-thumbnail shadow" width="150">
+                        @if (isset($solicitud))
+                            <input type="text" class="form-control-file" name="imagen_soli" id="image"  value="{{$restaurante->image}}" >
+                        @endif
                     </div>
                 @endif
-                
+
             </div>
 
         </div>

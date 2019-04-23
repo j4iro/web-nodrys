@@ -10,26 +10,31 @@ use App\Util;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index_r()
     {
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('restaurant_id',1)
+        ->where('orders.restaurant_id',1)
         ->where('orders.state','pendiente')
         ->get();
-        
+
         return view('admin-restaurant.index',[
             "pedidos" => $orders
         ]);
     }
 
-    public function pedidos_completados() 
+    public function pedidos_completados()
     {
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('restaurant_id',1)
+        ->where('orders.restaurant_id',1)
         ->where('orders.state','completado')
         ->get();
 
@@ -87,13 +92,13 @@ class OrderController extends Controller
 
     public function add(Request $request)
     {
-        
+
         // die();
 
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
 
-        //Fecha y hora actual para 
+        //Fecha y hora actual para
         $fecha_actual = $now->format('Y-m-d');
         $hora_actual = $now->format('H:i:s');
 
@@ -114,7 +119,7 @@ class OrderController extends Controller
         $r = $request->input('recordarTarjeta');
         $recordar_tarjeta = isset($r) ? 'on' : 'off';
 
-        if ($recordar_tarjeta=='on') 
+        if ($recordar_tarjeta=='on')
         {
             //Guardar los datos de la tarjeta en la base de datos
             $card->save();

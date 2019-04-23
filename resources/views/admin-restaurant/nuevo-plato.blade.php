@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid mt-3">
-    <form action="{{route('dishes.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('adminRestaurant.plato.new')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
     <div class="row ">
