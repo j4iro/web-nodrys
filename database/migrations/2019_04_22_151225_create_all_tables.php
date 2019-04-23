@@ -36,13 +36,29 @@ class CreateAllTables extends Migration
         Schema::create('restaurants', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',200);
-            $table->text('descripction')->nullable();
+            $table->text('description')->nullable();
             $table->text('slogan')->nullable();
             $table->text('address');
             $table->integer('assessment');
             $table->string('telephone')->nullable();
             $table->integer('points');
             $table->text('image');
+            $table->integer('user_id');
+            $table->timestamps();
+        });
+
+        Schema::create('requests_restaurants', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name',200);
+            $table->text('description');
+            $table->text('slogan');
+            $table->text('address');
+            $table->string('email');
+            $table->string('telephone');
+            $table->integer('points');
+            $table->text('image');
+            $table->string('district_id_name');
+            $table->string('category_id_name');
             $table->timestamps();
         });
 
@@ -190,6 +206,7 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('categories');
         Schema::dropIfExists('favorites');
         Schema::dropIfExists('restaurants');
+        Schema::dropIfExists('requests_restaurants');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_resets');
         Schema::dropIfExists('asigned_roles');

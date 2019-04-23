@@ -10,12 +10,17 @@ use App\Util;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index_r()
     {
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('restaurant_id',1)
+        ->where('orders.restaurant_id',1)
         ->where('orders.state','pendiente')
         ->get();
 
@@ -29,7 +34,7 @@ class OrderController extends Controller
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('restaurant_id',1)
+        ->where('orders.restaurant_id',1)
         ->where('orders.state','completado')
         ->get();
 

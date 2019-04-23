@@ -8,6 +8,11 @@ use App\Restaurant;
 
 class AdminRestaurant extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('admin-restaurant.index');
@@ -27,11 +32,11 @@ class AdminRestaurant extends Controller
     {
         //Conseguir restaurante identificado
         // $user = \Auth::user();
-        $id = 1;
+        $id = $_SESSION['id_restaurante'];
         $datos = Restaurant::all()
         ->where('id',$id)
         ->first();
-        
+
         return view('admin-restaurant.datos',["datos"=>$datos]);
     }
 

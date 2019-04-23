@@ -2,16 +2,6 @@
 
 //AQUI SE INGRESA EN LA BD YA QUE TU NO SABES JAIRO
 
-// Route::get('rol', function () {
-//     $rol=new App\Role;
-//     $rol->id=1;
-//     $rol->name='adminMaster';
-//     $rol->display_name='permisos de administrador master';
-//     $rol->description='';
-//     $rol->save();
-//     return $rol;
-// });
-
 session_start();
 
 Auth::routes();
@@ -67,6 +57,8 @@ Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('a
 Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
 
 // Route::resource('dishes', 'DishController');
+
+// Route::resource('dishes', 'DishController');
 /*Rutas para pedidos en la sección administrativa */
 
 // Route::get('/admin-restaurante/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
@@ -88,6 +80,7 @@ Route::get('/admin/restaurantes', 'AdminController@showRestaurants')->name('admi
 Route::get('/admin/restaurantes/nuevo', 'AdminController@newRestaurant')->name('admin.restaurant.new');
 Route::post('/admin/restaurantes/save', 'AdminController@saveRestaurant')->name('admin.restaurant.save');
 Route::get('/admin/restaurantes/edit/{id}', 'AdminController@editRestaurant')->name('admin.restaurant.edit');
+Route::get('/admin/restaurantes/detalles-solicitud/{id}', 'AdminController@showDatosSolicitud')->name('admin.restaurant.show-solicitud');
 
 
 Route::get('/admin/reportes/', 'AdminController@reportes')->name('admin.reportes');
@@ -100,3 +93,4 @@ Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers');
 Route::get('/admin/reportes/excel/restaurantes', 'ExcelController@reporteRestaurants');
 
 Route::get('/solicitud-unirse','HomeController@show_solicitud');
+Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('solicitud.save');

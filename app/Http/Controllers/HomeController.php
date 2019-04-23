@@ -7,6 +7,8 @@ use App\Restaurant;
 use App\Dish;
 use App\Category;
 use App\District;
+use App\RequestRestaurant;
+use App\Asigned_role;
 
 class HomeController extends Controller
 {
@@ -15,10 +17,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
 
     /**
      * Show the application dashboard.
@@ -27,6 +25,36 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        if (auth()->check())
+        {
+            $user = \Auth::user();
+            $id_user = $user->id;
+            $datos_restaurante_logueado = Restaurant::where('user_id',$id_user)->first();
+
+            if ($datos_restaurante_logueado==null)
+            {
+                //Si el objeto es nulo hay que comprobar si es admin
+                //Obtener registros de la tabla asignar_roles
+                $registros_asign_roles = Asigned_role::all();
+                //Recorrer la tabla
+                foreach ($registros_asign_roles as $registro_asign_rol)
+                {
+                    //Si el id del usuario se encuentra y si el rol es igual a 1 osea admin
+                    if($registro_asign_rol->user_id==$id_user && $registro_asign_rol->role_id==1)
+                    {
+                        return redirect()->route('admin.index');
+                    }
+                }
+            }
+            else
+            {
+                //El usuario logueado es un restaurante y hay que redirigir
+                $_SESSION['id_restaurante'] = $id_user;
+                return redirect()->route('adminRestaurant.index');
+            }
+        }
+
         $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')
         ->join('districts','districts.id','=','restaurants.district_id')
         ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria', 'districts.name as distrito')
@@ -34,19 +62,6 @@ class HomeController extends Controller
 
         $categorias = Category::all();
         $distritos = District::all();
-
-        /*
-            $nombres_separados_por_guion = array();
-            foreach ($restaurants as $restaurant)
-            {
-                $nombre = $restaurant->name;
-                $palabras = explode(" ", $nombre);
-                array_push($nombres_separados_por_guion, strtolower(implode("-", $palabras)));
-                //VERSION CORTA
-                echo strtolower(implode("-",explode(" ",$restaurant->name)));
-            }
-            die();
-        */
 
         return view('home',[
             'restaurants' => $restaurants,
@@ -80,8 +95,43 @@ class HomeController extends Controller
         ]);
     }
 
-    public function show_solicitud()
+    public function show_solicitud($resultado="nada")
     {
-        return view('solicitud');
+        $distritos = District::all();
+        $categorias = Category::all();
+
+        return view('solicitud',[
+            'distritos' => $distritos,
+            'categorias' => $categorias,
+            'resultado' => $resultado
+        ]);
+    }
+
+    public function save_solicitud(Request $request)
+    {
+      $request_restaurant = new RequestRestaurant();
+      $request_restaurant->name = $request->input('name');
+      $request_restaurant->description = $request->input('description');
+      $request_restaurant->category_id_name = $request->input('category_id_name');
+      $request_restaurant->district_id_name = $request->input('district_id_name');
+      $request_restaurant->slogan = $request->input('slogan');
+      $request_restaurant->address = $request->input('address');
+      $request_restaurant->email = $request->input('email');
+      $request_restaurant->telephone = $request->input('telephone');
+      $request_restaurant->points = $request->input('points');
+
+      //Guardar la imagen del plato
+      $image_path =  $request->file('image');
+
+      if ($image_path)
+      {
+        $image_path_name = time().$image_path->getClientOriginalName();
+        \Storage::disk('restaurants')->put($image_path_name, \File::get($image_path));
+         $request_restaurant->image = $image_path_name;
+      }
+
+      $request_restaurant->save();
+      return  $this->show_solicitud('Su solicitud se ha enviado correctamente');
+
     }
 }

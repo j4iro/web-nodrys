@@ -90,18 +90,17 @@ class InsertAllTablesSeeder extends Seeder
 
 
         User::create([
-            'name' => 'Esmith',
-            'surname' => 'Alama Ramos',
-            'email' => 'noe@gmail.com',
+            'name' => 'admin',
+            'surname' => 'Administrador general',
+            'email' => 'admin@nodrys.com',
             'password' => bcrypt('123456'),
-            'telephone' => '95816381',
-            'address' => 'Lince - Manuel Candamo 854',
+            'telephone' => '0000000',
+            'address' => '',
             'image' => 'default_avatar.png',
             'points' => 0,
             'state' => 1,
-            'district_id' => 1
+            'district_id' => 1,
         ]);
-
         User::create([
             'name' => 'Beimer',
             'surname' => 'Rodriguez Campos',
@@ -112,12 +111,36 @@ class InsertAllTablesSeeder extends Seeder
             'image' => 'default_avatar.png',
             'points' => 0,
             'state' => 1,
-            'district_id' => 2
+            'district_id' => 2,
+        ]);
+        User::create([
+            'name' => 'Jairo',
+            'surname' => 'Lachira Torres',
+            'email' => 'jairo@gmail.com',
+            'password' => bcrypt('123456'),
+            'telephone' => '95816815',
+            'address' => 'Jr La Paz 874 - Lince',
+            'image' => 'default_avatar.png',
+            'points' => 0,
+            'state' => 1,
+            'district_id' => 1,
+        ]);
+        User::create([
+            'name' => 'Cristhian',
+            'surname' => 'Huayanay',
+            'email' => 'cristhian@gmail.com',
+            'password' => bcrypt('123456'),
+            'telephone' => '9485632',
+            'address' => 'Calle Torres Mz 8 Lte 95 ',
+            'image' => 'default_avatar.png',
+            'points' => 0,
+            'state' => 1,
+            'district_id' => 1,
         ]);
 
         Restaurant::create([
             'name' => 'Embarcadero 41',
-            'descripction' => 'Restaurante Criollo',
+            'description' => 'Restaurante Criollo',
             'slogan' => 'Slogan',
             'address' => 'Lince - Manuel Candamo',
             'telephone' => '95816815',
@@ -126,16 +149,20 @@ class InsertAllTablesSeeder extends Seeder
             'district_id' => 1,
             'category_id' => 1,
             'image' => 'embarcadero41.jpg',
+            'user_id' => 1,
         ]);
 
         Asigned_role::create([
             'user_id' => 1,
             'role_id' => 1,
         ]);
-
         Asigned_role::create([
             'user_id' => 2,
             'role_id' => 2,
+        ]);
+        Asigned_role::create([
+            'user_id' => 3,
+            'role_id' => 3,
         ]);
 
         Dish::create([

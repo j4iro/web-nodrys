@@ -101,7 +101,7 @@
                                 </a>
                             </li>
                             <li>
-                                @if(auth()->user()->hasRoles(['admin','adminMaster']))
+                                @if(auth()->user()->hasRoles(['admin']))
                                         <a target="_blank" href="{{route('admin.index')}}" class="nav-link">Panel Administrador Master</a>
                                 @endif
                             </li>

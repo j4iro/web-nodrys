@@ -9,3 +9,63 @@ form .avatar
     border-radius: 900px;
     overflow: hidden;
 }
+
+.img-card-restaurant
+{
+    /* border: 5px solid red; */
+    /* width: 390px; */
+    height: 205px;
+    object-fit: cover;
+}
+
+.list-group-slidebar
+{
+    font-size: 0.8rem;
+}
+
+.img-card-plato
+{
+    height: 90px;
+}
+
+.card-restaurant:hover, .card-plato:hover
+{
+    box-shadow: 2px 2px 10px rgb(155, 147, 147);
+}
+
+.card-title-restaurant
+{
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-style: normal;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.badge-restaurant
+{
+    height: 1.5rem;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+}
+
+.card-title-plato
+{
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-style: normal;
+    font-size: 0.9rem;
+}
+
+.card-text-plato
+{
+    font-size: 0.8rem;
+}
+
+.bg-intro
+{
+    height: 300px;
+    background-image: url('../images/img-intro_dese2.png');
+    object-fit: cover;
+}
