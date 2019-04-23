@@ -1,31 +1,66 @@
 @extends('layouts.app-r')
 @section('content')
-    <section>
-        <div class="container">
-            <div class="menu">
-                <div class="cameras">
-                     <h2>Cameras</h2>
-                     <div id="camerasList">
 
-                     </div>
+        <div class="container-fluid mt-3">
+
+            <div class="row">
+                @include('includes/slidebar')
+                <div class="col-7">
+                        <div class="preview-container">
+                            <video id="preview"></video>
+                                <div class="cameras">
+                                    <h4>Cameras</h4>
+                                    <div id="camerasList">
+                                    </div>
+                                </div>
+                            <div class="scans">
+                                <div id="scans">
+                                    <h4>Scans</h4>
+
+                                </div>
+                            </div>
+                            <div id="line" class="line"></div>
+                        </div>
+                    <form style="display:none" action="{{route('adminRestaurant.pedidos.confirmation')}}" method="post" display="none">
+                        @csrf
+                        <input id="txtCode" type="text" name="txtCode" value="">
+                        <button id="btnConfirma" name="btnConfirma" class="btn btn-primary">enviar</button>
+
+                    </form>
                 </div>
-            </div>
-            <center>
-            <h2>Muestre su codigo para confirmar pedido</h2>
-            <div class="preview-container">
-                <video id="preview"></video>
-                <div id="line" class="line"></div>
-            </div>
-        </center>
-        <div class="scans">
-            <div id="scans">
-                <h2>Scans</h2>
+                <div class="col-3">
+                    @if (session('order'))
+                        @php
+                            $order=session('order');
+                        @endphp
+                        <h2>Ultima Orden confirmada</h2>
+                        <table class="table">
+                            <tr>
+                                <td>Fecha:</td>
+                                <td>{{$order->date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Hora:</td>
+                                <td>{{$order->hour}}</td>
+                            </tr>
+                            <tr>
+                                <td>N° Personas:</td>
+                                <td>{{$order->n_people}}</td>
+                            </tr>
+                            <tr>
+                                <td>Pago:</td>
+                                <td>{{$order->total}}</td>
+                            </tr>
+                        </table>
+                    @endif
+                </div>
+
+
+
 
             </div>
         </div>
 
-        </div>
 
-    </section>
 
 @endsection

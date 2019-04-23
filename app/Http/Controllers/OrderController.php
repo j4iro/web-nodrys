@@ -85,6 +85,25 @@ class OrderController extends Controller
         ]);
     }
 
+    public function confirmation(Request $request){
+        $cadena=$request->get('txtCode');
+        $trozos = explode(",", $cadena);
+        $order=Order::where('id','=',$trozos[0])->first();
+
+        //si existe
+        if (count((array)$order)>=1) {
+            $order->state='confirmada';
+            $order->save();
+            return redirect('admin/restaurant/escanear-qr')->with('order',$order);
+        }else {
+            //datos invalidos
+            // dd($order);
+            dd('Datos invalidos');
+        }
+
+
+    }
+
     public function add(Request $request)
     {
 

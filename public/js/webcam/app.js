@@ -20,17 +20,35 @@ window.onload=function()
         activeCameraId: null
     };
     var cams=null;
+    var txtCode=document.querySelector('#txtCode');
+    var btnConfirma=document.querySelector('#btnConfirma');
 
     let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
         scanner.addListener('scan', function (content) {
        	 // aqui seria donde pondriamos insertar
-          // alert(content);
+
+            // $.post('/admin-restaurante/platos/save',{
+            //   Caso:'actualizarReserva'
+            //
+            // },function(e){
+            //   if (e!=0) {
+            //       menu.classList.add('mostrar');
+            //       var t = setInterval(progress, 50);
+            //   }else{
+            //     alert('Codigo de cancelacion incorrecto');
+            //   }
+            // });
+
+
+
           // console.log(content);
           var scansList=document.querySelector('#scans');
           var li=document.createElement('li');
           li.innerHTML=content;
           scansList.appendChild(li);
           // clearInterval(i);
+          txtCode.value=content;
+          btnConfirma.click();
         });
 
         Instascan.Camera.getCameras().then(function (cameras) {

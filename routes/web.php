@@ -60,19 +60,19 @@ Route::get('/admin-restaurante/reportes-pedidos','AdminRestaurant@reportesPedido
 
 /*Rutas para mantenimiento de platos en la sección administrativa */
 
-// Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
-// Route::post('/admin-restaurante/platos/save','DishController@save')->name('adminRestaurant.plato.save');
-// Route::get('/admin-restaurante/platos/list','DishController@list')->name('adminRestaurant.plato.list');
-// Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('adminRestaurant.plato.edit');
-// Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
+Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
+Route::post('/admin-restaurante/platos/save','DishController@save')->name('adminRestaurant.plato.save');
+Route::get('/admin-restaurante/platos/list','DishController@list')->name('adminRestaurant.plato.list');
+Route::get('/admin-restaurante/platos/edit/{id}','DishController@edit')->name('adminRestaurant.plato.edit');
+Route::get('/admin-restaurante/platos/delete/{id}','DishController@delete')->name('adminRestaurant.plato.delete');
 
-Route::resource('dishes', 'DishController');
-
+// Route::resource('dishes', 'DishController');
 /*Rutas para pedidos en la sección administrativa */
 
 // Route::get('/admin-restaurante/pedidos-pendientes','OrderController@index_r')->name('adminRestaurant.orders.all');
 Route::get('/admin-restaurante/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
 Route::get('/admin-restaurante/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
+Route::post('/admin-restaurante/confirmation', 'OrderController@confirmation')->name('adminRestaurant.pedidos.confirmation');
 
 
 /* Ruta para el Codigo QR */

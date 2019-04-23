@@ -41,7 +41,8 @@
         </div>
 
         <div class="col-12 ">
-            
+            <div id="qrcode">
+            </div>
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">
                     <tr>
@@ -54,6 +55,7 @@
                     <th scope="col" colspan="2">Acciones</th>
                     </tr>
                 </thead>
+
                 <tbody>
 
                 @foreach ($pedidos as $pedido)
@@ -76,6 +78,11 @@
                             <a href="{{route('pedidos.detail_c',["id"=>$pedido->id])}}" class="btn btn-outline-danger btn-sm">Cancelar</a>
                             @endif
                         </td>
+                        <td>
+                            @if ($pedido->state=='pendiente')
+                            <button class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" onclick="createQrCode(this)">codigo</button>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
 
@@ -87,5 +94,27 @@
 
 
 
+
+
 </div>
+
+
+<script type="text/javascript" src="{{asset('js/qrcode.js')}}"></script>
+
+<script type="text/javascript">
+    function createQrCode(m){
+        var qrContainer=document.querySelector('#qrcode');
+        qrContainer.innerHTML="";
+        var input=m.getAttribute('codigo');
+        // var userInput=document.getElementById('value').value;
+        var qrcode=new QRCode("qrcode",{
+            text: input,
+            width:256,
+            height:256,
+            colorDark: "black",
+            colorLigth: "white",
+            correctLevel:QRCode.CorrectLevel.H
+        });
+    }
+</script>
 @endsection

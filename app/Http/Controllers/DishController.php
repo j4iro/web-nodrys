@@ -8,44 +8,54 @@ use App\Restaurant;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+// use Illuminate\Support\Facades\DB;
 
 class DishController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function dishes(Request $request)
     {
-        $dishes = Dish::where('restaurant_id', $request->id)->get();
-        $restaurant = Restaurant::where('id', $request->id)->first();
+       $dishes = Dish::where('restaurant_id', $request->id)->get();
+       $restaurant = Restaurant::where('id', $request->id)->first();
 
-         return view('dish.index',[
-             'dishes' => $dishes,
-             'restaurant'=>$restaurant
-         ]);
+        return view('dish.index',[
+            'dishes' => $dishes,
+            'restaurant'=>$restaurant
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getImage($filename)
+    {
+        $file = Storage::disk('dishes')->get($filename);
+        return new Response($file,200);
+    }
+
+    public function new()
     {
         return view('admin-restaurant.nuevo-plato');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function list()
     {
-        //Instanciar a la tabla platos para setear mas adelante
+        $dishes= Dish::where('restaurant_id', 1)->get();
+        return view('admin-restaurant.list-plato',compact('dishes'));
+    }
+
+    public function edit($id)
+    {
+        $plato = Dish::findOrFail($id);
+        return view('admin-restaurant.nuevo-plato',compact('plato'));
+    }
+
+    public function delete($id)
+    {
+        $plato = Dish::findOrFail($id)->delete();
+        return redirect()->route('adminRestaurant.plato.list')->with('resultado','El plato se eliminó correctamente');
+    }
+ 
+    public function save(Request $request)
+    {
+
+      //Instanciar a la tabla platos para setear mas adelante
       if ($request->input('editar')=='editar')
       {
         $id = $request->input('id');
@@ -83,54 +93,6 @@ class DishController extends Controller
         $dish->save();
         return redirect()->route('adminRestaurant.plato.new')->with('resultado','El plato se insertó correctamente');
       }
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $plato = Dish::findOrFail($id);
-        return view('admin-restaurant.nuevo-plato',compact('plato'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $plato = Dish::findOrFail($id)->delete();
-        return redirect()->route('adminRestaurant.plato.list')->with('resultado','El plato se eliminó correctamente');
     }
 }

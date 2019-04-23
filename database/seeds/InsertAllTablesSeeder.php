@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Role;
 use App\District;
 use App\Restaurant;
+use App\Dish;
 use App\Category;
 use App\Category_dish;
 use App\User;
@@ -19,12 +20,16 @@ class InsertAllTablesSeeder extends Seeder
     public function run()
     {
         Restaurant::truncate();
+        Dish::truncate();
         User::truncate();
         Role::truncate();
         District::truncate();
         Category::truncate();
         Category_dish::truncate();
         Asigned_role::truncate();
+
+
+
 
         Role::create([
             'name' => 'admin',
@@ -131,6 +136,15 @@ class InsertAllTablesSeeder extends Seeder
         Asigned_role::create([
             'user_id' => 2,
             'role_id' => 2,
+        ]);
+
+        Dish::create([
+            'name'=>'cebiche',
+            'price'=>'50.30',
+            'time'=>'3',
+            'image'=>'1553978205ceviche-piura.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>1
         ]);
 
 
