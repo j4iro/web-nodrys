@@ -1,6 +1,5 @@
 @extends('layouts.app-a')
 
-
 @section('content')
 <div class="container-fluid mt-3">
     <div class="row">
