@@ -107,7 +107,7 @@
                     <div class="form-group col-12 col-md-6">
                         <img src="{{ route('restaurant.image',['filename'=>$restaurante->image]) }}" class="img-thumbnail shadow" width="150">
                         @if (isset($solicitud))
-                            <input type="text" class="form-control-file" name="imagen_soli" id="image"  value="{{$restaurante->image}}" >
+                            <input type="hidden" class="form-control-file" name="imagen_soli" id="image"  value="{{$restaurante->image}}" >
                         @endif
                     </div>
                 @endif

@@ -1,7 +1,5 @@
 <?php
 
-//AQUI SE INGRESA EN LA BD YA QUE TU NO SABES JAIRO
-
 session_start();
 
 Auth::routes();
