@@ -51,9 +51,15 @@ class DishController extends Controller
         $plato = Dish::findOrFail($id)->delete();
         return redirect()->route('adminRestaurant.plato.list')->with('resultado','El plato se eliminó correctamente');
     }
- 
+
     public function save(Request $request)
     {
+
+        $id = $_SESSION['id_restaurante'];
+        $id_restau = Restaurant::
+        where('user_id',$id)
+        ->first();
+
 
       //Instanciar a la tabla platos para setear mas adelante
       if ($request->input('editar')=='editar')
@@ -66,12 +72,12 @@ class DishController extends Controller
         $dish = new Dish;
       }
 
-      $dish->restaurant_id = $request->input('restaurant_id');
+      $dish->restaurant_id = $id_restau->id;
       $dish->name = $request->input('name');
       $dish->description = $request->input('description');
       $dish->price = $request->input('price');
       $dish->time = $request->input('time');
-      $dish->type = $request->input('type');
+      $dish->category_dish = $request->input('category_dish');
 
       //Guardar la imagen del plato
       $image_path =  $request->file('image');

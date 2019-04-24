@@ -51,6 +51,7 @@ class HomeController extends Controller
             {
                 //El usuario logueado es un restaurante y hay que redirigir
                 $_SESSION['id_restaurante'] = $id_user;
+                // die();
                 return redirect()->route('adminRestaurant.index');
             }
         }

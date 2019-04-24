@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid mt-3">
-    <form action="{{route('adminRestaurant.plato.new')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('adminRestaurant.plato.save')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
     <div class="row ">
@@ -71,17 +71,17 @@
                 </div>
                 <div class="form-group col-12  col-md-6 ">
                     <label for="type">Tipo</label>
-                    <select class="form-control" name="type" id="type">
+                    <select class="form-control" name="category_dish" id="type">
 
-                        @if (isset($plato))
+                        {{-- @if (isset($plato))
                             <option value="segundo" @if($plato->type=='segundo'){{'selected'}} @endif >Segundo</option>
                             <option value="entrada" @if($plato->type=='entrada'){{'selected'}} @endif >Entrada</option>
                             <option value="bebida" @if($plato->type=='bebida'){{'selected'}} @endif >Bebida</option>
-                        @else
-                            <option value="segundo" >Segundo</option>
-                            <option value="entrada" >Entrada</option>
-                            <option value="bebida" >Bebida</option>
-                        @endif
+                        @else --}}
+                            <option value="1" >Segundo</option>
+                            <option value="2" >Entrada</option>
+                            <option value="3" >Bebida</option>
+                        {{-- @endif --}}
 
 
                     </select>

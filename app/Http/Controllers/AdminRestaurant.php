@@ -34,7 +34,7 @@ class AdminRestaurant extends Controller
         // $user = \Auth::user();
         $id = $_SESSION['id_restaurante'];
         $datos = Restaurant::all()
-        ->where('id',$id)
+        ->where('user_id',$id)
         ->first();
 
         return view('admin-restaurant.datos',["datos"=>$datos]);

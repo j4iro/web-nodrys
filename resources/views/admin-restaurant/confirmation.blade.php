@@ -52,6 +52,10 @@
                                 <td>{{$order->total}}</td>
                             </tr>
                         </table>
+                    @elseif (session('error'))
+                        <div class="alert alert-danger">
+                            {{session('error')}}
+                        </div>
                     @endif
                 </div>
 
@@ -63,4 +67,8 @@
 
 
 
+@endsection
+@section('scripts')
+    <script type="text/javascript" src="{{asset('js/webcam/instascan.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/webcam/app.js')}}"></script>
 @endsection
