@@ -24,9 +24,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-    <!-- Estilo necesario para la webcam -->
-    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -69,8 +66,8 @@
             @yield('content')
         </main>
     </div>
-    <script type="text/javascript" src="{{asset('js/webcam/instascan.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/webcam/app.js')}}"></script>
+    @yield('scripts')
+
 
 </body>
 </html>

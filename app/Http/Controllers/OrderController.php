@@ -55,7 +55,7 @@ class OrderController extends Controller
         //Traigo los pedidos del usuario identificado
         $orders = Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
         ->select('restaurants.image','restaurants.name','orders.created_at','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('user_id',$id_user)
+        ->where('orders.user_id',$id_user)
         ->orderBy('orders.state', 'DESC')
         ->get();
 
@@ -68,7 +68,7 @@ class OrderController extends Controller
     {
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.type')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
         ->where('details_orders.order_id',$id)
         ->get();
 
@@ -81,7 +81,7 @@ class OrderController extends Controller
     {
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.type')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
         ->where('details_orders.order_id',$id)
         ->get();
 
@@ -102,8 +102,9 @@ class OrderController extends Controller
             return redirect('admin/restaurant/escanear-qr')->with('order',$order);
         }else {
             //datos invalidos
-            // dd($order);
-            dd('Datos invalidos');
+            // dd($cadena);
+            // dd('Esta reserva no existe');
+            return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
         }
 
 
