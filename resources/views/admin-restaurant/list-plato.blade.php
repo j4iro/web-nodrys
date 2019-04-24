@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 
-    
+
 
     <!--Tabla Lista de platos-->
     <div class="row mt-3">
@@ -16,15 +16,14 @@
             </div>
         @endif
 
-        
         @include('includes/slidebar')
 
-        <div class="col-10 col-sm-8 ">
+        <div class="col-12 col-md-9 col-lg-10 mb-3">
 
         <!--Titulo-->
         <div class="row mb-2">
             <div class="col-12 ">
-                <h4>Lista de platos</h4>
+                <strong class="navbar-brand p-0">Mis platos a ofrecer</strong>
             </div>
         </div>
         <!--Titulo-->
@@ -64,7 +63,7 @@
                         </td>
                     </tr>
                     @endforeach
-                        
+
 
                 </tbody>
             </table>

@@ -10,7 +10,7 @@
 
     @include('includes/slidebar-admin')
 
-    <div class="col-12 col-md-10 col-lg-8 ">
+    <div class="col-12 col-md-9  col-lg-7 mb-3">
 
     <div class="card shadow p-4 bg-light">
 

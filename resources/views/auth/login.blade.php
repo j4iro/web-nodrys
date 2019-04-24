@@ -14,8 +14,8 @@
 
                 <div class="card-body text-center ">
                     <h4 class="mb-4">Inicia Sesión</h4>
-                    
-                    
+
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -76,7 +76,7 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>

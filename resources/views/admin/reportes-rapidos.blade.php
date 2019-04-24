@@ -1,10 +1,10 @@
 @extends('layouts.app-a')
 
-@section('content') 
+@section('content')
 <div class="container-fluid mt-3">
     <div class="row">
         @include('includes/slidebar-admin')
-    <div class="col-10">
+    <div class="col-12 col-md-9 col-lg-10 mb-3">
 
             <!--Titulo-->
             <div class="row ">
@@ -12,10 +12,10 @@
             <div class="col-12">
                 <h4>Reportes Rápidos</h4>
             </div>
-      
-    
+
+
             <div class="col-12 mt-2">
-                
+
                 <table class="table  table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         {{-- FILA --}}
                         <tr>
                             <th scope="row"> Restaurantes registrados</th>
@@ -85,11 +85,11 @@
                             <td><a href="" class="btn btn-success btn-sm">Descargar</a></td>
                         </tr>
                         {{-- FILA --}}
-         
-    
+
+
                     </tbody>
                 </table>
-    
+
             </div>
         </div>
         <!--Titulo-->

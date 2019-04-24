@@ -36,7 +36,8 @@ class DishController extends Controller
 
     public function list()
     {
-        $dishes= Dish::where('restaurant_id', 1)->get();
+        $id_restaurant = session('id_restaurante');
+        $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
         return view('admin-restaurant.list-plato',compact('dishes'));
     }
 

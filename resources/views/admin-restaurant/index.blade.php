@@ -1,21 +1,21 @@
  @extends('layouts.app-r')
 
-@section('content') 
+@section('content')
 <div class="container-fluid mt-3">
     <div class="row">
-        
+
         @include('includes/slidebar')
 
-    <div class="col-10">
+    <div class="col-12 col-md-9 col-lg-10 mb-3">
 
             <!--Titulo-->
             <div class="row ">
             <div class="col-12">
-                <h4>Pedidos Pendientes</h4>
+                <strong class="navbar-brand p-0">Pedidos Pendientes</strong>
             </div>
-    
+
             <div class="col-12 mt-2">
-                
+
                 <table class="table table-responsive table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -32,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-    
+
                     @foreach ($pedidos as $pedido)
                         <tr>
                             <th scope="row">{{$pedido->name .' '. $pedido->surname}}</th>
@@ -47,15 +47,15 @@
                             @else
                                 <td class="text-primary text-uppercase"><span class="badge badge-primary">{{$pedido->state}}</span></td>
                             @endif
-                            
+
                             <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
                             <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Marcar</a></td>
                         </tr>
                     @endforeach
-    
+
                     </tbody>
                 </table>
-    
+
             </div>
         </div>
         <!--Titulo-->

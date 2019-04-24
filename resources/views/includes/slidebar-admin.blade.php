@@ -1,5 +1,5 @@
 {{-- SLIDEBAR PARA LA SECCIÓN ADMIN --}}
-<div class="col-2">
+<div class="col-12 col-md-3 col-lg-2 mb-3">
         <div class="list-group border border-info rounded shadow-sm">
             <a href="{{route('admin.index')}}" class="list-group-item list-group-item-action">Solicitudes</a>
             <div class="btn-group dropright">
@@ -22,11 +22,11 @@
                     Pedidos
                 </a>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a href="{{route('adminRestaurant.index')}}" class="dropdown-item">
+                    <a href="" class="dropdown-item">
                         Pendientes
                         <span class="badge badge-primary badge-pill ml-auto">14</span>
                     </a>
-                    <a href="{{route('adminRestaurant.pedidos.completados')}}" class="dropdown-item">
+                    <a href="" class="dropdown-item">
                         Completados
                         <span class="badge badge-primary badge-pill ml-auto">14</span>
                     </a>
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Categorias</a>
+            <a href="" class="list-group-item list-group-item-action">Categorias</a>
             <a href="{{ route('logout') }}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();"  class="list-group-item list-group-item-action text-danger">Salir</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -1,15 +1,15 @@
 @extends('layouts.app-r')
 
-@section('content') 
+@section('content')
 <div class="container-fluid mt-3">
     <div class="row">
 
         @include('includes/slidebar')
 
-        <div class="col-10">
+        <div class="col-12 col-md-9 col-lg-8 mb-3">
             <div class="row">
                 <div class="col-12">
-                    <h3>Reportes Pedidos</h3>
+                    <strong class="navbar-brand p-0">Reportes de Pedidos</strong>
                 </div>
             </div>
             <div class="row">
@@ -23,8 +23,8 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
-    
+
 </div>
  @endsection

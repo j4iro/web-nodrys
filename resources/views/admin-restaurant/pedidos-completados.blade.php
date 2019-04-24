@@ -1,6 +1,6 @@
 @extends('layouts.app-r')
 
-@section('content') 
+@section('content')
 <div class="container-fluid mt-3">
 
     <!--Titulo-->
@@ -8,18 +8,18 @@
 
 
         @include('includes/slidebar')
-        
 
-        <div class="col-10 ">
+
+        <div class="col-12 col-md-9 col-lg-10 mb-3">
 
             <!--Titulo-->
             <div class="row mb-2">
                 <div class="col-12 ">
-                    <h4>Pedidos completados</h4>
+                    <strong class="navbar-brand p-0">Pedidos Completados</strong>
                 </div>
             </div>
             <!--Titulo-->
-            
+
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">
                     <tr>
@@ -50,7 +50,7 @@
                         @else
                             <td class="text-success text-uppercase"><span class="badge badge-success">{{$pedido->state}}</span></td>
                         @endif
-                        
+
                         <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
                     </tr>
                 @endforeach

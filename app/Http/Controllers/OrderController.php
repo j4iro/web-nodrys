@@ -7,6 +7,7 @@ use App\Order;
 use App\DetailOrder;
 use App\Card;
 use App\Util;
+use App\Restaurant;
 
 class OrderController extends Controller
 {
@@ -18,9 +19,16 @@ class OrderController extends Controller
     public function index_r()
     {
         //Traigo los pedidos del restaurante identificado
+        //Conseguir restaurante identificado
+        $id = session('id_user');
+        $datos = Restaurant::all()->where('user_id',$id)->first();
+        session(['id_restaurante'=>$datos->id]);
+        session(['nombre_restaurante'=>$datos->name]);
+        $id_restaurant =session('id_restaurante');
+
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('orders.restaurant_id',1)
+        ->where('orders.restaurant_id',$id_restaurant)
         ->where('orders.state','pendiente')
         ->get();
 
@@ -112,9 +120,7 @@ class OrderController extends Controller
 
     public function add(Request $request)
     {
-
         // die();
-
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
 

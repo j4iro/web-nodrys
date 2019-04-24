@@ -30,13 +30,11 @@ class AdminRestaurant extends Controller
 
     public function datos()
     {
-        //Conseguir restaurante identificado
-        // $user = \Auth::user();
-        $id = $_SESSION['id_restaurante'];
-        $datos = Restaurant::all()
-        ->where('user_id',$id)
-        ->first();
-
+        // \Session::flush();
+        // die();
+        $id = session('id_restaurante');
+        // dd($id);
+        $datos = Restaurant::all()->where('id',$id)->first();
         return view('admin-restaurant.datos',["datos"=>$datos]);
     }
 

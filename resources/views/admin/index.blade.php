@@ -5,12 +5,12 @@
     <div class="row">
 
         @include('includes/slidebar-admin')
-    <div class="col-10">
+    <div class="col-12 col-md-9 col-lg-10 mb-3">
 
             <!--Titulo-->
             <div class="row ">
             <div class="col-12">
-                <h4>Solicitudes Pendientes</h4>
+                <strong class="navbar-brand p-0">Nuevas solicitudes</strong>
             </div>
 
             <div class="col-12 mt-2">
