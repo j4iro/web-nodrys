@@ -14,12 +14,15 @@
 
         <a href="{{route('adminRestaurant.orders.qr')}}" class="list-group-item list-group-item-action">QR</a>
 
+        <a href="{{route('adminRestaurant.reportesclientes')}}" class="list-group-item list-group-item-action">Reportes Rápidos</a>
+
         <a href="{{route('adminRestaurant.reportesclientes')}}" class="list-group-item list-group-item-action">Reportes Clientes</a>
+
         <a href="{{route('adminRestaurant.reportespedidos')}}" class="list-group-item list-group-item-action">Reportes Pedidos</a>
 
         <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Mis Datos</a>
         <a href="{{ route('logout') }}" onclick="event.preventDefault();
-        document.getElementById('logout-form').submit();"  class="list-group-item list-group-item-action text-danger">Salir</a>
+        document.getElementById('logout-form').submit();"  class="list-group-item list-group-item-action text-danger"><strong>Salir</strong></a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>

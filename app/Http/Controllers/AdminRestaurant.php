@@ -30,11 +30,11 @@ class AdminRestaurant extends Controller
 
     public function datos()
     {
-        // \Session::flush();
-        // die();
         $id = session('id_restaurante');
-        // dd($id);
-        $datos = Restaurant::all()->where('id',$id)->first();
+        $datos = Restaurant::join('users','users.id','=','restaurants.user_id')
+        ->select('restaurants.*','users.email as email_acceso')
+        ->where('restaurants.id',$id)
+        ->first();
         return view('admin-restaurant.datos',["datos"=>$datos]);
     }
 

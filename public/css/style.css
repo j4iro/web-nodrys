@@ -70,10 +70,14 @@ form .avatar
     object-fit: cover;
 }
 
+.table
+{
+    font-size: 0.85rem;
+}
+
 
 /* NOTE:
 esto es para la camara  */
-
 .preview-container{
     position: relative;
     /* border:1px solid red; */

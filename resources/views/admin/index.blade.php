@@ -10,7 +10,7 @@
             <!--Titulo-->
             <div class="row ">
             <div class="col-12">
-                <strong class="navbar-brand p-0">Nuevas solicitudes</strong>
+                <strong class="navbar-brand p-0">{{ count($solicitudes) . $titulo}}</strong>
             </div>
 
             <div class="col-12 mt-2">
@@ -18,11 +18,10 @@
                 <table class="table table-responsive table-hover">
                     <thead class="thead-light">
                         <tr>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Slogan</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Dirección</th>
+                        <th scope="col">Código</th>
+                        <th scope="col" colspan="2">Restaurante</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Fecha y hora de registro</th>
                         <th scope="col">Email</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Puntos</th>
@@ -35,13 +34,19 @@
 
                     @foreach ($solicitudes as $solicitud)
                         <tr>
+                            <th scope="row"> SOL-{{$solicitud->id}}</th>
                             <th scope="row">
                                 <img src="{{ route('restaurant.image',['filename'=>$solicitud->image]) }}" width="50" class="img-fluid img-thumbnail shadow-sm avatar">
                             </th>
                             <td>{{$solicitud->name}}</td>
-                            <td>{{$solicitud->slogan}}</td>
-                            <td>{{$solicitud->description}}</td>
-                            <td>{{$solicitud->address}}</td>
+                            <td>
+                                @if ($solicitud->state==1)
+                                    <strong class="text-danger">Nueva</strong>
+                                @else
+                                    <strong class="text-primary">Atendida</strong>
+                                @endif
+                            </td>
+                            <td>{{$solicitud->created_at}}</td>
                             <td>{{$solicitud->email}}</td>
                             <td>{{$solicitud->telephone}}</td>
                             <td>{{$solicitud->points}}</td>

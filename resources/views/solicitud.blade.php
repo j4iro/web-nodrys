@@ -5,9 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-            @if($resultado!='nada')
+            @if(session('resultado'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>{{$resultado}}</strong>
+                    <strong>{{session('resultado')}}</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -45,7 +45,7 @@
                             <label for="slogan" class="col-md-4 col-form-label text-md-right">{{ __('Slogan') }}</label>
 
                             <div class="col-md-6">
-                                <input id="slogan" type="text" placeholder="Slogan del restaurante" class="form-control{{ $errors->has('slogan') ? ' is-invalid' : '' }}" name="slogan" required autofocus>
+                                <input id="slogan" type="text" placeholder="Slogan del restaurante" class="form-control{{ $errors->has('slogan') ? ' is-invalid' : '' }}" name="slogan" required >
 
                                 @if ($errors->has('slogan'))
                                     <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}</label>
 
                             <div class="col-md-6">
-                                <input id="description" type="text" placeholder="Describa su restaurante" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required autofocus>
+                                <textarea id="description" type="text" placeholder="Describa su restaurante" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required rows="3" ></textarea>
 
                                 @if ($errors->has('description'))
                                     <span class="invalid-feedback" role="alert">
@@ -98,10 +98,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="telephone" class="col-md-4 col-form-label text-md-right">Celular</label>
+                            <label for="telephone" class="col-md-4 col-form-label text-md-right">Telefono - Celular</label>
 
                             <div class="col-md-6">
-                                <input id="telephone" placeholder="Celular" type="number" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" >
+                                <input id="telephone" placeholder="Telefono o Celular" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" required>
 
                                 @if ($errors->has('telephone'))
                                     <span class="invalid-feedback" role="alert">
@@ -130,7 +130,7 @@
 
                             <div class="col-md-6">
 
-                                <select class="form-control" name="district_id_name" id="type">
+                                <select class="form-control" name="district_id_name" id="type" required>
                                     @foreach ($distritos as $distrito)
                                         <option value="{{$distrito->id}}" @if(isset($restaurante->district_id) && $distrito->id==$restaurante->district_id) {{'selected'}} @endif >{{$distrito->name}}</option>
                                     @endforeach
@@ -149,7 +149,7 @@
 
                             <div class="col-md-6">
 
-                                    <select class="form-control" name="category_id_name" id="type">
+                                    <select class="form-control" name="category_id_name" id="type" required>
                                         @foreach ($categorias as $categoria)
                                             <option value="{{$categoria->id}}" @if(isset($restaurante->category_id) && $categoria->id==$restaurante->category_id) {{'selected'}} @endif>{{$categoria->name}}</option>
                                         @endforeach
@@ -167,7 +167,7 @@
                             <label for="image" class="col-md-4 col-form-label text-md-right">Foto</label>
 
                             <div class="col-md-6">
-                                <input id="image" type="file" class="form-control-file {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image"   >
+                                <input id="image" type="file" class="form-control-file {{ $errors->has('image') ? ' is-invalid' : '' }}" name="image"  required >
 
                                 @if ($errors->has('image'))
                                     <span class="invalid-feedback" role="alert">

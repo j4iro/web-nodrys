@@ -428,7 +428,7 @@ class InsertAllTablesSeeder extends Seeder
             'user_id' => 12,
         ]);
 
-        // Usuario N11
+        // Usuario N12
         User::create([
             'name' => 'user',
             'surname' => 'restaurante',

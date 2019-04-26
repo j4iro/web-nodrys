@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
     <style>
-        
+
         /* @import url('https://fonts.googleapis.com/css?family=Acme'); */
 
         h1, h3
@@ -30,12 +30,17 @@
         {
             width: 30%;
         }
-        
+
+        body
+        {
+            background: white;
+        }
+
     </style>
 </head>
 <body>
     <div class="container-fluid">
-        
+
         <div class="row ">
             <div class="col-6 ">
                 <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
@@ -44,7 +49,7 @@
 
         <div class="row mt-3">
             <div class="col-12 text-center">
-                <h3>Reporte de Restaurantes</h3>
+                <strong >Reporte Restaurantes Registrados</strong>
             </div>
         </div>
 
@@ -62,7 +67,7 @@
                 <tbody>
 
                     <?php $cantidad=1; ?>
-                    
+
                     @foreach ($data as $restaurant)
                             <tr>
                             <th scope="row">{{$cantidad}}</th>
@@ -87,7 +92,7 @@
                 <tbody>
                     <tr>
                         <td >
-                            <strong>Fecha   : </strong> 
+                            <strong>Fecha   : </strong>
                         </td>
                         <td>
                             {{$date}}
@@ -95,7 +100,7 @@
                     </tr>
                     <tr class="mb-3">
                         <td>
-                            <strong>Cantidad: </strong> 
+                            <strong>Cantidad: </strong>
                         </td>
                         <td>
                             {{count($data) . " registrados"}}
@@ -106,4 +111,4 @@
             </table>
 
 </body>
-</html> 
+</html>

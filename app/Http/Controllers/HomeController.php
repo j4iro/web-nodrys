@@ -97,15 +97,14 @@ class HomeController extends Controller
         ]);
     }
 
-    public function show_solicitud($resultado="nada")
+    public function show_solicitud()
     {
         $distritos = District::all();
         $categorias = Category::all();
 
         return view('solicitud',[
             'distritos' => $distritos,
-            'categorias' => $categorias,
-            'resultado' => $resultado
+            'categorias' => $categorias
         ]);
     }
 
@@ -133,7 +132,8 @@ class HomeController extends Controller
       }
 
       $request_restaurant->save();
-      return  $this->show_solicitud('Su solicitud se ha enviado correctamente');
+
+      return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente');
 
     }
 }

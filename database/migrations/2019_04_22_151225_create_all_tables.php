@@ -17,6 +17,7 @@ class CreateAllTables extends Migration
             $table->increments('id');
             $table->string('name',200);
             $table->text('description')->nullable();
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
 
@@ -24,6 +25,7 @@ class CreateAllTables extends Migration
             $table->increments('id');
             $table->string('name',100);
             $table->string('description',100)->nullable();
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
         Schema::create('categories_dishes', function (Blueprint $table) {
@@ -44,6 +46,7 @@ class CreateAllTables extends Migration
             $table->integer('points');
             $table->text('image');
             $table->integer('user_id');
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
 
@@ -57,6 +60,7 @@ class CreateAllTables extends Migration
             $table->string('telephone');
             $table->integer('points');
             $table->text('image');
+            $table->boolean('state')->default(1);
             $table->string('district_id_name');
             $table->string('category_id_name');
             $table->timestamps();

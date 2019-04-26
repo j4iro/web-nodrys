@@ -36,7 +36,7 @@
             {{csrf_field()}}
         <div class="col-6 col-lg-3 pt-2">
             <select name="categoria" class="form-control" id="">
-                <option value="" disabled selected >Filtra por categoria</option>
+                <option value="" disabled selected >Categorias</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{$categoria->id}}"   >{{$categoria->name}}</option>
                 @endforeach
@@ -44,7 +44,7 @@
         </div>
         <div class="col-6 col-lg-3 pt-2">
             <select name="distrito" class="form-control" id="">
-                <option value="" disabled selected >Filtra por distrito</option>
+                <option value="" disabled selected >Distritos</option>
                 @foreach ($distritos as $distrito)
                     <option value="{{$distrito->id}}">{{$distrito->name}}</option>
                 @endforeach

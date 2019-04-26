@@ -10,7 +10,7 @@
             <div class="row ">
 
             <div class="col-12">
-                <h4>Reportes Rápidos</h4>
+                <strong class="navbar-brand p-0">Reportes predeterminados</strong>
             </div>
 
 
@@ -19,7 +19,7 @@
                 <table class="table  table-hover">
                     <thead class="thead-light">
                         <tr>
-                        <th scope="col">Nombre</th>
+                        <th scope="col">¿Qué desea saber?</th>
                         <th scope="col">PDF</th>
                         <th scope="col">EXCEL</th>
                         </tr>
@@ -28,7 +28,7 @@
 
                         {{-- FILA --}}
                         <tr>
-                            <th scope="row"> Restaurantes registrados</th>
+                            <th scope="row">Restaurantes registrados</th>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a target="blank" href="{{route('admin.resportes.restaurantes',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
@@ -43,7 +43,7 @@
 
                         {{-- FILA --}}
                         <tr>
-                            <th scope="row"> Restaurantes registrados en el último mes</th>
+                            <th scope="row">Restaurantes agrupados por distrito </th>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a target="blank" href="{{route('admin.resportes.restaurantes',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
@@ -52,7 +52,22 @@
                                 </div>
                             </td>
 
-                            <td><a href="" class="btn btn-success btn-sm">Descargar</a></td>
+                            <td><a href="/admin/reportes/excel/usuarios" class="btn btn-success btn-sm">Descargar</a></td>
+                        </tr>
+                        {{-- FILA --}}
+
+                        {{-- FILA --}}
+                        <tr>
+                            <th scope="row">Restaurantes agrupados por categoria </th>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a target="blank" href="{{route('admin.resportes.restaurantes',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
+
+                                    <a href="{{route('admin.resportes.restaurantes',['tipo'=>'descargar'])}}" class="btn btn-danger btn-sm">Descargar</a>
+                                </div>
+                            </td>
+
+                            <td><a href="/admin/reportes/excel/usuarios" class="btn btn-success btn-sm">Descargar</a></td>
                         </tr>
                         {{-- FILA --}}
 
@@ -71,20 +86,37 @@
                         </tr>
                         {{-- FILA --}}
 
-                        {{-- FILA --}}
-                        <tr>
-                            <th scope="row">Clientes registrados en el último mes</th>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a target="blank" href="{{route('admin.resportes.restaurantes',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
+                         {{-- FILA --}}
+                         <tr>
+                                <th scope="row">Clientes agrupados por distrito </th>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a target="blank" href="{{route('admin.resportes.restaurantes',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
 
-                                    <a href="{{route('admin.resportes.restaurantes',['tipo'=>'descargar'])}}" class="btn btn-danger btn-sm">Descargar</a>
-                                </div>
-                            </td>
+                                        <a href="{{route('admin.resportes.restaurantes',['tipo'=>'descargar'])}}" class="btn btn-danger btn-sm">Descargar</a>
+                                    </div>
+                                </td>
 
-                            <td><a href="" class="btn btn-success btn-sm">Descargar</a></td>
-                        </tr>
-                        {{-- FILA --}}
+                                <td><a href="/admin/reportes/excel/usuarios" class="btn btn-success btn-sm">Descargar</a></td>
+                            </tr>
+                            {{-- FILA --}}
+
+                            {{-- FILA --}}
+                            <tr>
+                                <th scope="row">Clientes agrupados por categoria </th>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a target="blank" href="{{route('admin.resportes.restaurantes',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
+
+                                        <a href="{{route('admin.resportes.restaurantes',['tipo'=>'descargar'])}}" class="btn btn-danger btn-sm">Descargar</a>
+                                    </div>
+                                </td>
+
+                                <td><a href="/admin/reportes/excel/usuarios" class="btn btn-success btn-sm">Descargar</a></td>
+                            </tr>
+                            {{-- FILA --}}
+
+
 
 
                     </tbody>
