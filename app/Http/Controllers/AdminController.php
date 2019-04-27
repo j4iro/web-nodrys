@@ -194,6 +194,10 @@ class AdminController extends Controller
       $restaurant->assessment = 0;
       $restaurant->points = $request->input('points');
       $imagen_soli =  $request->input('imagen_soli');
+      $restaurant->ruc=$request->input('ruc');
+      $restaurant->latitude=$request->input('latitud');
+      $restaurant->longitude=$request->input('longitud');
+
 
       //Guardar la imagen del plato
       $image_path =  $request->file('image');
