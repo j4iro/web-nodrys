@@ -110,6 +110,7 @@ class HomeController extends Controller
 
     public function save_solicitud(Request $request)
     {
+        // dd($request);
       $request_restaurant = new RequestRestaurant();
       $request_restaurant->name = $request->input('name');
       $request_restaurant->description = $request->input('description');
@@ -120,6 +121,9 @@ class HomeController extends Controller
       $request_restaurant->email = $request->input('email');
       $request_restaurant->telephone = $request->input('telephone');
       $request_restaurant->points = $request->input('points');
+      $request_restaurant->ruc = $request->input('ruc');
+      $request_restaurant->latitude = $request->input('txtlati');
+      $request_restaurant->longitude = $request->input('txtlong');
 
       //Guardar la imagen del plato
       $image_path =  $request->file('image');
@@ -131,6 +135,7 @@ class HomeController extends Controller
          $request_restaurant->image = $image_path_name;
       }
 
+      // dd($request_restaurant);
       $request_restaurant->save();
 
       return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente');
