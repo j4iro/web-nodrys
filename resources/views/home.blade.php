@@ -1,4 +1,31 @@
 @extends('layouts.app')
+@section('scripts')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+       crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+      crossorigin=""></script>
+
+      <style media="screen">
+          #map{
+              width: 80%;
+              height: 400px;
+
+          }
+          .hubicacion_controls{
+              display: none;
+          }
+          .btnActual{
+              position: absolute;
+              z-index: 99;
+              right: 0;
+          }
+          .map_container{
+            position: relative;
+          }
+      </style>
+@endsection
 
 @section('content')
 
@@ -116,7 +143,53 @@
     {{-- Paginación --}}
 
 </div>
+<div class="form-group container">
+        <div class="hubicacion_controls">
+          Latitud : <input type="text" name="txtlati" id="txtlati">
+          longitud : <input type="text" name="txtlong" id="txtlong">
+        </div>
+
+        <center>
+            <div class="map_container">
+                <div id="map">
+
+                </div>
+                <button class="btn btn-primary" type="button" class="btnActual" name="button" onclick="localizar()">Ubicacion Actual</button>
+            </div>
+
+        </center>
+</div>
 
 @include('includes/footer')
+<script>
+            var map = L.map('map');
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+              maxZoom: 25
+            }).addTo(map);
+
+
+             @foreach ($restaurants as $restaurant)
+
+                 var n="{{$restaurant->name}}";
+                 var lat={{$restaurant->latitude}};
+                 var lon={{$restaurant->longitude}};
+                 var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
+
+                 map.setView([lat,lon],14);
+                 var marker = L.marker([lat,lon]).addTo(map);
+                 marker.bindPopup("<img width='70px' src='"+img+"' alt='no image' /> <br /><b>"+n+"</b>").openPopup();
+
+             @endforeach
+
+      //$sql="SELECT restaurante, latitud, longitud, ( 6371 * acos(cos(radians(-12.0797741)) *
+      // cos(radians(latitud)) * cos(radians(longitud) - radians(-77.0276488)) + sin(radians(-12.0797741)) *
+      // sin(radians(latitud)))) AS distance FROM marcadores HAVING distance < 1 ORDER BY distance;";
+      //
+
+
+
+
+</script>
 
 @endsection
