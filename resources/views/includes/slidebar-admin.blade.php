@@ -78,7 +78,7 @@
                 </a>
                 <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(111px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
                     <a class="dropdown-item" href="{{route('admin.distritos.list')}}">Listar</a>
-                    <a class="dropdown-item" href="{{route('admin.distritos.list')}}">Agregar</a>
+                    <a class="dropdown-item" href="{{route('admin.distritos.new')}}">Agregar</a>
                 </div>
             </div>
 

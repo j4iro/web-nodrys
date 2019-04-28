@@ -46,4 +46,10 @@ class AdminRestaurant extends Controller
 
         return view('admin-restaurant.datos');
     }
+    public function reportes()
+    {
+        return view('admin-restaurant.reportes-rapidos');
+    }
+
+
 }

@@ -14,7 +14,7 @@
 
         <a href="{{route('adminRestaurant.orders.qr')}}" class="list-group-item list-group-item-action">QR</a>
 
-        <a href="{{route('adminRestaurant.reportesclientes')}}" class="list-group-item list-group-item-action">Reportes Rápidos</a>
+        <a href="{{route('adminRestaurant.reportes')}}" class="list-group-item list-group-item-action">Reportes Rápidos</a>
 
         <a href="{{route('adminRestaurant.reportesclientes')}}" class="list-group-item list-group-item-action">Reportes Clientes</a>
 

@@ -22,6 +22,11 @@
                                     <div class="alert alert-success">{{session('resultado')}}</div>
                                 </strong>
                             @endif
+                            @if (session('error'))
+                            <strong>
+                                <div class="alert alert-danger">{{session('error')}}</div>
+                            </strong>
+                        @endif
                         </div>
                     </div>
 
