@@ -4,18 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
-
-    <title>Panel Administrador</title>
-
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-
-    <!-- Fonts -->
+    <title>@yield('title')</title>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png"  href="{{asset('images/favicon/favicon.png')}}">
@@ -24,9 +14,34 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    <!-- Estilo necesario para la webcam -->
-    {{-- <link href="{{ asset('css/master.css') }}" rel="stylesheet"> --}}
+    <style>
 
+
+    .dropdown-toggle_down::after{
+
+          -ms-transform: rotate(90deg); /* IE 9 */
+          -webkit-transform: rotate(90deg); /* Safari */'
+          transform: rotate(90deg);
+    }
+
+    .nested {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .btn-group{
+        width: 100%;
+    }
+    .dropdown-menu{
+        position: absolute;
+        /* transform: translate3d(111px, 0px, 0px); */
+        top: 0px; left: 0px;
+        will-change: transform;
+    }
+    </style>
     @yield('scripts')
 </head>
 <body>
@@ -46,8 +61,27 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container-fluid mt-3">
+                <div class="row">
+                    @include('includes/slidebar-admin')
+                <div class="col-12 col-md-9 col-lg-10 mb-3">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
         </main>
     </div>
+    <script>
+
+        var toggler = document.getElementsByClassName("dropdown-toggle");
+        var i;
+        for (i = 0; i < toggler.length; i++) {
+          toggler[i].addEventListener("click", function() {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("dropdown-toggle_down");
+          });
+        }
+
+    </script>
 </body>
 </html>

@@ -1,12 +1,6 @@
 @extends('layouts.app-a')
 
 @section('content')
-<div class="container-fluid mt-3">
-    <div class="row">
-        @include('includes/slidebar-admin')
-    <div class="col-12 col-md-9 col-lg-10 mb-3">
-
-            <!--Titulo-->
             <div class="row ">
                 <div class="col-12">
                     <strong class="navbar-brand p-0">{{count($categorias)}} categorias registradas</strong>
@@ -72,8 +66,5 @@
 
             </div>
         </div>
-        <!--Titulo-->
-        </div>
-    </div>
-</div>
+
  @endsection

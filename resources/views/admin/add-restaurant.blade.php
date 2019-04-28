@@ -26,17 +26,7 @@
       </style>
 @endsection
 @section('content')
-
-<div class="container-fluid mt-3">
     <form action="{{route('admin.restaurant.save')}}" method="post" enctype="multipart/form-data">
-
-    <!--Formulario de Registro-->
-    <div class="row ">
-
-    @include('includes/slidebar-admin')
-
-    <div class="col-12 col-md-9  col-lg-7 mb-3">
-
     <div class="card shadow p-4 ">
 
         <div class="row">
@@ -207,11 +197,6 @@
 
 
         </div>
-    </div>
-</div>
-<!--Formulario de Registro-->
-
-</div>
 
 </form>
 

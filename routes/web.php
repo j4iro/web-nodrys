@@ -100,3 +100,4 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
 
 Route::get('/solicitud-unirse','HomeController@show_solicitud')->name('show.solicitud');
 Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('solicitud.save');
+Route::get('/template','HomeController@template');

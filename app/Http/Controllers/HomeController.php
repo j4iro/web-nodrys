@@ -141,4 +141,7 @@ class HomeController extends Controller
       return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente');
 
     }
+    public function template(){
+        return view('includes.app_new');
+    }
 }
