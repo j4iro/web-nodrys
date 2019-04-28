@@ -32,7 +32,6 @@
               <span class="badge badge-primary badge-pill ml-auto">14</span>
           </a>
       </ul>
-
   </li>
   <li class="btn-group dropright">
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Reportes</span>

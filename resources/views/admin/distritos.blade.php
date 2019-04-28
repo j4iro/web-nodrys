@@ -9,6 +9,21 @@
 
             <div class="col-12 mt-2">
 
+                <div class="row">
+                    <div class="col-12">
+                        @if (session('resultado'))
+                            <strong>
+                                <div class="alert alert-success">{{session('resultado')}}</div>
+                            </strong>
+                        @endif
+                        @if (session('error'))
+                            <strong>
+                                <div class="alert alert-danger">{{session('error')}}</div>
+                            </strong>
+                        @endif
+                    </div>
+                </div>
+
                 <table class="table table-responsive table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -25,22 +40,29 @@
                     @foreach ($distritos as $distrito)
                         <tr>
                             <td>{{$distrito->name}}</td>
-                            <th scope="col">Habilitado</th>
+                            <th scope="col">
+                                @if ($distrito->state==1)
+                                    Habilitado
+                                @else
+                                <strong class="text-danger">Deshabilitado</strong>
+                                @endif
+                            </th>
                             <td>{{$distrito->description}}</td>
                             <td>{{$distrito->created_at}}</td>
                             <td>{{$distrito->updated_at}}</td>
 
                             <td>
-                                <a href="{{route('admin.restaurant.edit',["id" => $distrito->id ])}}" class="btn btn-primary btn-sm">
+                                <a href="{{route('admin.distritos.show',["id" => $distrito->id ])}}" class="btn btn-outline-primary btn-sm">
                                     {{-- <img src="https://img.icons8.com/ultraviolet/40/000000/edit.png" width="18"> --}}
                                     Editar
                                 </a>
                             </td>
                             <td>
-                                <a href="{{route('admin.restaurant.edit',["id" => $distrito->id ])}}" class="btn btn-danger btn-sm">
-                                    {{-- <img src="https://img.icons8.com/ultraviolet/40/000000/edit.png" width="18"> --}}
-                                    Deshabilitar
-                                </a>
+                                @if ($distrito->state==1)
+                                    <a href="{{route('admin.distritos.update.state',["id" => $distrito->id ])}}" class="btn btn-outline-danger btn-sm">Deshabilitar</a>
+                                @else
+                                    <a href="{{route('admin.distritos.update.state',["id" => $distrito->id ])}}" class="btn btn-outline-success btn-sm">Habilitar</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

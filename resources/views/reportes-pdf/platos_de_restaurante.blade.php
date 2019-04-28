@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
     <style>
 
-        /* @import url('https://fonts.googleapis.com/css?family=Acme'); */
-
         h1, h3
         {
             font-family: Arial, Helvetica, sans-serif;
@@ -28,7 +26,7 @@
 
         .table-resultados
         {
-            width: 30%;
+            width: 35%;
         }
 
         body
@@ -49,34 +47,36 @@
 
         <div class="row mt-3">
             <div class="col-12 text-center">
-                <strong >Reporte Restaurantes Registrados</strong>
+                <strong>Historial de mis platos</strong>
             </div>
         </div>
 
             <table class="table table-sm mt-5">
                 <thead class="thead-light ">
                     <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Distrito</th>
-                    <th>Dirección</th>
-                    <th>Ingreso</th>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Preparación</th>
+                        <th>Precio</th>
+                        <th>Creación</th>
+                        <th>Categoria</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    <?php $cantidad=1; ?>
+                    <?php $cantidad=0; ?>
 
-                    @foreach ($data as $restaurant)
+                    @foreach ($data as $plato)
+                    <?php $cantidad++; ?>
                             <tr>
-                            <th scope="row">{{$cantidad}}</th>
-                            <th scope="row">{{$restaurant->name}}</th>
-                            <td>{{$restaurant->distrito}}</td>
-                            <td>{{$restaurant->address}}</td>
-                            <td>{{ substr($restaurant->created_at,0,10) }}</td>
+                            <td>{{$cantidad}}</td>
+                            <td>{{$plato->name}}</td>
+                            <td>{{$plato->time }} Min.</td>
+                            <td>{{$plato->price}}</td>
+                            <td>{{$plato->created_at}}</td>
+                            <td>{{$plato->categoria}}</td>
                         </tr>
-                        <?php $cantidad++; ?>
                     @endforeach
 
                 </tbody>
@@ -85,26 +85,18 @@
               <table class="table table-sm mt-5 table-resultados">
                 <thead class="thead-light ">
                     <tr>
-                        <th colspan="2" >Resultados</th>
+                        <th colspan="2">Resultados</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td >
-                            <strong>Fecha   : </strong>
-                        </td>
-                        <td>
-                            {{$date}}
-                        </td>
+                        <td><strong>Fecha de impresión :</strong></td>
+                        <td><strong>{{$date}}</strong></td>
                     </tr>
-                    <tr class="mb-3">
-                        <td>
-                            <strong>Cantidad: </strong>
-                        </td>
-                        <td>
-                            {{count($data) . " registrados"}}
-                        </td>
+                    <tr>
+                        <td ><strong>Total de registros   : </strong></td>
+                        <td><strong>{{$cantidad}}</strong></td>
                     </tr>
                 </tbody>
 

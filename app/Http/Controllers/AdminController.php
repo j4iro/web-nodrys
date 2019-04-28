@@ -80,18 +80,29 @@ class AdminController extends Controller
     public function updateStateCategoria($id)
     {
         $categoria = Category::where('id',$id)->first();
+        $id_categoria = $categoria->id;
 
-        if ($categoria->state==1)
+        $restaurantes = Restaurant::where('category_id', $id_categoria)->get();
+        $cantidad = count($restaurantes);
+
+        if($cantidad>=1)
         {
-            Category::where('id', $id)
-            ->update(['state' => 0]);
-            return redirect()->route('admin.categorias.list')->with('resultado','La categoria se deshabilitó correctamente');
+            return back()->with('error','No se puede deshabilitar esta categoria por que hay '.$cantidad.' restaurantes asociados a esta. Por favor edite la información de estos y vuelva a intentarlo.');
         }
         else
         {
-            Category::where('id', $id)
-            ->update(['state' => 1]);
-            return redirect()->route('admin.categorias.list')->with('resultado','La categoria se habilitó correctamente');
+            if ($categoria->state==1)
+            {
+                Category::where('id', $id)
+                ->update(['state' => 0]);
+                return redirect()->route('admin.categorias.list')->with('resultado','La categoria se deshabilitó correctamente');
+            }
+            else
+            {
+                Category::where('id', $id)
+                ->update(['state' => 1]);
+                return redirect()->route('admin.categorias.list')->with('resultado','La categoria se habilitó correctamente');
+            }
         }
     }
 
@@ -113,10 +124,61 @@ class AdminController extends Controller
         }
     }
 
+    public function updateStateDistrito($id)
+    {
+        $distrito = District::where('id',$id)->first();
+        $id_distrito = $distrito->id;
+
+        $restaurantes = Restaurant::where('district_id', $id_distrito)->get();
+        $cantidad = count($restaurantes);
+
+        if($cantidad>=1)
+        {
+            return back()->with('error','No se puede deshabilitar este distrito por que hay '.$cantidad.' restaurantes asociados a este. Por favor edite la información de estos y vuelva a intentarlo.');
+        }
+        else
+        {
+            if ($distrito->state==1)
+            {
+                District::where('id', $id)
+                ->update(['state' => 0]);
+                return back()->with('resultado','El distrito se deshabilitó correctamente');
+            }
+            else
+            {
+                District::where('id', $id)
+                ->update(['state' => 1]);
+                return back()->with('resultado','El distrito se habilitó correctamente');
+            }
+        }
+    }
+
     public function listDistritos()
     {
         $distritos = District::all();
         return view('admin.distritos',compact('distritos'));
+    }
+
+    public function newDistritos()
+    {
+        return view('admin.add-distritos');
+    }
+
+    public function saveDistritos(Request $request)
+    {
+
+        if ($request->editar=="editar")
+        {
+            District::findOrFail($request->id)->update($request->all());
+            return back()->with('resultado','El distrito se actualizó correctamente');
+        }
+            District::create($request->all());
+            return back()->with('resultado','El distrito se agregó correctamente');
+    }
+
+    public function showDestritos($id){
+        $distritos=District::findOrFail($id);
+        return view('admin.add-distritos',compact('distritos'));
     }
 
     public function reportes()

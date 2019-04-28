@@ -48,7 +48,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel sticky-top">
             <div class="container-fluid">
-                <a class="navbar-brand p-0" href="{{ route('adminRestaurant.index') }}">
+                <a class="navbar-brand p-0" href="{{ route('admin.index') }}">
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
                     <strong>Panel Administrador</strong>
@@ -77,9 +77,25 @@
         var i;
         for (i = 0; i < toggler.length; i++) {
           toggler[i].addEventListener("click", function() {
-            this.parentElement.querySelector(".nested").classList.toggle("active");
-            this.classList.toggle("dropdown-toggle_down");
+              var actual=i;
+              for (i = 0; i < toggler.length; i++) {
+                  if (this.innerHTML!=toggler[i].innerHTML) {
+                      pliega(toggler[i]);
+                  }
+
+              }
+              despliega(this);
           });
+
+        }
+
+        function despliega(objeto){
+            objeto.parentElement.querySelector(".nested").classList.toggle("active");
+            objeto.classList.toggle("dropdown-toggle_down");
+        }
+        function pliega(objeto) {
+            toggler[i].classList.remove('dropdown-toggle_down');
+            toggler[i].parentElement.querySelector(".nested").classList.remove("active");
         }
 
     </script>
