@@ -1,5 +1,41 @@
 @extends('layouts.app-a')
+@section('scripts')
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript">
 
+    window.onload=function () {
+        var t = setInterval(function(){
+            // post::()
+            // notificar('uno','genial');
+        }, 3000);
+    };
+    document.addEventListener("DOMContentLoaded",function() {
+        if (!Notification) {
+            alert("Las notificaciones no estan soportadas en tu navegador")
+            return
+        }
+        if(Notification.permission!=="granted")
+            Notification.requestPermission()
+    });
+
+    function notificar(titulo,mensaje) {
+        if (Notification.permission!=="granted") {
+            Notification.requestPermission();
+        }else {
+            var notificacion=new Notification(titulo,{
+                icon:"{{asset('images/favicon/favicon.png')}}",
+                body:mensaje
+            });
+            notificacion.onclick=function(){
+                window.open("/");
+            }
+        }
+    }
+
+
+
+    </script>
+@endsection
 @section('content')
             <div class="row ">
             <div class="col-12">
@@ -59,4 +95,5 @@
 
             </div>
         </div>
+        <button type="button" onclick="notificar()">Enviar una notificaicon</button>
  @endsection

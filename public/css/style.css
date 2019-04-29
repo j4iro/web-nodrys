@@ -118,6 +118,10 @@ esto es para la camara  */
     z-index: 500;
 }
 
+.card
+{
+    color: black;   
+}
 
 .card-restaurantes
 {
@@ -130,6 +134,3 @@ li
 {
     cursor: pointer;
 }
-
-
-

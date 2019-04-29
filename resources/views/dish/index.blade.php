@@ -54,7 +54,8 @@
                         <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
                         <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
                         <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                        <input class="form-check-input"  type="checkbox" value="{{$dish->id}}" name="checkDish[]" >
+                        <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                         <label class="label-cliente" for="{{$dish->id}}">Muestra precio</label>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('scripts')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+@endsection
 @section('content')
 <form method="POST" action="{{route('pedidos.add')}}">
 {{csrf_field()}}
@@ -31,7 +33,9 @@
                         <th scope="col">Imagen</th>
                         <th scope="col">Restaurante</th>
                         <th scope="col">Tipo</th>
+
                         <th scope="col">Plato</th>
+
                         <th scope="col">Precio</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Sub Total</th>
@@ -49,13 +53,17 @@
                         <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" class="img-thumbnail shadow" width="50">
                     </th>
                     <td>{{$plato->restaurante}}</td>
-                    <td class="text-capitalize">{{$plato->type}}</td>
-                    <td>{{$plato->name}}</td>
+                    <td class="text-capitalize">{{$plato->categoria_plato}}</td>
+                    <td> @if($plato->name=="reserva") {{'-'}} @else {{$plato->name}}  @endif </td>
                     <td>{{$plato->price}}</td>
                     <th scope="row">
-                        <a href="{{route('carrito.up',['indice'=>$indice])}}" class="btn btn-outline-success btn-sm rounded p-0 px-2 mb-1 mr-1">+</a> 
+                        @if($plato->name!="reserva")
+                        <a href="{{route('carrito.up',['indice'=>$indice])}}" class="btn btn-outline-success btn-sm rounded p-0 px-2 mb-1 mr-1">+</a>
+                        @endif
                         {{$dish['unidades']}}
+                        @if($plato->name!="reserva")
                         <a href="{{route('carrito.down',['indice'=>$indice])}}" class="btn btn-outline-success btn-sm rounded p-0 px-2 mb-1 ml-1">-</a>
+                        @endif
                     </th>
                     <?php $subtotal= $plato->price*$dish['unidades']; ?>
                     <?php $total += $subtotal; ?>
@@ -70,7 +78,7 @@
                 <td>-</td>
                 </tr>
             @endif
-                
+
             @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                 <tr>
                     <td><a href="{{route('carrito.deleteall')}}">Vaciar Carrito</a></td>
@@ -117,7 +125,7 @@
                         <input type="number" placeholder="Número de personas" value="1" class="form-control" name="n_people">
                     </div>
                 </div>
-            
+
                 <div class="row mt-3">
                     <div class="col-6">
                         <a href="{{route('pedidos.index')}}" data-toggle="modal" data-target="#modalPago" class="btn btn-primary btn-sm">Reservar</a>
@@ -140,19 +148,19 @@
                 <!--Formulario de Pago-->
                     <div class="row my-3">
                         <div class="col-12 col-sm-12">
-                
+
                                 <div class="row">
                                     <dt class="col-12">Nueva tarjeta de pago
                                         <hr>
                                     </dt>
                                 </div>
-                
+
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <input type="text" placeholder="Número de tarjeta" class="form-control" name="num_card" id="" required>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row mt-2">
                                     <div class="col-4  pr-0">
                                         <select name="month" class="form-control" id="" required>
@@ -174,13 +182,13 @@
                                         <input type="text" placeholder="CVC" class="form-control" name="cvc" id="" required>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <input type="text" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="" required>
                                     </div>
                                 </div>
-                            
+
                                 <div class="row mt-2">
                                     <div class="col-8 ">
                                         <select name="country" class="form-control" id="">
@@ -195,7 +203,7 @@
                                         <input type="text" placeholder="Código Postal" class="form-control" name="cod_postal" id="">
                                     </div>
                                 </div>
-                                
+
                                 <div class="row mt-2">
                                     <div class="col-8 ">
                                         <div class="form-group form-check">
@@ -204,7 +212,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+
                                 <div class="row mt-2 ">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-danger btn-block btn-lg">Realizar Pago</button>
@@ -213,7 +221,7 @@
                                         <small class="form-text text-muted">Al completar la compra aceptas estas <a href="">Condiciones de uso</a></small>
                                     </div>
                                 </div>
-                
+
                         </div>
                     </div>
                 <!--Formulario de Pago-->

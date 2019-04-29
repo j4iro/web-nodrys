@@ -5,35 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
-    <style>
-
-        h1, h3
-        {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .table
-        {
-            font-size: 0.85rem;
-        }
-
-        .encabezado
-        {
-            position: fixed;
-        }
-
-        body
-        {
-            background: white;
-        }
-
-        .page-break {
-            page-break-after: always;
-        }
-
-    </style>
 
 </head>
 
@@ -47,24 +20,26 @@
         </div>
 
         <div class="row mt-0">
-            <div class="col-12 text-center">
+            <div class="col-12 text-center" style="width:100%;text-align:right">
                 <strong >Factura de Pedido N° 0000{{$data2->id}}</strong>
             </div>
         </div>
 
-            <table class="table table-sm mt-5">
+            <table class="table table-sm mt-5" style="padding-top:5%" border="1" style="width:100%">
                 <thead class="thead-light ">
-                    <tr>
+                    <tr style="width:100%;text-align:center;">
                         <th colspan="2" style="text-align:center;" >CLIENTE</th>
                     </tr>
                     <tr>
                         <td><strong>Codigo : C-000{{$data2->id_user}}</strong></td>
+                    </tr>
+                    <tr>
                         <td><strong>Nombres: {{$data2->cliente}} {{$data2->apellidos}}</strong></td>
                     </tr>
                 </thead>
             </table>
 
-            <table class="table table-sm mt-3">
+            <table class="table table-sm mt-3" border="1" style="width:100%;margin-top:2%">
                 <thead class="thead-light ">
                     <tr>
                         <th colspan="4" style="text-align:center;">DETALLES DEL PEDIDO</th>

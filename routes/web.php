@@ -84,7 +84,11 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
 
     /* Cruds Categorias */
     Route::get('/admin/categorias/list', 'AdminController@listCategorias')->name('admin.categorias.list');
+    Route::get('/admin/categorias/edit/{id}', 'AdminController@editCategorias')->name('admin.categorias.edit');
+    Route::get('/admin/categorias/create', 'AdminController@createCategorias')->name('admin.categorias.create');
+    Route::post('/admin/categorias/save', 'AdminController@saveCategorias')->name('admin.categorias.save');
     Route::get('/admin/categorias/estado/edit/{id}', 'AdminController@updateStateCategoria')->name('admin.categorias.update.state');
+
 
     /* Cruds Distritos */
     Route::get('/admin/distritos/list', 'AdminController@listDistritos')->name('admin.distritos.list');
