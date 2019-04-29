@@ -133,6 +133,10 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'Postre',
             'description' => 'Postre',
         ]);
+        Category_dish::create([
+            'name' => 'Reserva',
+            'description' => 'Reserva',
+        ]);
 
         // Usuario N1
         User::create([
@@ -472,6 +476,16 @@ class InsertAllTablesSeeder extends Seeder
 
         // Platos
         Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>1
+        ]);
+
+        // Platos
+        Dish::create([
             'name'=>'Ceviche',
             'price'=>'20.30',
             'time'=>'10',
@@ -479,6 +493,8 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>1,
             'restaurant_id'=>1
         ]);
+
+
 
     }
 }

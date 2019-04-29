@@ -1,5 +1,5 @@
 {{-- SLIDEBAR PARA LA SECCIÓN ADMIN --}}
-<ul id="myUL" class="col-12 col-md-3 col-lg-2 mb-3">
+<ul id="myUL" class="col-12 col-md-3 col-lg-2 mb-3 ">
   <li class="btn-group dropright">
     <span class="caret list-group-item list-group-item-action dropdown-toggle">Solicitudes</span>
     <ul class="nested dropdown-menu">
@@ -8,7 +8,7 @@
         <a href="{{route('admin.solicitudes.historial')}}" class="dropdown-item">Todas</a>
     </ul>
   </li>
-  <li class="btn-group dropright">
+  <li class="btn-group dropright ">
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Restaurantes</span>
       <ul class="nested dropdown-menu">
           <a href="{{route('admin.restaurants')}}" class="dropdown-item">

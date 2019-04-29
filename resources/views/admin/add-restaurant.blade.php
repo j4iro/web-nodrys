@@ -39,6 +39,9 @@
                 @else
                     Nuevo Restaurante
                     <input type="hidden" name="editar" value="agregar">
+                    @if (isset($solicitud))
+                    <input type="text" name="solicitud" value="{{$solicitud}}" >
+                    @endif
                 @endif
                 <hr>
             </dt>
@@ -128,6 +131,21 @@
 
             <div class="form-row">
                 <div class="form-group col-12  col-md-6 ">
+                    <label for="password"><strong>Contraseña</strong></label>
+                    <input type="text" class="form-control" name="password" placeholder="Nueva contraseña" id="password"  @if(isset($restaurante) && !isset($solicitud)) {{''}} @else {{'required'}} @endif >
+
+                </div>
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="repeatpassword"><strong>Repita la Contraseña</strong></label>
+                    <input type="text" class="form-control @if (session('error_password')) {{'is-invalid'}} @endif" name="repeatpassword"  placeholder="Repita la contraseña" id="repeatpassword" @if(isset($restaurante) && !isset($solicitud)) {{''}} @else {{'required'}} @endif >
+                    <div class="invalid-feedback" >
+                        <strong>Las contraseñas no coinciden</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-12  col-md-6 ">
                     <label for="address">Latitud</label>
                     <input type="text" class="form-control" name="latitud" value="{{ $restaurante->latitude?? '' }}" placeholder="Dirección" id="latitud" required>
                 </div>
@@ -153,20 +171,7 @@
                     </center>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col-12  col-md-6 ">
-                    <label for="password"><strong>Contraseña</strong></label>
-                    <input type="text" class="form-control" name="password" placeholder="Nueva contraseña" id="password"  @if(isset($restaurante) && !isset($solicitud)) {{''}} @else {{'required'}} @endif >
 
-                </div>
-                <div class="form-group col-12  col-md-6 ">
-                    <label for="repeatpassword"><strong>Repita la Contraseña</strong></label>
-                    <input type="text" class="form-control @if (session('error_password')) {{'is-invalid'}} @endif" name="repeatpassword"  placeholder="Repita la contraseña" id="repeatpassword" @if(isset($restaurante) && !isset($solicitud)) {{''}} @else {{'required'}} @endif >
-                    <div class="invalid-feedback" >
-                        <strong>Las contraseñas no coinciden</strong>
-                    </div>
-                </div>
-            </div>
 
             <hr>
 
