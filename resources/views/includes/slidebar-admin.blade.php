@@ -45,7 +45,7 @@
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Categorias</span>
       <ul class="nested dropdown-menu">
           <a class="dropdown-item" href="{{route('admin.categorias.list')}}">Listar</a>
-          <a class="dropdown-item" href="{{route('admin.categorias.list')}}">Agregar</a>
+          <a class="dropdown-item" href="{{route('admin.categorias.create')}}">Agregar</a>
       </ul>
   </li>
   <li class="btn-group dropright">

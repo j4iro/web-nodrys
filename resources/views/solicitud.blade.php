@@ -9,7 +9,6 @@
       crossorigin=""></script>
       <style media="screen">
           #map{
-              width: 80%;
               height: 400px;
 
           }
@@ -107,7 +106,9 @@
                                     <div id="map">
 
                                     </div>
-                                    <button class="btn btn-primary" type="button" class="btnActual" name="button" onclick="localizar()">Ubicacion Actual</button>
+                                    <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+                                            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+                                    </button>
                                 </div>
 
                         </div>
@@ -305,9 +306,6 @@
     marker = L.marker([lat, lng], {draggable: true}).addTo(map);
     marker.on('drag', onMapClick);
     }
-
-
-
 
 function onMapClic(e) {
     var valor=e.latlng.toString().replace(/ /g, "");
