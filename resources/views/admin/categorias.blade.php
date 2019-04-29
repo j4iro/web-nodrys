@@ -52,7 +52,7 @@
                             <td>{{$categoria->updated_at}}</td>
 
                             <td>
-                                <a href="{{route('admin.restaurant.edit',["id" => $categoria->id ])}}" class="btn btn-sm btn-outline-primary">
+                                <a href="{{route('admin.categorias.edit',["id" => $categoria->id ])}}" class="btn btn-sm btn-outline-primary">
                                     Editar
                                 </a>
                             </td>

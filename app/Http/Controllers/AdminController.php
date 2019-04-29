@@ -76,6 +76,23 @@ class AdminController extends Controller
         $categorias = Category::all();
         return view('admin.categorias',compact('categorias'));
     }
+    public function editCategorias($id){
+      $categorias=Category::findOrFail($id);
+      return view('admin.create-categoria',compact('categorias'));
+    }
+    public function createCategorias(){
+      return view('admin.create-categoria');
+    }
+    public function saveCategorias(Request $request){
+     
+     if ($request->editar=="editar")
+      {
+          Category::findOrFail($request->id)->update($request->all());
+          return back()->with('resultado','La categoria se actualizó correctamente');
+      }
+          Category::create($request->all());
+          return back()->with('resultado','La categoria se agregó correctamente');
+    }
 
     public function updateStateCategoria($id)
     {
@@ -108,6 +125,7 @@ class AdminController extends Controller
 
     public function updateStateRestaurante($id)
     {
+
         $restaurante = Restaurant::where('id',$id)->first();
 
         if ($restaurante->state==1)
@@ -297,6 +315,7 @@ class AdminController extends Controller
 
     public function editRestaurant($id)
     {
+
         $restaurante = Restaurant::findOrFail($id);
         $distritos = District::all();
         $categorias = Category::all();
