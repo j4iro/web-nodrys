@@ -110,21 +110,30 @@ esto es para la camara  */
     right: 0;
 }
 
-body
+.btn-actual
 {
-    /* background-color: rgb(251, 240, 227) */
-    background-color:white;
+    margin-top: -5rem;
+    margin-left: 1rem;
+    position: relative;
+    z-index: 500;
 }
 
-.card
+/* body
+{
+     background-color: rgb(251, 240, 227) ;
+     background-color:white;
+} */
+
+.card-restaurantes
 {
     background: #f9dfc2;
     color: black;
     border-color:  #d19147
 }
-/* 
-.btn-actual
+
+li
 {
-    margin-top: -2rem;
-    z-index: inherit;
-} */
+    cursor: pointer;
+}
+
+

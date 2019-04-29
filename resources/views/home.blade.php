@@ -9,9 +9,7 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
       <style media="screen">
-            #map{
-                height: 400px;
-            }
+
           .btnActual{
               position: absolute;
               z-index: 99;
@@ -19,10 +17,18 @@
           }
           #map{
               height: 0;
+              transition: 0.5s;
+          }
+          #btnActual{
+              display: none;
           }
           #map.show{
-              height: 400px;
-              transition: 1.5s;
+          height: 400px;
+          transition: 0.5s;
+          }
+          #btnActual.show{
+              display: block;
+              transition: 0.5s;
           }
 
       </style>
@@ -72,12 +78,17 @@
 
         <div class="map_container">
             <div id="map"">
+
             </div>
+
         </div>
 
     </div>
+    <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+    </button>
 
-    <button class="btn btn-primary btn-actual" type="button" class="btnActual" name="button" onclick="localizar()">Regresar</button>
+
 
     <div class="row mb-4 mt-2">
             {{csrf_field()}}
@@ -150,16 +161,11 @@
             var mapContenedor=document.querySelector('#map');
 
             var btnShow=document.querySelector('#btnShow');
+            var btnActual=document.querySelector('#btnActual');
+
             btnShow.addEventListener('click',function(){
-                    if(mapContenedor.classList.contains('show')){
-                        mapContenedor.classList.remove('show');
-                    }else{
-                        mapContenedor.classList.add('show');
-                    }
-
-
-
-
+                        mapContenedor.classList.toggle('show');
+                        btnActual.classList.toggle('show');
             });
 
             var map = L.map('map');
