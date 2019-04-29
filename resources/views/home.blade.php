@@ -20,6 +20,12 @@
           /* .map_container{
             position: relative;
           } */
+
+          .mapa-oculto
+          {
+            height: 0;
+
+          }
       </style>
 @endsection
 
@@ -39,7 +45,7 @@
                 </div>
                 <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
                 <br>
-                <button id="btnShow" type="button" class="btn btn-dark">
+                <button id="btnShow" type="button" onclick="mostrarMapa()" class="btn btn-dark">
                     Ver cercanos
                 </button>
             </div>
@@ -58,24 +64,25 @@
         </div>
     </div>
 
-    <div id="contenedor_mapa" class="container p-0 shadow">
+    <div id="mapa_oculto" class="">
+        <div id="contenedor_mapa" class="container p-0 shadow">
 
-        <div class="d-none">
-            Latitud : <input type="text" name="txtlati" id="txtlati">
-            Longitud : <input type="text" name="txtlong" id="txtlong">
-        </div>
-
-        <div class="map_container">
-            <div id="map"">
-
+            <div class="d-none">
+                Latitud : <input type="text" name="txtlati" id="txtlati">
+                Longitud : <input type="text" name="txtlong" id="txtlong">
             </div>
 
-        </div>
+            <div class="map_container">
+                <div id="map"">
 
+                </div>
+
+            </div>
+        </div>
+        <button class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" >
+        </button>
     </div>
-    <button class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" >
-    </button>
 
 
 
@@ -118,7 +125,7 @@
         @foreach ( $restaurants as $restaurant )
 
             <div class="col-12 col-md-6 col-lg-4 mb-4 ">
-                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" style="text-decoration:none;">
+                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" class="a-card-restaurant">
                 <div class="card card-restaurant ">
                     @include('includes.image_restaurante')
                     <div class="card-body p-0 px-3 pt-2 ">
@@ -144,6 +151,7 @@
 </div>
 
 <button type="button" onclick="notificar()">Enviar una notificaicon</button>
+
 @include('includes/footer')
 <script>
             var map = L.map('map');
@@ -172,8 +180,9 @@
       //
 var btnShow=document.querySelector('#btnShow');
 btnShow.addEventListener('click',function(){
- var mapContenedor=document.querySelector('#contenedor_mapa');
- mapContenedor.style.display="block";
+ var mapContenedor=document.querySelector('#map');
+//  mapContenedor.classList.add('mapa-oculto');
+//  alert('hola');
 });
 
 

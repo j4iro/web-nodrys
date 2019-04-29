@@ -7,8 +7,7 @@
 @endif
 
 <div class="container mt-5">
-    <form action="{{route('carrito.add')}}" method="post">
-    {{csrf_field()}}
+
 
 
     <div class="row ">
@@ -31,11 +30,19 @@
             <br>
             {{$restaurant->telephone}}
             <br>
-            <input type="submit" class="btn btn-dark mt-2"  name="addcarrito" value="Reservar lugar">
+            <form action="{{route('carrito.add')}}" method="post">
+                {{csrf_field()}}
+                <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
+                <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
+                <input type="hidden" name="solo_reserva" value="1">
+                <input type="submit" class="btn btn-dark mt-2"  name="addcarrito" value="Solo reserva">
+            </form>
         </div>
     </div>
 
 
+    <form action="{{route('carrito.add')}}" method="post">
+    {{csrf_field()}}
 
     <strong class="navbar-brand mt-3">¿Qué desea comer?</strong>
     <div class="row ">
@@ -47,7 +54,7 @@
                         <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
                         <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
                         <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                        <input class="form-check-input" type="checkbox" value="{{$dish->id}}" name="checkDish[]" >
+                        <input class="form-check-input"  type="checkbox" value="{{$dish->id}}" name="checkDish[]" >
                     </div>
                 </div>
             </div>
