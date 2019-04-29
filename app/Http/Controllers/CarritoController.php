@@ -24,8 +24,13 @@ class CarritoController extends Controller
 
     public function add(Request $request)
     {
-        // var_dump($_POST);
-        if (isset($request->checkDish) && count($request->checkDish)>0) 
+        $solo_reserva = $request->input('solo_reserva');
+        if(isset($solo_reserva))
+        {
+            unset($_SESSION['carrito']);
+        }
+
+        if (isset($request->checkDish) && count($request->checkDish)>0)
         {
             if(isset($_SESSION['carrito']))
             {
@@ -43,7 +48,7 @@ class CarritoController extends Controller
                 }
             }
 
-            if (!isset($counter) || $counter==0) 
+            if (!isset($counter) || $counter==0)
             {
                 for ($i=0; $i < count($request->checkDish); $i++)
                 {
@@ -53,8 +58,7 @@ class CarritoController extends Controller
                     $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
                     ->select('dishes.*','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
                     ->where('dishes.id',$id_plato)->first();
-                    
-                    
+
                     //Añadir al carrito
                     if (is_object($dish)) {
                         $_SESSION['carrito'][] = array(
@@ -73,14 +77,7 @@ class CarritoController extends Controller
         }
         else
         {
-            if (isset($request->id_restaurant)) 
-            {
-                return redirect()->route('restaurant.detalle',["id"=>$request->id_restaurant])->with('vacio','Seleccione al menos un plato para continuar');
-            }
-            else
-            {
-                return redirect()->route('getAllDishes')->with('vacio','Seleccione al menos un plato para continuar');
-            }
+            return back()->with('vacio','Seleccione al menos un plato para continuar');
         }
     }
 
@@ -107,6 +104,12 @@ class CarritoController extends Controller
     }
 
     public function delete_all()
+    {
+        unset($_SESSION['carrito']);
+        return redirect()->route('carrito.index');
+    }
+
+    public function delete_all_and_add_reseva()
     {
         unset($_SESSION['carrito']);
         return redirect()->route('carrito.index');

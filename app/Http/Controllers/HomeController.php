@@ -91,7 +91,9 @@ class HomeController extends Controller
     public function getAllDishes()
     {
         $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
-        ->select('dishes.*','restaurants.name as restaurante')->get();
+        ->select('dishes.*','restaurants.name as restaurante')
+        ->where('dishes.category_dish','<>','5')
+        ->get();
         return view('dish.getAll',[
             'platos' => $platos
         ]);
