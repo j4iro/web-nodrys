@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('css/pdf.css')}}"> --}}
     <style>
 
         h1, h3

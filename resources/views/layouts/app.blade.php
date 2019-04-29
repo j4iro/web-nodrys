@@ -23,8 +23,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @yield('scripts')
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -99,6 +99,18 @@
                                     {{-- <span class="badge badge-warning mb-1">0</span> --}}
                                 </a>
                             </li>
+
+                            <li>
+                                  <a class="nav-link text-danger" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                     Salir
+                                 </a>
+                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                     @csrf
+                                 </form>
+                            </li>
+
                             <li>
                                 @if(auth()->user()->hasRoles(['admin']))
                                         <a target="_blank" href="{{route('admin.index')}}" class="nav-link">Panel Administrador Master</a>

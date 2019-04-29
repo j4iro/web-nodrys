@@ -16,18 +16,18 @@
               right: 0;
           }
           #map{
-              height: 0;
-              transition: 0.5s;
+              height: 400px;
+              /* transition: 0.5s; */
           }
           #btnActual{
-              display: none;
+              display: block;
           }
           #map.show{
-          height: 400px;
+          height: 0px;
           transition: 0.5s;
           }
           #btnActual.show{
-              display: block;
+              display: none;
               transition: 0.5s;
           }
 
@@ -50,7 +50,7 @@
                 </div>
                 <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
                 <br>
-                <button id="btnShow" type="button" class="btn btn-dark">
+                <button id="btnShow" type="button"  class="btn btn-dark">
                     Ver cercanos
                 </button>
             </div>
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div id="mapa_oculto" class="">
+    <div id="mapa_oculto" class="mb-5">
         <div id="contenedor_mapa" class="container p-0 shadow">
 
             <div class="d-none">
@@ -81,9 +81,7 @@
                 <div id="map"">
 
                 </div>
-
             </div>
-
         </div>
         <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
             <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
@@ -155,7 +153,6 @@
     </div>
 
 
-
 </div>
 
 
@@ -183,7 +180,7 @@
 
             });
 
-
+            btnShow.click();
             function localizar(){
                 if (navigator.geolocation) {
                      navigator.geolocation.getCurrentPosition(mostrarUbicacion);
@@ -197,7 +194,7 @@
             function mostrarUbicacion (ubicacion) {
                const lng = ubicacion.coords.longitude;
                const lat = ubicacion.coords.latitude;
-               map.setView([lat,lng],15);
+               map.setView([lat,lng],14);
                map.removeLayer(circle);
                circle = L.circle([lat, lng], {
                    color: '#0064FF',
@@ -230,7 +227,10 @@
                 marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
 
             @endforeach
-            map.removeLayer(marker);
+
+            window.loaded=function(){
+
+            }
 
 </script>
 

@@ -56,7 +56,8 @@ class CarritoController extends Controller
 
                     //Conseguir Datos del plato
                     $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
-                    ->select('dishes.*','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
+                    ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+                    ->select('dishes.*','categories_dishes.name as categoria_plato','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
                     ->where('dishes.id',$id_plato)->first();
 
                     //Añadir al carrito

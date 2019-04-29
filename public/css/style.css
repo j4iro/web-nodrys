@@ -118,11 +118,10 @@ esto es para la camara  */
     z-index: 500;
 }
 
-/* body
+.card
 {
-     background-color: rgb(251, 240, 227) ;
-     background-color:white;
-} */
+    color: black;   
+}
 
 .card-restaurantes
 {
