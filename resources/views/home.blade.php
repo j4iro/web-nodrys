@@ -84,6 +84,7 @@
         </div>
 
     </div>
+
     <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
         <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
     </button>
@@ -156,7 +157,15 @@
 
 
 @include('includes/footer')
+
 <script type="text/javascript">
+            var map = L.map('map');
+            var marker=L.marker();
+            var circle= L.circle();
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+              maxZoom: 25
+            }).addTo(map);
 
             var mapContenedor=document.querySelector('#map');
 
@@ -166,32 +175,61 @@
             btnShow.addEventListener('click',function(){
                         mapContenedor.classList.toggle('show');
                         btnActual.classList.toggle('show');
+                        localizar();
+
+
+
             });
 
-            var map = L.map('map');
-            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-              maxZoom: 25
-            }).addTo(map);
 
+            function localizar(){
+                if (navigator.geolocation) {
+                     navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+                }
+                const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+                setTimeout(() => {
+                  navigator.geolocation.clearWatch(watcher);
+              }, 10);
+            }
 
-             @foreach ($restaurants as $restaurant)
+            function mostrarUbicacion (ubicacion) {
+               const lng = ubicacion.coords.longitude;
+               const lat = ubicacion.coords.latitude;
+               map.setView([lat,lng],15);
+               map.removeLayer(circle);
+               circle = L.circle([lat, lng], {
+                   color: '#0064FF',
+                   fillColor: '#0075CC',
+                   fillOpacity: 0.5,
+                   radius: 1000
+               }).addTo(map);
+               var cir = L.circle([lat, lng], {
+                   color: 'red',
+                   fillColor: 'red',
+                   fillOpacity: 0.5,
+                   radius: 1
+               }).addTo(map);
+               var popup = L.popup()
+               .setLatLng([lat, lng])
+               .setContent("<center><b>Hola!</b><br>Estas aquí</center>")
+               .openOn(map);
 
-                 var n="{{$restaurant->name}}";
-                 var lat={{$restaurant->latitude}};
-                 var lon={{$restaurant->longitude}};
-                 var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
+            }
 
-                 map.setView([lat,lon],14);
-                 var marker = L.marker([lat,lon]).addTo(map);
-                 marker.bindPopup("<img width='70px' src='"+img+"' alt='no image' /> <br /><b>"+n+"</b>").openPopup();
+            @foreach ($restaurants as $restaurant)
 
-             @endforeach
+                var n="{{$restaurant->name}}";
+                var lat={{$restaurant->latitude}};
+                var lon={{$restaurant->longitude}};
+                var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
+                var ruta='{{ route("restaurant.detalle",["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}';
 
+                marker = L.marker([lat,lon]).addTo(map);
+                marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
 
+            @endforeach
+            map.removeLayer(marker);
 
-
-            
 </script>
 
 @endsection
