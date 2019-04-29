@@ -161,6 +161,25 @@
 
              @endforeach
 
+             var circle = L.circle([lat, lng], {
+                 color: '#0064FF',
+                 fillColor: '#0075CC',
+                 fillOpacity: 0.5,
+                 radius: 1000
+             }).addTo(map);
+             var circle = L.circle([lat, lng], {
+                 color: 'red',
+                 fillColor: 'red',
+                 fillOpacity: 0.5,
+                 radius: 1
+             }).addTo(map);
+             var popup = L.popup()
+             .setLatLng([lat, lng])
+             .setContent("<b>Hola!</b><br>Estas aquí")
+             .openOn(map);
+
+
+
       //$sql="SELECT restaurante, latitud, longitud, ( 6371 * acos(cos(radians(-12.0797741)) *
       // cos(radians(latitud)) * cos(radians(longitud) - radians(-77.0276488)) + sin(radians(-12.0797741)) *
       // sin(radians(latitud)))) AS distance FROM marcadores HAVING distance < 1 ORDER BY distance;";
