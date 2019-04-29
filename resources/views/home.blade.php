@@ -69,25 +69,28 @@
         </div>
     </div>
 
-    <div id="contenedor_mapa" class="container p-0 shadow">
+    <div id="mapa_oculto" class="">
+        <div id="contenedor_mapa" class="container p-0 shadow">
 
-        <div class="d-none">
-            Latitud : <input type="text" name="txtlati" id="txtlati">
-            Longitud : <input type="text" name="txtlong" id="txtlong">
-        </div>
+            <div class="d-none">
+                Latitud : <input type="text" name="txtlati" id="txtlati">
+                Longitud : <input type="text" name="txtlong" id="txtlong">
+            </div>
 
-        <div class="map_container">
-            <div id="map"">
+            <div class="map_container">
+                <div id="map"">
+
+                </div>
 
             </div>
 
         </div>
-
+        <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+        </button>
     </div>
 
-    <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
-    </button>
+
 
 
 
@@ -130,7 +133,7 @@
         @foreach ( $restaurants as $restaurant )
 
             <div class="col-12 col-md-6 col-lg-4 mb-4 ">
-                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" style="text-decoration:none;">
+                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" class="a-card-restaurant">
                 <div class="card card-restaurant ">
                     @include('includes.image_restaurante')
                     <div class="card-body p-0 px-3 pt-2 ">
@@ -157,7 +160,6 @@
 
 
 @include('includes/footer')
-
 <script type="text/javascript">
             var map = L.map('map');
             var marker=L.marker();
