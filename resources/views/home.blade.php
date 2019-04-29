@@ -154,7 +154,7 @@
 
 </div>
 
-<button type="button" onclick="notificar()">Enviar una notificaicon</button>
+
 @include('includes/footer')
 <script type="text/javascript">
 
@@ -191,29 +191,7 @@
 
 
 
-            document.addEventListener("DOMContentLoaded",function() {
-                if (!Notification) {
-                    alert("Las notificaciones no estan soportadas en tu navegador")
-                    return
-                }
-                if(Notification.permission!=="granted")
-                    Notification.requestPermission()
-            });
-
-            function notificar() {
-                if (Notification.permission!=="granted") {
-                    Notification.requestPermission();
-                }else {
-                    var notificacion=new Notification("titulo de mi notificacion",{
-                        icon:"img.jpg",
-                        body:"Este es el contenido de la notificacion"
-                    });
-                    notificacion.onclick=function(){
-                        window.open("/");
-                    }
-                }
-            }
-
+            
 </script>
 
 @endsection
