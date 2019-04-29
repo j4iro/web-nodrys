@@ -7,6 +7,7 @@ use App\Restaurant;
 use Dompdf\Dompdf;
 use App\User;
 use App\Order;
+use App\DetailOrder;
 use App\Dish;
 
 class PdfController extends Controller
@@ -18,6 +19,7 @@ class PdfController extends Controller
         $date = date('Y-m-d');
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadView($vistaurl,compact('data', 'date','data2'));
+        $pdf->setPaper('A5');
 
         switch($tipo)
         {
@@ -145,6 +147,30 @@ class PdfController extends Controller
         ->get();
 
         return $this->crearPDF($clientes, $vistaurl, $tipo,$nombrePDF, $cantidades);
+    }
+
+    public function facturaPedidoCliente($id, $tipo)
+    {
+        $nombrePDF = 'factura_pedido_'. $id;
+        $vistaurl = 'reportes-pdf.factura_pedido_cliente';
+
+        $user = \Auth::user();
+        $id_user = $user->id;
+
+        //Traigo los pedidos del usuario identificado
+        $order = Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+        ->join('users','users.id','=','orders.user_id')
+        ->select('users.name as cliente','users.surname as apellidos','users.id as id_user','restaurants.image','restaurants.name','restaurants.address','orders.created_at','orders.oca_special','orders.n_people','orders.total','orders.id')
+        ->where('orders.user_id',$id_user)
+        ->where('orders.id',$id)
+        ->first();
+
+        $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+        ->where('details_orders.order_id',$id)
+        ->get();
+
+        return $this->crearPDF($details, $vistaurl, $tipo,$nombrePDF, $order);
     }
 
 }

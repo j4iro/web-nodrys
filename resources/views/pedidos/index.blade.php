@@ -5,7 +5,7 @@
 
     <div class="row mt-3">
         <div class="col-12 ">
-            <h4>Mi Historial de pedidos</h4>
+            <strong class="navbar-brand">Mi Historial de pedidos</strong>
         </div>
     </div>
 
@@ -40,19 +40,18 @@
             @endif
         </div>
 
-        <div class="col-12 ">
-            <div id="qrcode">
-            </div>
+        <div class="col-12">
+
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">
                     <tr>
+                    <th scope="col">Codigo</th>
                     <th scope="col" colspan="2">Restaurante</th>
                     <th scope="col">Fecha - Hora</th>
                     <th scope="col">Personas</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Total</th>
-                    {{-- <th scope="col">Acciones</th> --}}
-                    <th scope="col" colspan="2">Acciones</th>
+                    <th scope="col" colspan="3">Acciones</th>
                     </tr>
                 </thead>
 
@@ -60,6 +59,7 @@
 
                 @foreach ($pedidos as $pedido)
                     <tr>
+                        <th scope="row">R-000{{$pedido->id}}</th>
                         <th scope="row" class="p-0 pt-1 pl-2">
                             <img src="{{ route('restaurant.image',['filename'=>$pedido->image]) }}" width="50" class="img-fluid img-thumbnail shadow-sm avatar">
                         </th>
@@ -79,9 +79,7 @@
                             @endif
                         </td>
                         <td>
-                            @if ($pedido->state=='pendiente')
-                            <button class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" onclick="createQrCode(this)">codigo</button>
-                            @endif
+                            <a href="{{route('pedidos.factura.pdf',["id"=>$pedido->id,"tipo"=>'ver'])}}" target="_blank" class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" onclick="createQrCode(this)">Factura</a>
                         </td>
                     </tr>
                 @endforeach
@@ -92,29 +90,6 @@
         </div>
     </div>
 
-
-
-
-
 </div>
 
-
-<script type="text/javascript" src="{{asset('js/qrcode.js')}}"></script>
-
-<script type="text/javascript">
-    function createQrCode(m){
-        var qrContainer=document.querySelector('#qrcode');
-        qrContainer.innerHTML="";
-        var input=m.getAttribute('codigo');
-        // var userInput=document.getElementById('value').value;
-        var qrcode=new QRCode("qrcode",{
-            text: input,
-            width:256,
-            height:256,
-            colorDark: "black",
-            colorLigth: "white",
-            correctLevel:QRCode.CorrectLevel.H
-        });
-    }
-</script>
 @endsection
