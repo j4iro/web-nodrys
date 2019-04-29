@@ -42,7 +42,11 @@
                     </div>
                 </div>
                 <strong><a class="" href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
-
+                <center>
+                    <button id="btnShow" type="button" class="btn btn-secondary">
+                        Ver cercanos
+                    </button>
+                </center>
             </div>
         </div>
 
@@ -57,6 +61,22 @@
         <div class="col-12 ">
             <h5>Busca entre {{count($restaurants)}} restaurantes para tí</h5>
         </div>
+    </div>
+    <div id="contenedor_mapa" class="form-group container">
+            <div class="hubicacion_controls">
+              Latitud : <input type="text" name="txtlati" id="txtlati">
+              longitud : <input type="text" name="txtlong" id="txtlong">
+            </div>
+
+            <center>
+                <div class="map_container">
+                    <div id="map">
+
+                    </div>
+                    <button class="btn btn-primary" type="button" class="btnActual" name="button" onclick="localizar()">Ubicacion Actual</button>
+                </div>
+
+            </center>
     </div>
 
     <div class="row mb-4 mt-2">
@@ -96,10 +116,12 @@
 
     <div class="row mt-1">
         @foreach ( $restaurants as $restaurant )
-            <div class="col-12 col-md-6 col-lg-4 mb-2">
+
+            <div class="col-12 col-md-6 col-lg-4 mb-4 ">
+                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" style="text-decoration:none;">
                 <div class="card card-restaurant">
                     @include('includes.image_restaurante')
-                    <div class="card-body p-0 px-3 pt-2 pb-5">
+                    <div class="card-body p-0 px-3 pt-2 ">
 
                         <div class="d-flex justify-content-between">
                             <p class="card-title card-title-restaurant my-0">{{$restaurant->name}}</p>
@@ -109,10 +131,11 @@
                         </div>
                         <p class="my-2 font-weight-light">
                             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
-                        <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" class="btn btn-primary stretched-link">Mirar platos</a>
                     </div>
                 </div>
+                </a>
             </div>
+
         @endforeach
     </div>
 
@@ -143,23 +166,8 @@
     {{-- Paginación --}}
 
 </div>
-<div class="form-group container">
-        <div class="hubicacion_controls">
-          Latitud : <input type="text" name="txtlati" id="txtlati">
-          longitud : <input type="text" name="txtlong" id="txtlong">
-        </div>
 
-        <center>
-            <div class="map_container">
-                <div id="map">
-
-                </div>
-                <button class="btn btn-primary" type="button" class="btnActual" name="button" onclick="localizar()">Ubicacion Actual</button>
-            </div>
-
-        </center>
-</div>
-
+<button type="button" onclick="notificar()">Enviar una notificaicon</button>
 @include('includes/footer')
 <script>
             var map = L.map('map');
@@ -186,9 +194,35 @@
       // cos(radians(latitud)) * cos(radians(longitud) - radians(-77.0276488)) + sin(radians(-12.0797741)) *
       // sin(radians(latitud)))) AS distance FROM marcadores HAVING distance < 1 ORDER BY distance;";
       //
+var btnShow=document.querySelector('#btnShow');
+btnShow.addEventListener('click',function(){
+ var mapContenedor=document.querySelector('#contenedor_mapa');
+ mapContenedor.style.display="block";
+});
 
 
+document.addEventListener("DOMContentLoaded",function() {
+    if (!Notification) {
+        alert("Las notificaciones no estan soportadas en tu navegador")
+        return
+    }
+    if(Notification.permission!=="granted")
+        Notification.requestPermission()
+});
 
+function notificar() {
+    if (Notification.permission!=="granted") {
+        Notification.requestPermission();
+    }else {
+        var notificacion=new Notification("titulo de mi notificacion",{
+            icon:"img.jpg",
+            body:"Este es el contenido de la notificacion"
+        });
+        notificacion.onclick=function(){
+            window.open("/");
+        }
+    }
+}
 
 </script>
 

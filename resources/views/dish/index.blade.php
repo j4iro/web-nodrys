@@ -15,6 +15,10 @@
         <div class="col-12 text-center">
             <h1>Platos del Restaurante: "{{$restaurant->name}}"</h1>
         </div>
+        <div class="card ">
+            {{$restaurant->description}}
+        </div>
+        <img src="{{route('restaurant.image',["filename"=>$restaurant->image])}}" alt="">
     </div>
 
     <div class="row mt-3">
@@ -32,11 +36,19 @@
             </div>
         @endforeach
     </div>
+    @if (count($dishes)!=0)
+        <div class="row">
+            <div class="col-3">
+                <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
+                <input type="submit" class="btn btn-primary"  name="addcarrito" value="Añadir al carrito">
+            </div>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-3">
             <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
-            <input type="submit" class="btn btn-primary"  name="addcarrito" value="Añadir al carrito">
+            <input type="submit" class="btn btn-primary"  name="addcarrito" value="Reservar lugar">
         </div>
     </div>
 
@@ -44,4 +56,3 @@
 </div>
 
 @endsection
-
