@@ -6,20 +6,25 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
       <style media="screen">
-          #map{
-              /* width: 100%; */
-              height: 400px;
-          }
+            #map{
+                height: 400px;
+            }
           .btnActual{
               position: absolute;
               z-index: 99;
               right: 0;
           }
-          /* .map_container{
-            position: relative;
-          } */
+          #map{
+              height: 0;
+          }
+          #map.show{
+              height: 400px;
+              transition: 1.5s;
+          }
+
       </style>
 @endsection
 
@@ -140,7 +145,23 @@
 
 <button type="button" onclick="notificar()">Enviar una notificaicon</button>
 @include('includes/footer')
-<script>
+<script type="text/javascript">
+
+            var mapContenedor=document.querySelector('#map');
+
+            var btnShow=document.querySelector('#btnShow');
+            btnShow.addEventListener('click',function(){
+                    if(mapContenedor.classList.contains('show')){
+                        mapContenedor.classList.remove('show');
+                    }else{
+                        mapContenedor.classList.add('show');
+                    }
+
+
+
+
+            });
+
             var map = L.map('map');
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
               attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
@@ -161,39 +182,31 @@
 
              @endforeach
 
-      //$sql="SELECT restaurante, latitud, longitud, ( 6371 * acos(cos(radians(-12.0797741)) *
-      // cos(radians(latitud)) * cos(radians(longitud) - radians(-77.0276488)) + sin(radians(-12.0797741)) *
-      // sin(radians(latitud)))) AS distance FROM marcadores HAVING distance < 1 ORDER BY distance;";
-      //
-var btnShow=document.querySelector('#btnShow');
-btnShow.addEventListener('click',function(){
- var mapContenedor=document.querySelector('#contenedor_mapa');
- mapContenedor.style.display="block";
-});
 
 
-document.addEventListener("DOMContentLoaded",function() {
-    if (!Notification) {
-        alert("Las notificaciones no estan soportadas en tu navegador")
-        return
-    }
-    if(Notification.permission!=="granted")
-        Notification.requestPermission()
-});
 
-function notificar() {
-    if (Notification.permission!=="granted") {
-        Notification.requestPermission();
-    }else {
-        var notificacion=new Notification("titulo de mi notificacion",{
-            icon:"img.jpg",
-            body:"Este es el contenido de la notificacion"
-        });
-        notificacion.onclick=function(){
-            window.open("/");
-        }
-    }
-}
+            document.addEventListener("DOMContentLoaded",function() {
+                if (!Notification) {
+                    alert("Las notificaciones no estan soportadas en tu navegador")
+                    return
+                }
+                if(Notification.permission!=="granted")
+                    Notification.requestPermission()
+            });
+
+            function notificar() {
+                if (Notification.permission!=="granted") {
+                    Notification.requestPermission();
+                }else {
+                    var notificacion=new Notification("titulo de mi notificacion",{
+                        icon:"img.jpg",
+                        body:"Este es el contenido de la notificacion"
+                    });
+                    notificacion.onclick=function(){
+                        window.open("/");
+                    }
+                }
+            }
 
 </script>
 
