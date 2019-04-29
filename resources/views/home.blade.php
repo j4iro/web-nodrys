@@ -84,13 +84,9 @@
         </div>
 
     </div>
-<<<<<<< HEAD
-    <button class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" onclick="localizar()">
-=======
+
     <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
         <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
->>>>>>> 18e6e0bba3586ba03781166a492e553cf9304d47
     </button>
 
 
@@ -161,10 +157,15 @@
 
 <button type="button" onclick="notificar()">Enviar una notificaicon</button>
 @include('includes/footer')
-<<<<<<< HEAD
-<script>
-=======
+
 <script type="text/javascript">
+            var map = L.map('map');
+            var marker=L.marker();
+            var circle= L.circle();
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+              maxZoom: 25
+            }).addTo(map);
 
             var mapContenedor=document.querySelector('#map');
 
@@ -174,40 +175,35 @@
             btnShow.addEventListener('click',function(){
                         mapContenedor.classList.toggle('show');
                         btnActual.classList.toggle('show');
+                        localizar();
+
+
+
             });
->>>>>>> 18e6e0bba3586ba03781166a492e553cf9304d47
 
-            var map = L.map('map');
-            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-              maxZoom: 25
-            }).addTo(map);
-
-            if (navigator.geolocation) {
-                 navigator.geolocation.getCurrentPosition(mostrarUbicacion);
-            }
 
             function localizar(){
+                if (navigator.geolocation) {
+                     navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+                }
                 const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
                 setTimeout(() => {
                   navigator.geolocation.clearWatch(watcher);
               }, 10);
             }
-            localizar();
-
-
 
             function mostrarUbicacion (ubicacion) {
                const lng = ubicacion.coords.longitude;
                const lat = ubicacion.coords.latitude;
-               map.setView([lat,lng],14);
-               var circle = L.circle([lat, lng], {
+               map.setView([lat,lng],15);
+               map.removeLayer(circle);
+               circle = L.circle([lat, lng], {
                    color: '#0064FF',
                    fillColor: '#0075CC',
                    fillOpacity: 0.5,
                    radius: 1000
                }).addTo(map);
-               var circle = L.circle([lat, lng], {
+               var cir = L.circle([lat, lng], {
                    color: 'red',
                    fillColor: 'red',
                    fillOpacity: 0.5,
@@ -217,62 +213,32 @@
                .setLatLng([lat, lng])
                .setContent("<center><b>Hola!</b><br>Estas aquí</center>")
                .openOn(map);
+
             }
 
+            @foreach ($restaurants as $restaurant)
+
+                var n="{{$restaurant->name}}";
+                var lat={{$restaurant->latitude}};
+                var lon={{$restaurant->longitude}};
+                var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
+                var ruta='{{ route("restaurant.detalle",["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}';
+
+                marker = L.marker([lat,lon]).addTo(map);
+                marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
+
+            @endforeach
+            map.removeLayer(marker);
 
 
 
-             @foreach ($restaurants as $restaurant)
-
-                 var n="{{$restaurant->name}}";
-                 var lat={{$restaurant->latitude}};
-                 var lon={{$restaurant->longitude}};
-                 var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
-                 var ruta='{{ route("restaurant.detalle",["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}';
-
-                 var marker = L.marker([lat,lon]).addTo(map);
-                 marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
-
-             @endforeach
 
 
 
 
-<<<<<<< HEAD
-      //$sql="SELECT restaurante, latitud, longitud, ( 6371 * acos(cos(radians(-12.0797741)) *
-      // cos(radians(latitud)) * cos(radians(longitud) - radians(-77.0276488)) + sin(radians(-12.0797741)) *
-      // sin(radians(latitud)))) AS distance FROM marcadores HAVING distance < 1 ORDER BY distance;";
-      //
-var btnShow=document.querySelector('#btnShow');
-btnShow.addEventListener('click',function(){
- var mapContenedor=document.querySelector('#contenedor_mapa');
- mapContenedor.style.display="block";
-});
 
 
-document.addEventListener("DOMContentLoaded",function() {
-    if (!Notification) {
-        alert("Las notificaciones no estan soportadas en tu navegador")
-        return
-    }
-    if(Notification.permission!=="granted")
-        Notification.requestPermission()
-});
 
-function notificar() {
-    if (Notification.permission!=="granted") {
-        Notification.requestPermission();
-    }else {
-        var notificacion=new Notification("titulo de mi notificacion",{
-            icon:"img.jpg",
-            body:"Este es el contenido de la notificacion"
-        });
-        notificacion.onclick=function(){
-            window.open("/");
-        }
-    }
-}
-=======
             document.addEventListener("DOMContentLoaded",function() {
                 if (!Notification) {
                     alert("Las notificaciones no estan soportadas en tu navegador")
@@ -295,7 +261,7 @@ function notificar() {
                     }
                 }
             }
->>>>>>> 18e6e0bba3586ba03781166a492e553cf9304d47
+
 
 </script>
 
