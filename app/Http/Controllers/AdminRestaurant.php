@@ -10,7 +10,7 @@ class AdminRestaurant extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+       // $this->middleware('auth');
     }
 
     public function index()
@@ -41,10 +41,12 @@ class AdminRestaurant extends Controller
     public function update(Request $request)
     {
         //Conseguir restaurante identificado
-        // $user = \Auth::user();
+        $user = \Auth::user();
         $id = 1;
-
-        return view('admin-restaurant.datos');
+        $datos=auth()->user()->id;//id_restaurant
+        $datos=Restaurant::all()->where('user_id','=',$datos);
+        
+        return view('admin-restaurant.datos',compact('datos'));
     }
     public function reportes()
     {
