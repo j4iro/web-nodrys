@@ -67,12 +67,17 @@
 
         <div class="map_container">
             <div id="map"">
+
             </div>
+
         </div>
 
     </div>
+    <button class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" >
+    </button>
 
-    <button class="btn btn-primary btn-actual" type="button" class="btnActual" name="button" onclick="localizar()">Regresar</button>
+
 
     <div class="row mb-4 mt-2">
             {{csrf_field()}}

@@ -280,6 +280,15 @@ class AdminController extends Controller
       $asigned_role->user_id = $user->id;
       $asigned_role->role_id = 2;
 
+     //Actualizar la solicitud si la hay a estado completado
+     $solicitud = $request->input('solicitud');
+     if (isset($solicitud))
+     {
+        $solicitud = RequestRestaurant::findOrFail($solicitud);
+        $solicitud->state = 0;
+        $solicitud->update();
+     }
+
       //Falta revisar haber si funciona correctamente
       if ($request->input('editar')=='editar')
       {
@@ -322,7 +331,7 @@ class AdminController extends Controller
             'distritos' => $distritos,
             'categorias' => $categorias,
             'restaurante'=>$restaurante,
-            'solicitud' => 1
+            'solicitud' => $id
         ]);
     }
 
