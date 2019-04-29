@@ -1,5 +1,34 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+       crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+      crossorigin=""></script>
+      <style media="screen">
+          #map{
+              width: 80%;
+              height: 400px;
+
+          }
+          .hubicacion_controls{
+              display: none;
+          }
+          .btnActual{
+              position: absolute;
+              z-index: 99;
+              right: 0;
+          }
+          .map_container{
+            position: relative;
+          }
+      </style>
+@endsection
+@section('title')
+    Solicitud de registro
+@endsection
 @section('content')
 <div class="container my-4">
     <div class="row justify-content-center">
@@ -68,6 +97,24 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group container">
+                                <div class="hubicacion_controls">
+                                  Latitud : <input type="text" name="txtlati" id="txtlati">
+                                  longitud : <input type="text" name="txtlong" id="txtlong">
+                                </div>
+
+                                <center>
+                                    <div class="map_container">
+                                        <div id="map">
+
+                                        </div>
+                                        <button class="btn btn-primary" type="button" class="btnActual" name="button" onclick="localizar()">Ubicacion Actual</button>
+                                    </div>
+
+                                </center>
+
+
+                        </div>
 
                         <div class="form-group row">
                             <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
@@ -131,6 +178,7 @@
                             <div class="col-md-6">
 
                                 <select class="form-control" name="district_id_name" id="type" required>
+
                                     @foreach ($distritos as $distrito)
                                         <option value="{{$distrito->id}}" @if(isset($restaurante->district_id) && $distrito->id==$restaurante->district_id) {{'selected'}} @endif >{{$distrito->name}}</option>
                                     @endforeach
@@ -176,6 +224,13 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="ruc" class="col-md-4 col-form-label text-md-right" >RUC</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control-file" name="ruc" placeholder="RUC" required >
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -192,5 +247,103 @@
     </div>
 </div>
 
+<script>
 
+              var txtLati=document.getElementById('txtlati');
+              var txtLong=document.getElementById('txtlong');
+              var marker=L.marker();
+
+              var map = L.map('map');
+             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                 maxZoom: 18
+             }).addTo(map);
+
+
+
+              function localizar(){
+                const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+                setTimeout(() => {
+                  navigator.geolocation.clearWatch(watcher);
+                }, 10);
+              }
+
+
+              if (navigator.geolocation) {
+                   navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+              }
+
+              const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+
+              setTimeout(() => {
+                navigator.geolocation.clearWatch(watcher);
+              }, 10);
+
+
+
+             function mostrarUbicacion (ubicacion) {
+                const lng = ubicacion.coords.longitude;
+                const lat = ubicacion.coords.latitude;
+                txtLati.value=lat;
+                txtLong.value=lng;
+                console.log(`longitud: ${ lng } | latitud: ${ lat }`);
+
+                map.setView([lat,lng],14);
+                var circle = L.circle([lat, lng], {
+                    color: '#0064FF',
+                    fillColor: '#0075CC',
+                    fillOpacity: 0.5,
+                    radius: 50
+                }).addTo(map);
+                var circle = L.circle([lat, lng], {
+                    color: 'red',
+                    fillColor: 'red',
+                    fillOpacity: 0.5,
+                    radius: 1
+                }).addTo(map);
+                var popup = L.popup()
+                .setLatLng([lat, lng])
+                .setContent("<b>Hola!</b><br>Estas aquí")
+                .openOn(map);
+                map.removeLayer(marker);
+                marker = L.marker([lat, lng], {draggable: true}).addTo(map);
+                marker.on('drag', onMapClick);
+             }
+
+
+
+
+            function onMapClic(e) {
+              var valor=e.latlng.toString().replace(/ /g, "");
+              var n1=valor.indexOf("(")+1;
+              var nExtraer=(valor.indexOf(")"))-n1;
+              var coordenadas=valor.substr(n1,nExtraer).split(",")
+              txtLati.value=coordenadas[0];
+              txtLong.value=coordenadas[1];
+              console.log(coordenadas);
+
+              map.removeLayer(marker);
+              marker = L.marker([coordenadas[0],coordenadas[1]], {draggable: true}).addTo(map);
+              marker.bindPopup("<b>Hola!</b><br>Esta es mi ubicación.").openPopup();
+              marker.on('drag', onMapClick);
+
+            }
+            map.on('click', onMapClic);
+
+            function onMapClick(e) {
+              var popup = L.popup();
+              var valor=e.latlng.toString().replace(/ /g, "");
+              var n1=valor.indexOf("(")+1;
+              var nExtraer=(valor.indexOf(")"))-n1;
+              var coordenadas=valor.substr(n1,nExtraer).split(",")
+              popup
+                    .setLatLng(e.latlng)
+                    .setContent("" + valor)
+                    .openOn(map);
+                    console.log(coordenadas);
+              txtLati.value=coordenadas[0];
+              txtLong.value=coordenadas[1];
+            }
+
+         </script>
 @endsection

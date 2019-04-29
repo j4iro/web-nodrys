@@ -66,7 +66,7 @@ form .avatar
 .bg-intro
 {
     height: 300px;
-    background-image: url('../images/img-intro_dese2.png');
+    background-image: url('../images/img-intro_dese.png');
     object-fit: cover;
 }
 
@@ -109,3 +109,22 @@ esto es para la camara  */
     top: 0;
     right: 0;
 }
+
+body
+{
+    /* background-color: rgb(251, 240, 227) */
+    background-color:white;
+}
+
+.card
+{
+    background: #f9dfc2;
+    color: black;
+    border-color:  #d19147
+}
+/* 
+.btn-actual
+{
+    margin-top: -2rem;
+    z-index: inherit;
+} */

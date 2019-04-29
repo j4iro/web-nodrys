@@ -1,17 +1,32 @@
 @extends('layouts.app-a')
+@section('scripts')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+       crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+      crossorigin=""></script>
+      <style media="screen">
+          #map{
+              width: 80%;
+              height: 400px;
 
+          }
+          .hubicacion_controls{
+              display: none;
+          }
+          .btnActual{
+              position: absolute;
+              z-index: 99;
+              right: 0;
+          }
+          .map_container{
+            position: relative;
+          }
+      </style>
+@endsection
 @section('content')
-
-<div class="container-fluid mt-3">
     <form action="{{route('admin.restaurant.save')}}" method="post" enctype="multipart/form-data">
-
-    <!--Formulario de Registro-->
-    <div class="row ">
-
-    @include('includes/slidebar-admin')
-
-    <div class="col-12 col-md-9  col-lg-7 mb-3">
-
     <div class="card shadow p-4 ">
 
         <div class="row">
@@ -104,6 +119,39 @@
                     <input type="email" class="form-control" name="email_ingreso" value="{{ $user->email ?? '' }}" placeholder="Email de acceso al panel" id="address" required>
                 </div>
             </div>
+            <div class="form-row">
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="address">RUC</label>
+                    <input type="text" class="form-control" name="ruc" value="{{ $restaurante->ruc ?? '' }}" placeholder="Dirección" id="ruc" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="address">Latitud</label>
+                    <input type="text" class="form-control" name="latitud" value="{{ $restaurante->latitude?? '' }}" placeholder="Dirección" id="latitud" required>
+                </div>
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="address">Longitud</label>
+                    <input type="text" class="form-control" name="longitud" value="{{ $restaurante->longitude ?? '' }}" placeholder="Dirección" id="longitud" required>
+                </div>
+            </div>
+            <div class="form-group container">
+                    <div class="hubicacion_controls">
+                      Latitud : <input type="text" name="txtlati" id="txtlati">
+                      longitud : <input type="text" name="txtlong" id="txtlong">
+                    </div>
+
+                    <center>
+                        <div class="map_container">
+                            <div id="map">
+
+                            </div>
+                            <button class="btn btn-primary" type="button" class="btnActual" name="button" onclick="localizar()">Ubicacion Actual</button>
+                        </div>
+
+                    </center>
+            </div>
 
             <div class="form-row">
                 <div class="form-group col-12  col-md-6 ">
@@ -149,12 +197,44 @@
 
 
         </div>
-    </div>
-</div>
-<!--Formulario de Registro-->
-
-</div>
 
 </form>
+
+<script>
+
+            var txtnombre=document.getElementById('name').value;
+            var txtLati=document.getElementById('latitud');
+            var txtLong=document.getElementById('longitud');
+
+            var lati=parseFloat(txtLati.value);
+            var long=parseFloat(txtLong.value);
+
+            var marker=L.marker();
+
+            var map = L.map('map');
+             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                 maxZoom: 18
+             }).addTo(map);
+
+
+             ubicaionRes();
+
+             function ubicaionRes(){
+                 map.setView([lati,long],15);
+                 map.removeLayer(marker);
+                 marker = L.marker([lati,long], {draggable: true}).addTo(map);
+                  marker.on('drag', onMapClic);
+             }
+
+            function onMapClic(e) {
+                console.log(e);
+                    txtLati.value=e.latlng.lat;
+                    txtLong.value=e.latlng.lng;
+            }
+
+
+
+         </script>
 
 @endsection

@@ -222,6 +222,9 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 1,
             'image' => 'restaurante-la-cucharita-tapas-bar.jpg',
             'user_id' => 6,
+            'ruc'=>'12345678910',
+            'longitude'=>'-77.022294',
+            'latitude'=>'-12.077509'
         ]);
 
         // Usuario N6
@@ -256,6 +259,9 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 3,
             'image' => 'restaurante-akasuka.png',
             'user_id' => 7,
+            'ruc'=>'12345678911',
+            'longitude'=>'-77.02529',
+            'latitude'=>'-12.074697'
         ]);
 
         // Usuario N7
@@ -290,6 +296,9 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 6,
             'image' => 'restaurante-hotel-b.png',
             'user_id' => 8,
+            'ruc'=>'12345678912',
+            'longitude'=>'-77.035799',
+            'latitude'=>'-12.083637'
         ]);
 
         // Usuario N8
@@ -324,6 +333,10 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 6,
             'image' => 'restaurante-las-palmeras.png',
             'user_id' => 9,
+
+            'ruc'=>'12345678913',
+            'longitude'=>'-77.035259',
+            'latitude'=>'-12.086825'
         ]);
 
         // Usuario N9
@@ -358,6 +371,9 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 5,
             'image' => 'restaurante-la-piccolina.jpg',
             'user_id' => 10,
+            'ruc'=>'12345678914',
+            'longitude'=>'-77.027795',
+            'latitude'=>'-12.084475'
         ]);
 
         // Usuario N10
@@ -392,6 +408,10 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 4,
             'image' => 'restaurante_305-sur_barranco.jpg',
             'user_id' => 11,
+
+            'ruc'=>'12345678915',
+            'longitude'=>'-77.031354',
+            'latitude'=>'-12.084098'
         ]);
 
         // Usuario N11
@@ -426,6 +446,9 @@ class InsertAllTablesSeeder extends Seeder
             'category_id' => 4,
             'image' => 'restaurante_la-trastienda_barranco_jpg3.jpg',
             'user_id' => 12,
+            'ruc'=>'12345678916',
+            'longitude'=>'-77.023335',
+            'latitude'=>'-12.082714'
         ]);
 
         // Usuario N12
