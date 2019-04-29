@@ -6,20 +6,31 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
       <style media="screen">
-          #map{
-              /* width: 100%; */
-              height: 400px;
-          }
+
           .btnActual{
               position: absolute;
               z-index: 99;
               right: 0;
           }
-          /* .map_container{
-            position: relative;
-          } */
+          #map{
+              height: 0;
+              transition: 0.5s;
+          }
+          #btnActual{
+              display: none;
+          }
+          #map.show{
+          height: 400px;
+          transition: 0.5s;
+          }
+          #btnActual.show{
+              display: block;
+              transition: 0.5s;
+          }
+
       </style>
 @endsection
 
@@ -73,8 +84,13 @@
         </div>
 
     </div>
+<<<<<<< HEAD
     <button class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
         <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" onclick="localizar()">
+=======
+    <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+>>>>>>> 18e6e0bba3586ba03781166a492e553cf9304d47
     </button>
 
 
@@ -145,7 +161,21 @@
 
 <button type="button" onclick="notificar()">Enviar una notificaicon</button>
 @include('includes/footer')
+<<<<<<< HEAD
 <script>
+=======
+<script type="text/javascript">
+
+            var mapContenedor=document.querySelector('#map');
+
+            var btnShow=document.querySelector('#btnShow');
+            var btnActual=document.querySelector('#btnActual');
+
+            btnShow.addEventListener('click',function(){
+                        mapContenedor.classList.toggle('show');
+                        btnActual.classList.toggle('show');
+            });
+>>>>>>> 18e6e0bba3586ba03781166a492e553cf9304d47
 
             var map = L.map('map');
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -208,6 +238,7 @@
 
 
 
+<<<<<<< HEAD
       //$sql="SELECT restaurante, latitud, longitud, ( 6371 * acos(cos(radians(-12.0797741)) *
       // cos(radians(latitud)) * cos(radians(longitud) - radians(-77.0276488)) + sin(radians(-12.0797741)) *
       // sin(radians(latitud)))) AS distance FROM marcadores HAVING distance < 1 ORDER BY distance;";
@@ -241,6 +272,30 @@ function notificar() {
         }
     }
 }
+=======
+            document.addEventListener("DOMContentLoaded",function() {
+                if (!Notification) {
+                    alert("Las notificaciones no estan soportadas en tu navegador")
+                    return
+                }
+                if(Notification.permission!=="granted")
+                    Notification.requestPermission()
+            });
+
+            function notificar() {
+                if (Notification.permission!=="granted") {
+                    Notification.requestPermission();
+                }else {
+                    var notificacion=new Notification("titulo de mi notificacion",{
+                        icon:"img.jpg",
+                        body:"Este es el contenido de la notificacion"
+                    });
+                    notificacion.onclick=function(){
+                        window.open("/");
+                    }
+                }
+            }
+>>>>>>> 18e6e0bba3586ba03781166a492e553cf9304d47
 
 </script>
 
