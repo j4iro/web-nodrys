@@ -139,7 +139,7 @@
                 <tbody>
                     <tr>
                         <td colspan="2" style="text-align:center;">
-                            <img class="mt-4" src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(300)->margin(0)->generate($data2->id.$data2->created_at.$data2->name)) }} ">
+                            <img class="mt-4" src="data:image/png;base64, {{ base64_encode(\QrCode::format('png')->size(300)->margin(0)->generate($data2->id.",".$data2->created_at.",".$data2->name)) }} ">
                         </td>
                     </tr>
                 </tbody>
