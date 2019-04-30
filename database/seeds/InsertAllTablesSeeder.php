@@ -494,6 +494,182 @@ class InsertAllTablesSeeder extends Seeder
             'restaurant_id'=>1
         ]);
 
+        //RESTAURANT LAS PALMERAS
+         Dish::create([
+            'name'=>'Arroz a la chiclayana',
+            'price'=>'18.99',
+            'time'=>'10',
+            'image'=>'arrozAlaChiclayana.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>4
+        ]);
+
+        Dish::create([
+            'name'=>'Arroz chaufa peruano',
+            'price'=>'17.55',
+            'time'=>'10',
+            'image'=>'arrozChaufaPeruano.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>4
+        ]);
+       Dish::create([
+            'name'=>'Cau - Cau',
+            'price'=>'13.99',
+            'time'=>'10',
+            'image'=>'caucau.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>4
+        ]);
+         Dish::create([
+            'name'=>'Causa a la limeña',
+            'price'=>'226.88',
+            'time'=>'10',
+            'image'=>'causaLimena.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>4
+        ]);
+           Dish::create([
+            'name'=>'Ceviche',
+            'price'=>'20.30',
+            'time'=>'10',
+            'image'=>'1553978205ceviche-piura.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>4
+        ]);
+
+
+
+
+             Dish::create([
+            'name'=>'Coliflor con sésamo',
+            'price'=>'28.99',
+            'time'=>'10',
+            'image'=>'coliflorConSesamo.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>4
+        ]);
+               Dish::create([
+            'name'=>'Espárragos trigueros con vinagre balsámico y tomate',
+            'price'=>'35.55',
+            'time'=>'10',
+            'image'=>'esparragoTriguero.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>4
+        ]);
+           Dish::create([
+            'name'=>'Tartaletas de queso de cabra con cebolla carmelizada',
+            'price'=>'32.55',
+            'time'=>'10',
+            'image'=>'tartaletaQueso.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>4
+        ]);
+        Dish::create([
+            'name'=>'Tabule de quinua',
+            'price'=>'39',
+            'time'=>'10',
+            'image'=>'tabuleQuinua.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>4
+        ]);
+        Dish::create([
+            'name'=>'Tostadas de champiñones al ajillo',
+            'price'=>'28.99',
+            'time'=>'10',
+            'image'=>'tostadasChampinones.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>4
+        ]);
+
+
+        //Restaurante pil¿colina
+         Dish::create([
+            'name'=>'Chupe de camarones',
+            'price'=>'37.00',
+            'time'=>'10',
+            'image'=>'chupeCamarones.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>5
+        ]);
+
+        Dish::create([
+            'name'=>'Empanadas rellenas',
+            'price'=>'15.99',
+            'time'=>'10',
+            'image'=>'empanadasRellenas.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>5
+        ]);
+       Dish::create([
+            'name'=>'Escabeche',
+            'price'=>'17.11',
+            'time'=>'10',
+            'image'=>'escabeche.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>5
+        ]);
+         Dish::create([
+            'name'=>'Juane peruano',
+            'price'=>'19.88',
+            'time'=>'10',
+            'image'=>'juanePeruano.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>5
+        ]);
+           Dish::create([
+            'name'=>'Lomo saltado',
+            'price'=>'18.30',
+            'time'=>'10',
+            'image'=>'lomoSaltso.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>5
+        ]);
+
+
+
+
+             Dish::create([
+            'name'=>'Muffins de calabaza',
+            'price'=>'19.99',
+            'time'=>'10',
+            'image'=>'muffinsCalabaza.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>5
+        ]);
+               Dish::create([
+            'name'=>'Revuelto de boniatos	caramelizados con manzana',
+            'price'=>'35.55',
+            'time'=>'10',
+            'image'=>'revueltoBoniatos.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>5
+        ]);
+           Dish::create([
+            'name'=>'Ensalada caprese de melocotón',
+            'price'=>'38.00',
+            'time'=>'10',
+            'image'=>'ensaladaCaprese.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>5
+        ]);
+        Dish::create([
+            'name'=>'Hummus auténtico',
+            'price'=>'16.98',
+            'time'=>'10',
+            'image'=>'ummus.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>5
+        ]);
+        Dish::create([
+            'name'=>'Paella de verduras',
+            'price'=>'30.99',
+            'time'=>'10',
+            'image'=>'paella.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>5
+        ]);      
+
+
 
 
     }
