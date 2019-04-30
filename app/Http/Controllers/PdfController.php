@@ -12,20 +12,22 @@ use App\Dish;
 
 class PdfController extends Controller
 {
-    public function crearPDF($datos, $vistaurl, $tipo, $nombrePDF,$otroDato = null)
+    public function crearPDF($datos, $vistaurl, $tipo, $nombrePDF,$otroDato = null,$papel = "A4")
     {
         $data = $datos;
         $data2 = $otroDato;
         $date = date('Y-m-d');
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadView($vistaurl,compact('data', 'date','data2'));
-        $pdf->setPaper('A5');
+        $pdf->setPaper($papel);
 
         switch($tipo)
         {
             case 'ver': return $pdf->stream($nombrePDF);
+            // case 'ver': echo  'puto';die();
             case 'descargar': return $pdf->download($nombrePDF.'.pdf');
         }
+
     }
 
     public function reporteRestaurantes($tipo)
@@ -170,7 +172,7 @@ class PdfController extends Controller
         ->where('details_orders.order_id',$id)
         ->get();
 
-        return $this->crearPDF($details, $vistaurl, $tipo,$nombrePDF, $order);
+        return $this->crearPDF($details, $vistaurl, $tipo,$nombrePDF, $order,"A5");
     }
 
 }

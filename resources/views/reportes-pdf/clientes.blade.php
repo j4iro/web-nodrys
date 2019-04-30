@@ -5,102 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
-    <style>
-
-        /* @import url('https://fonts.googleapis.com/css?family=Acme'); */
-
-        h1, h3
-        {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .table
-        {
-            font-size: 0.85rem;
-        }
-
-        .encabezado
-        {
-            position: fixed;
-        }
-
-        .table-resultados
-        {
-            width: 30%;
-        }
-
-        body
-        {
-            background: white;
-        }
-
-    </style>
 </head>
 <body>
     <div class="container-fluid">
+    <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
+    <center>
+        <strong >Reporte Clientes Registrados</strong>
+    </center>
 
-        <div class="row ">
-            <div class="col-6 ">
-                <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
-            </div>
-        </div>
+        <table >
+            <thead class="bg-plomo">
+                <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Celular</th>
+                <th>Distrito</th>
+                <th>F. Registro</th>
+                </tr>
+            </thead>
 
-        <div class="row mt-3">
-            <div class="col-12 text-center">
-                <strong >Reporte Clientes Registrados</strong>
-            </div>
-        </div>
+            <tbody>
 
-            <table class="table table-sm mt-5">
-                <thead class="thead-light ">
-                    <tr>
-                    <th>#</th>
-                    <th>Cliente</th>
-                    <th>Contacto</th>
-                    <th>Distrito</th>
-                    <th>F. Registro</th>
+                <?php $cantidad=0; ?>
+
+                @foreach ($data as $cliente)
+                <?php $cantidad++; ?>
+                        <tr>
+                        <th>{{$cantidad}}</th>
+                        <td>{{$cliente->name}} {{$cliente->surname}}</td>
+                        <td>{{$cliente->email}}</td>
+                        <td>{{$cliente->telephone}}</td>
+                        <td>{{$cliente->distrito}}</td>
+                        <td class="text-center">{{ substr($cliente->created_at,0,10) }}</td>
                     </tr>
-                </thead>
+                @endforeach
 
-                <tbody>
+            </tbody>
+        </table>
 
-                    <?php $cantidad=0; ?>
+    <table class="w-50" >
+        <thead class="bg-plomo" >
+            <tr><th colspan="2">Resultados</th></tr>
+        </thead>
 
-                    @foreach ($data as $cliente)
-                    <?php $cantidad++; ?>
-                            <tr>
-                            <td>{{$cantidad}}</td>
-                            <td>{{$cliente->name}} {{$cliente->surname}}</td>
-                            <td>{{$cliente->email}} - {{$cliente->telephone}}</td>
-                            <td>{{$cliente->distrito}}</td>
-                            <td>{{ substr($cliente->created_at,0,10) }}</td>
-                        </tr>
-                    @endforeach
+        <tbody>
+            <tr>
+                <th class="text-left" >Fecha de impresión  :</th>
+                <td>{{$date}}</td>
+            </tr>
+            <tr>
+                <th class="text-left" >Total de registros   : </th>
+                <td>{{$cantidad}}</td>
+            </tr>
+        </tbody>
 
-                </tbody>
-            </table>
-
-              <table class="table table-sm mt-5 table-resultados">
-                <thead class="thead-light ">
-                    <tr>
-                        <th colspan="2">Resultados</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td ><strong>Fecha   : </strong></td>
-                        <td><strong>{{$date}}</strong></td>
-                    </tr>
-                    <tr>
-                        <td ><strong>Total de registros   : </strong></td>
-                        <td><strong>{{$cantidad}}</strong></td>
-                    </tr>
-                </tbody>
-
-            </table>
+    </table>
 
 </body>
 </html>

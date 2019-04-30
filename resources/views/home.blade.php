@@ -51,7 +51,7 @@
                 <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
                 <br>
                 <button id="btnShow" type="button"  class="btn btn-dark">
-                    Ver cercanos
+                    Ver cercanos a mí
                 </button>
             </div>
         </div>
@@ -78,7 +78,7 @@
             </div>
 
             <div class="map_container">
-                <div id="map"">
+                <div id="map">
 
                 </div>
             </div>
@@ -89,16 +89,13 @@
     </div>
 
 
-
-
-
     <div class="row mb-4 mt-2">
             {{csrf_field()}}
         <div class="col-6 col-lg-3 pt-2">
             <select name="categoria" class="form-control" id="">
                 <option value="" disabled selected >Categorias</option>
                 @foreach ($categorias as $categoria)
-                    <option value="{{$categoria->id}}"   >{{$categoria->name}}</option>
+                    <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -157,6 +154,7 @@
 
 
 @include('includes/footer')
+
 <script type="text/javascript">
             var map = L.map('map');
             var marker=L.marker();
@@ -233,5 +231,7 @@
             }
 
 </script>
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
 @endsection

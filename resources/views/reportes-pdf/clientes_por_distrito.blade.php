@@ -5,56 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
-    <style>
-
-        /* @import url('https://fonts.googleapis.com/css?family=Acme'); */
-
-        h1, h3
-        {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .table
-        {
-            font-size: 0.85rem;
-        }
-
-        .encabezado
-        {
-            position: fixed;
-        }
-
-        .table-resultados
-        {
-            width: 35%;
-        }
-
-        body
-        {
-            background: white;
-        }
-
-    </style>
 </head>
 <body>
     <div class="container-fluid">
 
-        <div class="row ">
-            <div class="col-6 ">
-                <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
-            </div>
-        </div>
+        <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
+        <center>
+            <strong >Reporte de clientes por distrito</strong>
+        </center>
 
-        <div class="row mt-3">
-            <div class="col-12 text-center">
-                <strong >Reporte de clientes por distrito</strong>
-            </div>
-        </div>
-
-            <table class="table table-sm mt-5">
-                <thead class="thead-light ">
+            <table >
+                <thead class="bg-plomo">
                     <tr>
                     <th>#</th>
                     <th>Nombre</th>
@@ -73,35 +35,33 @@
                     @foreach ($data as $cliente)
                     <?php $cantidad++; ?>
                             <tr>
-                            <td>{{$cantidad}}</td>
+                            <th>{{$cantidad}}</th>
                             <td>{{$cliente->name}}</td>
                             <td>{{$cliente->email}}</td>
                             <td>{{$cliente->telephone}}</td>
                             <td>{{$cliente->distrito}}</td>
-                            <td>{{ substr($cliente->created_at,0,10) }}</td>
+                            <td class="text-center">{{ substr($cliente->created_at,0,10) }}</td>
                         </tr>
                     @endforeach
 
                 </tbody>
             </table>
 
-              <table class="table table-sm mt-5 table-resultados">
-                <thead class="thead-light ">
-                    <tr>
-                        <th colspan="2">Resultados</th>
-                    </tr>
+              <table class="w-50">
+                <thead class="bg-plomo">
+                    <tr><th colspan="2">Resultados</th></tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td><strong>Fecha de impresión :</strong></td>
-                        <td><strong>{{$date}}</strong></td>
+                        <th class="text-left" >Fecha de impresión  :</th>
+                        <td>{{$date}}</td>
                     </tr>
 
                     @foreach ($data2 as $data)
                         <tr class="mb-3 fila-resultados">
-                            <td><strong>{{$data->distrito}}</strong></td>
-                            <td><strong>{{$data->total}}</strong></td>
+                            <th class="text-left" >{{$data->distrito}}</th>
+                            <td>{{$data->total}}</td>
                         </tr>
                     @endforeach
 
@@ -109,6 +69,8 @@
                 </tbody>
 
             </table>
+
+
 
 </body>
 </html>

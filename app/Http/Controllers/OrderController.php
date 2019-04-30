@@ -8,6 +8,7 @@ use App\DetailOrder;
 use App\Card;
 use App\Util;
 use App\Restaurant;
+use App\User;
 
 class OrderController extends Controller
 {
@@ -42,10 +43,11 @@ class OrderController extends Controller
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('orders.restaurant_id',1)
-        ->where('orders.state','completado')
+        ->where('orders.restaurant_id',auth()->user()->id)
+        ->where('orders.state','confirmada')
         ->get();
-
+       //  dd(User::all());
+       // dd($orders->toArray());
         return view('admin-restaurant.pedidos-completados',["pedidos"=>$orders]);
     }
 
@@ -110,7 +112,7 @@ class OrderController extends Controller
             return redirect('admin/restaurant/escanear-qr')->with('order',$order);
         }else {
             //datos invalidos
-            // dd($cadena);
+            //dd($cadena);
             // dd('Esta reserva no existe');
             return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
         }
@@ -153,7 +155,7 @@ class OrderController extends Controller
         }
 
         $stats = Util::statsCarrito();
-
+       
         //Datos del pedido
         $order = new Order();
         $order->restaurant_id = $stats['restaurant_id'];

@@ -4,55 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <title>Reporte - Historial de platos</title>
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
-    <style>
-
-        h1, h3
-        {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .table
-        {
-            font-size: 0.85rem;
-        }
-
-        .encabezado
-        {
-            position: fixed;
-        }
-
-        .table-resultados
-        {
-            width: 35%;
-        }
-
-        body
-        {
-            background: white;
-        }
-
-    </style>
 </head>
 <body>
     <div class="container-fluid">
 
-        <div class="row ">
-            <div class="col-6 ">
-                <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
-            </div>
-        </div>
+        <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
+        <center>
+            <strong >Historial de mis platos</strong>
+        </center>
 
-        <div class="row mt-3">
-            <div class="col-12 text-center">
-                <strong>Historial de mis platos</strong>
-            </div>
-        </div>
-
-            <table class="table table-sm mt-5">
-                <thead class="thead-light ">
+            <table>
+                <thead class="bg-plomo">
                     <tr>
                         <th>#</th>
                         <th>Nombre</th>
@@ -70,7 +34,7 @@
                     @foreach ($data as $plato)
                     <?php $cantidad++; ?>
                             <tr>
-                            <td>{{$cantidad}}</td>
+                            <th>{{$cantidad}}</th>
                             <td>{{$plato->name}}</td>
                             <td>{{$plato->time }} Min.</td>
                             <td>{{$plato->price}}</td>
@@ -82,8 +46,8 @@
                 </tbody>
             </table>
 
-              <table class="table table-sm mt-5 table-resultados">
-                <thead class="thead-light ">
+              <table class="w-50">
+                <thead class="bg-plomo">
                     <tr>
                         <th colspan="2">Resultados</th>
                     </tr>
@@ -91,12 +55,12 @@
 
                 <tbody>
                     <tr>
-                        <td><strong>Fecha de impresión :</strong></td>
-                        <td><strong>{{$date}}</strong></td>
+                        <th class="text-left">Fecha de impresión :</th>
+                        <td>{{$date}}</td>
                     </tr>
                     <tr>
-                        <td ><strong>Total de registros   : </strong></td>
-                        <td><strong>{{$cantidad}}</strong></td>
+                        <th class="text-left">Total de registros   : </th>
+                        <td>{{$cantidad}}</td>
                     </tr>
                 </tbody>
 

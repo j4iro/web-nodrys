@@ -4,57 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <title>Reporte pedidos pendientes</title>
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
-    <style>
-
-        /* @import url('https://fonts.googleapis.com/css?family=Acme'); */
-
-        h1, h3
-        {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .table
-        {
-            font-size: 0.85rem;
-        }
-
-        .encabezado
-        {
-            position: fixed;
-        }
-
-        .table-resultados
-        {
-            width: 35%;
-        }
-
-        body
-        {
-            background: white;
-        }
-
-    </style>
 </head>
 <body>
     <div class="container-fluid">
 
-        <div class="row ">
-            <div class="col-6 ">
-                <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
-            </div>
-        </div>
+         <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
+         <center>
+             <strong>Historial de pedidos pendientes</strong>
+         </center>
 
-        <div class="row mt-3">
-            <div class="col-12 text-center">
-                <strong>Historial de pedidos pendientes</strong>
-            </div>
-        </div>
-
-            <table class="table table-sm mt-5">
-                <thead class="thead-light ">
+            <table >
+                <thead class="bg-plomo">
                     <tr>
                     <th>#</th>
                     <th>Cliente</th>
@@ -75,7 +37,7 @@
                     @foreach ($data as $cliente_pedido)
                     <?php $cantidad++; ?>
                             <tr>
-                            <td>{{$cantidad}}</td>
+                            <th>{{$cantidad}}</th>
                             <td>{{$cliente_pedido->username}} {{$cliente_pedido->usersurname}}</td>
                             <td>{{$cliente_pedido->distrito}}</td>
                             <td>{{$cliente_pedido->created_at}}</td>
@@ -89,8 +51,8 @@
                 </tbody>
             </table>
 
-              <table class="table table-sm mt-5 table-resultados">
-                <thead class="thead-light ">
+              <table class="w-50">
+                <thead class="bg-plomo">
                     <tr>
                         <th colspan="2">Resultados</th>
                     </tr>
@@ -98,16 +60,16 @@
 
                 <tbody>
                     <tr>
-                        <td ><strong>Fecha   : </strong></td>
-                        <td><strong>{{$date}}</strong></td>
+                        <th class="text-left">Fecha de impresión :</th>
+                        <td>{{$date}}</td>
                     </tr>
                     <tr>
-                        <td ><strong>Suma de total:</strong></td>
-                        <td><strong>S/. {{$total}}</strong></td>
+                        <th class="text-left">Suma de total:</th>
+                        <td>S/. {{$total}}</td>
                     </tr>
                     <tr>
-                        <td ><strong>Total de registros   : </strong></td>
-                        <td><strong>{{$cantidad}}</strong></td>
+                        <th class="text-left">Total de registros   : </th>
+                        <td>{{$cantidad}}</td>
                     </tr>
 
                 </tbody>

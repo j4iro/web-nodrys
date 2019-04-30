@@ -5,58 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
-    <style>
 
-        h1, h3
-        {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .table
-        {
-            font-size: 0.85rem;
-        }
-
-        .encabezado
-        {
-            position: fixed;
-        }
-
-        .table-resultados
-        {
-            width: 30%;
-        }
-
-        body
-        {
-            background: white;
-        }
-
-    </style>
 </head>
 <body>
     <div class="container-fluid">
 
-        <div class="row ">
-            <div class="col-6 ">
-                <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
-            </div>
-        </div>
 
-        <div class="row mt-3">
-            <div class="col-12 text-center">
+            <img class="encabezado" src="{{asset('images/favicon/favicon.png')}}" width="50">
+            <center>
                 <strong >Reporte Restaurantes Registrados</strong>
-            </div>
-        </div>
+            </center>
 
-            <table class="table table-sm mt-5">
-                <thead class="thead-light ">
+
+            <table >
+                <thead class="bg-plomo" >
                     <tr>
                     <th>#</th>
                     <th>Nombre</th>
-                    <th>Foto</th>
+                    {{-- <th>Foto</th> --}}
                     <th>Distrito</th>
                     <th>Dirección</th>
                     <th>Ingreso</th>
@@ -70,20 +37,20 @@
                     @foreach ($data as $restaurant)
                     <?php $cantidad++; ?>
                             <tr>
-                            <th scope="row">{{$cantidad}}</th>
-                            <th scope="row">{{$restaurant->name}}</th>
-                            <td><img src="{{ route('restaurant.image',['filename'=>$restaurant->image]) }}" class="rounded shadow-sm" width="50"></td>
+                            <th>{{$cantidad}}</th>
+                            <th class="text-left">{{$restaurant->name}}</th>
+                            {{-- <td><img src="{{ route('restaurant.image',['filename'=>$restaurant->image]) }}" width="50"></td> --}}
                             <td>{{$restaurant->distrito}}</td>
                             <td>{{$restaurant->address}}</td>
-                            <td>{{ substr($restaurant->created_at,0,10) }}</td>
+                            <td class="text-center">{{ substr($restaurant->created_at,0,10) }}</td>
                         </tr>
                     @endforeach
 
                 </tbody>
             </table>
 
-              <table class="table table-sm mt-5 table-resultados">
-                <thead class="thead-light ">
+              <table class="w-50">
+                <thead class="bg-plomo">
                     <tr>
                         <th colspan="2">Resultados</th>
                     </tr>
@@ -91,7 +58,7 @@
 
                 <tbody>
                     <tr>
-                        <td ><strong>Fecha   : </strong></td>
+                        <td ><strong>Fecha de impresión  : </strong></td>
                         <td><strong>{{$date}}</strong></td>
                     </tr>
                     <tr>

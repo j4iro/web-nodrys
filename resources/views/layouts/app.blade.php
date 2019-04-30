@@ -23,8 +23,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @yield('scripts')
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    @yield('scripts')
 </head>
 <body>
     <div id="app">

@@ -20,8 +20,10 @@ class RestaurantController extends Controller
 
     public function buscar(Request $request)
     {
-        $restaurants = Restaurant::where('name',$request->name)
-        ->orWhere('name','like','%'.$request->name.'%')->get();
+        $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')->where('restaurants.name',$request->name)
+        ->orWhere('restaurants.name','like','%'.$request->name.'%')
+        ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+        ->get();
 
         $mje = 'Se muestran '.count($restaurants). ' resultados de "' .  $request->name . '".';
 
@@ -36,7 +38,7 @@ class RestaurantController extends Controller
         ]);
     }
 
-    public function filtro(Request $request) 
+    public function filtro(Request $request)
     {
         if(isset($request->categoria))
         {
