@@ -1,37 +1,43 @@
 @extends('layouts.app')
 @section('scripts')
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-       crossorigin=""/>
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-      crossorigin=""></script>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
 
-      <style media="screen">
+    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">;
+    </script> --}}
 
-          .btnActual{
-              position: absolute;
-              z-index: 99;
-              right: 0;
-          }
-          #map{
-              height: 400px;
-              /* transition: 0.5s; */
-          }
-          #btnActual{
-              display: block;
-          }
-          #map.show{
-          height: 0px;
-          transition: 0.5s;
-          }
-          #btnActual.show{
-              display: none;
-              transition: 0.5s;
-          }
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
-      </style>
+    <style media="screen">
+
+        .btnActual{
+            position: absolute;
+            z-index: 99;
+            right: 0;
+        }
+        #map{
+            height: 400px;
+            /* transition: 0.5s; */
+        }
+        #btnActual{
+            display: block;
+        }
+        #map.show{
+        height: 0px;
+        transition: 0.5s;
+        }
+        #btnActual.show{
+            display: none;
+            transition: 0.5s;
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -232,6 +238,5 @@
 
 </script>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
 @endsection

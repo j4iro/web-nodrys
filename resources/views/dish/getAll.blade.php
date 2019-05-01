@@ -28,7 +28,7 @@
 
     <div class="row">
         <div class="col-12 ">
-            <h5>Busca entre {{count($platos)}} platos para tí</h5>
+            <strong class="navbar-brand">Busca entre {{count($platos)}} platos para tí</strong>
         </div>
     </div>
 

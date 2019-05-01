@@ -58,10 +58,8 @@ class DishController extends Controller
     public function save(Request $request)
     {
 
-        $id = $_SESSION['id_restaurante'];
-        $id_restau = Restaurant::
-        where('user_id',$id)
-        ->first();
+
+        $id_restau = session('id_restaurante');
 
 
       //Instanciar a la tabla platos para setear mas adelante
@@ -75,12 +73,14 @@ class DishController extends Controller
         $dish = new Dish;
       }
 
-      $dish->restaurant_id = $id_restau->id;
+      $dish->restaurant_id = $id_restau;
       $dish->name = $request->input('name');
       $dish->description = $request->input('description');
       $dish->price = $request->input('price');
       $dish->time = $request->input('time');
       $dish->category_dish = $request->input('category_dish');
+      $id_restaurante = session('id_restaurante');
+    //   $dish->restaurant_id = $id_restaurante;
 
       //Guardar la imagen del plato
       $image_path =  $request->file('image');

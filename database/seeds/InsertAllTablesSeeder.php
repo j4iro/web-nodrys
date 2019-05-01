@@ -522,13 +522,13 @@ class InsertAllTablesSeeder extends Seeder
         ]);
          Dish::create([
             'name'=>'Causa a la limeña',
-            'price'=>'226.88',
+            'price'=>'6.88',
             'time'=>'10',
             'image'=>'causaLimena.jpg',
             'category_dish'=>1,
             'restaurant_id'=>4
         ]);
-           Dish::create([
+        Dish::create([
             'name'=>'Ceviche',
             'price'=>'20.30',
             'time'=>'10',
@@ -537,10 +537,7 @@ class InsertAllTablesSeeder extends Seeder
             'restaurant_id'=>4
         ]);
 
-
-
-
-             Dish::create([
+        Dish::create([
             'name'=>'Coliflor con sésamo',
             'price'=>'28.99',
             'time'=>'10',
@@ -548,7 +545,7 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>2,
             'restaurant_id'=>4
         ]);
-               Dish::create([
+        Dish::create([
             'name'=>'Espárragos trigueros con vinagre balsámico y tomate',
             'price'=>'35.55',
             'time'=>'10',
@@ -556,7 +553,7 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>2,
             'restaurant_id'=>4
         ]);
-           Dish::create([
+        Dish::create([
             'name'=>'Tartaletas de queso de cabra con cebolla carmelizada',
             'price'=>'32.55',
             'time'=>'10',
@@ -616,7 +613,7 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>1,
             'restaurant_id'=>5
         ]);
-           Dish::create([
+        Dish::create([
             'name'=>'Lomo saltado',
             'price'=>'18.30',
             'time'=>'10',
@@ -628,7 +625,7 @@ class InsertAllTablesSeeder extends Seeder
 
 
 
-             Dish::create([
+        Dish::create([
             'name'=>'Muffins de calabaza',
             'price'=>'19.99',
             'time'=>'10',
@@ -636,7 +633,7 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>2,
             'restaurant_id'=>5
         ]);
-               Dish::create([
+        Dish::create([
             'name'=>'Revuelto de boniatos	caramelizados con manzana',
             'price'=>'35.55',
             'time'=>'10',
@@ -644,7 +641,7 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>2,
             'restaurant_id'=>5
         ]);
-           Dish::create([
+        Dish::create([
             'name'=>'Ensalada caprese de melocotón',
             'price'=>'38.00',
             'time'=>'10',
@@ -667,10 +664,74 @@ class InsertAllTablesSeeder extends Seeder
             'image'=>'paella.jpg',
             'category_dish'=>2,
             'restaurant_id'=>5
-        ]);      
+        ]);
+        //platos 305 sur
+        Dish::create([
+            'name'=>'Tartare de carne',
+            'price'=>'15.99',
+            'time'=>'17',
+            'image'=>'TARTARE DE CARNE.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>6
+        ]);
+        Dish::create([
+            'name'=>'Pulpo a la brasa con yuca al carbon',
+            'price'=>'26.99',
+            'time'=>'21',
+            'image'=>'PULPO A LAS BRASAS CON YUCA AL CARBÓN.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>6
+        ]);
+        Dish::create([
+            'name'=>'Tiradito pesca del día y pulpo',
+            'price'=>'18.99',
+            'time'=>'19',
+            'image'=>'TIRADITO PESCA DEL DÍA Y PULPO.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>6
+        ]);
+        Dish::create([
+            'name'=>'Gyozas de coditos de cerdo',
+            'price'=>'35.99',
+            'time'=>'29',
+            'image'=>'GYOZAS DE CODITOS DE CERDO.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>6
+        ]);
 
-
-
+        //La trasstienda
+        Dish::create([
+            'name'=>'Cebiche de lenguado clásico ',
+            'price'=>'15.99',
+            'time'=>'12',
+            'image'=>'Cebiche de lenguado clásico.jpg',
+            'category_dish'=>1,
+            'restaurant_id'=>7
+        ]);
+        Dish::create([
+            'name'=>'Arroz con pato a la sartén',
+            'price'=>'22.99',
+            'time'=>'17',
+            'image'=>'Arroz con pato a la sartén.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>7
+        ]);
+        Dish::create([
+            'name'=>'Lomo de novillo al jugo',
+            'price'=>'18.99',
+            'time'=>'16',
+            'image'=>'Lomo de novillo al jugo.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>7
+        ]);
+        Dish::create([
+            'name'=>'Arroz con conchas a la criolla',
+            'price'=>'23.99',
+            'time'=>'21',
+            'image'=>'Arroz con conchas a la criolla.jpg',
+            'category_dish'=>2,
+            'restaurant_id'=>7
+        ]);
 
     }
 }

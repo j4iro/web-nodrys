@@ -40,14 +40,16 @@ class OrderController extends Controller
 
     public function pedidos_completados()
     {
+        $id_restaurant =session('id_restaurante');
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('orders.restaurant_id',auth()->user()->id)
+        ->where('orders.restaurant_id',$id_restaurant)
         ->where('orders.state','confirmada')
         ->get();
        //  dd(User::all());
        // dd($orders->toArray());
+
         return view('admin-restaurant.pedidos-completados',["pedidos"=>$orders]);
     }
 
@@ -155,7 +157,7 @@ class OrderController extends Controller
         }
 
         $stats = Util::statsCarrito();
-       
+
         //Datos del pedido
         $order = new Order();
         $order->restaurant_id = $stats['restaurant_id'];

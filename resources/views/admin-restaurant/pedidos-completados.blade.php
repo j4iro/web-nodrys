@@ -1,7 +1,7 @@
 @extends('layouts.app-r')
 
 @section('content')
-{{$pedidos}}
+{{-- {{$pedidos}} --}}
 <div class="container-fluid mt-3">
 
     <!--Titulo-->
