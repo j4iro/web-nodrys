@@ -45,14 +45,14 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    {{-- <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
 
                         <li class="nav-item">
                             <a href="{{route('adminRestaurant.index')}} "  class="btn btn-danger">Salir</a>
                         </li>
 
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
         </nav>

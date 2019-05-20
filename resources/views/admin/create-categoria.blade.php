@@ -1,13 +1,11 @@
 @extends('layouts.app-a')
 
 @section('content')
-         <div class="container-fluid mt-3">
+    <div class="container-fluid ">
     <form action="{{route('admin.categorias.save')}}" method="post" enctype="multipart/form-data">
 
     <!--Formulario de Registro-->
     <div class="row ">
-
-   
 
     <div class="col-12 col-md-9 col-lg-8 mb-3">
 
@@ -47,13 +45,20 @@
 
                 </div>
                 <div class="form-group col-12  col-md-6 ">
+
                     <label for="state">Estado</label>
-                    <input type="text" class="form-control" name="state" value="{{ $categorias->state ?? '' }}" placeholder="Estado" id="state" required>
+                    <select name="state" class="form-control" required>
+                        <option value="1" selected>Activada</option>
+                        <option value="0" >Desactivada</option>
+                    </select>
+
+                    {{-- <input type="number" value="1" class="form-control" name="state" value="{{ $categorias->state ?? '' }}" placeholder="Estado" id="state" required> --}}
+
                 </div>
                 <div class="form-group col-12 ">
                     <label for="description">Descripción</label>
 
-                    <textarea class="form-control" name="description" id="description" required>{{ $categorias->description ?? '' }}</textarea>
+                    <textarea class="form-control" name="description" id="description" placeholder="Escribe una descripción" rows="3" required>{{ $categorias->description ?? '' }}</textarea>
                 </div>
             </div>
 

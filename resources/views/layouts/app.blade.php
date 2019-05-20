@@ -95,21 +95,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('favoritos.index')}}"  class="nav-link">Mis Favoritos
-                                    {{-- <span class="badge badge-warning mb-1">0</span> --}}
-                                </a>
+                                {{-- <a href="{{route('favoritos.index')}}"  class="nav-link">Mis Favoritos
+                                </a> --}}
                             </li>
 
-                            <li>
-                                  <a class="nav-link text-danger" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                     Salir
-                                 </a>
-                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                     @csrf
-                                 </form>
-                            </li>
+
 
                             <li>
                                 @if(auth()->user()->hasRoles(['admin']))
@@ -127,14 +117,12 @@
                                 @include('includes.avatar')
                             </li>
 
-                            <li class="nav-item dropdown">
+                            {{-- <li class="nav-item dropdown">
 
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                     <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
                                     <a class="dropdown-item" href="{{ route('config') }}">
                                         Mi Perfil
                                     </a>
@@ -149,7 +137,22 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li> --}}
+
+                            <li>
+                                <a  href="{{ route('config') }}" class="nav-link">{{ Auth::user()->name }}</a>
                             </li>
+
+                            <li>
+                                <a class="nav-link text-danger" href="{{ route('logout') }}"
+                                  onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();">
+                                   <img src="{{asset('images/icons/icon-exit.png')}}" width="20">
+                               </a>
+                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                   @csrf
+                               </form>
+                          </li>
                         @endguest
                     </ul>
                 </div>

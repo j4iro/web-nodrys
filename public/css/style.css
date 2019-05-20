@@ -120,7 +120,7 @@ esto es para la camara  */
 
 .card
 {
-    color: black;   
+    color: black;
 }
 
 .card-restaurantes
@@ -134,3 +134,19 @@ li
 {
     cursor: pointer;
 }
+
+
+.btn-primary
+{
+    background: #02415F;
+    border-color: rgb(8, 59, 83);
+}
+
+.btn-primary:hover
+{
+    background: rgb(15, 87, 121);
+    border-color: rgb(8, 59, 83);
+
+}
+
+

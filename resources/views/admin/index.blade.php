@@ -95,5 +95,5 @@
 
             </div>
         </div>
-        <button type="button" onclick="notificar()">Enviar una notificaicon</button>
+        {{-- <button type="button" onclick="notificar()">Enviar una notificaicon</button> --}}
  @endsection

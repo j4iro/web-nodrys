@@ -40,7 +40,7 @@
                     Nuevo Restaurante
                     <input type="hidden" name="editar" value="agregar">
                     @if (isset($solicitud))
-                    <input type="text" name="solicitud" value="{{$solicitud}}" >
+                    <input type="hidden" name="solicitud" value="{{$solicitud}}" >
                     @endif
                 @endif
                 <hr>

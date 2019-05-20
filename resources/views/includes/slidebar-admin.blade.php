@@ -20,7 +20,7 @@
           </a>
       </ul>
   </li>
-  <li class="btn-group dropright">
+  {{-- <li class="btn-group dropright">
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Pedidos</span>
       <ul class="nested dropdown-menu">
           <a href="" class="dropdown-item">
@@ -32,7 +32,7 @@
               <span class="badge badge-primary badge-pill ml-auto">14</span>
           </a>
       </ul>
-  </li>
+  </li> --}}
   <li class="btn-group dropright">
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Reportes</span>
       <ul class="nested dropdown-menu">
@@ -52,7 +52,7 @@
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Distritos</span>
       <ul class="nested dropdown-menu">
           <a class="dropdown-item" href="{{route('admin.distritos.list')}}">Listar</a>
-          <a class="dropdown-item" href="{{route('admin.distritos.list')}}">Agregar</a>
+          <a class="dropdown-item" href="{{route('admin.distritos.new')}}">Agregar</a>
       </ul>
 
   </li>

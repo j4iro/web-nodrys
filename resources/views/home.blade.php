@@ -51,12 +51,12 @@
                 <div class="input-group mb-2">
                     <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
                     <div class="input-group-append">
-                        <button class="btn btn-dark btn-lg" name="buscar" type="submit">Buscar</button>
+                        <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
                     </div>
                 </div>
                 <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
                 <br>
-                <button id="btnShow" type="button"  class="btn btn-dark">
+                <button id="btnShow" type="button"  class="btn btn-primary">
                     Ver cercanos a mí
                 </button>
             </div>
@@ -105,16 +105,16 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-6 col-lg-3 pt-2">
+        {{-- <div class="col-6 col-lg-3 pt-2">
             <select name="distrito" class="form-control" id="">
                 <option value="" disabled selected >Distritos</option>
                 @foreach ($distritos as $distrito)
                     <option value="{{$distrito->id}}">{{$distrito->name}}</option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
         <div class="col-6 col-lg-2  pt-2">
-            <button class="btn btn-outline-dark" name="filtrar" type="submit">Filtrar</button>
+            <button class="btn btn-outline-primary" name="filtrar" type="submit">Filtrar</button>
         </div>
         </form>
     </div>

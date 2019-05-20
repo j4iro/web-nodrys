@@ -60,6 +60,7 @@ class HomeController extends Controller
         $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')
         ->join('districts','districts.id','=','restaurants.district_id')
         ->select('restaurants.*','categories.name as categoria', 'districts.name as distrito')
+        ->where('restaurants.state','=','1')
         ->get();
 
         $categorias = Category::all();

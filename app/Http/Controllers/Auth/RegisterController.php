@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'image' => 'avatar_default.png',
             'points' => 0,
+            'district_id' => 1,
             'state' => 1,
         ]);
     }

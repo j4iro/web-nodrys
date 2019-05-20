@@ -8,13 +8,7 @@
     <!--Tabla Lista de platos-->
     <div class="row mt-3">
 
-        @if (session('resultado'))
-            <div class="col-8">
-                <strong>
-                    <div class="alert alert-success">{{session('resultado')}}</div>
-                </strong>
-            </div>
-        @endif
+
 
         @include('includes/slidebar')
 
@@ -27,6 +21,14 @@
             </div>
         </div>
         <!--Titulo-->
+
+        @if (session('resultado'))
+            <div class="row mb-2">
+                <div class="col-12">
+                    <strong><div class="alert alert-success">{{session('resultado')}}</div></strong>
+                </div>
+            </div>
+        @endif
 
             <table class="table table-responsive table-hover">
                 <thead class="thead-light">

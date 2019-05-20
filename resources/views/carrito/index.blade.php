@@ -12,15 +12,14 @@
     <!--Titulo del carrito-->
     <div class="row mt-3">
         <div class="col-12 ">
-            <h4>Mi Carrito
+            <strong class="navbar-brand">Mi Carrito
                 @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                     <span class="badge badge-warning border border-secondary">{{count($_SESSION['carrito'])}}</span>
                 @endif
-            </h4>
+            </strong>
         </div>
     </div>
     <!--Titulo del carrito-->
-
 
 
     <!--Tabla Carrito de compras-->

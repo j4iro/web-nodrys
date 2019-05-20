@@ -14,7 +14,7 @@
                         <tr>
                         <th scope="col" colspan="2">Plato</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Tipo</th>
+                        {{-- <th scope="col">Tipo</th> --}}
                         </tr>
                     </thead>
                     <tbody>

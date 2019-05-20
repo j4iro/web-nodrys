@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 d-none">
         <div class="col-2">
             <label for="form-label-control">Restaurante</label>
             <select class="form-control form-control-sm" name="" id="">
@@ -71,7 +71,7 @@
                         @else
                             <td class="text-primary text-uppercase"><span class="badge badge-primary">{{$pedido->state}}</span></td>
                         @endif
-                        <td>{{$pedido->total}}</td>
+                        <td>S/. {{$pedido->total}}</td>
                         <td><a href="{{route('pedidos.detail_c',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
                         <td>
                             @if ($pedido->state=='pendiente')
@@ -81,6 +81,7 @@
                         <td>
                             <a href="{{route('pedidos.factura.pdf',["id"=>$pedido->id,"tipo"=>'ver'])}}" target="_blank" class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" onclick="createQrCode(this)">Factura</a>
                         </td>
+
                     </tr>
                 @endforeach
 

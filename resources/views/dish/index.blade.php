@@ -44,10 +44,10 @@
             <strong class="navbar-brand">{{$restaurant->name}}</strong><br>
             {{$restaurant->description}}
             <br>
-            <strong class="navbar-brand pb-0">Distrito</strong>
+            {{-- <strong class="navbar-brand pb-0">Distrito</strong>
             <br>
             {{$restaurant->district_id}}
-            <br>
+            <br> --}}
             <strong class="navbar-brand pb-0">Dirección</strong>
             <br>
             {{$restaurant->address}}
@@ -61,7 +61,7 @@
                 <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
                 <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
                 <input type="hidden" name="solo_reserva" value="1">
-                <input type="submit" class="btn btn-dark mt-2"  name="addcarrito" value="Solo reserva">
+                <input type="submit" class="btn btn-primary mt-2"  name="addcarrito" value="Solo reserva">
             </form>
         </div>
     </div>
@@ -81,7 +81,7 @@
                         <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
                         <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
                         <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                         <label class="label-cliente" for="{{$dish->id}}">Muestra precio</label>
+                         <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
                     </div>
                 </div>
             </div>
@@ -124,6 +124,9 @@
     </button>
 
 </div>
+
+@include('includes/footer')
+
 <script>
 
 

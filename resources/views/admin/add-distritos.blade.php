@@ -1,19 +1,15 @@
 @extends('layouts.app-a')
 
 @section('content')
-
-<div class="container-fluid mt-3">
+<div class="container-fluid ">
     <form action="{{route('admin.distritos.save')}}" method="post" enctype="multipart/form-data">
+        {{csrf_field()}}
 
     <!--Formulario de Registro-->
     <div class="row ">
-
-    @include('includes/slidebar-admin')
-
     <div class="col-12 col-md-9 col-lg-8 mb-3">
 
     <div class="card shadow p-4 ">
-
         <div class="row">
             <dt class="col-12">
                 @if (isset($distritos))
@@ -29,6 +25,7 @@
                 <hr>
             </dt>
         </div>
+
         <div class="row">
             <div class="col-12">
                 @if (session('resultado'))
@@ -39,7 +36,7 @@
             </div>
         </div>
 
-            {{csrf_field()}}
+
 
             <div class="form-row ">
                 <div class="form-group col-12  col-md-6 ">
@@ -48,13 +45,20 @@
 
                 </div>
                 <div class="form-group col-12  col-md-6 ">
-                    <label for="description">Estado</label>
-                    <input type="text" class="form-control" name="state" value="{{ $distritos->state ?? '' }}" placeholder="Estado" id="description" required>
+
+                    <label for="state">Estado</label>
+                    <select name="state" class="form-control" required>
+                        <option value="1" selected>Activado</option>
+                        <option value="0">Desactivado</option>
+                    </select>
+
+                    {{-- <input type="number" value="1" class="form-control" name="state" value="{{ $distritos->state ?? '' }}" placeholder="Estado" id="description" required> --}}
+
                 </div>
                 <div class="form-group col-12 ">
                     <label for="description">Descripción</label>
 
-                    <textarea class="form-control" name="description" id="description" required>{{ $distritos->description ?? '' }}</textarea>
+                    <textarea class="form-control" name="description" id="description" placeholder="Escribe una descripción" rows="3" required>{{ $distritos->description ?? '' }}</textarea>
                 </div>
             </div>
 
@@ -67,12 +71,12 @@
            </div>
 
 
+            </div>
         </div>
     </div>
-</div>
+
+    </div>
+
 <!--Formulario de Registro-->
-
-</div>
-
 </form>
 @endsection
