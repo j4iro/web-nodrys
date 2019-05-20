@@ -143,10 +143,10 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'admin',
             'surname' => 'Administrador general',
             'email' => 'admin@nodrys.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('adminvb00'),
             'telephone' => 'null',
             'address' => 'null',
-            'image' => 'default_avatar.png',
+            'image' => 'avatar_default.png',
             'points' => 0,
             'state' => 1,
             'district_id' => 10,
@@ -165,7 +165,7 @@ class InsertAllTablesSeeder extends Seeder
             'password' => bcrypt('123456'),
             'telephone' => '958632415',
             'address' => 'Jr Enrique Barrón 1038',
-            'image' => 'default_avatar.png',
+            'image' => 'avatar_default.png',
             'points' => 0,
             'state' => 1,
             'district_id' => 1,
@@ -179,7 +179,7 @@ class InsertAllTablesSeeder extends Seeder
             'password' => bcrypt('123456'),
             'telephone' => '958051477',
             'address' => 'Jr La Paz 874',
-            'image' => 'default_avatar.png',
+            'image' => 'avatar_default.png',
             'points' => 0,
             'state' => 1,
             'district_id' => 1,
@@ -193,7 +193,7 @@ class InsertAllTablesSeeder extends Seeder
             'password' => bcrypt('123456'),
             'telephone' => '975863241',
             'address' => 'Calle Torres Mz 8 Lte 95',
-            'image' => 'default_avatar.png',
+            'image' => 'avatar_default.png',
             'points' => 0,
             'state' => 1,
             'district_id' => 2,
@@ -207,7 +207,7 @@ class InsertAllTablesSeeder extends Seeder
             'password' => bcrypt('123456'),
             'telephone' => '963852741',
             'address' => 'Calle Bolivar Mz 5 Lte 20',
-            'image' => 'default_avatar.png',
+            'image' => 'avatar_default.png',
             'points' => 0,
             'state' => 1,
             'district_id' => 2,
@@ -236,7 +236,7 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'user',
             'surname' => 'restaurante',
             'email' => 'la-cucharita@nodrys.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('lacuchara123'),
             'telephone' => 'null',
             'address' => 'null',
             'image' => 'null',
@@ -501,7 +501,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'arrozAlaChiclayana.jpg',
             'category_dish'=>1,
-            'restaurant_id'=>4
+            'restaurant_id'=>2
         ]);
 
         Dish::create([
@@ -510,7 +510,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'arrozChaufaPeruano.jpg',
             'category_dish'=>1,
-            'restaurant_id'=>4
+            'restaurant_id'=>2
         ]);
        Dish::create([
             'name'=>'Cau - Cau',
@@ -518,7 +518,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'caucau.jpg',
             'category_dish'=>1,
-            'restaurant_id'=>4
+            'restaurant_id'=>2
         ]);
          Dish::create([
             'name'=>'Causa a la limeña',
@@ -559,7 +559,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'tartaletaQueso.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>4
+            'restaurant_id'=>1
         ]);
         Dish::create([
             'name'=>'Tabule de quinua',
@@ -567,7 +567,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'tabuleQuinua.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>4
+            'restaurant_id'=>1
         ]);
         Dish::create([
             'name'=>'Tostadas de champiñones al ajillo',
@@ -575,7 +575,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'tostadasChampinones.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>4
+            'restaurant_id'=>1
         ]);
 
 
@@ -639,7 +639,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'revueltoBoniatos.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>5
+            'restaurant_id'=>3
         ]);
         Dish::create([
             'name'=>'Ensalada caprese de melocotón',
@@ -647,7 +647,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'ensaladaCaprese.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>5
+            'restaurant_id'=>3
         ]);
         Dish::create([
             'name'=>'Hummus auténtico',
@@ -655,7 +655,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'ummus.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>5
+            'restaurant_id'=>3
         ]);
         Dish::create([
             'name'=>'Paella de verduras',
@@ -663,7 +663,7 @@ class InsertAllTablesSeeder extends Seeder
             'time'=>'10',
             'image'=>'paella.jpg',
             'category_dish'=>2,
-            'restaurant_id'=>5
+            'restaurant_id'=>3
         ]);
         //platos 305 sur
         Dish::create([

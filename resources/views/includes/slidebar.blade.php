@@ -16,9 +16,9 @@
 
         <a href="{{route('adminRestaurant.reportes')}}" class="list-group-item list-group-item-action">Reportes Rápidos</a>
 
-        <a href="{{route('adminRestaurant.reportesclientes')}}" class="list-group-item list-group-item-action">Reportes Clientes</a>
+        <a href="{{route('adminRestaurant.reportesclientes')}}" class="list-group-item list-group-item-action">Reportes Personalizado</a>
 
-        <a href="{{route('adminRestaurant.reportespedidos')}}" class="list-group-item list-group-item-action">Reportes Pedidos</a>
+        {{-- <a href="{{route('adminRestaurant.reportespedidos')}}" class="list-group-item list-group-item-action">Reportes Pedidos</a> --}}
 
         <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Mis Datos</a>
         <a href="{{ route('logout') }}" onclick="event.preventDefault();

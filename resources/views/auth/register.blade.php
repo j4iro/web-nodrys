@@ -103,4 +103,16 @@
         </div>
     </div>
 </div>
+<script>
+
+
+    // function soloNumeros(e){
+    //     var key = window.event ? e.which : e.keyCode;
+    //     if (key < 48 || key > 57) {
+    //         e.preventDefault();
+    //         console.log(key);
+    //     }
+    // }
+
+</script>
 @endsection
