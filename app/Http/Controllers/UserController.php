@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\District;
 
 class UserController extends Controller
 {
@@ -16,7 +17,8 @@ class UserController extends Controller
 
     public function config()
     {
-        return view('user.config');
+        $districts = District::all();
+        return view('user.config', \compact('districts'));
     }
 
     public function update(Request $request)
@@ -40,6 +42,7 @@ class UserController extends Controller
         $email = $request->input('email');
         $telephone = $request->input('telephone');
         $address = $request->input('address');
+        $district_id = $request->input('district_id');
 
         //asignar nuevos valores al objeto del usuario
         $user->name = $name;
@@ -47,6 +50,7 @@ class UserController extends Controller
         $user->email = $email;
         $user->telephone = $telephone;
         $user->address = $address;
+        $user->district_id = $district_id;
 
         //Recoger y Subir la imagen
         $image_path = $request->file('image_path');

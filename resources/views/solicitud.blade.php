@@ -244,6 +244,8 @@
     </div>
 </div>
 
+@include('includes/footer')
+
 <script>
 
     var txtLati=document.getElementById('txtlati');
@@ -256,15 +258,12 @@
         maxZoom: 18
     }).addTo(map);
 
-
-
     function localizar(){
     const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
     setTimeout(() => {
         navigator.geolocation.clearWatch(watcher);
     }, 10);
     }
-
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(mostrarUbicacion);
