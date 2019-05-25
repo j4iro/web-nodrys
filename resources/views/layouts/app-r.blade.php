@@ -18,7 +18,6 @@
 
     <script type="text/javascript">
 
-
         function cambiardisponibilidad()
         {
             var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/cambiar-disponibilidad";
@@ -55,15 +54,25 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        
                     </ul>
-                </div> --}}
+                </div>
             </div>
         </nav>
 
         <main class="py-4">
-            @yield('content')
+                <div class="container-fluid mt-3">
+                        <div class="row ">
+
+                        @include('includes/slidebar')
+
+                            <div class="col-12 col-md-9 col-lg-10 mb-3">
+                                @yield('content')
+                            </div>
+                        </div>
+                </div>
         </main>
     </div>
     @yield('scripts')

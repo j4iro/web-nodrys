@@ -136,7 +136,12 @@
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿Qué hora asistirán?</dt>
-                        <input type="time" class="form-control" name="hora">
+                        <select class="form-control" name="hora" id="hora">
+                            @for ($i = 11; $i <= 23; $i++)
+                                <option value="{{$i}}:00">{{$i}}:00</option>
+                                <option value="{{$i}}:30">{{$i}}:30</option>
+                            @endfor
+                        </select>
                     </div>
                 </div>
 

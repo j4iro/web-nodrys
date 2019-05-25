@@ -1,18 +1,6 @@
 @extends('layouts.app-r')
 
 @section('content')
-<div class="container-fluid">
-
-
-
-    <!--Tabla Lista de platos-->
-    <div class="row mt-3">
-
-
-
-        @include('includes/slidebar')
-
-        <div class="col-12 col-md-9 col-lg-10 mb-3">
 
         <!--Titulo-->
         <div class="row mb-2">
@@ -70,9 +58,4 @@
                 </tbody>
             </table>
 
-        </div>
-    </div>
-    <!--Tabla Carrito de compras-->
-
-</div>
 @endsection

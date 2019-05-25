@@ -15,14 +15,6 @@ class AdminRestaurant extends Controller
 
     public function index()
     {
-        // $user = \Auth::user();
-        // $id = 1;
-        // $datos=auth()->user()->id;//id_restaurant
-        // $datos=Restaurant::all()->where('user_id','=',$datos)->first();
-
-        // $disponibilidad = $datos->availability;
-        // dd($disponibilidad);
-
         return view('admin-restaurant.index');
     }
 
@@ -66,21 +58,21 @@ class AdminRestaurant extends Controller
          if($datos->availability == 0)
          {
             $datos->availability=1;
+            session(['estado_restaurant'=>1]);
          }
          else
          {
             $datos->availability=0;
+            session(['estado_restaurant'=>0]);
          }
          $datos->update();
          $estado_restau = $datos->availability;
          echo $estado_restau;
-
     }
 
     public function reportes()
     {
         return view('admin-restaurant.reportes-rapidos');
     }
-    // C:\xampp\htdocs\tesis\app\Http\Controllers\AdminRestaurant.php
 
 }

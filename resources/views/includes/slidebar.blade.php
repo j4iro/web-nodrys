@@ -22,9 +22,9 @@
 
         <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Mis Datos</a>
 
-    <a href="" class="list-group-item list-group-item-action pb-0"><strong id="labeldisponibilidad" class="mr-3">@if($disponibilidad==1){{'ABIERTO'}}@else{{'CERRADO'}}@endif</strong>
+    <a href="" class="list-group-item list-group-item-action pb-0"><strong id="labeldisponibilidad" class="mr-3">@if(session('estado_restaurant')==1){{'ABIERTO'}}@else{{'CERRADO'}}@endif</strong>
             <label class="switch ">
-                <input id="checkdisponibilidad" type="checkbox" @if($disponibilidad==1) {{'checked'}} @endif onchange="cambiardisponibilidad();">
+                <input id="checkdisponibilidad" type="checkbox" @if(session('estado_restaurant')==1) {{'checked'}} @endif onchange="cambiardisponibilidad();">
                 <span class="slider round"></span>
             </label>
         </a>
