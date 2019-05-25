@@ -118,8 +118,16 @@ class OrderController extends Controller
             // dd('Esta reserva no existe');
             return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
         }
+    }
 
+    public function cancelar(Request $request)
+    {
+        // dd($request);
+        $order = Order::where('id','=',$request->input('cod_reserva'))->first();
+        $order->state = 'cancelada';
+        $order->update();
 
+        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');;
     }
 
     public function add(Request $request)

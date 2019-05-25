@@ -127,7 +127,7 @@
 
                 <div class="row mt-3">
                     <div class="col-6">
-                        <a href="{{route('pedidos.index')}}" data-toggle="modal" data-target="#modalPago" class="btn btn-primary btn-sm">Reservar</a>
+                        <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-primary btn-sm">Reservar</a>
                     </div>
                 </div>
             </div>

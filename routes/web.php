@@ -125,4 +125,5 @@ Route::get('/solicitud-unirse','HomeController@show_solicitud')->name('show.soli
 Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('solicitud.save');
 
 Route::get('/mis-pedidos/factura/{id}/{tipo}','PdfController@facturaPedidoCliente')->name('pedidos.factura.pdf');
+Route::post('/mis-pedidos/cancelar','OrderController@cancelar')->name('order.cancelar');
 

@@ -38,6 +38,11 @@
                     <strong>{{session('result')}}</strong>
                 </div>
             @endif
+            @if(session('respuesta'))
+                <div class="alert alert-success">
+                    <strong>{{session('respuesta')}}</strong>
+                </div>
+            @endif
         </div>
 
         <div class="col-12">
@@ -67,19 +72,22 @@
                         <td>{{$pedido->created_at}}</td>
                         <td>{{$pedido->n_people}}</td>
                         @if ($pedido->state=='pendiente')
+                            <td class="text-danger text-uppercase"><span class="badge badge-warning">{{$pedido->state}}</span></td>
+                        @elseif($pedido->state=='cancelada')
                             <td class="text-danger text-uppercase"><span class="badge badge-danger">{{$pedido->state}}</span></td>
                         @else
                             <td class="text-primary text-uppercase"><span class="badge badge-primary">{{$pedido->state}}</span></td>
                         @endif
                         <td>S/. {{$pedido->total}}</td>
                         <td><a href="{{route('pedidos.detail_c',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
+                        @if ($pedido->state=='pendiente')
                         <td>
-                            @if ($pedido->state=='pendiente')
-                            <a href="{{route('pedidos.detail_c',["id"=>$pedido->id])}}" class="btn btn-outline-danger btn-sm">Cancelar</a>
-                            @endif
+                            <a href="" id="{{$pedido->id}}" onclick="jalarid(this);" data-toggle="modal" data-target="#modalPago" class="btn btn-outline-danger btn-sm">Cancelar</a>
                         </td>
+                        @endif
+
                         <td>
-                            <a href="{{route('pedidos.factura.pdf',["id"=>$pedido->id,"tipo"=>'ver'])}}" target="_blank" class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" onclick="createQrCode(this)">Factura</a>
+                            <a href="{{route('pedidos.factura.pdf',["id"=>$pedido->id,"tipo"=>'ver'])}}" target="_blank" class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" >Factura</a>
                         </td>
 
                     </tr>
@@ -91,6 +99,66 @@
         </div>
     </div>
 
+
+    {{-- Modal para cancelar --}}
+     <!-- Modal Formulario de Pago -->
+     <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+            <!--Formulario de Pago-->                
+                <form method="post" action="{{route('order.cancelar')}}">
+                {{csrf_field()}}
+                    <div class="row my-3">
+                        <div class="col-12 col-sm-12">
+                                <div class="row">
+                                    <dt class="col-12">¿Qué pasó?<hr></dt>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-4">
+                                        <input type="text" readonly class="form-control" name="cod_reserva" id="cod_reserva"/>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <textarea type="text" placeholder="Escriba su motivo (opcional)" class="form-control" name="motivo" id="motivo"  rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 ">
+                                    <div class="col-6">
+                                        <input type="submit" class="btn btn-danger btn-block btn-lg" value="Cancelar reserva">
+                                    </div>
+                                    <div class="col-6 ">
+                                        <small class="form-text text-muted">Si ya canceló la reserva, tiene un plazo de 15 dias para postergarla. <a href="">Mas información</a> </small>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </form>
+            <!--Formulario de Pago-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Modal Formulario de Pago -->
+
 </div>
 
+
+
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+@endsection
+
+    <script>
+        function jalarid(input)
+        {
+            cod_reserva.value = input.id;
+        }
+    </script>
+
