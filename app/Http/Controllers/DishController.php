@@ -12,8 +12,35 @@ use Illuminate\Support\Facades\File;
 
 class DishController extends Controller
 {
+   public function verificar_restaurante_diferente($id_restaurant)
+    {
+
+      $restaurant_id=isset($_SESSION['carrito'])?$_SESSION['carrito']:"0";
+      $id_restaurante_comparar=0;
+
+        if ($restaurant_id!="0") {
+          foreach ($restaurant_id as $id => $value) {
+             if($value['restaurante_id']!=$id_restaurant){
+               return false;
+             }else{
+               // dd('ss');
+             }
+
+           }
+        
+        }  
+
+        return true;
+    }
+
     public function dishes(Request $request)
     {
+        $sm="";
+        if($this->verificar_restaurante_diferente($request->id)==false)
+        {
+          $sm="No puedes hacer reserva en más de un restaurante. !GRACIAS POR SU COMPRESIÓN...!  ♥♥♥";
+        };
+
        $dishes = Dish::where('restaurant_id', $request->id)
                 ->where('category_dish','<>','5')
                 ->get();
@@ -21,7 +48,8 @@ class DishController extends Controller
 
         return view('dish.index',[
             'dishes' => $dishes,
-            'restaurant'=>$restaurant
+            'restaurant'=>$restaurant,
+            'sm'=>$sm,
         ]);
     }
 

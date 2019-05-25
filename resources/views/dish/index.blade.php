@@ -33,8 +33,13 @@
 @endsection
 
 <div class="container mt-5">
-
-
+               
+                @if ($sm!="")
+                    <strong>
+                        <div class="alert alert-danger">{{$sm}}</div>
+                    </strong>
+               
+                @endif
 
     <div class="row ">
         <div class="col-12 col-sm-6">

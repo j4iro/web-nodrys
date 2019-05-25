@@ -15,7 +15,9 @@ class AdminRestaurant extends Controller
 
     public function index()
     {
+
         return view('admin-restaurant.index');
+
     }
 
     public function reportesClientes()

@@ -29,7 +29,7 @@ class OrderController extends Controller
     {
         //Traigo los pedidos del restaurante identificado
         //Conseguir restaurante identificado
-
+        
         $id = session('id_user');
         $datos = Restaurant::all()->where('user_id',$id)->first();
         session(['id_restaurante'=>$datos->id]);
@@ -143,7 +143,9 @@ class OrderController extends Controller
         $order->state = 'cancelada';
         $order->update();
 
-        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');;
+        // aqui redirecciona
+
+        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');
     }
 
     public function add(Request $request)

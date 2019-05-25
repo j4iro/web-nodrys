@@ -160,7 +160,7 @@ class InsertAllTablesSeeder extends Seeder
         // Usuario N2
         User::create([
             'name' => 'Beimer',
-            'surname' => 'Rodriguez Campos',
+            'surname' => 'Campos Mezones',
             'email' => 'beimer@gmail.com',
             'password' => bcrypt('123456'),
             'telephone' => '958632415',
@@ -235,8 +235,8 @@ class InsertAllTablesSeeder extends Seeder
         User::create([
             'name' => 'user',
             'surname' => 'restaurante',
-            'email' => 'la-cucharita@nodrys.com',
-            'password' => bcrypt('lacuchara123'),
+            'email' => 'cucharita@nodrys.com',
+            'password' => bcrypt('cuchara123'),
             'telephone' => 'null',
             'address' => 'null',
             'image' => 'null',
