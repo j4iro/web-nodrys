@@ -29,7 +29,24 @@
           .map_container{
             position: relative;
           }
+          input[type=checkbox]{
+              display: none;
+          }
       </style>
+      <script type="text/javascript">
+          function seleccionar(id){
+              var estado=document.getElementById(id).checked;
+              var cont=document.getElementById('card-cont');
+              var imgPlatos=document.getElementById('imgPlatos');
+              if (estado==true) {
+                  cont.style="background-color:rgba(2,65,95,1);color:white";
+                  imgPlatos.style="filter: grayscale(70%);";
+              }else{
+                  cont.style="";
+                  imgPlatos.style="";
+              }
+          }
+      </script>
 @endsection
 
 <div class="container mt-5">
@@ -74,16 +91,17 @@
     <div class="row ">
         @foreach ($dishes as $dish)
             <div class="col-6 col-md-4 col-lg-2 mb-4">
-                <div class="card card-plato">
-                    @include('includes.image_dish')
-                    <div class="card-body p-0 px-3 pt-2 pb-3">
-                        <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                        <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                        <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                        <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                         <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
+                <label for="{{$dish->id}}">
+                    <div class="card card-plato">
+                        <img id="imgPlatos" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
+                        <div id="card-cont" class="card-body p-0 px-3 pt-2 pb-3">
+                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
+                            <input class="form-check-input" onclick="seleccionar(this.id);" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                        </div>
                     </div>
-                </div>
+                </label>
             </div>
         @endforeach
     </div>
@@ -183,7 +201,7 @@
         var nomR='{{$restaurant->name}}';
         var latR={{$restaurant->latitude}};
         var lonR={{$restaurant->longitude}};
-        marker = L.marker([latR, lonR], {draggable: true}).addTo(map);
+        marker = L.marker([latR, lonR]).addTo(map);
         marker.bindPopup("<b>"+nomR+"</b>").openPopup();
         }
 
