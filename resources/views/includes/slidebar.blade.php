@@ -21,6 +21,14 @@
         {{-- <a href="{{route('adminRestaurant.reportespedidos')}}" class="list-group-item list-group-item-action">Reportes Pedidos</a> --}}
 
         <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Mis Datos</a>
+
+    <a href="" class="list-group-item list-group-item-action pb-0"><strong id="labeldisponibilidad" class="mr-3">@if($disponibilidad==1){{'ABIERTO'}}@else{{'CERRADO'}}@endif</strong>
+            <label class="switch ">
+                <input id="checkdisponibilidad" type="checkbox" @if($disponibilidad==1) {{'checked'}} @endif onchange="cambiardisponibilidad();">
+                <span class="slider round"></span>
+            </label>
+        </a>
+
         <a href="{{ route('logout') }}" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();"  class="list-group-item list-group-item-action text-danger"><strong>Salir</strong></a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

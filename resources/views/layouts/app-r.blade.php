@@ -16,6 +16,23 @@
 
     </script>
 
+    <script type="text/javascript">
+
+
+        function cambiardisponibilidad()
+        {
+            var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/cambiar-disponibilidad";
+            $.get( finalUrl,function( data ) {
+                if(data=="0"){
+                    labeldisponibilidad.innerHTML = "CERRADO";
+                }else{
+                    labeldisponibilidad.innerHTML = "ABIERTO";
+                }
+              //  alert(data);
+            });
+        }
+    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -38,22 +55,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    {{-- <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-
-                        <li class="nav-item">
-                            <a href="{{route('adminRestaurant.index')}} "  class="btn btn-danger">Salir</a>
-                        </li>
-
-                    </ul> --}}
-                </div>
+                </div> --}}
             </div>
         </nav>
 
@@ -62,7 +67,6 @@
         </main>
     </div>
     @yield('scripts')
-
 
 </body>
 </html>

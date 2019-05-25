@@ -47,6 +47,7 @@ class CreateAllTables extends Migration
             $table->text('image');
             $table->integer('user_id');
             $table->boolean('state')->default(1);
+            $table->boolean('availability')->default(1);
             $table->timestamps();
         });
 
