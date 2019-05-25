@@ -43,6 +43,8 @@ class OrderController extends Controller
         ->where('orders.state','pendiente')
         ->get();
 
+        session(['estado_restaurant'=>$this->disponibilidad()]);
+
         return view('admin-restaurant.index',[
             "pedidos" => $orders,
             "disponibilidad" =>$this->disponibilidad()
@@ -184,8 +186,8 @@ class OrderController extends Controller
         $order = new Order();
         $order->restaurant_id = $stats['restaurant_id'];
         $order->user_id = $id_user;
-        $order->date =  $fecha_actual;
-        $order->hour = $hora_actual;
+        $order->date =  $request->input('fecha');
+        $order->hour = $request->input('hora');
         $order->n_people = $request->input('n_people');
         $order->oca_special = $request->input('oca_special');
 

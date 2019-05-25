@@ -145,6 +145,14 @@
                                 <strong>{{$restaurant->categoria}}</strong>
                             </div>
                         </div>
+                        <p class="my-2 mb-0 font-weight-light">
+                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14">
+                            @if ($restaurant->availability==1)
+                                Abierto
+                            @else
+                                Cerrado
+                            @endif
+                        </p>
                         <p class="my-2 font-weight-light">
                             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
                     </div>
