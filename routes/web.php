@@ -127,3 +127,7 @@ Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('sol
 Route::get('/mis-pedidos/factura/{id}/{tipo}','PdfController@facturaPedidoCliente')->name('pedidos.factura.pdf');
 Route::post('/mis-pedidos/cancelar','OrderController@cancelar')->name('order.cancelar');
 
+Route::get('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
+// Route::post('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
+
+

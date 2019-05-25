@@ -17,15 +17,25 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
+    public function disponibilidad(){
+        $user = \Auth::user();
+        $datos=auth()->user()->id;//id_restaurant
+        $datos=Restaurant::all()->where('user_id','=',$datos)->first();
+        $disponibilidad = $datos->availability;
+        return $disponibilidad;
+    }
+
     public function index_r()
     {
         //Traigo los pedidos del restaurante identificado
         //Conseguir restaurante identificado
+
         $id = session('id_user');
         $datos = Restaurant::all()->where('user_id',$id)->first();
         session(['id_restaurante'=>$datos->id]);
         session(['nombre_restaurante'=>$datos->name]);
         $id_restaurant =session('id_restaurante');
+
 
         $orders = Order::join('users','users.id','=','orders.user_id')
         ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
@@ -33,8 +43,11 @@ class OrderController extends Controller
         ->where('orders.state','pendiente')
         ->get();
 
+        session(['estado_restaurant'=>$this->disponibilidad()]);
+
         return view('admin-restaurant.index',[
-            "pedidos" => $orders
+            "pedidos" => $orders,
+            "disponibilidad" =>$this->disponibilidad()
         ]);
     }
 
@@ -50,7 +63,10 @@ class OrderController extends Controller
        //  dd(User::all());
        // dd($orders->toArray());
 
-        return view('admin-restaurant.pedidos-completados',["pedidos"=>$orders]);
+        return view('admin-restaurant.pedidos-completados',[
+            "pedidos"=>$orders,
+            "disponibilidad" =>$this->disponibilidad()
+            ]);
     }
 
     public function qr()
@@ -170,8 +186,8 @@ class OrderController extends Controller
         $order = new Order();
         $order->restaurant_id = $stats['restaurant_id'];
         $order->user_id = $id_user;
-        $order->date =  $fecha_actual;
-        $order->hour = $hora_actual;
+        $order->date =  $request->input('fecha');
+        $order->hour = $request->input('hora');
         $order->n_people = $request->input('n_people');
         $order->oca_special = $request->input('oca_special');
 

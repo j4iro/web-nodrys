@@ -115,13 +115,33 @@
                     </div>
                 </div>
 
-                <div class="row mt-2">
+                {{-- <div class="row mt-2">
                     <dt class="col-12">¿Cuantas personas asistirán?</dt>
+                </div> --}}
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <dt class="mb-2">¿Cuantas personas asistirán?</dt>
+                        <input type="number" placeholder="Número de personas" value="1" class="form-control" name="n_people">
+                    </div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-12">
-                        <input type="number" placeholder="Número de personas" value="1" class="form-control" name="n_people">
+                        <dt class="mb-2">¿Qué día asistirán?</dt>
+                        <input type="date" class="form-control" name="fecha">
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <dt class="mb-2">¿Qué hora asistirán?</dt>
+                        <select class="form-control" name="hora" id="hora">
+                            @for ($i = 11; $i <= 23; $i++)
+                                <option value="{{$i}}:00">{{$i}}:00</option>
+                                <option value="{{$i}}:30">{{$i}}:30</option>
+                            @endfor
+                        </select>
                     </div>
                 </div>
 

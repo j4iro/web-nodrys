@@ -1,10 +1,6 @@
 @extends('layouts.app-r')
 
 @section('content')
-<div class="container-fluid mt-3">
-    <div class="row">
-        @include('includes/slidebar')
-    <div class="col-12 col-md-9 col-lg-10 mb-3">
 
             <!--Titulo-->
             <div class="row ">
@@ -82,8 +78,4 @@
 
             </div>
         </div>
-        <!--Titulo-->
-        </div>
-    </div>
-</div>
  @endsection

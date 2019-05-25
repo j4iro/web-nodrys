@@ -44,16 +44,37 @@ class AdminRestaurant extends Controller
     {
         //Conseguir restaurante identificado
         $user = \Auth::user();
-        $id = 1;
         $datos=auth()->user()->id;//id_restaurant
         $datos=Restaurant::all()->where('user_id','=',$datos);
-        
+
         return view('admin-restaurant.datos',compact('datos'));
     }
+
+    public function cambiarDisponibilidad()
+    {
+         //Conseguir restaurante identificado
+         $user = \Auth::user();
+         $datos=auth()->user()->id;//id_restaurant
+         $datos=Restaurant::all()->where('user_id','=',$datos)->first();
+
+         if($datos->availability == 0)
+         {
+            $datos->availability=1;
+            session(['estado_restaurant'=>1]);
+         }
+         else
+         {
+            $datos->availability=0;
+            session(['estado_restaurant'=>0]);
+         }
+         $datos->update();
+         $estado_restau = $datos->availability;
+         echo $estado_restau;
+    }
+
     public function reportes()
     {
         return view('admin-restaurant.reportes-rapidos');
     }
-
 
 }
