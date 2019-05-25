@@ -2,15 +2,9 @@
 
 @section('content')
 
-<div class="container-fluid mt-3">
-    <form action="{{route('adminRestaurant.plato.save')}}" method="post" enctype="multipart/form-data">
 
-    <!--Formulario de Registro-->
-    <div class="row ">
 
-    @include('includes/slidebar')
-
-    <div class="col-12 col-md-9 col-lg-8 mb-3">
+ <form action="{{route('adminRestaurant.plato.save')}}" method="post" enctype="multipart/form-data">
 
     <div class="card shadow p-4 ">
 
@@ -110,11 +104,7 @@
 
 
         </div>
-    </div>
-</div>
-<!--Formulario de Registro-->
+    </form>
 
-</div>
 
-</form>
 @endsection

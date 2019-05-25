@@ -16,6 +16,22 @@
 
     </script>
 
+    <script type="text/javascript">
+
+        function cambiardisponibilidad()
+        {
+            var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/cambiar-disponibilidad";
+            $.get( finalUrl,function( data ) {
+                if(data=="0"){
+                    labeldisponibilidad.innerHTML = "CERRADO";
+                }else{
+                    labeldisponibilidad.innerHTML = "ABIERTO";
+                }
+              //  alert(data);
+            });
+        }
+    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -39,30 +55,27 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    {{-- <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-
-                        <li class="nav-item">
-                            <a href="{{route('adminRestaurant.index')}} "  class="btn btn-danger">Salir</a>
-                        </li>
-
-                    </ul> --}}
                 </div>
             </div>
         </nav>
 
         <main class="py-4">
-            @yield('content')
+                <div class="container-fluid mt-3">
+                        <div class="row ">
+
+                        @include('includes/slidebar')
+
+                            <div class="col-12 col-md-9 col-lg-10 mb-3">
+                                @yield('content')
+                            </div>
+                        </div>
+                </div>
         </main>
     </div>
     @yield('scripts')
-
 
 </body>
 </html>
