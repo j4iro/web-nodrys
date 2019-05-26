@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container mt-4">
+<div class="container mt-4 ">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
@@ -15,8 +15,17 @@
                     </div>
                 @endif
 
-                <div class="card shadow">
-                    <div class="card-header">Configuración de mi cuenta</div>
+                @if(session('error_password_no_coinciden'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>¡Opss!</strong> Las contraseñas no coinciden, vuelve a intentarlo.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                <div class="card shadow mb-5">
+                    <div class="card-header text-center"><img class="mb-1 mr-1" src="https://img.icons8.com/ios-glyphs/24/000000/user.png" width="18" ><strong>Mi perfil</strong></div>
 
                     <div class="card-body">
                     <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
@@ -112,6 +121,41 @@
                             </div>
 
                             <div class="form-group row">
+                                <label  class="col-md-4 col-form-label text-md-right">
+                                    <strong style="cursor:pointer;" onclick="show_block_password();" class="text-primary">Cambiar contraseña</strong>
+                                </label>
+                            </div>
+
+                            <div id="block_password" class="d-none border border-primary p-3 rounded mb-3">
+                            <div class="form-group row">
+                                <label for="newpassword" class="col-md-4 col-form-label text-md-right">Nueva contraseña</label>
+
+                                <div class="col-md-6">
+                                    <input id="newpassword" onkeyup="agregar_required_repeat_password();" type="text" class="form-control{{ $errors->has('newpassword') ? ' is-invalid' : '' }}" name="newpassword" >
+
+                                    @if ($errors->has('newpassword'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('newpassword') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="repeatpassword" class="col-md-4 col-form-label text-md-right">Repita la contraseña</label>
+
+                                <div class="col-md-6">
+                                    <input id="repeatpassword" onkeyup="agregar_required_new_password();" type="password" class="form-control{{ $errors->has('repeatpassword') ? ' is-invalid' : '' }}" name="repeatpassword"  >
+
+                                    @if ($errors->has('repeatpassword'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('repeatpassword') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="imagepath" class="col-md-4 col-form-label text-md-right">Foto</label>
 
                                 <div class="col-md-6">
@@ -148,4 +192,44 @@
 
     @include('includes/footer')
 
+@endsection
+
+@section('scripts')
+     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script>
+        function agregar_required_repeat_password()
+        {
+            if(newpassword.value.length!=0)
+            {
+                repeatpassword.required=true;
+            }
+            else
+            {
+                repeatpassword.required=false;
+            }
+        }
+        function agregar_required_new_password()
+        {
+            if(repeatpassword.value.length!=0)
+            {
+                newpassword.required=true;
+            }
+            else
+            {
+                newpassword.required=false;
+            }
+        }
+        function show_block_password()
+        {
+
+            if (block_password.classList.contains('d-none'))
+            {
+                block_password.classList.remove('d-none');
+            }
+            else
+            {
+                block_password.classList.add('d-none');
+            }
+        }
+    </script>
 @endsection

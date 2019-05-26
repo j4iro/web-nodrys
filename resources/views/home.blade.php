@@ -16,11 +16,11 @@
 
     <style media="screen">
 
-        .btnActual{
+        /* .btnActual{
             position: absolute;
             z-index: 99;
             right: 0;
-        }
+        } */
         #map{
             height: 400px;
             /* transition: 0.5s; */
@@ -49,16 +49,14 @@
         <div class="row bg-intro  d-flex justify-content-center align-items-center">
             <div class="col-12 col-sm-8 col-md-5 text-center">
                 <div class="input-group mb-2">
-                    <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
+                    <input type="text" name="name" class="form-control form-control-lg" required placeholder="Busca restaurantes por su nombre" >
                     <div class="input-group-append">
                         <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
                     </div>
                 </div>
                 <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
                 <br>
-                <button id="btnShow" type="button"  class="btn btn-primary">
-                    Ver cercanos a mí
-                </button>
+                <button id="btnShow" type="button"  class="btn btn-primary mt-2">Ver cercanos a mí </button>
             </div>
         </div>
 
@@ -89,8 +87,8 @@
                 </div>
             </div>
         </div>
-        <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+        <button id="btnActual" class="btn btn-primary btn-actual p-1" type="button" class="btnActual" name="button" onclick="localizar()">
+            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" >
         </button>
     </div>
 
@@ -145,8 +143,15 @@
                                 <strong>{{$restaurant->categoria}}</strong>
                             </div>
                         </div>
-                        <p class="my-2 font-weight-light">
-                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
+                        <p class="my-2 pt-0 font-weight-light">
+                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/clock-filled.png" width="14">
+                            @if ($restaurant->availability==1)
+                                Abierto
+                            @else
+                                Cerrado
+                            @endif
+                            <br>
+                            <img class="mb-1" src="https://img.icons8.com/ios-glyphs/30/000000/marker.png" width="15"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
                     </div>
                 </div>
                 </a>

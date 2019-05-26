@@ -135,7 +135,7 @@
 
                 <div class="row mt-2">
                     <div class="col-12">
-                        <dt class="mb-2">¿Qué hora asistirán?</dt>
+                        <dt class="mb-2">¿A qué hora asistirán?</dt>
                         <select class="form-control" name="hora" id="hora">
                             @for ($i = 11; $i <= 23; $i++)
                                 <option value="{{$i}}:00">{{$i}}:00</option>
@@ -147,7 +147,18 @@
 
                 <div class="row mt-3">
                     <div class="col-6">
-                        <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-primary btn-sm">Reservar</a>
+                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
+                        <label for="rbtarjeta" class="form-check-label" >Tarjeta</label>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbefectivo">
+                        <label for="rbefectivo" class="form-check-label" >Efectivo</label>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Reservar</a>
                     </div>
                 </div>
             </div>

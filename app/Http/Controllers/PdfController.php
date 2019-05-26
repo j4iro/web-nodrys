@@ -108,6 +108,7 @@ class PdfController extends Controller
         $vistaurl = "reportes-pdf.platos_de_restaurante";
         $restaurantes = Dish::join('categories','categories.id','=','dishes.category_dish')
         ->select('dishes.*','categories.name as categoria')
+        ->where('dishes.restaurant_id','=',\session('id_restaurante'))
         ->get();
         return $this->crearPDF($restaurantes, $vistaurl, $tipo,$nombrePDF);
     }

@@ -31,6 +31,7 @@ class UserController extends Controller
         $validate = $this->validate($request,[
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
+            'password' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
             'telephone' => ['max:20'],
             'address' => ['max:255'],
@@ -44,6 +45,9 @@ class UserController extends Controller
         $address = $request->input('address');
         $district_id = $request->input('district_id');
 
+        $password = $request->input('newpassword');
+        $repeatpassword = $request->input('repeatpassword');
+
         //asignar nuevos valores al objeto del usuario
         $user->name = $name;
         $user->surname = $surname;
@@ -51,6 +55,19 @@ class UserController extends Controller
         $user->telephone = $telephone;
         $user->address = $address;
         $user->district_id = $district_id;
+
+        if(isset($password) && isset($repeatpassword))
+        {
+            if($password==$repeatpassword)
+            {
+                $user->password = \bcrypt($password);
+            }
+            else
+            {
+                return redirect()->route('config')
+                ->with(['error_password_no_coinciden'=>'Las contraseñan no coinciden']);
+            }
+        }
 
         //Recoger y Subir la imagen
         $image_path = $request->file('image_path');

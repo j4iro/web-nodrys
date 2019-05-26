@@ -34,29 +34,36 @@
 
 <div class="container mt-5">
 
-
-
     <div class="row ">
         <div class="col-12 col-sm-6">
             <img class="img-thumbnail shadow" src="{{route('restaurant.image',["filename"=>$restaurant->image])}}" width="100%" >
         </div>
         <div class="col-12 col-sm-6">
             <strong class="navbar-brand">{{$restaurant->name}}</strong><br>
+            {{$restaurant->slogan}}
+            <br>
             {{$restaurant->description}}
             <br>
-            {{-- <strong class="navbar-brand pb-0">Distrito</strong>
+            <hr>
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/discount-filled.png" width="16">
+            Gana <strong>{{$restaurant->points}}</strong> puntos por hacer tu reserva aquí
             <br>
-            {{$restaurant->district_id}}
-            <br> --}}
-            <strong class="navbar-brand pb-0">Dirección</strong>
+            <img class="mb-1" src="https://img.icons8.com/ios-glyphs/30/000000/marker.png" width="16">
+            {{$restaurant->address}} - <strong>{{$restaurant->distrito}}</strong>
             <br>
-            {{$restaurant->address}}
-            <br>
-            <strong class="navbar-brand pb-0">Telefono</strong>
-            <br>
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/phone-not-being-used-filled.png" width="16">
             {{$restaurant->telephone}}
             <br>
-            <form action="{{route('carrito.add')}}" method="post">
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
+            {{$restaurant->categoria}}
+            <br>
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/clock-filled.png" width="16">
+            @if ($restaurant->availability==1)
+                Abierto
+            @else
+                Cerrado
+            @endif
+            <form class="mt-3" action="{{route('carrito.add')}}" method="post">
                 {{csrf_field()}}
                 <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
                 <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
