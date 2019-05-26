@@ -16,7 +16,6 @@
       <style media="screen">
           #map{
               height: 400px;
-
           }
           .hubicacion_controls{
               display: none;
@@ -50,12 +49,12 @@
 @endsection
 
 <div class="container mt-5">
-               
+
                 @if ($sm!="")
                     <strong>
                         <div class="alert alert-danger">{{$sm}}</div>
                     </strong>
-               
+
                 @endif
 
     <div class="row ">
@@ -87,7 +86,6 @@
             </form>
         </div>
     </div>
-
 
     <form action="{{route('carrito.add')}}" method="post">
     {{csrf_field()}}

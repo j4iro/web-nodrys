@@ -79,9 +79,8 @@
 @section('content')
 
 <form action="{{route('restaurant.buscar')}}" method="post">
-<div class="container-fluid">
+<div class="container-fluid" style="padding:0">
             {{csrf_field()}}
-
             <div class="slider">
                 <ul>
                     <li>
@@ -117,8 +116,6 @@
 
 </div>
 </form>
-
-
 <div class="container my-4">
     <form action="{{route('restaurants.filtro')}}" method="post">
 
@@ -216,6 +213,7 @@
 
 <script type="text/javascript">
             var map = L.map('map');
+            map.scrollWheelZoom.disable();
             var marker=L.marker();
             var circle= L.circle();
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -269,6 +267,7 @@
                .setLatLng([lat, lng])
                .setContent("<center><b>Hola!</b><br>Estas aquí</center>")
                .openOn(map);
+
 
             }
 
