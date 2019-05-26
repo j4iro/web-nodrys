@@ -37,30 +37,83 @@
             transition: 0.5s;
         }
 
+
+        .slider{
+            width:100%;
+            height:400px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            position:relative;
+        }
+        .slider ul {
+        	display: flex;
+        	padding: 0;
+        	width: 400%;
+        	animation: cambio 20s infinite alternate linear;
+        }
+        .slider li {
+        	width: 100%;
+        	list-style: none;
+        }
+        .slider img {
+        	width: 100%;
+            filter: grayscale(70%);
+            object-fit: cover;
+        }
+        @keyframes cambio {
+        	0% {margin-left: 0;}
+        	20% {margin-left: 0;}
+
+        	25% {margin-left: -100%;}
+        	45% {margin-left: -100%;}
+
+        	50% {margin-left: -200%;}
+        	70% {margin-left: -200%;}
+
+        	75% {margin-left: -300%;}
+        	100% {margin-left: -300%;}
+        }
     </style>
 @endsection
 
 @section('content')
 
 <form action="{{route('restaurant.buscar')}}" method="post">
-<div class="container-fluid ">
+<div class="container-fluid">
             {{csrf_field()}}
 
-        <div class="row bg-intro  d-flex justify-content-center align-items-center">
-            <div class="col-12 col-sm-8 col-md-5 text-center">
-                <div class="input-group mb-2">
-                    <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
-                    <div class="input-group-append">
-                        <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
+            <div class="slider">
+                <ul>
+                    <li>
+                        <img src="{{asset('images/slider/imagen1.jpg')}}" alt="">
+                    </li>
+                    <li>
+                      <img src="{{asset('images/slider/imagen2.jpg')}}" alt="">
+                    </li>
+                    <li>
+                      <img src="{{asset('images/slider/imagen3.jpg')}}" alt="">
+                    </li>
+                    <li>
+                      <img src="{{asset('images/slider/imagen4.jpg')}}" alt="">
+                    </li>
+                </ul>
+                <div class="row slider-inicio d-flex justify-content-center align-items-center">
+                    <div class="col-12 col-sm-8 col-md-5 text-center">
+                        <div class="input-group mb-2">
+                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                        <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
+                        <br>
+                        <button id="btnShow" type="button"  class="btn btn-primary">
+                            Ver cercanos a mí
+                        </button>
                     </div>
                 </div>
-                <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
-                <br>
-                <button id="btnShow" type="button"  class="btn btn-primary">
-                    Ver cercanos a mí
-                </button>
             </div>
-        </div>
+
 
 </div>
 </form>
