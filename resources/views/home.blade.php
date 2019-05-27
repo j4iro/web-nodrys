@@ -293,10 +293,6 @@
 
             @endforeach
 
-            window.loaded=function(){
-
-            }
-
 </script>
 
 
