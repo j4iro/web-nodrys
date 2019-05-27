@@ -16,11 +16,11 @@
 
     <style media="screen">
 
-        .btnActual{
+        /* .btnActual{
             position: absolute;
             z-index: 99;
             right: 0;
-        }
+        } */
         #map{
             height: 400px;
             /* transition: 0.5s; */
@@ -141,8 +141,8 @@
                 </div>
             </div>
         </div>
-        <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+        <button id="btnActual" class="btn btn-primary btn-actual p-1" type="button" class="btnActual" name="button" onclick="localizar()">
+            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" >
         </button>
     </div>
 

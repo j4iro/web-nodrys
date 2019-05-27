@@ -77,8 +77,6 @@ class AdminRestaurant extends Controller
 
         return back();
 
-
-
     }
 
     public function cambiarDisponibilidad()

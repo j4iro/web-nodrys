@@ -228,7 +228,7 @@ private function getOrders(){
 
         //Sacar el ID del último pedido ingresado
         $last_id_insertado = $order->id;
-        echo "Último ID insertado" . $last_id_insertado;
+        //echo "Último ID insertado" . $last_id_insertado;
 
         //Recorrer todos los productos del carrito e insertarlos al detalle
         foreach ($_SESSION['carrito'] as $elemento)
