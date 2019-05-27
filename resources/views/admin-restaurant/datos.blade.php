@@ -35,14 +35,14 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Slogan') }}</label>
+                                <label for="slogan" class="col-md-4 col-form-label text-md-right">{{ __('Slogan') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{$datos->slogan}}" required >
+                                    <input id="slogan" type="text" class="form-control{{ $errors->has('slogan') ? ' is-invalid' : '' }}" name="slogan" value="{{$datos->slogan}}" required >
 
-                                    @if ($errors->has('surname'))
+                                    @if ($errors->has('slogan'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('surname') }}</strong>
+                                            <strong>{{ $errors->first('slogan') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -122,7 +122,7 @@
                                 <label for="imagepath" class="col-md-4 col-form-label text-md-right">Foto</label>
 
                                 <div class="col-md-6">
-                                    <input id="imagepath" type="file" class="form-control-file {{ $errors->has('imagepath') ? ' is-invalid' : '' }}" name="image_path" >
+                                    <input id="imagepath" type="file" class="form-control-file {{ $errors->has('imagepath') ? ' is-invalid' : '' }}" name="image" >
 
                                     @if ($errors->has('imagepath'))
                                         <span class="invalid-feedback" role="alert">
