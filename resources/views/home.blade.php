@@ -56,7 +56,9 @@
         	list-style: none;
         }
         .slider img {
-        	width: 100%;
+        	width: auto;
+            height:100%;
+            margin-top:-10%;
             filter: grayscale(70%);
             object-fit: cover;
         }
@@ -84,16 +86,16 @@
             <div class="slider">
                 <ul>
                     <li>
-                        <img src="{{asset('images/slider/imagen1.jpg')}}" alt="">
+                        <img class="img-fluid" src="{{asset('images/slider/imagen1.jpg')}}" alt="">
                     </li>
                     <li>
-                      <img src="{{asset('images/slider/imagen2.jpg')}}" alt="">
+                        <img class="img-fluid"  src="{{asset('images/slider/imagen2.jpg')}}" alt="">
                     </li>
                     <li>
-                      <img src="{{asset('images/slider/imagen3.jpg')}}" alt="">
+                        <img class="img-fluid"  src="{{asset('images/slider/imagen3.jpg')}}" alt="">
                     </li>
                     <li>
-                      <img src="{{asset('images/slider/imagen4.jpg')}}" alt="">
+                        <img class="img-fluid"  src="{{asset('images/slider/imagen4.jpg')}}" alt="">
                     </li>
                 </ul>
                 <div class="row slider-inicio d-flex justify-content-center align-items-center">
