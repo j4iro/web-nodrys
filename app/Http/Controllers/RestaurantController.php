@@ -24,7 +24,7 @@ class RestaurantController extends Controller
 
         $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')->where('restaurants.name',$request->name)
         ->orWhere('restaurants.name','like','%'.$request->name.'%')
-        ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+        ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')
         ->get();
 
         $mje = 'Se muestran '.count($restaurants). ' resultados de "' .  $request->name . '".';
@@ -42,7 +42,7 @@ class RestaurantController extends Controller
 
     public function filtro(Request $request)
     {
-       
+
 
         if(isset($request->categoria))
         {

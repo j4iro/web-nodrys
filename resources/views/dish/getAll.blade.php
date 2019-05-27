@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('scripts')
-    <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet">
-
-    </script>
+    <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
     <style media="screen">
         input[type=checkbox]{
             display: none;

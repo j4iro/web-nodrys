@@ -48,6 +48,8 @@ private function getOrders(){
         $orders=$this->getOrders();
         session(['estado_restaurant'=>$this->disponibilidad()]);
 
+        session(['estado_restaurant'=>$this->disponibilidad()]);
+
         return view('admin-restaurant.index',[
             "pedidos" => $orders,
             "disponibilidad" =>$this->disponibilidad()

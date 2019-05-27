@@ -32,7 +32,6 @@
         </div>
 
 
-        <div id="result"></div>
 
  @endsection
  @section('scripts')

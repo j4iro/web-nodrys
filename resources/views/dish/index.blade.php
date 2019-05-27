@@ -19,7 +19,6 @@
       <style media="screen">
           #map{
               height: 400px;
-
           }
           .hubicacion_controls{
               display: none;
@@ -76,7 +75,6 @@
             </form>
         </div>
     </div>
-
 
     <form action="{{route('carrito.add')}}" method="post">
     {{csrf_field()}}
