@@ -66,7 +66,7 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
 
 /* Ruta para Buscar restaurantes por su nombre */
 Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
-Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
+//Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
 
 /*Rutas para el administrador master*/
 Route::get('/admin/home', 'AdminController@index')->name('admin.index');
@@ -129,5 +129,8 @@ Route::post('/mis-pedidos/cancelar','OrderController@cancelar')->name('order.can
 
 Route::get('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
 // Route::post('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
+
+
+Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'RestaurantController@filtroXcategoria']);
 
 
