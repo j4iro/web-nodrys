@@ -1,24 +1,11 @@
 @extends('layouts.app')
 @section('scripts')
+    <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
     <style media="screen">
         input[type=checkbox]{
             display: none;
         }
     </style>
-    <script type="text/javascript">
-        function seleccionar(id){
-            var estado=document.getElementById(id).checked;
-            var cont=document.getElementById('card-cont');
-            var imgPlatos=document.getElementById('imgPlatos');
-            if (estado==true) {
-                cont.style="background-color:rgba(2,65,95,1);color:white";
-                imgPlatos.style="filter: grayscale(70%);";
-            }else{
-                cont.style="";
-                imgPlatos.style="";
-            }
-        }
-    </script>
 @endsection
 
 @section('content')
@@ -70,8 +57,8 @@
         <div class="col-6 col-md-4 col-lg-2 mb-4">
             <label for="{{$dish->id}}">
                 <div  class="card card-plato">
-                    <img id="imgPlatos" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
-                    <div id="card-cont" class="card-body p-0 px-3 pt-2 pb-3">
+                    <img id="{{$dish->id}}i" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
+                    <div id="{{$dish->id}}c" class="card-body p-0 px-3 pt-2 pb-3">
                         <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
                         <p class="card-text card-text-plato m-0">{{$dish->restaurante}} </p>
                         <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>

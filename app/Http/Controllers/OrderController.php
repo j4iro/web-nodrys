@@ -25,23 +25,30 @@ class OrderController extends Controller
         return $disponibilidad;
     }
 
+private function getOrders(){
+    //Traigo los pedidos del restaurante identificado
+    //Conseguir restaurante identificado
+    $id = session('id_user');
+    $datos = Restaurant::all()->where('user_id',$id)->first();
+    session(['id_restaurante'=>$datos->id]);
+    session(['nombre_restaurante'=>$datos->name]);
+    $id_restaurant =session('id_restaurante');
+
+
+    $orders = Order::join('users','users.id','=','orders.user_id')
+    ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+    ->where('orders.restaurant_id',$id_restaurant)
+    ->where('orders.state','pendiente')
+    ->get();
+// dd($orders->toArray());
+    return $orders;
+}
     public function index_r()
     {
-        //Traigo los pedidos del restaurante identificado
-        //Conseguir restaurante identificado
+        $orders=$this->getOrders();
+        session(['estado_restaurant'=>$this->disponibilidad()]);
 
-        $id = session('id_user');
-        $datos = Restaurant::all()->where('user_id',$id)->first();
-        session(['id_restaurante'=>$datos->id]);
-        session(['nombre_restaurante'=>$datos->name]);
-        $id_restaurant =session('id_restaurante');
-
-
-        $orders = Order::join('users','users.id','=','orders.user_id')
-        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('orders.restaurant_id',$id_restaurant)
-        ->where('orders.state','pendiente')
-        ->get();
+        session(['estado_restaurant'=>$this->disponibilidad()]);
 
         session(['estado_restaurant'=>$this->disponibilidad()]);
 
@@ -50,7 +57,26 @@ class OrderController extends Controller
             "disponibilidad" =>$this->disponibilidad()
         ]);
     }
+    public function notif(){
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
 
+        //$time = date('r');
+        // echo "data: The server time is, otro\n\n";
+        $orders=$this->getOrders();
+        $ordenes=array();
+        $array=$orders->toArray();
+        foreach ($array as $reserva) {
+            
+            array_push($ordenes,implode(",",$reserva));
+        }
+        // $cadena=implode ( ";" , $array );
+        $cadena=implode(";",$ordenes);
+
+        echo "data: {$cadena}\n\n";
+        flush();
+
+    }
     public function pedidos_completados()
     {
         $id_restaurant =session('id_restaurante');
@@ -143,7 +169,9 @@ class OrderController extends Controller
         $order->state = 'cancelada';
         $order->update();
 
-        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');;
+        // aqui redirecciona
+
+        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');
     }
 
     public function add(Request $request)
@@ -200,7 +228,7 @@ class OrderController extends Controller
 
         //Sacar el ID del último pedido ingresado
         $last_id_insertado = $order->id;
-        echo "Último ID insertado" . $last_id_insertado;
+        //echo "Último ID insertado" . $last_id_insertado;
 
         //Recorrer todos los productos del carrito e insertarlos al detalle
         foreach ($_SESSION['carrito'] as $elemento)

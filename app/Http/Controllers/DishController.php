@@ -44,7 +44,10 @@ class DishController extends Controller
        $dishes = Dish::where('restaurant_id', $request->id)
                 ->where('category_dish','<>','5')
                 ->get();
-       $restaurant = Restaurant::where('id', $request->id)->first();
+       $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
+       ->join('categories','categories.id','=','restaurants.category_id')
+       ->select('restaurants.*','districts.name as distrito','categories.name as categoria')
+       ->where('restaurants.id', $request->id)->first();
 
         return view('dish.index',[
             'dishes' => $dishes,

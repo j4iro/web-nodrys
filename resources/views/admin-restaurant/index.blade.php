@@ -8,7 +8,6 @@
             </div>
 
             <div class="col-12 mt-2">
-
                 <table class="table table-responsive table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -21,34 +20,106 @@
                         <th scope="col">Total</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Detalles</th>
-                        <th scope="col">Marcar</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="pedidos">
 
-                    @foreach ($pedidos as $pedido)
-                        <tr>
-                            <th scope="row">{{$pedido->name .' '. $pedido->surname}}</th>
-                            <td>{{$pedido->telephone}}</td>
-                            <td>{{$pedido->date}}</td>
-                            <td>{{$pedido->hour}}</td>
-                            <td class="text-capitalize">{{$pedido->oca_special}}</td>
-                            <td>{{$pedido->n_people}}</td>
-                            <td>{{$pedido->total}}</td>
-                            @if ($pedido->state=='pendiente')
-                                <td class="text-danger text-uppercase"><span class="badge badge-danger">{{$pedido->state}}</span></td>
-                            @else
-                                <td class="text-primary text-uppercase"><span class="badge badge-primary">{{$pedido->state}}</span></td>
-                            @endif
-
-                            <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Detalles</a></td>
-                            <td><a href="{{route('adminRestaurant.pedidos.detail',["id"=>$pedido->id])}}" class="btn btn-outline-primary btn-sm">Marcar</a></td>
-                        </tr>
-                    @endforeach
 
                     </tbody>
                 </table>
 
             </div>
         </div>
+
+
+
+ @endsection
+ @section('scripts')
+     <script type="text/javascript">
+
+var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
+            Notification.requestPermission();
+             function mostrarNotificacion(titulo,descripcion) {
+             if(Notification) {
+
+                 opciones = {
+                     icon: icono,
+                     body: descripcion
+                 };
+
+                 if (Notification.permission == "granted") {
+                     var n = new Notification(titulo, opciones);
+                 }
+
+                 else if(Notification.permission == "default") {
+                     alert("Primero da los permisos de notificación");
+                 }
+
+                 else {
+                     alert("Bloqueaste los permisos de notificación");
+                 }
+             }
+             };
+
+// esto es lo maximo
+            var num=0;
+            if(typeof(EventSource) !== "undefined") {
+
+            var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
+
+
+
+               var source = new EventSource(finalUrl);
+               source.onmessage = function(event) {
+
+                var n=event.data.split(";");
+                if (n.length==num&&num!=0) {
+
+
+              }else {
+                  mostrarNotificacion('Hay nuevas ordenes',"tiene "+n.length+" ordenes pendientes");
+              }
+                num=n.length;
+                // console.log(num);
+                var reservas=[];
+                for (var i = 0; i < n.length; i++) {
+                    var aux=n[i].split(',');
+                    reservas.push(aux);
+                }
+
+
+                // http://127.0.0.1:8001/admin-restaurante/pedidos-pendientes/detalle/10
+                pedidos.innerHTML="";
+                for (var i = 0; i < reservas.length; i++) {
+                    var id=reservas[i][10];
+                    var url={!! json_encode(url('/'))!!}+"/admin-restaurante/pedidos-pendientes/detalle/"+id;
+
+                    var estado=reservas[i][9];
+                    if (estado=="pendiente") {
+                        estado="<td class='text-danger text-uppercase'><span class='badge badge-danger'>Pendiente</span></td>";
+                    }else {
+                        estado="<td class='text-primary text-uppercase'><span class='badge badge-primary'>Cancelado</span></td>";
+                    }
+
+                    var cadena="<tr>\
+                    <td>"+reservas[i][1]+" "+reservas[i][2]+"</td>\
+                    <td>"+reservas[i][3]+"</td>\
+                    <td>"+reservas[i][4]+"</td>\
+                    <td>"+reservas[i][5]+"</td>\
+                    <td>"+reservas[i][6]+"</td>\
+                    <td>"+reservas[i][7]+"</td>\
+                    <td>"+reservas[i][8]+"</td>"+
+                    estado
+                    +"\
+                    <td><a href="+url+" class='btn btn-outline-primary btn-sm'>Detalles</a></td>\
+                    </tr>"
+                    pedidos.innerHTML+=cadena;
+                }
+               };
+             } else {
+               document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+             }
+
+     </script>
+
  @endsection

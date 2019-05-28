@@ -128,6 +128,5 @@ Route::get('/mis-pedidos/factura/{id}/{tipo}','PdfController@facturaPedidoClient
 Route::post('/mis-pedidos/cancelar','OrderController@cancelar')->name('order.cancelar');
 
 Route::get('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
+Route::get('/admin-restaurante/serve','OrderController@notif');
 // Route::post('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
-
-

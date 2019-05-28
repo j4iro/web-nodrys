@@ -13,6 +13,9 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
+
+      <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
+
       <style media="screen">
           #map{
               height: 400px;
@@ -54,25 +57,7 @@
 
 
       </style>
-      <script type="text/javascript">
-
-        function vaStart(id){
-            var valoracion=document.getElementById(id).value;
-            alert(valoracion);
-        }
-        function seleccionar(id){
-            var estado=document.getElementById(id).checked;
-            var cont=document.getElementById('card-cont');
-            var imgPlatos=document.getElementById('imgPlatos');
-            if (estado==true) {
-                cont.style="background-color:rgba(2,65,95,1);color:white";
-                imgPlatos.style="filter: grayscale(70%);";
-            }else{
-                cont.style="";
-                imgPlatos.style="";
-            }
-        }
-      </script>
+     
 @endsection
 
 <div class="container mt-5">
@@ -90,20 +75,21 @@
         </div>
         <div class="col-12 col-sm-6">
             <strong class="navbar-brand">{{$restaurant->name}}</strong><br>
+            {{$restaurant->slogan}}
+            <br>
             {{$restaurant->description}}
             <br>
-            {{-- <strong class="navbar-brand pb-0">Distrito</strong>
+            <hr>
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/discount-filled.png" width="16">
+            Gana <strong>{{$restaurant->points}}</strong> puntos por hacer tu reserva aquí
             <br>
-            {{$restaurant->district_id}}
-            <br> --}}
-            <strong class="navbar-brand pb-0">Dirección</strong>
+            <img class="mb-1" src="https://img.icons8.com/ios-glyphs/30/000000/marker.png" width="16">
+            {{$restaurant->address}} - <strong>{{$restaurant->distrito}}</strong>
             <br>
-            {{$restaurant->address}}
-            <br>
-            <strong class="navbar-brand pb-0">Telefono</strong>
-            <br>
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/phone-not-being-used-filled.png" width="16">
             {{$restaurant->telephone}}
             <br>
+
 
 
             <strong class="navbar-brand pb-0">Puntuación</strong>
@@ -125,6 +111,18 @@
 
 
             <form action="{{route('carrito.add')}}" method="post">
+
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
+            {{$restaurant->categoria}}
+            <br>
+            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/clock-filled.png" width="16">
+            @if ($restaurant->availability==1)
+                Abierto
+            @else
+                Cerrado
+            @endif
+            <form class="mt-3" action="{{route('carrito.add')}}" method="post">
+
                 {{csrf_field()}}
                 <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
                 <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
@@ -143,8 +141,8 @@
             <div class="col-6 col-md-4 col-lg-2 mb-4">
                 <label for="{{$dish->id}}">
                     <div class="card card-plato">
-                        <img id="imgPlatos" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
-                        <div id="card-cont" class="card-body p-0 px-3 pt-2 pb-3">
+                        <img id="{{$dish->id}}i" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
+                        <div id="{{$dish->id}}c" class="card-body p-0 px-3 pt-2 pb-3">
                             <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
                             <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
                             <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>

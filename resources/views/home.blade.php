@@ -16,11 +16,11 @@
 
     <style media="screen">
 
-        .btnActual{
+        /* .btnActual{
             position: absolute;
             z-index: 99;
             right: 0;
-        }
+        } */
         #map{
             height: 400px;
             /* transition: 0.5s; */
@@ -141,8 +141,8 @@
                 </div>
             </div>
         </div>
-        <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+        <button id="btnActual" class="btn btn-primary btn-actual p-1" type="button" class="btnActual" name="button" onclick="localizar()">
+            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" >
         </button>
     </div>
 
@@ -197,6 +197,14 @@
                                 <strong>{{$restaurant->categoria}}</strong>
                             </div>
                         </div>
+                        <p class="my-2 mb-0 font-weight-light">
+                            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14">
+                            @if ($restaurant->availability==1)
+                                Abierto
+                            @else
+                                Cerrado
+                            @endif
+                        </p>
                         <p class="my-2 font-weight-light">
                             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/place-marker.png" width="14"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
                     </div>
@@ -285,10 +293,6 @@
                 marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
 
             @endforeach
-
-            window.loaded=function(){
-
-            }
 
 </script>
 
