@@ -163,7 +163,7 @@ class PdfController extends Controller
         //Traigo los pedidos del usuario identificado
         $order = Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
         ->join('users','users.id','=','orders.user_id')
-        ->select('users.name as cliente','users.surname as apellidos','users.id as id_user','restaurants.image','restaurants.name','restaurants.address','orders.created_at','orders.oca_special','orders.n_people','orders.total','orders.id')
+        ->select('users.name as cliente','users.surname as apellidos','users.id as id_user','restaurants.image','restaurants.name','restaurants.address','orders.created_at','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.paid','orders.id')
         ->where('orders.user_id',$id_user)
         ->where('orders.id',$id)
         ->first();

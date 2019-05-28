@@ -45,10 +45,20 @@ private function getOrders(){
 }
     public function index_r()
     {
-        $orders=$this->getOrders();
-        session(['estado_restaurant'=>$this->disponibilidad()]);
+        //Traigo los pedidos del restaurante identificado
+        //Conseguir restaurante identificado
 
-        session(['estado_restaurant'=>$this->disponibilidad()]);
+        $id = session('id_user');
+        $datos = Restaurant::all()->where('user_id',$id)->first();
+        session(['id_restaurante'=>$datos->id]);
+        session(['nombre_restaurante'=>$datos->name]);
+        $id_restaurant =session('id_restaurante');
+
+        $orders = Order::join('users','users.id','=','orders.user_id')
+        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+        ->where('orders.restaurant_id',$id_restaurant)
+        ->where('orders.state','pendiente')
+        ->get();
 
         session(['estado_restaurant'=>$this->disponibilidad()]);
 
@@ -67,7 +77,7 @@ private function getOrders(){
         $ordenes=array();
         $array=$orders->toArray();
         foreach ($array as $reserva) {
-            
+
             array_push($ordenes,implode(",",$reserva));
         }
         // $cadena=implode ( ";" , $array );
@@ -188,41 +198,50 @@ private function getOrders(){
         $user = \Auth::user();
         $id_user = $user->id;
 
-        $card = new Card();
-        $card->num_card = $request->input('num_card');
-        $card->user_id = $id_user;
-        $card->month = $request->input('month');
-        $card->year = $request->input('year');
-        $card->cvc = $request->input('cvc');
-        $card->owner = $request->input('owner');
-        $card->country = $request->input('country');
-        $card->cod_postal = $request->input('cod_postal');
+        $pagar_con_tarjeta = $request->input('pagarcontarjeta');
 
-        $r = $request->input('recordarTarjeta');
-        $recordar_tarjeta = isset($r) ? 'on' : 'off';
+        $order = new Order();
 
-        if ($recordar_tarjeta=='on')
+        if(isset($pagar_con_tarjeta))
         {
-            //Guardar los datos de la tarjeta en la base de datos
-            $card->save();
-            // dd($card);
+            $order->paid = "si";
+
+            //Aqui falta verificar si la tarjeta existe, si ya existe que ya no se inserte
+            $card = new Card();
+            $card->num_card = $request->input('num_card');
+            $card->user_id = $id_user;
+            $card->month = $request->input('month');
+            $card->year = $request->input('year');
+            $card->cvc = $request->input('cvc');
+            $card->owner = $request->input('owner');
+            $card->country = $request->input('country');
+            $card->cod_postal = $request->input('cod_postal');
+
+            $r = $request->input('recordarTarjeta');
+            $recordar_tarjeta = isset($r) ? 'on' : 'off';
+
+            if ($recordar_tarjeta=='on')
+            {
+               $card->save();
+            }
+        }
+        else
+        {
+            $order->paid = "no";
         }
 
         $stats = Util::statsCarrito();
 
         //Datos del pedido
-        $order = new Order();
         $order->restaurant_id = $stats['restaurant_id'];
         $order->user_id = $id_user;
         $order->date =  $request->input('fecha');
         $order->hour = $request->input('hora');
         $order->n_people = $request->input('n_people');
         $order->oca_special = $request->input('oca_special');
-
-        //Ver si hay codigo de promoción
-        // $order->cod_promo = null;
         $order->state = 'pendiente';
         $order->total = $stats['total'];
+
 
         $order->save();
 
