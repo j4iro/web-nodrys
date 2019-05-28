@@ -365,4 +365,6 @@ class AdminController extends Controller
             'restaurantes' => $restaurants,
         ]);
     }
+   
+
 }

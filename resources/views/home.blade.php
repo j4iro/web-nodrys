@@ -7,8 +7,10 @@
 
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-    crossorigin=""></script>
+    crossorigin="">
 
+    </script>
+<script type="text/javascript" src="js/js/ajax.js"></script>
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">;
     </script> --}}
 
@@ -118,8 +120,10 @@
 
 </div>
 </form>
-<div class="container my-4">
-    <form action="{{route('restaurants.filtro')}}" method="post">
+
+
+<div class="container my-4"  >
+    <form  method="post">
 
     <div class="row">
         <div class="col-12 ">
@@ -150,7 +154,7 @@
     <div class="row mb-4 mt-2">
             {{csrf_field()}}
         <div class="col-6 col-lg-3 pt-2">
-            <select name="categoria" class="form-control" id="">
+            <select name="categoria" class="form-control" id="btnCategoria" onchange="mostrar();" >
                 <option value="" disabled selected >Categorias</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
@@ -165,9 +169,7 @@
                 @endforeach
             </select>
         </div> --}}
-        <div class="col-6 col-lg-2  pt-2">
-            <button class="btn btn-outline-primary" name="filtrar" type="submit">Filtrar</button>
-        </div>
+
         </form>
     </div>
 
@@ -182,7 +184,7 @@
         </div>
     @endisset
 
-    <div class="row mt-1">
+    <div class="row mt-1" id="ajaxResultados" >
         @foreach ( $restaurants as $restaurant )
 
             <div class="col-12 col-md-6 col-lg-4 mb-4 ">
@@ -213,6 +215,7 @@
 
         @endforeach
     </div>
+
 
 
 </div>
