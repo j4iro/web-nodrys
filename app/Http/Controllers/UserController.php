@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\District;
+use App\Card;
 
 class UserController extends Controller
 {
@@ -96,5 +97,30 @@ class UserController extends Controller
         $file = Storage::disk('users')->get($filename);
         return new Response($file,200);
     }
+
+    public function getDatosTarjeta()
+    {
+        //Conseguir usuario identificado
+        $user = \Auth::user();
+        $id = $user->id;
+        $card = Card::where('user_id','=',$id)->get();
+
+        if(count($card)>0)
+        {
+            echo json_encode($card);
+        }else
+        {
+            echo json_encode("no");
+        }
+    }
+
+    public function getDatosTarjetaOne($id)
+    {
+        $card = Card::where('id','=',$id)
+        ->first();
+
+        echo json_encode($card);
+    }
+
 
 }

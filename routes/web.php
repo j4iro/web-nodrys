@@ -130,4 +130,6 @@ Route::post('/mis-pedidos/cancelar','OrderController@cancelar')->name('order.can
 Route::get('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
 // Route::post('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
 
+Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
+Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 
