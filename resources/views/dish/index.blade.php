@@ -49,14 +49,20 @@
               unicode-bidi:bidi-override:
           }
           #contCalif label:hover,label:hover~label{
-              color:#02415F;
+              color:#FFCC00;
           }
           #contCalif input[type=radio]:checked~label{
-              color:#02415F;
+              color:#FFCC00;
           }
 
 
       </style>
+      <script type="text/javascript">
+          function vaStart(id){
+              var valoracion=document.getElementById(id);
+              alert(valoracion.value);
+          }
+      </script>
 
 @endsection
 
