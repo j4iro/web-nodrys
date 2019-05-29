@@ -110,6 +110,7 @@ var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
                         estado="<td class='text-primary text-uppercase'><span class='badge badge-primary'>Cancelado</span></td>";
                     }
                     if(restante<0){
+                        invalidar_Orden(id)
                         estado="<td class='text-danger text-uppercase'><span class='badge badge-alert'>Vencido</span></td>";
                     }
 
@@ -133,6 +134,32 @@ var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
              } else {
                document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
              }
+
+             var nose={!! json_encode(route('order.vence'))!!};
+             alert(nose);
+
+             function invalidar_Orden(id_orden){
+                $.get(nose,{
+                    cod_reserva:id_orden
+                },function (resultado) {
+                    if(resultado=="OK"){
+                        alert("se han cancelado con exito");
+                    }else {
+                        alert(resultado);
+                    }
+                })
+
+             }
+             /*
+             $.get( finalUrl,function( data ) {
+                 if(data=="0"){
+                     labeldisponibilidad.innerHTML = "CERRADO";
+                 }else{
+                     labeldisponibilidad.innerHTML = "ABIERTO";
+                 }
+               //  alert(data);
+             });
+             */
 
      </script>
 

@@ -161,15 +161,28 @@ private function getOrders(){
 
     public function cancelar(Request $request)
     {
-        // dd($request);
-        $order = Order::where('id','=',$request->input('cod_reserva'))->first();
-        $order->state = 'cancelada';
-        $order->update();
-
-        // aqui redirecciona
-
+        $this->cancela_orden($request->input('cod_reserva'),"cancela");
         return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');
     }
+    public function vence_orden(Request $request){
+        $this->cancela_orden($request->input('cod_reserva'));
+    }
+
+    public function cancela_orden($id,$accion="otra")
+    {
+        $order = Order::where('id','=',$id)->first();
+
+        if ($accion=="cancela") {
+            $order->state = 'cancelada';
+            $order->update();
+
+        }else {
+            $order->state = 'vencida';
+            $order->update();
+            echo "OK";
+        }
+    }
+
 
     public function add(Request $request)
     {
