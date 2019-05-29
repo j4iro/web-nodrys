@@ -263,18 +263,12 @@ function quitar_requireds() {
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
-                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
-                        <label for="rbtarjeta" class="form-check-label" >Tarjeta</label>
+
+                        <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Tarjeta</a>
                     </div>
                     <div class="col-6">
-                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbefectivo">
-                        <label for="rbefectivo" class="form-check-label" >Efectivo</label>
-                    </div>
-                </div>
+                        <button type="submit"  class="btn btn-block  btn-danger ">Efectivo</button>
 
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Reservar</a>
                     </div>
                 </div>
                 {{-- <div class="row mt-3">

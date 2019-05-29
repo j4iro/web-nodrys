@@ -34,7 +34,30 @@
           input[type=checkbox]{
               display: none;
           }
+
+
+          input[type=radio]{
+              display:none;
+          }
+          .start{
+              cursor:pointer;
+              font-size:200%;
+              color:gray;
+          }
+          .clasificación{
+              direction:rtl;
+              unicode-bidi:bidi-override:
+          }
+          #contCalif label:hover,label:hover~label{
+              color:#02415F;
+          }
+          #contCalif input[type=radio]:checked~label{
+              color:#02415F;
+          }
+
+
       </style>
+
 @endsection
 
 <div class="container mt-5">
@@ -66,6 +89,29 @@
             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/phone-not-being-used-filled.png" width="16">
             {{$restaurant->telephone}}
             <br>
+
+
+
+            <strong class="navbar-brand pb-0">Puntuación</strong>
+            {{-- <form id="formCali" name="formCali"> --}}
+                <p id="contCalif" class="clasificación">
+                    <input id="radio5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="radio5">&#9733;</label>
+                    <input id="radio4" type="radio" name="tenedor" value="4" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="radio4">&#9733;</label>
+                    <input id="radio3" type="radio" name="tenedor" value="3" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="radio3">&#9733;</label>
+                    <input id="radio2" type="radio" name="tenedor" value="2" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="radio2">&#9733;</label>
+                    <input id="radio1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="radio1">&#9733;</label>
+                </p>
+            {{-- </form> --}}
+
+
+
+            <form action="{{route('carrito.add')}}" method="post">
+
             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
             {{$restaurant->categoria}}
             <br>
@@ -76,6 +122,7 @@
                 Cerrado
             @endif
             <form class="mt-3" action="{{route('carrito.add')}}" method="post">
+
                 {{csrf_field()}}
                 <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
                 <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
