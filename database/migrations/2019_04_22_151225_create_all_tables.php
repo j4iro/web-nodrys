@@ -198,6 +198,16 @@ class CreateAllTables extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
+        Schema::create('valorations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('restaurant_id');
+            $table->decimal('score',4,2);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
+        });
+
     }
 
     /**
@@ -220,5 +230,7 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('orders');
         Schema::dropIfExists('dishes');
         Schema::dropIfExists('cards');
+        Schema::dropIfExists('valorations');
+
     }
 }
