@@ -15,6 +15,8 @@
                         <th scope="col">Celular</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
+                        <th scope="col">Hora Actual</th>
+                        <th scope="col">Hora restante</th>
                         <th scope="col">Ocasión Especial</th>
                         <th scope="col">N° Personas</th>
                         <th scope="col">Total</th>
@@ -89,10 +91,17 @@ var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
 
 
                 // http://127.0.0.1:8001/admin-restaurante/pedidos-pendientes/detalle/10
+                var horaActual=new Date();
+
                 pedidos.innerHTML="";
                 for (var i = 0; i < reservas.length; i++) {
+                    var cliente=reservas[i][1]+" "+reservas[i][2];
                     var id=reservas[i][10];
                     var url={!! json_encode(url('/'))!!}+"/admin-restaurante/pedidos-pendientes/detalle/"+id;
+                    var hora=reservas[i][5].split(":");
+                    var restante=(hora[0]*60+parseInt(hora[1]))-(horaActual.getHours()*60+horaActual.getMinutes());
+
+
 
                     var estado=reservas[i][9];
                     if (estado=="pendiente") {
@@ -100,12 +109,17 @@ var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
                     }else {
                         estado="<td class='text-primary text-uppercase'><span class='badge badge-primary'>Cancelado</span></td>";
                     }
+                    if(restante<0){
+                        estado="<td class='text-danger text-uppercase'><span class='badge badge-alert'>Vencido</span></td>";
+                    }
 
                     var cadena="<tr>\
-                    <td>"+reservas[i][1]+" "+reservas[i][2]+"</td>\
+                    <td>"+cliente+"</td>\
                     <td>"+reservas[i][3]+"</td>\
                     <td>"+reservas[i][4]+"</td>\
-                    <td>"+reservas[i][5]+"</td>\
+                    <td>"+hora[0]+":"+hora[1]+":"+hora[2]+"</td>\
+                    <td>"+horaActual.getHours()+":"+horaActual.getMinutes()+":"+horaActual.getSeconds()+"</td>\
+                    <td>"+restante+"</td>\
                     <td>"+reservas[i][6]+"</td>\
                     <td>"+reservas[i][7]+"</td>\
                     <td>"+reservas[i][8]+"</td>"+
