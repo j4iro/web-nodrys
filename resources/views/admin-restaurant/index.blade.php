@@ -6,7 +6,7 @@
             <div class="col-12">
                 <strong class="navbar-brand p-0">Pedidos Pendientes</strong>
             </div>
-
+    
             <div class="col-12 mt-2">
                 <table class="table table-responsive table-hover">
                     <thead class="thead-light">

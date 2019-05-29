@@ -40,11 +40,14 @@ private function getOrders(){
     ->where('orders.restaurant_id',$id_restaurant)
     ->where('orders.state','pendiente')
     ->get();
+
 // dd($orders->toArray());
+
     return $orders;
 }
-    public function index_r()
-    {
+
+public function index_r()
+{
         $orders=$this->getOrders();
 
         session(['estado_restaurant'=>$this->disponibilidad()]);
@@ -53,7 +56,7 @@ private function getOrders(){
             "pedidos" => $orders,
             "disponibilidad" =>$this->disponibilidad()
         ]);
-    }
+}
     public function notif(){
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
@@ -119,7 +122,8 @@ private function getOrders(){
     {
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+        ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish','categories_dishes.name as type')
         ->where('details_orders.order_id',$id)
         ->get();
 
@@ -130,15 +134,18 @@ private function getOrders(){
 
     public function detail_r($id)
     {
+
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish')
         ->where('details_orders.order_id',$id)
         ->get();
 
         return view('pedidos.detail_r',[
             'pedidos' => $details
         ]);
+
     }
 
     public function confirmation(Request $request){
@@ -257,6 +264,8 @@ private function getOrders(){
 
             $detail_order->order_id = $last_id_insertado;
             $detail_order->dish_id = $producto->id;
+            $detail_order->cant = $elemento['unidades'];
+
             $detail_order->save();
             // var_dump($producto->id);
         }

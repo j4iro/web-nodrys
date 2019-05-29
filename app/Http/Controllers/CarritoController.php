@@ -11,7 +11,7 @@ class CarritoController extends Controller
 {
     public function index()
     {
-
+        
 
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
         return view('carrito.index',[
@@ -47,6 +47,7 @@ class CarritoController extends Controller
     public function add(Request $request)
     {
      
+
         $solo_reserva = $request->input('solo_reserva');
         if(isset($solo_reserva))
         {
@@ -100,9 +101,10 @@ class CarritoController extends Controller
                             "plato" => $dish
                         );
                     }
+
                 }
             }
-
+           
             return redirect()->route('carrito.index');
         }
         else

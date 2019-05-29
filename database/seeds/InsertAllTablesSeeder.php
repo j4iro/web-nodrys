@@ -189,7 +189,7 @@ class InsertAllTablesSeeder extends Seeder
         User::create([
             'name' => 'Cristhian',
             'surname' => 'Huayanay',
-            'email' => 'cristhian@gmail.com',
+            'email' => 'huayanayricard88@gmail.com',
             'password' => bcrypt('123456'),
             'telephone' => '975863241',
             'address' => 'Calle Torres Mz 8 Lte 95',
