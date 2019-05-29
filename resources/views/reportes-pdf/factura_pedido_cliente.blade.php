@@ -12,7 +12,7 @@
     <div class="container-fluid">
 
         <center>
-            <strong class="titulo-factura" >FACTURA DE PEDIDO N° 0000{{$data2->id}}</strong>
+            <strong class="titulo-factura" >COMPROBANTE DE PEDIDO N° 0000{{$data2->id}}</strong>
         </center>
 
             <table>
@@ -73,24 +73,38 @@
 
                 <tbody>
                     <tr>
-                        <th class="text-left">Total :</th>
+                        <th class="text-left">Estado ecónomico</th>
+                        <td>
+                            @if ($data2->paid=='si')
+                                <strong class="text-success">CANCELADA</strong>
+                            @else
+                                <strong class="text-danger">PENDIENTE POR PAGAR</strong>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-left">Total</th>
                         <td>S/. {{$data2->total}}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">Restaurante :</th>
+                        <th class="text-left">Restaurante</th>
                         <td>{{$data2->name}}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">Dirección :</th>
+                        <th class="text-left">Dirección</th>
                         <td>{{$data2->address}}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">Personas :</th>
+                        <th class="text-left">Personas</th>
                         <td>{{$data2->n_people}}</td>
                     </tr>
                     <tr>
-                        <th class="text-left">Fecha y hora:</th>
-                        <td>{{$data2->created_at}}</td>
+                        <th class="text-left">Fecha</th>
+                        <td>{{$data2->date}}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left">Hora</th>
+                        <td>{{$data2->hour}}</td>
                     </tr>
                 </tbody>
             </table>

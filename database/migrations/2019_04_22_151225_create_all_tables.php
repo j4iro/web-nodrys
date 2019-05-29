@@ -127,9 +127,9 @@ class CreateAllTables extends Migration
             $table->time('hour');
             $table->integer('n_people');
             $table->text('oca_special');
-            $table->char('cod_promo')->nullable();
-            $table->char('state',10);
+            $table->string('state');
             $table->decimal('total');
+            $table->char('paid',2);
             $table->timestamps();
         });
 

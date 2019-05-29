@@ -56,3 +56,13 @@ body
 {
     width: 50%;
 }
+
+.text-danger
+{
+    color: red;
+}
+
+.text-success
+{
+    color: green;
+}

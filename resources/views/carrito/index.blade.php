@@ -1,7 +1,107 @@
 @extends('layouts.app')
 @section('scripts')
-    <script src="{{ asset('js/app.js') }}" defer></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
+<script type="text/javascript">
+
+$(window).load(function() {
+    $('#modalPago').on('show.bs.modal', function () {
+        checkpagarcontarjeta.checked=true;
+        poner_requireds();
+        //Peticion AJAX para traer datos de la tarjeta guardada
+        traerDatosTarjeta();
+    });
+    $('#modalPago').on('hide.bs.modal', function () {
+        checkpagarcontarjeta.checked=false;
+        quitar_requireds();
+    });
+});
+
+function traerDatosTarjeta()
+{
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/carrito/datos-tarjeta";
+    $.get(finalUrl,function(data)
+    {
+         let tarjetas;
+         tarjetas = JSON.parse(data);
+
+         if(tarjetas!='no')
+         {
+            let template  = ''
+            tarjetas.forEach( tarjeta => {
+                template += `<option value="${tarjeta.id}">${tarjeta.num_card}</option>`
+                }
+            );
+            template += `<option value="nueva" selected><strong>Nueva tarjeta</strong></option>`;
+            $('#listatarjetas').html(template);
+            limpiarformTarjeta();
+         }
+         else
+         {
+            $('#listatarjetas').html(`<option value="nueva" selected>Nueva tarjeta</option>`);
+            limpiarformTarjeta();
+         }
+    });
+}
+
+function llenarform()
+{
+    if($('#listatarjetas').val()=='nueva')
+    {
+        limpiarformTarjeta();
+    }
+    else
+    {
+        var finalUrl = {!! json_encode(url('/')) !!}+ "/carrito/datos-tarjeta/n/" + $('#listatarjetas').val();
+        $.get(finalUrl,function(data)
+        {
+            let tarjetas;
+            tarjeta = JSON.parse(data);
+            $('#num_card').val(tarjeta['num_card']);
+            $('#month').val(tarjeta['month']);
+            $('#year').val(tarjeta['year']);
+            $('#cvc').val(tarjeta['cvc']);
+            $('#owner').val(tarjeta['owner']);
+            $('#country').val(tarjeta['country']);
+            $('#cod_postal').val(tarjeta['cod_postal']);
+        });
+    }
+}
+
+function limpiarformTarjeta()
+{
+        $('#num_card').val('');
+        $('#month').val('');
+        $('#year').val('');
+        $('#cvc').val('');
+        $('#owner').val('');
+        $('#country').val('');
+        $('#cod_postal').val('');
+}
+
+function poner_requireds() {
+    $('#num_card').prop("required", true);
+    $('#month').prop("required", true);
+    $('#year').prop("required", true);
+    $('#cvc').prop("required", true);
+    $('#owner').prop("required", true);
+    $('#country').prop("required", true);
+    $('#cod_postal').prop("required", true);
+}
+function quitar_requireds() {
+    $('#num_card').removeAttr("required");
+    $('#month').removeAttr("required");
+    $('#year').removeAttr("required");
+    $('#cvc').removeAttr("required");
+    $('#owner').removeAttr("required");
+    $('#country').removeAttr("required");
+    $('#cod_postal').removeAttr("required");
+}
+
+</script>
+
 @endsection
+
 @section('content')
 <form method="POST" action="{{route('pedidos.add')}}">
 {{csrf_field()}}
@@ -122,21 +222,21 @@
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿Cuantas personas asistirán?</dt>
-                        <input type="number" placeholder="Número de personas" value="1" class="form-control" name="n_people">
+                        <input type="number" placeholder="Número de personas" value="1" class="form-control" name="n_people" required>
                     </div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿Qué día asistirán?</dt>
-                        <input type="date" class="form-control" name="fecha">
+                        <input type="date" class="form-control" name="fecha" required >
                     </div>
                 </div>
 
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿A qué hora asistirán?</dt>
-                        <select class="form-control" name="hora" id="hora">
+                        <select class="form-control" name="hora" id="hora" required>
                             @for ($i = 11; $i <= 23; $i++)
                                 <option value="{{$i}}:00">{{$i}}:00</option>
                                 <option value="{{$i}}:30">{{$i}}:30</option>
@@ -145,6 +245,22 @@
                     </div>
                 </div>
 
+                {{-- <div class="row mt-3">
+                    <div class="col-6">
+                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
+                        <label for="rbtarjeta" class="form-check-label" >Tarjeta</label>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbefectivo">
+                        <label for="rbefectivo" class="form-check-label" >Efectivo</label>
+                    </div>
+                </div> --}}
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <strong class="text-primary">Pagar con:</strong>
+                    </div>
+                </div>
                 <div class="row mt-3">
                     <div class="col-6">
                         <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
@@ -161,6 +277,8 @@
                         <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Reservar</a>
                     </div>
                 </div>
+                {{-- <div class="row mt-3">
+                </div> --}}
             </div>
         </div>
         <!--Formulario Ocasión Especial-->
@@ -179,21 +297,35 @@
                     <div class="row my-3">
                         <div class="col-12 col-sm-12">
 
+                                {{-- <div class="row">
+                                    <dt class="col-12">
+                                        <hr>
+                                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
+                                        <label for="rbtarjeta" id="numero_tarjeta" class="form-check-label">**** **** **** 8596</label>
+                                        <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
+                                    </dt>
+                                </div> --}}
+
                                 <div class="row">
-                                    <dt class="col-12">Nueva tarjeta de pago
+                                    <dt class="col-12">
+                                        <label for="rbtarjeta" id="titulo_modal" class="form-label">Escoge una tarjeta</label>
+                                        <select name="listatarjetas" onChange="llenarform();" class="form-control" id="listatarjetas">
+                                        </select>
                                         <hr>
                                     </dt>
                                 </div>
 
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <input type="text" placeholder="Número de tarjeta" class="form-control" name="num_card" id="" required>
+                                        <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
+                                        <input type="text" placeholder="Número de tarjeta" class="form-control" name="num_card" id="num_card" >
                                     </div>
                                 </div>
 
+
                                 <div class="row mt-2">
                                     <div class="col-4  pr-0">
-                                        <select name="month" class="form-control" id="" required>
+                                        <select name="month" class="form-control" id="month" >
                                             <option value="" disabled selected>MM</option>
                                             @for ($i = 1; $i < 13; $i++)
                                                 <option value="{{$i}}">{{$i}}</option>
@@ -201,7 +333,7 @@
                                         </select>
                                     </div>
                                     <div class="col-4  pl-0">
-                                        <select name="year" class="form-control" id="" required>
+                                        <select name="year" class="form-control" id="year" >
                                             <option value="" disabled selected>AAAA</option>
                                             @for ($i = 2020; $i < 2040; $i++)
                                                 <option value="{{$i}}"  >{{$i}}</option>
@@ -209,19 +341,20 @@
                                         </select>
                                     </div>
                                     <div class="col-4">
-                                        <input type="text" placeholder="CVC" class="form-control" name="cvc" id="" required>
+                                        <input type="text" placeholder="CVC" class="form-control" name="cvc" id="cvc" >
                                     </div>
                                 </div>
 
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <input type="text" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="" required>
+                                        <input type="text" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="owner" >
                                     </div>
                                 </div>
 
                                 <div class="row mt-2">
                                     <div class="col-8 ">
-                                        <select name="country" class="form-control" id="">
+                                        <select name="country" class="form-control" id="country">
+                                            <option value="" disabled selected>Pais</option>
                                             <option value="per" >Perú</option>
                                             <option value="col" >Colombia</option>
                                             <option value="chi" >Chile</option>
@@ -230,7 +363,7 @@
                                         </select>
                                     </div>
                                     <div class="col-4">
-                                        <input type="text" placeholder="Código Postal" class="form-control" name="cod_postal" id="">
+                                        <input type="text" placeholder="Código Postal" class="form-control" name="cod_postal" id="cod_postal">
                                     </div>
                                 </div>
 
@@ -270,5 +403,3 @@
 </form>
 
 @endsection
-
-
