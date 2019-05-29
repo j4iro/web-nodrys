@@ -159,6 +159,7 @@ class CreateAllTables extends Migration
 
         Schema::create('details_orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('cant');
             $table->timestamps();
         });
 
