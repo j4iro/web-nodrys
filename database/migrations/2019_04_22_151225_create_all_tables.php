@@ -198,6 +198,7 @@ class CreateAllTables extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
+
         Schema::create('valorations', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();

@@ -39,14 +39,14 @@ class CarritoController extends Controller
              }
 
            }
-        
-        }  
+
+        }
 
         return true;
     }
     public function add(Request $request)
     {
-     
+
         $solo_reserva = $request->input('solo_reserva');
         if(isset($solo_reserva))
         {
@@ -87,10 +87,10 @@ class CarritoController extends Controller
                     if($this->verificar_restaurante_diferente($dish->restaurante_id)==false){
                             return back();
                     };
-                   
+
 
                     if (is_object($dish)) {
-                        
+
                         $_SESSION['carrito'][] = array(
                             "id_plato" => $dish->id,
                             "restaurante" => $dish->restaurante,

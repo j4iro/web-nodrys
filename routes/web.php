@@ -132,4 +132,10 @@ Route::get('/admin-restaurante/serve','OrderController@notif');
 // Route::post('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
 
 
+
 Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'RestaurantController@filtroXcategoria']);
+
+
+//Ruta para la valoración
+Route::post('/Restaurant/calificaion','ValorationController@store')->name('calificar.store');
+Route::post('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');

@@ -48,19 +48,35 @@
               direction:rtl;
               unicode-bidi:bidi-override:
           }
-          #contCalif label:hover,label:hover~label{
+          #contCalif ~label{
               color:#FFCC00;
           }
           #contCalif input[type=radio]:checked~label{
+              event:none;
+              color:#FFCC00;
+          }
+
+          #contCalif2 label:hover, #contCalif2 label:hover~label{
+              color:#FFCC00;
+          }
+          #contCalif2 input[type=radio]:checked~label{
               color:#FFCC00;
           }
 
 
       </style>
       <script type="text/javascript">
+          function aparecerVa(){
+              if (document.getElementById('contCalif2').hidden==true) {
+                  document.getElementById('contCalif2').hidden=false;
+              }else{
+                  document.getElementById('contCalif2').hidden=true;
+              }
+          }
           function vaStart(id){
               var valoracion=document.getElementById(id);
-              alert(valoracion.value);
+              // alert(valoracion.value);
+              window.location='{{route('calificar.store')}}';
           }
       </script>
 
@@ -96,26 +112,6 @@
             {{$restaurant->telephone}}
             <br>
 
-
-
-            <strong class="navbar-brand pb-0">Puntuación</strong>
-            {{-- <form id="formCali" name="formCali"> --}}
-                <p id="contCalif" class="clasificación">
-                    <input id="radio5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
-                    <label class="start clasificación" for="radio5">&#9733;</label>
-                    <input id="radio4" type="radio" name="tenedor" value="4" onclick="vaStart(this.id);">
-                    <label class="start clasificación" for="radio4">&#9733;</label>
-                    <input id="radio3" type="radio" name="tenedor" value="3" onclick="vaStart(this.id);">
-                    <label class="start clasificación" for="radio3">&#9733;</label>
-                    <input id="radio2" type="radio" name="tenedor" value="2" onclick="vaStart(this.id);">
-                    <label class="start clasificación" for="radio2">&#9733;</label>
-                    <input id="radio1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
-                    <label class="start clasificación" for="radio1">&#9733;</label>
-                </p>
-            {{-- </form> --}}
-
-
-
             <form action="{{route('carrito.add')}}" method="post">
 
             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
@@ -127,6 +123,39 @@
             @else
                 Cerrado
             @endif
+            <br>
+            <p>
+                    <strong style="float:left;margin-top:3%" class="navbar-brand pb-0">Puntuación</strong>
+                    <div id="contCalif" class="clasificación" >
+                        <input id="rbd5" type="radio" name="valoracion">
+                        <label class="start clasificación" for="rbd5">&#9733;</label>
+                        <input id="rbd4" type="radio" name="valoracion">
+                        <label class="start clasificación" for="rbd4">&#9733;</label>
+                        <input id="rbd3" checked type="radio" name="valoracion">
+                        <label class="start clasificación" for="rbd3">&#9733;</label>
+                        <input id="rbd2" type="radio" name="valoracion" >
+                        <label class="start clasificación" for="rbd2">&#9733;</label>
+                        <input id="rbd1" type="radio" name="valoracion" >
+                        <label class="start clasificación" for="rbd1">&#9733;</label>
+                    </div>
+            </p>
+            <p>
+                <strong style="float:left;cursor:pointer;margin-top:0%" class="navbar-brand pb-0" onclick="aparecerVa();">Danos tu calificación</strong>
+                <div  id="contCalif2" class="clasificación" hidden>
+                    <input id="dar5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar5">&#9733;</label>
+                    <input id="dar4" type="radio" name="tenedor" value="4" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar4">&#9733;</label>
+                    <input id="dar3" type="radio" name="tenedor" value="3" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar3">&#9733;</label>
+                    <input id="dar2" type="radio" name="tenedor" value="2" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar2">&#9733;</label>
+                    <input id="dar1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar1">&#9733;</label>
+                </div>
+            </p>
+            <br>
+
             <form class="mt-3" action="{{route('carrito.add')}}" method="post">
 
                 {{csrf_field()}}

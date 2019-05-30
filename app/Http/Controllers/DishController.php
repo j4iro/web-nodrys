@@ -27,8 +27,8 @@ class DishController extends Controller
              }
 
            }
-        
-        }  
+
+        }
 
         return true;
     }
