@@ -5,6 +5,7 @@ session_start();
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
 Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes');
@@ -139,4 +140,6 @@ Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'R
 
 //Ruta para la valoración
 Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
+
+
 // Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
