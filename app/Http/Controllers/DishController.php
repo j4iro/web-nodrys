@@ -27,8 +27,8 @@ class DishController extends Controller
              }
 
            }
-        
-        }  
+
+        }
 
         return true;
     }
@@ -64,14 +64,18 @@ class DishController extends Controller
 
     public function new()
     {
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.nuevo-plato');
     }
 
     public function list()
     {
+        session(['ventana'=>"otra"]);
         $id_restaurant = session('id_restaurante');
         $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
         return view('admin-restaurant.list-plato',compact('dishes'));
+
+
     }
 
     public function edit($id)

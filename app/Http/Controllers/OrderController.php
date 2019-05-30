@@ -50,7 +50,8 @@ public function index_r()
 {
         $orders=$this->getOrders();
 
-        session(['estado_restaurant'=>$this->disponibilidad()]);
+        session(['estado_restaurant'=>$this->disponibilidad(),
+                    'ventana'=>"inicio"]);
 
         return view('admin-restaurant.index',[
             "pedidos" => $orders,
@@ -79,6 +80,7 @@ public function index_r()
     }
     public function pedidos_completados()
     {
+        session(['ventana'=>"otra"]);
         $id_restaurant =session('id_restaurante');
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
@@ -97,6 +99,7 @@ public function index_r()
 
     public function qr()
     {
+        session(['ventana'=>"otra"]);
         return view ('admin-restaurant.confirmation');
     }
 

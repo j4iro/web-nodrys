@@ -26,19 +26,18 @@ class AdminRestaurant extends Controller
 
     }
 
-    public function reportesClientes()
-    {
+    public function reportesClientes(){
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.reportesclientes');
     }
 
-    public function reportesPedidos()
-    {
+    public function reportesPedidos(){
         return view('admin-restaurant.reportespedidos');
     }
 
     public function datos()
     {
-
+        session(['ventana'=>"otra"]);
        $id = session('id_restaurante');
 
         $datos = Restaurant::join('users','users.id','=','restaurants.user_id')
@@ -103,6 +102,7 @@ class AdminRestaurant extends Controller
 
     public function reportes()
     {
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.reportes-rapidos');
     }
 
