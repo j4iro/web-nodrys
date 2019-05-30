@@ -105,6 +105,7 @@ public function index_r()
 
     public function index_c(Request $request)
     {
+
         //Conseguir usuario identificado
         $user = \Auth::user();
         $id_user = $user->id;

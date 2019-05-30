@@ -16,6 +16,7 @@
 
       <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
 
+
       <style media="screen">
           #map{
               height: 400px;
@@ -35,7 +36,6 @@
               display: none;
           }
 
-
           input[type=radio]{
               display:none;
           }
@@ -47,6 +47,9 @@
           .clasificación{
               direction:rtl;
               unicode-bidi:bidi-override:
+          }
+          #contCalif{
+              pointer-events: none;
           }
           #contCalif ~label{
               color:#FFCC00;
@@ -66,6 +69,48 @@
 
       </style>
       <script type="text/javascript">
+
+
+          var id_user='<?php
+              if(\Auth::user()!=null)
+              {
+                  echo \Auth::user()->id;
+              }
+          ?>';//obtenemos id usuarios
+          var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
+
+          verCalifi();
+          verCalifiR();
+
+          //funcion para ver calificacion de mismo usuario
+          function verCalifi(){
+              var obtnerMiCalf={!!json_encode(route('calificar.obtnerCali'))!!};
+              $.get(obtnerMiCalf,{
+                  user_id:id_user,
+                  restaurant_id:restaurant_id
+              },function(resultados){
+                  if (resultados!="") {
+                      var score=parseInt(resultados);
+                      var check= document.getElementById('dar'+score);
+                      check.checked=true;
+                  }
+              });
+          }
+
+          //funcion para ver puntaje del restaurante
+          function verCalifiR(){
+              var obtnerMiCalfR={!!json_encode(route('calificar.obtnerCaliR'))!!};
+              $.get(obtnerMiCalfR,{
+                  restaurant_id:restaurant_id
+              },function(resultados){
+                  if (resultados!="") {
+                      document.getElementById('lblpuntaje').innerText=resultados;
+                      document.getElementById('rbd'+parseInt(resultados)).checked=true;
+                  }
+              });
+          }
+
+          //funcion para mostrar para valorar
           function aparecerVa(){
               if (document.getElementById('contCalif2').hidden==true) {
                   document.getElementById('contCalif2').hidden=false;
@@ -73,10 +118,19 @@
                   document.getElementById('contCalif2').hidden=true;
               }
           }
+
+          //funcion para calificar
           function vaStart(id){
-              var valoracion=document.getElementById(id);
-              // alert(valoracion.value);
-              window.location='{{route('calificar.store')}}';
+              var valoracion=document.getElementById(id).value;
+              var DarCalif={!!json_encode(route('calificar.store'))!!};
+              $.get(DarCalif,{
+                  user_id:id_user,
+                  restaurant_id:restaurant_id,
+                  score:valoracion
+              },function(resultados){
+                  verCalifiR();
+                  verCalifi();
+              });
           }
       </script>
 
@@ -127,11 +181,12 @@
             <p>
                     <strong style="float:left;margin-top:3%" class="navbar-brand pb-0">Puntuación</strong>
                     <div id="contCalif" class="clasificación" >
+                        <strong id="lblpuntaje">0/5</strong>
                         <input id="rbd5" type="radio" name="valoracion">
                         <label class="start clasificación" for="rbd5">&#9733;</label>
                         <input id="rbd4" type="radio" name="valoracion">
                         <label class="start clasificación" for="rbd4">&#9733;</label>
-                        <input id="rbd3" checked type="radio" name="valoracion">
+                        <input id="rbd3" type="radio" name="valoracion">
                         <label class="start clasificación" for="rbd3">&#9733;</label>
                         <input id="rbd2" type="radio" name="valoracion" >
                         <label class="start clasificación" for="rbd2">&#9733;</label>
