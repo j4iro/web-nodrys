@@ -222,3 +222,13 @@ li
   .slider.round:before {
     border-radius: 50%;
   }
+  .help-container{
+      display: none;
+  }
+
+  .help-container.help-show{
+       display: block;
+   }
+   a{
+       cursor: pointer;
+   }
