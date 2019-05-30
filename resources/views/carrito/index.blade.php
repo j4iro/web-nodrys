@@ -263,10 +263,12 @@ function quitar_requireds() {
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
+
                         <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Tarjeta</a>
                     </div>
                     <div class="col-6">
                         <button type="submit"  class="btn btn-block  btn-danger ">Efectivo</button>
+
                     </div>
                 </div>
                 {{-- <div class="row mt-3">

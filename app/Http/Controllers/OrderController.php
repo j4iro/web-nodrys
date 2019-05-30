@@ -40,33 +40,24 @@ private function getOrders(){
     ->where('orders.restaurant_id',$id_restaurant)
     ->where('orders.state','pendiente')
     ->get();
+
 // dd($orders->toArray());
+
     return $orders;
 }
-    public function index_r()
-    {
-        //Traigo los pedidos del restaurante identificado
-        //Conseguir restaurante identificado
 
-        $id = session('id_user');
-        $datos = Restaurant::all()->where('user_id',$id)->first();
-        session(['id_restaurante'=>$datos->id]);
-        session(['nombre_restaurante'=>$datos->name]);
-        $id_restaurant =session('id_restaurante');
+public function index_r()
+{
+        $orders=$this->getOrders();
 
-        $orders = Order::join('users','users.id','=','orders.user_id')
-        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('orders.restaurant_id',$id_restaurant)
-        ->where('orders.state','pendiente')
-        ->get();
-
-        session(['estado_restaurant'=>$this->disponibilidad()]);
+        session(['estado_restaurant'=>$this->disponibilidad(),
+                    'ventana'=>"inicio"]);
 
         return view('admin-restaurant.index',[
             "pedidos" => $orders,
             "disponibilidad" =>$this->disponibilidad()
         ]);
-    }
+}
     public function notif(){
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
@@ -89,6 +80,7 @@ private function getOrders(){
     }
     public function pedidos_completados()
     {
+        session(['ventana'=>"otra"]);
         $id_restaurant =session('id_restaurante');
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
@@ -107,6 +99,7 @@ private function getOrders(){
 
     public function qr()
     {
+        session(['ventana'=>"otra"]);
         return view ('admin-restaurant.confirmation');
     }
 
@@ -132,7 +125,8 @@ private function getOrders(){
     {
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+        ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish','categories_dishes.name as type')
         ->where('details_orders.order_id',$id)
         ->get();
 
@@ -143,15 +137,18 @@ private function getOrders(){
 
     public function detail_r($id)
     {
+
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish')
         ->where('details_orders.order_id',$id)
         ->get();
 
         return view('pedidos.detail_r',[
             'pedidos' => $details
         ]);
+
     }
 
     public function confirmation(Request $request){
@@ -174,15 +171,28 @@ private function getOrders(){
 
     public function cancelar(Request $request)
     {
-        // dd($request);
-        $order = Order::where('id','=',$request->input('cod_reserva'))->first();
-        $order->state = 'cancelada';
-        $order->update();
-
-        // aqui redirecciona
-
+        $this->cancela_orden($request->input('cod_reserva'),"cancela");
         return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');
     }
+    public function vence_orden(Request $request){
+        $this->cancela_orden($request->input('cod_reserva'));
+    }
+
+    public function cancela_orden($id,$accion="otra")
+    {
+        $order = Order::where('id','=',$id)->first();
+
+        if ($accion=="cancela") {
+            $order->state = 'cancelada';
+            $order->update();
+
+        }else {
+            $order->state = 'vencida';
+            $order->update();
+            echo "OK";
+        }
+    }
+
 
     public function add(Request $request)
     {
@@ -257,6 +267,8 @@ private function getOrders(){
 
             $detail_order->order_id = $last_id_insertado;
             $detail_order->dish_id = $producto->id;
+            $detail_order->cant = $elemento['unidades'];
+
             $detail_order->save();
             // var_dump($producto->id);
         }
