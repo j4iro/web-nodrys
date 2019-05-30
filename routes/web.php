@@ -138,5 +138,5 @@ Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'R
 
 
 //Ruta para la valoración
-Route::post('/Restaurant/calificaion','ValorationController@store')->name('calificar.store');
-Route::post('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
+Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
+// Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');

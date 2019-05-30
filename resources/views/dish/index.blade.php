@@ -16,6 +16,7 @@
 
       <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
 
+
       <style media="screen">
           #map{
               height: 400px;
@@ -73,11 +74,8 @@
                   document.getElementById('contCalif2').hidden=true;
               }
           }
-          function vaStart(id){
-              var valoracion=document.getElementById(id);
-              // alert(valoracion.value);
-              window.location='{{route('calificar.store')}}';
-          }
+
+         
       </script>
 
 @endsection
