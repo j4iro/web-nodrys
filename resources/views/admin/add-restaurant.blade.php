@@ -6,11 +6,11 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
+      <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
       <style media="screen">
           #map{
               width: 80%;
               height: 400px;
-
           }
           .hubicacion_controls{
               display: none;
@@ -77,7 +77,7 @@
 
             <div class="form-row ">
                 <div class="form-group col-12">
-                    <label for="name">Descripción</label>
+                    <label for="description">Descripción</label>
                     <textarea type="text" rows="3" class="form-control" name="description"  id="description" required>{{ $restaurante->description ?? '' }}</textarea>
                 </div>
             </div>
@@ -115,7 +115,7 @@
             <div class="form-row ">
                 <div class="form-group col-12  col-md-6 ">
                     <label for="telephone">Telefono - Celular</label>
-                    <input type="text" class="form-control" name="telephone"  placeholder="Telefono o celular" id="telephone" value="{{ $restaurante->telephone ?? '' }}" required  >
+                    <input type="text" onkeypress="return validarNumero(event);" class="form-control" name="telephone"  placeholder="Telefono o celular" id="telephone" value="{{ $restaurante->telephone ?? '' }}" required  >
                 </div>
                 <div class="form-group col-12  col-md-6 ">
                     <label for="type"><strong>Email de ingreso</strong></label>
@@ -124,8 +124,8 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-12  col-md-6 ">
-                    <label for="address">RUC</label>
-                    <input type="text" class="form-control" name="ruc" value="{{ $restaurante->ruc ?? '' }}" placeholder="Dirección" id="ruc" required>
+                    <label for="ruc">RUC</label>
+                    <input type="text" onkeypress="return validarNumero(event);" class="form-control" name="ruc" value="{{ $restaurante->ruc ?? '' }}" placeholder="RUC" id="ruc" required>
                 </div>
             </div>
 
@@ -146,12 +146,12 @@
 
             <div class="form-row">
                 <div class="form-group col-12  col-md-6 ">
-                    <label for="address">Latitud</label>
-                    <input type="text" class="form-control" name="latitud" value="{{ $restaurante->latitude?? '' }}" placeholder="Dirección" id="latitud" required>
+                    <label for="latitud">Latitud</label>
+                    <input type="number" class="form-control" name="latitud" value="{{ $restaurante->latitude?? '' }}" placeholder="Latitud" id="latitud" required>
                 </div>
                 <div class="form-group col-12  col-md-6 ">
-                    <label for="address">Longitud</label>
-                    <input type="text" class="form-control" name="longitud" value="{{ $restaurante->longitude ?? '' }}" placeholder="Dirección" id="longitud" required>
+                    <label for="longitud">Longitud</label>
+                    <input type="number" class="form-control" name="longitud" value="{{ $restaurante->longitude ?? '' }}" placeholder="Longitud" id="longitud" required>
                 </div>
             </div>
             <div class="form-group container">

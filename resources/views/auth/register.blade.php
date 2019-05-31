@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
+@section('scripts')
+
+@endsection
 @section('content')
+    <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <div class="container">
     {{-- <div class="row">
         <div class="col-12 text-center">
@@ -27,7 +31,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name"  onkeypress="return validarLetras(event);" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -41,7 +45,7 @@
                             <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
 
                             <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ old('surname') }}" required autofocus>
+                                <input id="surname" onkeypress="return validarLetras(event);" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ old('surname') }}" required autofocus>
 
                                 @if ($errors->has('surname'))
                                     <span class="invalid-feedback" role="alert">

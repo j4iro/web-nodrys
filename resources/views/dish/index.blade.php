@@ -140,7 +140,6 @@
               }else{
                   window.location='../login';
               }
-
             }
       </script>
 

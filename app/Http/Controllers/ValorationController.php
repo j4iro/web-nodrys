@@ -129,7 +129,6 @@ class ValorationController extends Controller
             }else{
                 return 'null';
             }
-
     }
 
     /**
