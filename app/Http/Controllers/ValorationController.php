@@ -68,27 +68,26 @@ class ValorationController extends Controller
      */
     public function store(Request $request)
     {
-        $datos=$this->consult($request->user_id,$request->restaurant_id);
-        $valoration=new Valoration();
+            $datos=$this->consult($request->user_id,$request->restaurant_id);
+            $valoration=new Valoration();
 
-        if ($datos) {
-            $valoration = Valoration::where('user_id','=',$request->user_id)
-            ->where('restaurant_id','=',$request->restaurant_id)
-            ->first();
-        }
+            if ($datos) {
+                $valoration = Valoration::where('user_id','=',$request->user_id)
+                ->where('restaurant_id','=',$request->restaurant_id)
+                ->first();
+            }
 
-        $valoration->user_id=$request->user_id;
-        $valoration->restaurant_id=$request->restaurant_id;
-        $valoration->score=$request->score;
+            $valoration->user_id=$request->user_id;
+            $valoration->restaurant_id=$request->restaurant_id;
+            $valoration->score=$request->score;
 
-        if($datos){
-            $valoration->update();
-            echo "1";
-        }else{
-            $valoration->save();
-            echo "0";
-        }
-
+            if($datos){
+                $valoration->update();
+                echo "1";
+            }else{
+                $valoration->save();
+                echo "0";
+            }
 
     }
 
@@ -116,16 +115,21 @@ class ValorationController extends Controller
     }
 
     public function obtnerCaliR(Request $request){
-            // $datos= Array();
+
             $datos = Valoration::all()
-            ->where('restaurant_id',$request->restaurant_id)
-            ;
-            $puntaje=0;
-            $cantidad=count($datos);
-            foreach ($datos as $key => $value) {
-                $puntaje+=$value['score'];
+            ->where('restaurant_id',$request->restaurant_id);
+
+            if ($datos!='[]') {
+                $puntaje=0;
+                $cantidad=count($datos);
+                foreach ($datos as $key => $value) {
+                    $puntaje+=$value['score'];
+                }
+                return ($puntaje/$cantidad);
+            }else{
+                return 'null';
             }
-            return ($puntaje/$cantidad);
+
     }
 
     /**

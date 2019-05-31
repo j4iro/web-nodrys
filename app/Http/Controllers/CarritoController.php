@@ -83,7 +83,6 @@ class CarritoController extends Controller
                     ->select('dishes.*','categories_dishes.name as categoria_plato','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
                     ->where('dishes.id',$id_plato)->first();
 
-
                     if($this->verificar_restaurante_diferente($dish->restaurante_id)==false){
                             return back();
                     };

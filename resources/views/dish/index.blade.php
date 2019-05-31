@@ -75,6 +75,8 @@
               if(\Auth::user()!=null)
               {
                   echo \Auth::user()->id;
+              }else{
+                  echo 'no-log';
               }
           ?>';//obtenemos id usuarios
           var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
@@ -84,17 +86,20 @@
 
           //funcion para ver calificacion de mismo usuario
           function verCalifi(){
-              var obtnerMiCalf={!!json_encode(route('calificar.obtnerCali'))!!};
-              $.get(obtnerMiCalf,{
-                  user_id:id_user,
-                  restaurant_id:restaurant_id
-              },function(resultados){
-                  if (resultados!="") {
-                      var score=parseInt(resultados);
-                      var check= document.getElementById('dar'+score);
-                      check.checked=true;
-                  }
-              });
+              if (id_user!='no-log') {
+                  var obtnerMiCalf={!!json_encode(route('calificar.obtnerCali'))!!};
+                  $.get(obtnerMiCalf,{
+                      user_id:id_user,
+                      restaurant_id:restaurant_id
+                  },function(resultados){
+                      if (resultados!="") {
+                          var score=parseInt(resultados);
+                          var check= document.getElementById('dar'+score);
+                          check.checked=true;
+                      }
+                  });
+              }
+
           }
 
           //funcion para ver puntaje del restaurante
@@ -103,8 +108,8 @@
               $.get(obtnerMiCalfR,{
                   restaurant_id:restaurant_id
               },function(resultados){
-                  if (resultados!="") {
-                      document.getElementById('lblpuntaje').innerText=resultados;
+                  if (resultados!='null') {
+                      document.getElementById('lblpuntaje').innerText=resultados+'/5';
                       document.getElementById('rbd'+parseInt(resultados)).checked=true;
                   }
               });
@@ -121,17 +126,22 @@
 
           //funcion para calificar
           function vaStart(id){
-              var valoracion=document.getElementById(id).value;
-              var DarCalif={!!json_encode(route('calificar.store'))!!};
-              $.get(DarCalif,{
-                  user_id:id_user,
-                  restaurant_id:restaurant_id,
-                  score:valoracion
-              },function(resultados){
-                  verCalifiR();
-                  verCalifi();
-              });
-          }
+              if (id_user!='no-log') {
+                  var valoracion=document.getElementById(id).value;
+                  var DarCalif={!!json_encode(route('calificar.store'))!!};
+                  $.get(DarCalif,{
+                      user_id:id_user,
+                      restaurant_id:restaurant_id,
+                      score:valoracion
+                  },function(resultados){
+                      verCalifiR();
+                      verCalifi();
+                  });
+              }else{
+                  window.location='../login';
+              }
+
+            }
       </script>
 
 @endsection
