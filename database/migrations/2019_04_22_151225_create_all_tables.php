@@ -210,6 +210,12 @@ class CreateAllTables extends Migration
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
 
+        Schema::create('adminstration_values', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->unsignedInteger('point_value');
+        });
+
     }
 
     /**
@@ -233,6 +239,8 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('dishes');
         Schema::dropIfExists('cards');
         Schema::dropIfExists('valorations');
+        Schema::dropIfExists('adminstration_values');
+
 
     }
 }

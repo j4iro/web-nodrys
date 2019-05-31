@@ -145,6 +145,13 @@
                     numOrdenes=arrayOrders.length;
 
                 }else {
+                    if ('{{session('ventana')}}'=='inicio') {
+
+                        pedidos.innerHTML="No hay registros";
+                    }else {
+
+                    }
+
                     // significa que no hay registros
                 }
             };
