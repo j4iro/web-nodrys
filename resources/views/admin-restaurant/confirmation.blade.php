@@ -46,6 +46,14 @@
                                 <td>Pago:</td>
                                 <td>{{$order->total}}</td>
                             </tr>
+                            @if($order->paid=="no")
+                            <tr>
+                                <td colspan="2"> <div class="alert alert-warning">
+                                    Ahun no ha pagado
+                                </div></td>
+                               
+                            </tr>
+                            @endif
                         </table>
                     @elseif (session('error'))
                         <div class="alert alert-danger">

@@ -168,18 +168,10 @@ public function index_r()
 
         
         $cliente->points+=$restaurante["points"];
-       
-        // dd($cliente->toArray());
         $cliente->save();
-        // dd($restaurante);
-
-        // dd($request->toArray());
 
         $order=Order::where('id','=',$trozos[0])->first();
 
-        // User::findOrFail($cliente["id"])->update($cliente);
-
-        // User::findOrFail()->update()->where("id",$idcliente);
 
         //si existe
         if (count((array)$order)>=1) {
@@ -187,9 +179,6 @@ public function index_r()
             $order->save();
             return redirect('admin/restaurant/escanear-qr')->with('order',$order);
         }else {
-            //datos invalidos
-            //dd($cadena);
-            // dd('Esta reserva no existe');
             return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
         }
     }
