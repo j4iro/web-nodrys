@@ -142,4 +142,5 @@ Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'R
 Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
 Route::get('/Restaurant/MiCalifi','ValorationController@obtnerCali')->name('calificar.obtnerCali');
 Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('calificar.obtnerCaliR');
+Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->name('calificar.consultarPe');
 // Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
