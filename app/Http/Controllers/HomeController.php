@@ -72,6 +72,9 @@ class HomeController extends Controller
             'distritos' => $distritos,
         ]);
     }
+    public function help(){
+        return view('help');
+    }
 
     public function getDishOne(Request $request)
     {

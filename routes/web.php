@@ -5,6 +5,7 @@ session_start();
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
 Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes');

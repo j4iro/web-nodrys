@@ -68,6 +68,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('help')}}"  class="nav-link">Ayuda</a>
+                            </li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                             </li>
                             @if (Route::has('register'))
@@ -165,5 +168,12 @@
             @yield('content')
         </main>
     </div>
+    <script type="text/javascript">
+    var navbar_botton=document.querySelector(".navbar-toggler")
+    navbar_botton.addEventListener('click',function (){
+        navbarSupportedContent.classList.toggle("navbar-show");
+    });
+
+    </script>
 </body>
 </html>

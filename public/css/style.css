@@ -222,3 +222,20 @@ li
   .slider.round:before {
     border-radius: 50%;
   }
+  .help-container{
+      display: none;
+  }
+
+  .help-container.help-show{
+       display: block;
+   }
+   a{
+       cursor: pointer;
+   }
+   a:hover{
+       text-decoration: none;
+   }
+
+   .collapse.navbar-show{
+    display: block;
+   }
