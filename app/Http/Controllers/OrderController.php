@@ -9,7 +9,7 @@ use App\Card;
 use App\Util;
 use App\Restaurant;
 use App\User;
-
+use App\Valoration;
 class OrderController extends Controller
 {
     public function __construct()
@@ -48,6 +48,7 @@ private function getOrders(){
 
 public function index_r()
 {
+   
         $orders=$this->getOrders();
 
         session(['estado_restaurant'=>$this->disponibilidad(),

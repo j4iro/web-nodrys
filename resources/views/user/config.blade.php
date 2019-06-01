@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
+<script type="text/javascript" src="js/js/validation.js"></script>
 <div class="container mt-4 ">
         <div class="row justify-content-center">
             <div class="col-md-8">
-
+            
                 @if(session('message'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>¡Genial!</strong> Tus datos se han actualizado correctamente.
@@ -35,7 +35,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ Auth::user()->name }}" required autofocus>
+                                    <input id="name" onkeypress="return varlidarSoloLetra(event);" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ Auth::user()->name }}" required autofocus>
 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
@@ -46,10 +46,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
+                                <label for="surname"  class="col-md-4 col-form-label text-md-right">{{ __('Apellidos') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required >
+                                    <input id="surname" onkeypress="return varlidarSoloLetra(event);" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ Auth::user()->surname }}" required >
 
                                     @if ($errors->has('surname'))
                                         <span class="invalid-feedback" role="alert">
