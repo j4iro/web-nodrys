@@ -154,9 +154,17 @@ public function index_r()
     }
 
     public function confirmation(Request $request){
+
         $cadena=$request->get('txtCode');
         $trozos = explode(",", $cadena);
-        $order=Order::where('id','=',$trozos[0])->first();
+
+        dd($request);
+
+        // $order=Order::where('id','=',$trozos[0])->first();
+
+        // User::findOrFail($user_id)->update($request);
+
+        User::findOrFail()->update()->where("id",$idcliente);
 
         //si existe
         if (count((array)$order)>=1) {

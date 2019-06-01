@@ -37,8 +37,13 @@
     </p>
 </div>
 <div class="container card">
+<<<<<<< HEAD
+    <a class="card-header" id="help_client">Cliente</a>
+    <div class="card-body help-container" id="help_client_container">
+=======
     <h2 class="card-header" id="help_client">Cliente</h2>
     <div class="card-body" id="help_client_container">
+>>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
         <div class="row">
           <div class="col-sm-4">
             <h4>Crear una cuenta de usuario</h4>
@@ -69,8 +74,13 @@
 
 </div>
 <div class="container card">
+<<<<<<< HEAD
+    <a id="help_restaurant" class="card-header">Restaurante[Administrador]</a>
+ <div id="help_restaurant_container" class="card-body help-container">
+=======
     <h2 id="help_restaurant" class="card-header">Restaurante[Administrador]</h2>
  <div id="help_restaurant_container" class="card-body">
+>>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
      <div class="row">
        <div class="col-sm-4">
          <h4>¿Cómo unirte a nodrys?</h4>
@@ -100,10 +110,17 @@
  </div>
 </div>
 <div class="container card">
+<<<<<<< HEAD
+    <a class="card-header" id="help_question">Preguntas Frecuentes</a>
+    <div class="card-body help-container" id="help_questions_container">
+        <div class="row">
+          <div class="col-sm-4" style="display:none;">
+=======
     <h2 class="card-header" id="help_question">Preguntas Frecuentes</h2>
     <div class="card-body" id="help_questions_container">
         <div class="row">
           <div class="col-sm-4 panel panel-default">
+>>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
             <h4>Crear una cuenta de usuario</h4>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et m id est laborum.
@@ -135,9 +152,13 @@
 <script type="text/javascript">
 
 
+<<<<<<< HEAD
+
+=======
 help_client_container.style.display="none";
 help_restaurant_container.style.display="none";
 help_questions_container.style.display="none";
+>>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
 
 help_client.addEventListener('click',function () {
     muestra(help_client_container);
@@ -155,7 +176,11 @@ help_question.addEventListener('click',function () {
 });
 
 function muestra(objeto) {
+<<<<<<< HEAD
+objeto.classList.toggle('help-show');
+=======
 objeto.style.display="block";
+>>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
 }
 
 </script>

@@ -137,7 +137,7 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'Reserva',
             'description' => 'Reserva',
         ]);
-
+        
         // Usuario N1
         User::create([
             'name' => 'admin',

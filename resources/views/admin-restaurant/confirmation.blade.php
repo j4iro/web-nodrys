@@ -1,7 +1,5 @@
 @extends('layouts.app-r')
 @section('content')
-
-
                 <div class="col-7">
                         <div class="preview-container">
                             <video id="preview"></video>

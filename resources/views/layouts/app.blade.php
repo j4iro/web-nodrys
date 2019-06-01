@@ -168,5 +168,12 @@
             @yield('content')
         </main>
     </div>
+    <script type="text/javascript">
+    var navbar_botton=document.querySelector(".navbar-toggler")
+    navbar_botton.addEventListener('click',function (){
+        navbarSupportedContent.classList.toggle("navbar-show");
+    });
+
+    </script>
 </body>
 </html>

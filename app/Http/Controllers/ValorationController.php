@@ -68,44 +68,69 @@ class ValorationController extends Controller
      */
     public function store(Request $request)
     {
-        $datos=$this->consult($request->user_id,$request->restaurant_id);
-        $valoration=new Valoration();
+            $datos=$this->consult($request->user_id,$request->restaurant_id);
+            $valoration=new Valoration();
 
-        if ($datos) {
-            $valoration = Valoration::where('user_id','=',$request->user_id)
-            ->where('restaurant_id','=',$request->restaurant_id)
-            ->first();
-        }
+            if ($datos) {
+                $valoration = Valoration::where('user_id','=',$request->user_id)
+                ->where('restaurant_id','=',$request->restaurant_id)
+                ->first();
+            }
 
-        $valoration->user_id=$request->user_id;
-        $valoration->restaurant_id=$request->restaurant_id;
-        $valoration->score=$request->score;
+            $valoration->user_id=$request->user_id;
+            $valoration->restaurant_id=$request->restaurant_id;
+            $valoration->score=$request->score;
 
-        if($datos){
-        $valoration->update();
-        echo "Valoración actualizado";
-        }else{
-        $valoration->save();
-        echo "Valoracion guardada";
-        }
-
+            if($datos){
+                $valoration->update();
+                echo "1";
+            }else{
+                $valoration->save();
+                echo "0";
+            }
 
     }
 
-private function consult($id_user,$id_restaurant){
-        $datos = Valoration::all()
-        ->where('user_id',$id_user)
-        ->where('restaurant_id',$id_restaurant)
-        ->first();
+    private function consult($id_user,$id_restaurant){
+            $datos = Valoration::all()
+            ->where('user_id',$id_user)
+            ->where('restaurant_id',$id_restaurant)
+            ->first();
 
+            $var=true;
+            if ($datos==null) {
+                $var=false;
+            }
+            return $var;
+    }
 
-        $var=true;
-                //$valoration->save();
-                if ($datos==null) {
-        $var=false;
+    public function obtnerCali(Request $request){
+            $datos = Valoration::all()
+            ->where('user_id',$request->user_id)
+            ->where('restaurant_id',$request->restaurant_id)
+            ->first();
+            if ($datos!=null) {
+                echo $datos->score;
+            }
+    }
+
+    public function obtnerCaliR(Request $request){
+
+            $datos = Valoration::all()
+            ->where('restaurant_id',$request->restaurant_id);
+
+            if ($datos!='[]') {
+                $puntaje=0;
+                $cantidad=count($datos);
+                foreach ($datos as $key => $value) {
+                    $puntaje+=$value['score'];
                 }
-                return $var;
-}
+                return ($puntaje/$cantidad);
+            }else{
+                return 'null';
+            }
+    }
+
     /**
      * Display the specified resource.
      *

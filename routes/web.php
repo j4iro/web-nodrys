@@ -140,6 +140,6 @@ Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'R
 
 //Ruta para la valoración
 Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
-
-
+Route::get('/Restaurant/MiCalifi','ValorationController@obtnerCali')->name('calificar.obtnerCali');
+Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('calificar.obtnerCaliR');
 // Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
