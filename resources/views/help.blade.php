@@ -41,7 +41,7 @@
     <a class="card-header" id="help_client">Cliente</a>
     <div class="card-body help-container" id="help_client_container">
 
-        <div class="row">
+        <div class="row"> 
           <div class="col-sm-4">
             <h4>Crear una cuenta de usuario</h4>
             <video class="help_videos" src="" poster="">
