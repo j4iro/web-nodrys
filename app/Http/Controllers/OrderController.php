@@ -157,14 +157,29 @@ public function index_r()
 
         $cadena=$request->get('txtCode');
         $trozos = explode(",", $cadena);
+        
+        // dd($trozos[0]);
+        
+        $orden=Order::findOrFail($trozos[0]);
+        $user_id=$orden->toArray()["user_id"];
+        $cliente=User::where("id","=",$user_id)->first();
 
-        dd($request);
+        $restaurante=Restaurant::findOrFail($orden->toArray()["restaurant_id"])->toArray();
 
-        // $order=Order::where('id','=',$trozos[0])->first();
+        
+        $cliente->points+=$restaurante["points"];
+       
+        // dd($cliente->toArray());
+        $cliente->save();
+        // dd($restaurante);
 
-        // User::findOrFail($user_id)->update($request);
+        // dd($request->toArray());
 
-        User::findOrFail()->update()->where("id",$idcliente);
+        $order=Order::where('id','=',$trozos[0])->first();
+
+        // User::findOrFail($cliente["id"])->update($cliente);
+
+        // User::findOrFail()->update()->where("id",$idcliente);
 
         //si existe
         if (count((array)$order)>=1) {

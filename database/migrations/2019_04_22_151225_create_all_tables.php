@@ -239,12 +239,8 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('dishes');
         Schema::dropIfExists('cards');
         Schema::dropIfExists('valorations');
-<<<<<<< HEAD
-        Schema::dropIfExists('administrations');
-=======
         Schema::dropIfExists('adminstration_values');
 
->>>>>>> c3107f79c44c39459351dd20539c7c40519957e5
 
     }
 }
