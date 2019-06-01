@@ -59,7 +59,7 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
     /*Rutas para pedidos en la sección administrativa */
     Route::get('/admin-restaurante/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
     Route::get('/admin-restaurante/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
-    Route::post('/admin-restaurante/confirmation', 'OrderController@confirmation')->name('adminRestaurant.pedidos.confirmation');
+    Route::get('/admin-restaurante/confirmation', 'OrderController@confirmation')->name('adminRestaurant.pedidos.confirmation');
 
 
     /* Ruta para el Codigo QR */

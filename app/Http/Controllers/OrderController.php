@@ -155,7 +155,9 @@ public function index_r()
 
     public function confirmation(Request $request){
 
-        $cadena=$request->get('txtCode');
+      
+
+        $cadena=$request->get('orderData');
         $trozos = explode(",", $cadena);
         
         // dd($trozos[0]);
@@ -177,10 +179,13 @@ public function index_r()
         if (count((array)$order)>=1) {
             $order->state='confirmada';
             $order->save();
-            return redirect('admin/restaurant/escanear-qr')->with('order',$order);
-        }else {
-            return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
+
+            $cadena=implode(",",$order->toArray());
+            
+            // return redirect('admin/restaurant/escanear-qr')->with('order',$order);
+            echo $cadena;
         }
+       
     }
 
     public function cancelar(Request $request)
