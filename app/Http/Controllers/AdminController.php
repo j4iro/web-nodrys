@@ -20,6 +20,7 @@ class AdminController extends Controller
 
     public function index()
     {
+        dd();
         $solicitudes = RequestRestaurant::join('categories','categories.id','=','requests_restaurants.category_id_name')
         ->join('districts','districts.id','=','requests_restaurants.district_id_name')
         ->select('requests_restaurants.*','categories.name as categoria','districts.name as distrito')
@@ -84,7 +85,7 @@ class AdminController extends Controller
       return view('admin.create-categoria');
     }
     public function saveCategorias(Request $request){
-     
+
      if ($request->editar=="editar")
       {
           Category::findOrFail($request->id)->update($request->all());
@@ -365,6 +366,6 @@ class AdminController extends Controller
             'restaurantes' => $restaurants,
         ]);
     }
-   
+
 
 }
