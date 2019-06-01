@@ -35,6 +35,7 @@ class DishController extends Controller
 
     public function dishes(Request $request)
     {
+
         $sm="";
         if($this->verificar_restaurante_diferente($request->id)==false)
         {
@@ -43,6 +44,7 @@ class DishController extends Controller
 
        $dishes = Dish::where('restaurant_id', $request->id)
                 ->where('category_dish','<>','5')
+                ->where('state', '=',1)
                 ->get();
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
        ->join('categories','categories.id','=','restaurants.category_id')
@@ -70,6 +72,7 @@ class DishController extends Controller
 
     public function list()
     {
+
         session(['ventana'=>"otra"]);
         $id_restaurant = session('id_restaurante');
         $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
@@ -77,7 +80,11 @@ class DishController extends Controller
 
 
     }
+    public function update_state_dish($id,$state){
+    $estado=$state==1?["state"=>1]:["state"=>0];
+    Dish::findOrFail($id)->update($estado);
 
+    }
     public function edit($id)
     {
         $plato = Dish::findOrFail($id);

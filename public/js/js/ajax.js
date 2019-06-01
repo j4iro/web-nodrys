@@ -1,6 +1,6 @@
 		var READY_STATE_COMPLETE=4;
 		var peticion_http=null;
-		
+
 		function inicializa_xhr() {
 			if (window.XMLHttpRequest) {
 				return new XMLHttpRequest();
@@ -16,7 +16,7 @@
 		}
 
 		function mostrar(){
-		
+
 			peticion_http=inicializa_xhr();
 			if (peticion_http) {
 				peticion_http.onreadystatechange=procesaRespuesta;
@@ -25,7 +25,7 @@
 				//peticion_http.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				//var query_string=crea_query_string();
 				peticion_http.send(null);
-		
+
 			}
 
 		}
@@ -34,6 +34,28 @@
 			if (peticion_http.readyState==READY_STATE_COMPLETE) {
 				if (peticion_http.status==200) {
 					document.getElementById("ajaxResultados").innerHTML=peticion_http.responseText;
+				}
+			}
+		}
+		/**Activar desactivar**/
+		function actualizar_estado_plato(id){
+			let estado=document.getElementById(id).checked?1:0;
+			peticion_http1=inicializa_xhr();
+			if (peticion_http1) {
+				peticion_http1.onreadystatechange=respuesta_estado_plato;
+				peticion_http1.open("GET","update_state_dish/"+id+"/"+estado,true);
+
+				//peticion_http1.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				//var query_string=crea_query_string();
+				peticion_http1.send(null);
+
+			}
+		}
+
+		var respuesta_estado_plato=()=>{
+			if (peticion_http1.readyState==READY_STATE_COMPLETE) {
+				if (peticion_http1.status==200) {
+					//document.getElementById("ajaxResultados").innerHTML=peticion_http1.responseText;
 				}
 			}
 		}

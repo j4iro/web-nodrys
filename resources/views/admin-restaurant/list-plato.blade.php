@@ -1,5 +1,7 @@
 @extends('layouts.app-r')
-
+@section('scripts')
+    <script type="text/javascript" src="{{asset('js/js/ajax.js')}}"></script>
+@endsection
 @section('content')
 
         <!--Titulo-->
@@ -28,10 +30,12 @@
                         <th scope="col">Precio</th>
                         <th scope="col">Tiempo</th>
                         <th scope="col">Acciones</th>
+                        <th scope="col">Activar</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($dishes as $dish)
+
                     <tr>
                         <td>
                             <img src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="img-thumbnail " width="50">
@@ -49,7 +53,14 @@
                                 <a href="{{route('adminRestaurant.plato.delete',["id" => $dish->id ])}}" class="btn btn-outline-danger btn-sm">
                                     <img src="https://img.icons8.com/color/48/000000/cancel.png"  width="18">
                                 </a>
+
                             </div>
+                        </td>
+                        <td>
+                            <label class="switch" >
+                                <input id="{{$dish->id}}" type="checkbox" @if($dish->state)==1) {{'checked'}} @endif onchange="actualizar_estado_plato(this.id)">
+                                <span class="slider round"></span>
+                            </label>
                         </td>
                     </tr>
                     @endforeach

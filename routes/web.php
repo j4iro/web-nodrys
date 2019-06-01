@@ -19,6 +19,7 @@ Route::get('/restaurant/avatar/{filename}','RestaurantController@getImage')->nam
 Route::get('/platos/{filename}','DishController@getImage')->name('dish.image');
 Route::get('/restaurante/{id}-{nombre}','DishController@dishes')->name('restaurant.detalle');
 
+
 /*Rutas del carrito de compras*/
 Route::get('/carrito','CarritoController@index')->name('carrito.index');
 Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
@@ -136,6 +137,8 @@ Route::get('/admin-restaurante/serve','OrderController@notif');
 
 
 Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'RestaurantController@filtroXcategoria']);
+Route::get('/admin-restaurante/platos/update_state_dish/{id?}/{state?}', ['as'=>'update_state_dish','uses'=>'DishController@update_state_dish']);
+
 
 
 //Ruta para la valoración

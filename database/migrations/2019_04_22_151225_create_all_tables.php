@@ -147,6 +147,7 @@ class CreateAllTables extends Migration
             $table->integer('time');
             $table->text('description')->nullable();
             $table->text('image');
+            $table->boolean('state')->default(0);
             $table->timestamps();
         });
 
