@@ -36,7 +36,7 @@ private function getOrders(){
 
 
     $orders = Order::join('users','users.id','=','orders.user_id')
-    ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+    ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id','orders.restaurant_id')
     ->where('orders.restaurant_id',$id_restaurant)
     ->where('orders.state','pendiente')
     ->get();
@@ -48,11 +48,22 @@ private function getOrders(){
 
 public function index_r()
 {
-   
+        $time=null;
         $orders=$this->getOrders();
+        if(count($orders->toArray())>0){
+            $id_restaurant=$orders->first()->restaurant_id;
+            // dd($id_restaurant);
+        
+            $restaurante=Restaurant::where("id","=",$id_restaurant)->first();
+            $time=$restaurante->time;
+        }
+
+        // dd($orders->first()->toArray());
+      
 
         session(['estado_restaurant'=>$this->disponibilidad(),
-                    'ventana'=>"inicio"]);
+                    'ventana'=>"inicio",
+                    'tolerancia'=>$time]);
 
         return view('admin-restaurant.index',[
             "pedidos" => $orders,

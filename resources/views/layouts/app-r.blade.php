@@ -177,8 +177,8 @@
                      var id=reservas[i][10];
                      var url={!! json_encode(url('/'))!!}+"/admin-restaurante/pedidos-pendientes/detalle/"+id;
                      var hora=reservas[i][5].split(":");
-                     var restante=(hora[0]*60+parseInt(hora[1]))-(horaActual.getHours()*60+horaActual.getMinutes());
-
+                     var restante=((hora[0]*60+parseInt(hora[1]))+{{session('tolerancia')}})-(horaActual.getHours()*60+horaActual.getMinutes());
+                     //console.log(tolerancia.value);
 
 
                      var estado=reservas[i][9];
