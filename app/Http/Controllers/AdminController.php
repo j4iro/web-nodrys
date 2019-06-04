@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        dd();
+        
         $solicitudes = RequestRestaurant::join('categories','categories.id','=','requests_restaurants.category_id_name')
         ->join('districts','districts.id','=','requests_restaurants.district_id_name')
         ->select('requests_restaurants.*','categories.name as categoria','districts.name as distrito')
