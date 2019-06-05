@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dish extends Model
 {
     protected $table = 'dishes';
-    protected $fillable = ['restaurant_id','name','description','price','time','image','type'];
+    protected $fillable = ['restaurant_id','name','description','price','time','image','type','state'];
 
     //Esto me sacará todos los platos de un restaurante
     public function restaurant()

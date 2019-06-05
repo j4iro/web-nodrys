@@ -9,7 +9,7 @@ use App\Card;
 use App\Util;
 use App\Restaurant;
 use App\User;
-
+use App\Valoration;
 class OrderController extends Controller
 {
     public function __construct()
@@ -48,6 +48,7 @@ private function getOrders(){
 
 public function index_r()
 {
+   
         $orders=$this->getOrders();
 
         session(['estado_restaurant'=>$this->disponibilidad(),
@@ -154,28 +155,37 @@ public function index_r()
 
     public function confirmation(Request $request){
 
-        $cadena=$request->get('txtCode');
+      
+
+        $cadena=$request->get('orderData');
         $trozos = explode(",", $cadena);
+        
+        // dd($trozos[0]);
+        
+        $orden=Order::findOrFail($trozos[0]);
+        $user_id=$orden->toArray()["user_id"];
+        $cliente=User::where("id","=",$user_id)->first();
 
-        dd($request);
+        $restaurante=Restaurant::findOrFail($orden->toArray()["restaurant_id"])->toArray();
 
-        // $order=Order::where('id','=',$trozos[0])->first();
+        
+        $cliente->points+=$restaurante["points"];
+        $cliente->save();
 
-        // User::findOrFail($user_id)->update($request);
+        $order=Order::where('id','=',$trozos[0])->first();
 
-        User::findOrFail()->update()->where("id",$idcliente);
 
         //si existe
         if (count((array)$order)>=1) {
             $order->state='confirmada';
             $order->save();
-            return redirect('admin/restaurant/escanear-qr')->with('order',$order);
-        }else {
-            //datos invalidos
-            //dd($cadena);
-            // dd('Esta reserva no existe');
-            return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
+
+            $cadena=implode(",",$order->toArray());
+            
+            // return redirect('admin/restaurant/escanear-qr')->with('order',$order);
+            echo $cadena;
         }
+       
     }
 
     public function cancelar(Request $request)

@@ -268,7 +268,13 @@
     <form action="{{route('carrito.add')}}" method="post">
     {{csrf_field()}}
 
-    <strong class="navbar-brand mt-3">¿Qué desea comer?</strong>
+    @if(count($dishes)==0)
+        <br>
+        <strong class="alert alert-success">El Restaurante aún no registró sus platos, PERO PUEDES RESERVAR EL LUGAR...!</strong>
+        <br>
+    @else
+        <strong class="navbar-brand mt-3">¿Qué desea comer?</strong>
+    @endif
     <div class="row ">
         @foreach ($dishes as $dish)
             <div class="col-6 col-md-4 col-lg-2 mb-4">
