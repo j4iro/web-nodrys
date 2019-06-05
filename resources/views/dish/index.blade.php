@@ -100,7 +100,6 @@
                       }
                   });
               }
-
           }
 
           //funcion para ver puntaje del restaurante
@@ -172,6 +171,8 @@
                   window.location='../login';
               }
             }
+
+
       </script>
 
 @endsection
