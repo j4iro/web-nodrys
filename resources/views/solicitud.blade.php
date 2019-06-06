@@ -42,7 +42,7 @@
                 </div>
             @else
                 <div class="alert alert-info" role="alert">
-                    <strong>¡Excelente Decisión!</strong> Para formar parte de la plataforma por favor complete el siguiente formulario, una vez la solicitud se envie, nos pondremos en contacto con usted por medio de <strong>E-mail</strong> o <strong>telefono</strong> para responderle su solicitud. Esto puede demorar <strong>24 horas</strong> aproximadamente. Gracias por su elección.
+                    <strong>¡Excelente Decisión!</strong> Para formar parte de la plataforma por favor complete el siguiente formulario, una vez la solicitud se envie, nos pondremos en contacto con usted por medio de <strong>E-mail</strong> o <strong>teléfono</strong> para responderle su solicitud. Esto puede demorar <strong>24 horas</strong> aproximadamente. Gracias por su elección.
                 </div>
             @endif
 
@@ -142,10 +142,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="telephone" class="col-md-4 col-form-label text-md-right">Telefono - Celular</label>
+                            <label for="telephone" class="col-md-4 col-form-label text-md-right">teléfono - Celular</label>
 
                             <div class="col-md-6">
-                                <input id="telephone" placeholder="Telefono o Celular" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" required>
+                                <input id="telephone" maxlength="9" min="8" placeholder="Telefono o Celular" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" required>
 
                                 @if ($errors->has('telephone'))
                                     <span class="invalid-feedback" role="alert">
