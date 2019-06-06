@@ -11,6 +11,7 @@ $(window).load(function() {
         //Peticion AJAX para traer datos de la tarjeta guardada
         traerDatosTarjeta();
     });
+    modalPago.click();
     $('#modalPago').on('hide.bs.modal', function () {
         checkpagarcontarjeta.checked=false;
         quitar_requireds();

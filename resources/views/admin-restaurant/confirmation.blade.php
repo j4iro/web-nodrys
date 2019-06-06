@@ -23,23 +23,23 @@
 </div>
 <div class="col-3 card">
 
-        <h2 class="card-header">Ultima Orden</h2>
+        <h2 class="card-header">Última Orden confirmada</h2>
         <table class="table card-body">
             <tr>
                 <td>Fecha:</td>
-                <td id="fecha">-----</td>
+                <td id="fecha"></td>
             </tr>
             <tr>
                 <td>Hora:</td>
-                <td id="hora">-----</td>
+                <td id="hora"></td>
             </tr>
             <tr>
                 <td>N° Personas:</td>
-                <td id="personas">-----</td>
+                <td id="personas"></td>
             </tr>
             <tr>
                 <td>Pago:</td>
-                <td id="pago">-----</td>
+                <td id="pago"></td>
             </tr>
 
             <tr >
