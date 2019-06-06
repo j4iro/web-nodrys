@@ -19,7 +19,7 @@
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
                         <th scope="col">Hora Actual</th>
-                        <th scope="col">Hora restante</th>
+                        <th scope="col">min. restantes</th>
                         <th scope="col">Ocasión Especial</th>
                         <th scope="col">N° Personas</th>
                         <th scope="col">Total</th>

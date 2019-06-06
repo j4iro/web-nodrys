@@ -20,8 +20,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                   
+@php
+    $suma=0;
+@endphp
                     @foreach ($pedidos as $pedido)
+                        @php
+                            $suma+=$pedido->cant*$pedido->price;
+                        @endphp
                         <tr>
                             <th scope="row" class="p-0 pt-1 pl-2">
                                 <img src="{{ route('dish.image',['filename'=>$pedido->image]) }}" width="50" class="img-fluid img-thumbnail shadow-sm avatar">
@@ -34,7 +39,12 @@
 
                         </tr>
                     @endforeach
+<tr><td colspan="5" class="alert alert-primary">
+    <center>
+        <h4>S/.{{$suma}}</h4>
+    </center>
 
+</td></tr>
                     </tbody>
                 </table>
 

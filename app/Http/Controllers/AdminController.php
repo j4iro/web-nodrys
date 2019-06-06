@@ -284,7 +284,7 @@ class AdminController extends Controller
       $restaurant->longitude=$request->input('longitud');
 
 
-     
+
       //Guardar la imagen del plato
       $image_path =  $request->file('image');
 
@@ -323,14 +323,14 @@ class AdminController extends Controller
       else
       {
         $restaurant->save();
-        
+
         $reserva->name = 'reserva';
         $reserva->price = '3.30';
         $reserva->time = '1';
         $reserva->image = 'reserva-81818.png';
         $reserva->category_dish = '5';
         $reserva->restaurant_id = $restaurant->id;
-  
+
         $asigned_role->save();
         $reserva->save();
         return redirect()->route('admin.restaurant.new')->with('resultado','El restaurante se insertó correctamente');

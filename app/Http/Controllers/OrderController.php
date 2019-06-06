@@ -29,6 +29,8 @@ class OrderController extends Controller
 private function getOrders(){
     //Traigo los pedidos del restaurante identificado
     //Conseguir restaurante identificado
+
+
     $id = session('id_user');
     $datos = Restaurant::all()->where('user_id',$id)->first();
     session(['id_restaurante'=>$datos->id]);
@@ -43,7 +45,6 @@ private function getOrders(){
     ->get();
 
 // dd($orders->toArray());
-
     return $orders;
 }
 public function pagar_por_mes(){
@@ -91,8 +92,23 @@ public function index_r()
         header('Cache-Control: no-cache');
 
         //$time = date('r');
+        $id = session('id_user');
+        $datos = Restaurant::all()->where('user_id',$id)->first();
+        session(['id_restaurante'=>$datos->id]);
+        session(['nombre_restaurante'=>$datos->name]);
+        $id_restaurant =session('id_restaurante');
+
+
+        $today=Date("Y-m-d");
+
+        $orders = Order::join('users','users.id','=','orders.user_id')
+        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+        ->where('orders.restaurant_id',$id_restaurant)
+        ->where('orders.state','pendiente')
+        ->where('orders.date',$today)
+        ->get();
         // echo "data: The server time is, otro\n\n";
-        $orders=$this->getOrders();
+    
         $ordenes=array();
         $array=$orders->toArray();
         foreach ($array as $reserva) {
