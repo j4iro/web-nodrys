@@ -135,6 +135,9 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
 
     Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizadosAdmin');
 
+    Route::get('/admin-restaurante/cuenta-bancaria','AdminRestaurant@newCuentaBancaria')->name('admin-r.cuentaBancaria');
+    Route::post('/admin-restaurante/cuenta-bancaria/save','AdminRestaurant@saveCuentaBancaria')->name('admin-r.cuentaBancaria.save');
+
 Route::get('/solicitud-unirse','HomeController@show_solicitud')->name('show.solicitud');
 Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('solicitud.save');
 

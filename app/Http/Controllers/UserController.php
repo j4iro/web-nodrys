@@ -108,7 +108,8 @@ class UserController extends Controller
         if(count($card)>0)
         {
             echo json_encode($card);
-        }else
+        }
+        else
         {
             echo json_encode("no");
         }
