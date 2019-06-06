@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        
+
         $solicitudes = RequestRestaurant::join('categories','categories.id','=','requests_restaurants.category_id_name')
         ->join('districts','districts.id','=','requests_restaurants.district_id_name')
         ->select('requests_restaurants.*','categories.name as categoria','districts.name as distrito')
@@ -323,6 +323,14 @@ class AdminController extends Controller
       }
     }
 
+    public function reportespedidos()
+    {
+        $distritos = District::where('districts.name','<>','otro')->get();
+        return view('admin.reportesclientesdistrito',[
+            'distritos' => $distritos
+        ]);
+    }
+
     public function editRestaurant($id)
     {
 
@@ -383,7 +391,7 @@ class AdminController extends Controller
     ->where('orders.state','confirmada')
     ->where('orders.comision','=',1)
     ->get();
-    
+
      return view('cash.cash',[
      'restaurants'=>$restaurants,
      'totalComision'=>$totalComision
@@ -392,7 +400,7 @@ class AdminController extends Controller
    public function pagarComision($id)
    {
       Order::findOrFail($id)->update(['comision'=>1]);
-     
+
 
    }
 

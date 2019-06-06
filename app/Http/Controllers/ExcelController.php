@@ -8,6 +8,9 @@ use App\Exports\RestaurantsExport;
 use App\Exports\RestaurantByDistrictExport;
 use App\Exports\RestaurantByCategoryExport;
 use App\Exports\ClientByDistrictExport;
+use App\Exports\OrderByStateExport1;
+use App\Exports\OrderByStateExport2;
+use App\Exports\DishesExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -35,5 +38,20 @@ class ExcelController extends Controller
     public function reporteClientesPorDistrito()
     {
         return Excel::download(new ClientByDistrictExport, 'clientes_por_distrito.xlsx');
+    }
+
+    public function reportePedidosC()
+    {
+        return Excel::download(new OrderByStateExport1, 'pedidos_completados.xlsx');
+    }
+
+    public function reportePedidosP()
+    {
+        return Excel::download(new OrderByStateExport2, 'pedidos_pendientes.xlsx');
+    }
+
+    public function reportePlatos()
+    {
+        return Excel::download(new DishesExport, 'reporte_platos.xlsx');
     }
 }

@@ -22,9 +22,6 @@ class AdminRestaurant extends Controller
 
     public function index()
     {
-
-      
-
         return view('admin-restaurant.index');
 
     }
@@ -120,7 +117,7 @@ class AdminRestaurant extends Controller
     ->where('orders.comision','<>',1)
     ->where('restaurants.id','=',$restaurant_id)
     ->get();
-    
+
     return $debeComision[0]->totalComision;
     }
 }

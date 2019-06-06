@@ -24,10 +24,61 @@ class PdfController extends Controller
         switch($tipo)
         {
             case 'ver': return $pdf->stream($nombrePDF);
-            // case 'ver': echo  'puto';die();
             case 'descargar': return $pdf->download($nombrePDF.'.pdf');
         }
 
+    }
+
+    public function getreportespersonalizados($fecini, $fecfin,$descargar)
+    {
+        $pedidos = Order::join('users','users.id','=','orders.user_id')
+        ->join('districts','districts.id','=','users.district_id')
+        ->select('orders.date','orders.hour','orders.state','orders.oca_special', 'users.name as nombre_c','users.surname as apellido_c','districts.name as distrito')
+        ->where('users.name','<>','user')
+        ->where('users.name','<>','admin')
+        ->whereBetween('orders.date',[$fecini,$fecfin])
+        ->where('orders.restaurant_id','=',\session('id_restaurante'))
+        ->get();
+
+        // dd($descargar);
+        if($descargar=='false')
+        {
+            echo \json_encode($pedidos);
+        }
+        else
+        {
+            $vistaurl = "reportes-pdf.reporte-personalizado-restaurante";
+            $tipo = "ver";
+            $fechas = array($fecini, $fecfin);
+            $nombrePDF = "reporte-pedidos-personalizado";
+            return $this->crearPDF($pedidos, $vistaurl, $tipo,$nombrePDF,$fechas);
+        }
+    }
+
+    public function getreportespersonalizadosAdmin($fecini, $fecfin,$descargar)
+    {
+        $pedidos = Order::join('users','users.id','=','orders.user_id')
+        ->join('districts','districts.id','=','users.district_id')
+        ->join('restaurants','restaurants.id','=','orders.restaurant_id')
+        ->select('orders.date','orders.hour','restaurants.name as restaurante','orders.state','orders.oca_special', 'users.name as nombre_c','users.surname as apellido_c','districts.name as distrito')
+        ->where('users.name','<>','user')
+        ->where('users.name','<>','admin')
+        ->whereBetween('orders.date',[$fecini,$fecfin])
+        ->get();
+
+        // dd($descargar);
+        if($descargar=='false')
+        {
+            echo \json_encode($pedidos);
+        }
+        else
+        {
+            $vistaurl = "reportes-pdf.reporte-pedidos-admin";
+            $tipo = "ver";
+            $fechas = array($fecini, $fecfin);
+            $nombrePDF = "reporte-pedidos-personalizado";
+            return $this->crearPDF($pedidos, $vistaurl, $tipo,$nombrePDF,$fechas);
+        }
     }
 
     public function reporteRestaurantes($tipo)
@@ -106,8 +157,9 @@ class PdfController extends Controller
     {
         $nombrePDF = 'reportes_mis_platos';
         $vistaurl = "reportes-pdf.platos_de_restaurante";
-        $restaurantes = Dish::join('categories','categories.id','=','dishes.category_dish')
-        ->select('dishes.*','categories.name as categoria')
+        $restaurantes = Dish::join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+        ->select('dishes.*','categories_dishes.name as categoria')
+        ->where('dishes.name','<>','reserva')
         ->where('dishes.restaurant_id','=',\session('id_restaurante'))
         ->get();
         return $this->crearPDF($restaurantes, $vistaurl, $tipo,$nombrePDF);
@@ -175,6 +227,40 @@ class PdfController extends Controller
         ->get();
 
         return $this->crearPDF($details, $vistaurl, $tipo,$nombrePDF, $order,"A5");
+    }
+
+    public function getreportesclientes($distrito,$pdf)
+    {
+        if($distrito!='all')
+        {
+            $clientes = User::join('districts','districts.id','=','users.district_id')
+            ->select('users.*','districts.name as distrito')
+            ->where('users.name','<>','user')
+            ->where('users.name','<>','admin')
+            ->where('districts.id','=',$distrito)
+            ->get();
+        }
+        else
+        {
+            $clientes = User::join('districts','districts.id','=','users.district_id')
+            ->select('users.*','districts.name as distrito')
+            ->where('users.name','<>','user')
+            ->where('users.name','<>','admin')
+            ->get();
+        }
+
+        if($pdf=='true')
+        {
+            $vistaurl = "reportes-pdf.clientes_por_distrito_2";
+            $tipo = "ver";
+            $nombrePDF = "reporte-pedidos-personalizado";
+            return $this->crearPDF($clientes, $vistaurl, $tipo,$nombrePDF,$distrito);
+        }
+        else
+        {
+            echo \json_encode($clientes);
+        }
+
     }
 
 }
