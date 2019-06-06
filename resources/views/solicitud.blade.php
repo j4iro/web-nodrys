@@ -7,6 +7,7 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
+      <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
       <style media="screen">
           #map{
               height: 400px;
@@ -145,7 +146,7 @@
                             <label for="telephone" class="col-md-4 col-form-label text-md-right">teléfono - Celular</label>
 
                             <div class="col-md-6">
-                                <input id="telephone" maxlength="9" min="8" placeholder="Telefono o Celular" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" required>
+                                <input id="telephone" maxlength="9" min="8" onkeypress="return validarNumero(event);"  placeholder="Telefono o Celular" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" required>
 
                                 @if ($errors->has('telephone'))
                                     <span class="invalid-feedback" role="alert">
@@ -225,7 +226,7 @@
                             <label for="ruc" class="col-md-4 col-form-label text-md-right" >RUC</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ruc" placeholder="RUC" required >
+                                <input type="text"  maxlength="11" minLength="11" onkeypress="return validarNumero(event);" class="form-control" name="ruc" max="11" placeholder="RUC" required >
                             </div>
                         </div>
                         <div class="form-group row">
