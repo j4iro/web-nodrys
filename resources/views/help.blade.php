@@ -71,23 +71,23 @@
  <div id="help_restaurant_container" class="card-body help-container">
 
      <div class="row">
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>¿Cómo unirte a nodrys?</h4>
 
          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JxTxE-ZgOVU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>Agrega tus platos</h4>
          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VrZ4snt7T90" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>Confirma las reservas</h4>
          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DK2sWTFnYPA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>Imprime tus reportes</h4>
          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/OPK4_qfZ8rI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
        </div>
@@ -106,7 +106,7 @@
             </p>
           </div>
           <div class="col-sm-4">
-            <h4>Solo quieres realizar reservar</h4>
+            <h4>Solo quieres realizar reserva</h4>
             <p>
                 Descuida si no deseeas adquirir de la compra de platos y solo desea realizar la reserva, lo puedes hacer solo dando clic en el boton <strong>Reservar.</strong>
             </p>
