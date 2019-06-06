@@ -59,3 +59,34 @@
 				}
 			}
 		}
+
+		/*********************************************************************/
+
+		function pagarComision(id){
+		let valor= confirm('ESTAS SEGURO DE QUE ESTE RESTAURANTE YA PAGÓ LA COMISIÓN?');
+			if (valor) 
+			{
+					peticion_http2=inicializa_xhr();
+					if (peticion_http2)
+					 {
+						peticion_http2.onreadystatechange=respuesta_monto;
+						peticion_http2.open("GET","pagarComision/"+id,true);
+
+						//peticion_http2.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+						//var query_string=crea_query_string();
+						peticion_http2.send(null);
+
+					}
+			}
+			location.reload();
+		}
+
+		var respuesta_monto=()=>{
+			if (peticion_http2.readyState==READY_STATE_COMPLETE) {
+				if (peticion_http2.status==200) {
+					//document.getElementById("ajaxResultadosMonto").innerHTML=peticion_http2.responseText;
+				}
+			}
+		}
+		/***************************************************************/
+		

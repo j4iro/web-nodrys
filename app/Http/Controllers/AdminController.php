@@ -8,7 +8,7 @@ use App\Category;
 use App\RequestRestaurant;
 use App\User;
 use App\Asigned_role;
-
+use App\Order;
 
 class AdminController extends Controller
 {
@@ -367,5 +367,33 @@ class AdminController extends Controller
         ]);
     }
 
+   public function cash()
+   {
+      $restaurants=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('restaurants.id as id,restaurants.name,restaurants.slogan,COUNT(*) as cant')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','<>',1)
+    ->groupBy('restaurants.id')
+    ->groupBy('restaurants.name')
+    ->groupBy('restaurants.slogan')
+    ->get();
+
+    $totalComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('COUNT(*) as totalComision')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','=',1)
+    ->get();
+    
+     return view('cash.cash',[
+     'restaurants'=>$restaurants,
+     'totalComision'=>$totalComision
+     ]);
+   }
+   public function pagarComision($id)
+   {
+      Order::findOrFail($id)->update(['comision'=>1]);
+     
+
+   }
 
 }

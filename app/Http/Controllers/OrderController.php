@@ -10,6 +10,7 @@ use App\Util;
 use App\Restaurant;
 use App\User;
 use App\Valoration;
+use Auth;
 class OrderController extends Controller
 {
     public function __construct()
@@ -45,7 +46,20 @@ private function getOrders(){
 
     return $orders;
 }
+public function pagar_por_mes(){
+        $user_id = Auth::user()->id;//id_user
+         $restaurant_id = session('id_restaurante');//id_restaurant
+        //echo "hli".$restaurant_id;
 
+    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('COUNT(*) as totalComision')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','<>',1)
+    ->where('restaurants.id','=',$restaurant_id)
+    ->get();
+    
+    return $debeComision[0]->totalComision;
+}
 public function index_r()
 {
         $time=null;
@@ -63,7 +77,9 @@ public function index_r()
 
         session(['estado_restaurant'=>$this->disponibilidad(),
                     'ventana'=>"inicio",
-                    'tolerancia'=>$time]);
+                    'tolerancia'=>$time,
+                    'debePagar'=>$this->pagar_por_mes()]
+                    );
 
         return view('admin-restaurant.index',[
             "pedidos" => $orders,

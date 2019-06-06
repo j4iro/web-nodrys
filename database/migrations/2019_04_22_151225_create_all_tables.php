@@ -132,6 +132,7 @@ class CreateAllTables extends Migration
             $table->string('state');
             $table->decimal('total');
             $table->char('paid',2);
+            $table->boolean('comision')->default(0);
             $table->timestamps();
         });
 

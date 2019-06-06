@@ -87,7 +87,7 @@
                         @endif
 
                         <td>
-                            <a href="{{route('pedidos.factura.pdf',["id"=>$pedido->id,"tipo"=>'ver'])}}" target="_blank" class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" >Factura</a>
+                            <a href="{{route('pedidos.factura.pdf',["id"=>$pedido->id,"tipo"=>'ver'])}}" target="_blank" class="btn btn-outline-success btn-sm" codigo="{{$pedido->id}},{{$pedido->created_at}},{{$pedido->name}}" >Comprobante</a>
                         </td>
 
                     </tr>

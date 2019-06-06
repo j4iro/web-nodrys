@@ -71,10 +71,12 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
 //Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
 
 /*Rutas para el administrador master*/
-Route::get('/admin/home', 'AdminController@index')->name('admin.index');
+    Route::get('/admin/home', 'AdminController@index')->name('admin.index');
 
     Route::get('/admin/solicitudes/aceptadas', 'AdminController@listSolicitudesAceptadas')->name('admin.solicitudes.aceptadas');
     Route::get('/admin/solicitudes/historial', 'AdminController@listTodasSolicitudes')->name('admin.solicitudes.historial');
+    Route::get('/admin/cash',['as'=>'cashs','uses'=>'AdminController@cash']);
+     Route::get('/admin/pagarComision/{id?}', ['as'=>'pagarComision','uses'=>'AdminController@pagarComision']);
 
     /* Cruds restaurantes */
     Route::get('/admin/restaurantes/list', 'AdminController@showRestaurants')->name('admin.restaurants');
@@ -115,6 +117,8 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-completados/{tipo}', 'PdfController@reportePedidosCompletadosRestaurante')->name('adminRestaurant.pedidos-completados');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-pendientes/{tipo}', 'PdfController@reportePedidosPendientesRestaurante')->name('adminRestaurant.pedidos-pendientes');
     Route::get('/admin-restaurante/reportes/pdf/platos/{tipo}', 'PdfController@reportePlatosdeRestaurantes')->name('adminRestaurant.platos');
+    
+    Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
 
     /*Reportes EXCEL para la sección administrativa*/
     Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers')->name('admin.excel.clientes');
