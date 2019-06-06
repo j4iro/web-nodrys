@@ -9,6 +9,7 @@ use App\RequestRestaurant;
 use App\User;
 use App\Asigned_role;
 use App\Order;
+use App\Dish;
 
 class AdminController extends Controller
 {
@@ -223,6 +224,7 @@ class AdminController extends Controller
         $restaurant = new Restaurant();
         $user = new User();
         $asigned_role = new Asigned_role();
+        $reserva = new Dish();
       }
 
       $user->name = "user-r";
@@ -235,6 +237,8 @@ class AdminController extends Controller
       $user->points = 0;
       $user->state = 1;
       $user->district_id = $request->input('district_id');
+
+
 
       //Comprobar si han escrito contraseñas para un cambio
       $pwd = $request->input('password');
@@ -280,6 +284,7 @@ class AdminController extends Controller
       $restaurant->longitude=$request->input('longitud');
 
 
+     
       //Guardar la imagen del plato
       $image_path =  $request->file('image');
 
@@ -318,7 +323,16 @@ class AdminController extends Controller
       else
       {
         $restaurant->save();
+        
+        $reserva->name = 'reserva';
+        $reserva->price = '3.30';
+        $reserva->time = '1';
+        $reserva->image = 'reserva-81818.png';
+        $reserva->category_dish = '5';
+        $reserva->restaurant_id = $restaurant->id;
+  
         $asigned_role->save();
+        $reserva->save();
         return redirect()->route('admin.restaurant.new')->with('resultado','El restaurante se insertó correctamente');
       }
     }

@@ -46,6 +46,12 @@ class DishController extends Controller
                 ->where('category_dish','<>','5')
                 ->where('state', '=',1)
                 ->get();
+
+                $reserva = Dish::where('restaurant_id', $request->id)
+                ->where('category_dish','=','5')
+                ->where('state', '=',1)
+                ->first();          
+
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
        ->join('categories','categories.id','=','restaurants.category_id')
        ->select('restaurants.*','districts.name as distrito','categories.name as categoria')
@@ -55,6 +61,7 @@ class DishController extends Controller
             'dishes' => $dishes,
             'restaurant'=>$restaurant,
             'sm'=>$sm,
+            'reserva' => $reserva
         ]);
     }
 

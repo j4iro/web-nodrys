@@ -76,6 +76,7 @@ class CarritoController extends Controller
                 for ($i=0; $i < count($request->checkDish); $i++)
                 {
                     $id_plato = $request->checkDish[$i];
+                    
 
                     //Conseguir Datos del plato
                     $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
