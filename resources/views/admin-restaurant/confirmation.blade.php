@@ -23,7 +23,7 @@
 </div>
 <div class="col-3 card">
 
-        <h2 class="card-header">Última Orden confirmada</h2>
+        <h2 class="card-header">Ultima Orden confirmada</h2>
         <table class="table card-body">
             <tr>
                 <td>Fecha:</td>
