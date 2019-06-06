@@ -48,7 +48,7 @@ private function getOrders(){
 
 public function index_r()
 {
-   
+
         $orders=$this->getOrders();
 
         session(['estado_restaurant'=>$this->disponibilidad(),
@@ -139,7 +139,6 @@ public function index_r()
 
     public function detail_r($id)
     {
-
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
 
@@ -155,37 +154,32 @@ public function index_r()
 
     public function confirmation(Request $request){
 
-      
-
         $cadena=$request->get('orderData');
         $trozos = explode(",", $cadena);
-        
+
         // dd($trozos[0]);
-        
         $orden=Order::findOrFail($trozos[0]);
         $user_id=$orden->toArray()["user_id"];
         $cliente=User::where("id","=",$user_id)->first();
-
         $restaurante=Restaurant::findOrFail($orden->toArray()["restaurant_id"])->toArray();
-
-        
-        $cliente->points+=$restaurante["points"];
-        $cliente->save();
-
         $order=Order::where('id','=',$trozos[0])->first();
 
+        if($order->state=="pendiente"){
+            $cliente->points+=$restaurante["points"];
+            $cliente->save();
 
-        //si existe
-        if (count((array)$order)>=1) {
-            $order->state='confirmada';
-            $order->save();
-
-            $cadena=implode(",",$order->toArray());
-            
-            // return redirect('admin/restaurant/escanear-qr')->with('order',$order);
-            echo $cadena;
+            //si existe
+            if (count((array)$order)>=1) {
+                $order->state='confirmada';
+                $order->save();
+                $cadena=implode(",",$order->toArray());
+                echo $cadena;
+            }
+        }else if($order->state=="confirmada"){
+            echo "already";
+        }else{
+            echo "vencida";
         }
-       
     }
 
     public function cancelar(Request $request)
@@ -200,7 +194,6 @@ public function index_r()
     public function cancela_orden($id,$accion="otra")
     {
         $order = Order::where('id','=',$id)->first();
-
         if ($accion=="cancela") {
             $order->state = 'cancelada';
             $order->update();

@@ -14,6 +14,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
+        "maatwebsite/laravel-excel-light": "dev-master",
         "simplesoftwareio/simple-qrcode": "^2.0"
     },
     "require-dev": {

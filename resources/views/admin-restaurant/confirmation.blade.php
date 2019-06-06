@@ -17,51 +17,44 @@
             </div>
             <div id="line" class="line"></div>
         </div>
-   
 
-    
+
+
 </div>
 <div class="col-3 card">
-    @if (session('order'))
-        @php
-            $order=session('order');
-        @endphp
+
         <h2 class="card-header">Ultima Orden confirmada</h2>
         <table class="table card-body">
             <tr>
                 <td>Fecha:</td>
-                <td>{{$order->date}}</td>
+                <td id="fecha"></td>
             </tr>
             <tr>
                 <td>Hora:</td>
-                <td>{{$order->hour}}</td>
+                <td id="hora"></td>
             </tr>
             <tr>
                 <td>N° Personas:</td>
-                <td>{{$order->n_people}}</td>
+                <td id="personas"></td>
             </tr>
             <tr>
                 <td>Pago:</td>
-                <td>{{$order->total}}</td>
+                <td id="pago"></td>
             </tr>
-            @if($order->paid=="no")
+
             <tr >
-                <td colspan="2"> <div class="alert alert-warning">
-                    Ahun no ha pagado
-                </div></td>
-               
+                <td colspan="2">
+                    <div id="estado" class="alert">-----</div>
+                </td>
             </tr>
-            @endif
+
         </table>
-    @elseif (session('error'))
-        <div class="alert alert-danger">
-            {{session('error')}}
-        </div>
-    @endif
+
+
 </div>
 
 </div>
-                
+
 @endsection
 @section('scripts')
     <script type="text/javascript" src="{{asset('js/webcam/instascan.min.js')}}"></script>
@@ -77,8 +70,34 @@
          $.get(ordersPath,{
             orderData:content
          },function(e){
-              order=e.split(",");
-              console.log(order);
+                console.log(e);
+                if(e=="confirmada"){
+                    alert("Esta orden ya se ha confirmado");
+                }else if(e=="vencida"){
+                    alert("Esta orden ya se ha vencido");
+                }else{
+                    order=e.split(",");
+                    fecha.innerHTML=order[1];
+                    hora.innerHTML=order[2];
+                    personas.innerHTML=order[3];
+                    pago.innerHTML=order[6];
+                    if(order[7]=="no"){
+                      estado.innerHTML="Orden no cancelada !!!";
+                      if(estado.classList.contains('alert-success')){
+                          estado.classList.remove('alert-success');
+                      }
+                      estado.classList.add("alert-danger");
+                    }else{
+                      estado.innerHTML="Esta orden ya ha sido pagada"
+                      if(estado.classList.contains('alert-danger')){
+                          estado.classList.remove('alert-danger');
+                      }
+                      estado.classList.add("alert-success");
+
+                    }
+                }
+
+              //console.log(order);
             });
 
         });
@@ -89,6 +108,7 @@
           printCameras(cameras);
 
          if(cameras.length > 0){
+
              selectCamera(cameras[0]);
          }
          else

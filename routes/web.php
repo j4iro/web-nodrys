@@ -145,4 +145,5 @@ Route::get('/admin-restaurante/platos/update_state_dish/{id?}/{state?}', ['as'=>
 Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
 Route::get('/Restaurant/MiCalifi','ValorationController@obtnerCali')->name('calificar.obtnerCali');
 Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('calificar.obtnerCaliR');
+Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->name('calificar.consultarPe');
 // Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');

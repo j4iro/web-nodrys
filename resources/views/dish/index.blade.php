@@ -44,7 +44,7 @@
               font-size:200%;
               color:gray;
           }
-          .clasificación{
+          .clasificacion{
               direction:rtl;
               unicode-bidi:bidi-override:
           }
@@ -80,6 +80,7 @@
               }
           ?>';//obtenemos id usuarios
           var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
+          var divCalif=  document.getElementById('contCalif2');
 
           verCalifi();
           verCalifiR();
@@ -99,7 +100,6 @@
                       }
                   });
               }
-
           }
 
           //funcion para ver puntaje del restaurante
@@ -117,11 +117,31 @@
 
           //funcion para mostrar para valorar
           function aparecerVa(){
-              if (document.getElementById('contCalif2').hidden==true) {
-                  document.getElementById('contCalif2').hidden=false;
+              if (id_user!='no-log') {
+                  var validarP={!!json_encode(route('calificar.consultarPe'))!!};
+                  $.get(validarP,{
+                      user_id:id_user,
+                      restaurant_id:restaurant_id
+                  },function(resultados){
+                      if (resultados=='true') {
+                          var divCalif=  document.getElementById('contCalif2');
+                          if (divCalif.style.opacity=='0') {
+                              divCalif.style="opacity:1;transition:2s;float:left;";
+                          }else{
+                              divCalif.style="opacity:0;transition:2s;float:left;";
+                          }
+                      }else{
+                          var mensaje=document.getElementById('mensaje');
+                          mensaje.style="opacity:1;transition:1s";
+                          var intervalo=setInterval(function () {
+                            mensaje.style="opacity:0;transition:1s";
+                        }, 9000);
+                      }
+                  });
               }else{
-                  document.getElementById('contCalif2').hidden=true;
+                  window.location='../login';
               }
+
           }
 
           //funcion para calificar
@@ -136,16 +156,31 @@
                   },function(resultados){
                       verCalifiR();
                       verCalifi();
+                      var divCali=document.getElementById('contCalif2').style='opacity:0;transition:1s;float:left;';
+                      if (resultados!='1') {
+                          aparecerVa();
+
+                          var mensaje=document.getElementById('mensaje');
+                          mensaje.style="opacity:1;transition:1s";
+                            var intervalo=setInterval(function () {
+                                mensaje.style="opacity:0;transition:1s";
+                            }, 9000);
+                      }
                   });
               }else{
                   window.location='../login';
               }
             }
+
+
       </script>
 
 @endsection
 
 <div class="container mt-5">
+    <div id="mensaje" class="alert alert-primary" role="alert" style="opacity:0">
+        Aún no ha experimentado de los servicios del restaurante, para calificar ¿Qué  esperas? Haz tu reserva!
+    </div>
 
                 @if ($sm!="")
                     <strong>
@@ -189,7 +224,7 @@
             <br>
             <p>
                     <strong style="float:left;margin-top:3%" class="navbar-brand pb-0">Puntuación</strong>
-                    <div id="contCalif" class="clasificación" >
+                    <div id="contCalif" class="clasificacion" >
                         <strong id="lblpuntaje">0/5</strong>
                         <input id="rbd5" type="radio" name="valoracion">
                         <label class="start clasificación" for="rbd5">&#9733;</label>
@@ -203,9 +238,9 @@
                         <label class="start clasificación" for="rbd1">&#9733;</label>
                     </div>
             </p>
-            <p>
-                <strong style="float:left;cursor:pointer;margin-top:0%" class="navbar-brand pb-0" onclick="aparecerVa();">Danos tu calificación</strong>
-                <div  id="contCalif2" class="clasificación" hidden>
+            <p  style="height:auto;">
+                <strong id="DarCalificacion" style="float:left;cursor:pointer" class="alert alert-primary" onclick="aparecerVa();">Danos tu calificación</strong>
+                <div  id="contCalif2" class="clasificacion"  style="opacity:0;float:left;">
                     <input id="dar5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
                     <label class="start clasificación" for="dar5">&#9733;</label>
                     <input id="dar4" type="radio" name="tenedor" value="4" onclick="vaStart(this.id);">
@@ -217,17 +252,16 @@
                     <input id="dar1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
                     <label class="start clasificación" for="dar1">&#9733;</label>
                 </div>
+                <form  class="mt-3" action="{{route('carrito.add')}}" method="post">
+                    {{csrf_field()}}
+                    <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
+                    <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}"><br>
+                    <input type="hidden" name="solo_reserva" value="1"><br>
+                    <input type="submit" class="btn btn-primary mt-2" name="addcarrito" value="Solo reserva">
+                </form>
             </p>
-            <br>
 
-            <form class="mt-3" action="{{route('carrito.add')}}" method="post">
 
-                {{csrf_field()}}
-                <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
-                <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
-                <input type="hidden" name="solo_reserva" value="1">
-                <input type="submit" class="btn btn-primary mt-2"  name="addcarrito" value="Solo reserva">
-            </form>
         </div>
     </div>
 
@@ -300,10 +334,9 @@
 
 <script>
 
-
         var marker=L.marker();
-
         var map = L.map('map');
+        map.scrollWheelZoom.disable();
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
             maxZoom: 18

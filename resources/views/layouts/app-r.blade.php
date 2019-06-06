@@ -79,6 +79,8 @@
 
     window.onload=function(){
 
+
+
         var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
         Notification.requestPermission();
 
@@ -161,6 +163,22 @@
             document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
         }
 
+
+
+        // PARTE QUE MUEVE LA LINEA
+           var num=0,op=0;
+           var linea=document.getElementById('line');
+           var i=setInterval(function () {
+
+            if (num==100) {op=1;}
+            if (num==0) {op=0;}
+            // console.log(num);
+
+              linea.style.top=num+"%";
+              op==1?num--:num++;
+
+            }, 10);
+
     }
 
     function llenaTabla(arrayOrders){
@@ -219,9 +237,9 @@
                     cod_reserva:id_orden
                 },function (resultado) {
                     if(resultado=="OK"){
-                        alert("se han cancelado con exito");
+                        console.log("se han cancelado");
                     }else {
-                        alert(resultado);
+                        console.log(resultado);
                     }
                 });
 
