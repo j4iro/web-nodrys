@@ -127,6 +127,8 @@
                     if ('{{session('ventana')}}'=='inicio') {
 
                         llenaTabla(arrayOrders);
+
+                        
                     }else {
 
                     }
@@ -165,19 +167,7 @@
 
 
 
-        // PARTE QUE MUEVE LA LINEA
-           var num=0,op=0;
-           var linea=document.getElementById('line');
-           var i=setInterval(function () {
 
-            if (num==100) {op=1;}
-            if (num==0) {op=0;}
-            // console.log(num);
-
-              linea.style.top=num+"%";
-              op==1?num--:num++;
-
-            }, 10);
 
     }
 
