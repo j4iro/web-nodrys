@@ -483,6 +483,54 @@ class InsertAllTablesSeeder extends Seeder
             'category_dish'=>5,
             'restaurant_id'=>1
         ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>2
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>3
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>4
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>5
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>6
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>7
+        ]);
 
         // Platos
         Dish::create([

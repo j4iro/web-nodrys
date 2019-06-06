@@ -27,12 +27,12 @@
 	   		</tr>
 	   		@endforeach
 	   		<tr>
-	   			<td colspan="2">MONTO  A COBRAR POR COMISIONES :</td>
+	   			<td colspan="2">Monto total a cobrar por comisiones :</td>
 	   			{{-- <td colspan="1">{{sprintf('%03d',$sumTatal)}}</td> --}}
 	   			<td>{{"S/.".number_format($sumTatal,2)}}</td>
 	   		</tr>
 	   		<tr>
-	   			<td colspan="2">MONTO TOTAL DE COMISIONES: </td>
+	   			<td colspan="2">Montototal de comisiones: </td>
 	   			<td>{{"S/.".number_format($totalComision[0]->totalComision,2)}}</td>
 	   		</tr>
 	   </tbody>

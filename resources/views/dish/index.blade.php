@@ -254,14 +254,11 @@
                 </div>
                 <form  class="mt-3" action="{{route('carrito.add')}}" method="post">
                     {{csrf_field()}}
-                    <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
-                    <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}"><br>
-                    <input type="hidden" name="solo_reserva" value="1"><br>
-                    <input type="submit" class="btn btn-primary mt-2" name="addcarrito" value="Solo reserva">
-                </form>
-            </p>
-
-
+                    <input class="form-check-input d-none" type="checkbox" checked value="{{$reserva->id}}" name="checkDish[]" >
+                    <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
+                    <input type="hidden" name="solo_reserva" value="1">
+                    <input type="submit" class="btn btn-primary mt-2"  name="addcarrito" value="Solo reserva">
+            </form>
         </div>
     </div>
 

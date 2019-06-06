@@ -156,7 +156,7 @@ function quitar_requireds() {
                     </th>
                     <td>{{$plato->restaurante}}</td>
                     <td class="text-capitalize">{{$plato->categoria_plato}}</td>
-                    <td> @if($plato->name=="reserva") {{'-'}} @else {{$plato->name}}  @endif </td>
+                    <td> @if($plato->name=="reserva") H{{$plato->id}} @else {{$plato->name}}  @endif </td>
                     <td>{{$plato->price}}</td>
                     <th scope="row">
                         @if($plato->name!="reserva")
