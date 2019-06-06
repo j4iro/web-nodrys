@@ -1,8 +1,10 @@
 @extends('layouts.app')
 @section('scripts')
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script type="text/javascript">
+
 
 $(window).load(function() {
     $('#modalPago').on('show.bs.modal', function () {
@@ -313,7 +315,7 @@ function quitar_requireds() {
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
-                                        <input type="text" placeholder="Número de tarjeta" class="form-control" name="num_card" id="num_card" >
+                                        <input type="text" onkeypress="return validarNumero(event);" placeholder="Número de tarjeta" class="form-control" name="num_card" id="num_card" >
                                     </div>
                                 </div>
 
@@ -342,7 +344,7 @@ function quitar_requireds() {
 
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <input type="text" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="owner" >
+                                        <input type="text" onkeypress="return validarLetras(event);" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="owner" >
                                     </div>
                                 </div>
 

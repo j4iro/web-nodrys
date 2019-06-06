@@ -41,7 +41,7 @@
     <a class="card-header" id="help_client">Cliente</a>
     <div class="card-body help-container" id="help_client_container">
 
-        <div class="row"> 
+        <div class="row">
           <div class="col-sm-4">
             <h4>Crear una cuenta de usuario</h4>
             <video class="help_videos" src="" poster="">
@@ -90,15 +90,12 @@
        </div>
        <div class="col-sm-4">
          <h4>Confirma las reservas</h4>
-         <video class="help_videos" src="" poster="">
+         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DK2sWTFnYPA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-         </video>
        </div>
        <div class="col-sm-4">
          <h4>Imprime tus reportes</h4>
-         <video class="help_videos" src="" poster="">
-
-         </video>
+         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/OPK4_qfZ8rI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
        </div>
      </div>
  </div>
