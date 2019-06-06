@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Dish;
+use App\Order;
 use App\Restaurant;
 
 class AdminRestaurant extends Controller
@@ -18,15 +19,12 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.index');
     }
 
-    public function reportesClientes()
+    public function reportespersonalizados()
     {
-        return view('admin-restaurant.reportesclientes');
+        return view('admin-restaurant.reportespersonalizados');
     }
 
-    public function reportesPedidos()
-    {
-        return view('admin-restaurant.reportespedidos');
-    }
+
 
     public function datos()
     {

@@ -84,7 +84,7 @@ class AdminController extends Controller
       return view('admin.create-categoria');
     }
     public function saveCategorias(Request $request){
-     
+
      if ($request->editar=="editar")
       {
           Category::findOrFail($request->id)->update($request->all());
@@ -322,6 +322,14 @@ class AdminController extends Controller
       }
     }
 
+    public function reportespedidos()
+    {
+        $distritos = District::where('districts.name','<>','otro')->get();
+        return view('admin.reportesclientesdistrito',[
+            'distritos' => $distritos
+        ]);
+    }
+
     public function editRestaurant($id)
     {
 
@@ -365,4 +373,6 @@ class AdminController extends Controller
             'restaurantes' => $restaurants,
         ]);
     }
+
+
 }

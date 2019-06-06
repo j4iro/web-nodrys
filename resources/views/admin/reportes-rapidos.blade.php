@@ -41,7 +41,7 @@
                         {{-- FILA --}}
                         <tr>
                             <th scope="row">2</th>
-                            <th scope="row">Restaurantes agrupados por distrito </th>
+                            <th scope="row">Restaurantes por distrito </th>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a target="blank" href="{{route('admin.reportes.restaurantes-por-distrito',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
@@ -56,7 +56,7 @@
                         {{-- FILA --}}
                         <tr>
                             <th scope="row">3</th>
-                            <th scope="row">Restaurantes agrupados por categoria </th>
+                            <th scope="row">Restaurantes por categoria </th>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a target="blank" href="{{route('admin.reportes.restaurantes-por-categoria',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>
@@ -86,7 +86,7 @@
                          {{-- FILA --}}
                          <tr>
                             <th scope="row">5</th>
-                            <th scope="row">Clientes agrupados por distrito </th>
+                            <th scope="row">Clientes por distrito </th>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a target="blank" href="{{route('admin.reportes.clientes-por-distrito',['tipo'=>'ver'])}}" class="btn btn-danger btn-sm">Ver</a>

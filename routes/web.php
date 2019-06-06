@@ -44,8 +44,8 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
 
     Route::get('/admin-restaurante/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
     Route::post('/admin-restaurante/update','AdminRestaurant@update')->name('adminRestaurant.update');
-    Route::get('/admin-restaurante/reportes-clientes','AdminRestaurant@reportesClientes')->name('adminRestaurant.reportesclientes');
-    Route::get('/admin-restaurante/reportes-pedidos','AdminRestaurant@reportesPedidos')->name('adminRestaurant.reportespedidos');
+    Route::get('/admin-restaurante/reportes-personalizados','AdminRestaurant@reportesPersonalizados')->name('adminRestaurant.reportespersonalizados');
+    Route::get('/admin-restaurante/reportes-personalizados/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizados');
 
     /*Rutas para mantenimiento de platos en la sección administrativa */
     Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
@@ -102,6 +102,8 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
     Route::get('/admin/reportes/', 'AdminController@reportes')->name('admin.reportes');
 
     /*Reportes PDF para la sección administrativa*/
+    Route::get('/reportes/pdf/personalizado/{datos}/{vista}/{tipo}/{nombre}/{otrodato}/{papel}', 'PdfController@crearPDF')->name('crearPDF');
+
     Route::get('/admin/reportes/pdf/restaurantes/{tipo}', 'PdfController@reporteRestaurantes')->name('admin.reportes.restaurantes');
     Route::get('/admin/reportes/pdf/clientes/{tipo}', 'PdfController@reporteClientes')->name('admin.reportes.clientes');
     Route::get('/admin/reportes/pdf/restaurantes-por-distrito/{tipo}', 'PdfController@reporteRestaurantesPorDistrito')->name('admin.reportes.restaurantes-por-distrito');
@@ -120,6 +122,18 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
     Route::get('/admin/reportes/excel/restaurantes-por-distrito', 'ExcelController@reporteRestaurantesPorDistrito')->name('admin.excel.restaurantes-distrito');
     Route::get('/admin/reportes/excel/restaurantes-por-categoria', 'ExcelController@reporteRestaurantesPorCategoria')->name('admin.excel.restaurantes-categoria');
     Route::get('/admin/reportes/excel/clientes-por-distrito', 'ExcelController@reporteClientesPorDistrito')->name('admin.excel.clientes-distrito');
+
+    /*Reportes EXCEL para la sección administrativa del restaurante*/
+    Route::get('/admin-restaurante/reportes/excel/pedidos-c', 'ExcelController@reportePedidosC')->name('admin-r.excel.pedidos-c');
+    Route::get('/admin-restaurante/reportes/excel/pedidos-p', 'ExcelController@reportePedidosP')->name('admin-r.excel.pedidos-p');
+    Route::get('/admin-restaurante/reportes/excel/platos', 'ExcelController@reportePlatos')->name('admin-r.excel.platos');
+
+    Route::get('/admin/reportes-pedidos','AdminController@reportespedidos')->name('admin.reportespersonalizados');
+    Route::get('/admin/reportes-clientes','AdminController@reportesclientes')->name('admin.reportesclientes');
+
+    Route::get('/admin/reportes-clientes/get/{distrito}/{pdf}','PDFController@getreportesclientes')->name('admin.getreportesclientes');
+
+    Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizadosAdmin');
 
 Route::get('/solicitud-unirse','HomeController@show_solicitud')->name('show.solicitud');
 Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('solicitud.save');

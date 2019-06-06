@@ -7,6 +7,7 @@
 
             <div class="col-12">
                 <strong class="navbar-brand p-0">Reportes predeterminados</strong>
+                <hr>
             </div>
 
 
@@ -34,7 +35,7 @@
                                 </div>
                             </td>
 
-                        <td><a href="/admin/reportes/excel/restaurantes" class="btn btn-success btn-sm">Descargar</a></td>
+                        <td><a href="/admin-restaurante/reportes/excel/pedidos-c" class="btn btn-success btn-sm">Descargar</a></td>
                         </tr>
                         {{-- FILA --}}
 
@@ -50,7 +51,7 @@
                                 </div>
                             </td>
 
-                            <td><a href="/admin/reportes/excel/usuarios" class="btn btn-success btn-sm">Descargar</a></td>
+                            <td><a href="/admin-restaurante/reportes/excel/pedidos-p" class="btn btn-success btn-sm">Descargar</a></td>
                         </tr>
                         {{-- FILA --}}
 
@@ -66,10 +67,9 @@
                                 </div>
                             </td>
 
-                            <td><a href="/admin/reportes/excel/usuarios" class="btn btn-success btn-sm">Descargar</a></td>
+                            <td><a href="/admin-restaurante/reportes/excel/platos" class="btn btn-success btn-sm">Descargar</a></td>
                         </tr>
                         {{-- FILA --}}
-
 
 
 

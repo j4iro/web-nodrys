@@ -1,6 +1,6 @@
 {{-- SLIDEBAR PARA LA SECCIÓN ADMIN --}}
 <ul id="myUL" class="col-12 col-md-3 col-lg-2 mb-3 ">
-  <li class="btn-group dropright">
+  <li class="btn-group dropright ">
     <span class="caret list-group-item list-group-item-action dropdown-toggle">Solicitudes</span>
     <ul class="nested dropdown-menu">
         <a href="{{route('admin.index')}}" class="dropdown-item">Nuevas</a>
@@ -37,8 +37,8 @@
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Reportes</span>
       <ul class="nested dropdown-menu">
           <a class="dropdown-item" href="{{route('admin.reportes')}}">Predeterminados</a>
-          <a class="dropdown-item" href="{{route('adminRestaurant.reportesclientes')}}">Clientes</a>
-          <a class="dropdown-item" href="{{route('adminRestaurant.reportespedidos')}}">Pedidos</a>
+          <a class="dropdown-item" href="{{route('admin.reportespersonalizados')}}">Pedidos</a>
+          <a class="dropdown-item" href="{{route('admin.reportespersonalizados')}}">Clientes</a>
       </ul>
   </li>
   <li class="btn-group dropright">
