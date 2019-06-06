@@ -180,7 +180,10 @@ function quitar_requireds() {
 
             @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                 <tr>
-                    <td><a href="{{route('carrito.deleteall')}}">Vaciar Carrito</a></td>
+                    <td><a href="{{route('carrito.deleteall')}}">Vaciar Carrito</a>
+                        <a href="{{url('/')}}" name="validarAuth" id="continuar_carrito" class="btn btn-warning btn-sm" >Seguir comprando</a>
+
+                    </td>
                     <td colspan="4"></td>
                     <th class="text-right">Total: S/.</th>
                     <th>{{number_format($total,2,'.',' ')}}</th>
