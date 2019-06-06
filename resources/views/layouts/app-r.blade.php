@@ -31,7 +31,11 @@
                 <a class="navbar-brand p-0" href="{{ route('adminRestaurant.index') }}">
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
-                <strong>Restaurante {{session('nombre_restaurante')}}</strong>
+                <strong>{{session('nombre_restaurante')}}
+                             
+             </strong>
+             <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
+                
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -195,8 +199,8 @@
                      var id=reservas[i][10];
                      var url={!! json_encode(url('/'))!!}+"/admin-restaurante/pedidos-pendientes/detalle/"+id;
                      var hora=reservas[i][5].split(":");
-                     var restante=(hora[0]*60+parseInt(hora[1]))-(horaActual.getHours()*60+horaActual.getMinutes());
-
+                     var restante=((hora[0]*60+parseInt(hora[1]))+{{session('tolerancia')}})-(horaActual.getHours()*60+horaActual.getMinutes());
+                     //console.log(tolerancia.value);
 
 
                      var estado=reservas[i][9];

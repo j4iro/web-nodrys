@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Dish;
 use App\User;
+use App\Order;
 use Auth;
 
 
@@ -21,6 +22,8 @@ class AdminRestaurant extends Controller
 
     public function index()
     {
+
+      
 
         return view('admin-restaurant.index');
 
@@ -106,4 +109,18 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.reportes-rapidos');
     }
 
+    public function totalComision(){
+        $user_id = Auth::user()->id;//id_user
+         $restaurant_id = session('id_restaurante');//id_restaurant
+        //echo "hli".$restaurant_id;
+
+    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('COUNT(*) as totalComision')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','<>',1)
+    ->where('restaurants.id','=',$restaurant_id)
+    ->get();
+    
+    return $debeComision[0]->totalComision;
+    }
 }

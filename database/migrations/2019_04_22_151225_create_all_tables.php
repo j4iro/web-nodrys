@@ -48,6 +48,8 @@ class CreateAllTables extends Migration
             $table->integer('user_id');
             $table->boolean('state')->default(1);
             $table->boolean('availability')->default(1);
+            $table->integer('time')->default(10);
+
             $table->timestamps();
         });
 
@@ -130,6 +132,7 @@ class CreateAllTables extends Migration
             $table->string('state');
             $table->decimal('total');
             $table->char('paid',2);
+            $table->boolean('comision')->default(0);
             $table->timestamps();
         });
 
@@ -147,7 +150,7 @@ class CreateAllTables extends Migration
             $table->integer('time');
             $table->text('description')->nullable();
             $table->text('image');
-            $table->boolean('state')->default(0);
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
 

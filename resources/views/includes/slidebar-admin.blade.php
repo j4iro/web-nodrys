@@ -56,6 +56,9 @@
       </ul>
 
   </li>
+  <li class="btn-group dropright">
+    <a class="list-group-item list-group-item-action" href="{{route('cashs')}}">Caja</a>
+  </li>
   <a href="{{ route('logout') }}" onclick="event.preventDefault();
   document.getElementById('logout-form').submit();"  class="list-group-item list-group-item-action text-danger"><strong>Salir</strong></a>
   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
