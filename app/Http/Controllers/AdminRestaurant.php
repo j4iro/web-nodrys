@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Dish;
-use App\User;
+use App\Card;
 use App\Order;
 use Auth;
 
@@ -106,18 +106,52 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.reportes-rapidos');
     }
 
-    public function totalComision(){
-        $user_id = Auth::user()->id;//id_user
-         $restaurant_id = session('id_restaurante');//id_restaurant
-        //echo "hli".$restaurant_id;
 
-    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
-    ->selectRaw('COUNT(*) as totalComision')
-    ->where('orders.state','confirmada')
-    ->where('orders.comision','<>',1)
-    ->where('restaurants.id','=',$restaurant_id)
-    ->get();
+    public function newCuentaBancaria()
+    {
+        $restaurant = \Auth::user();
+        $id_restaurante=auth()->user()->id;
+        $card = Card::where('user_id','=',$id_restaurante)->first();
+        return view('admin-restaurant.datos_bancarios',compact('card'));
 
-    return $debeComision[0]->totalComision;
+
     }
+
+    public function saveCuentaBancaria(Request $request)
+    {
+
+        if($request->input('action')=='guardar')
+        {
+            $card = new Card();
+        }else
+        {
+            $card = Card::where('id',$request->input('id_card'))->first();
+        }
+
+        $restaurant = \Auth::user();
+        $id_restaurante=auth()->user()->id;
+
+
+        $card->num_card = $request->input('num_card');
+        $card->cod_postal = $request->input('cod_postal');
+        $card->month = '00';
+        $card->year = '0000';
+        $card->cvc = '000';
+        $card->owner = $request->input('owner');
+        $card->country = $request->input('country');
+        $card->user_id = $id_restaurante;
+
+        if($request->input('action')=='guardar')
+        {
+            $card->save();
+        }
+        else
+        {
+            $card->update();
+        }
+
+        return redirect()->route('admin-r.cuentaBancaria')
+        ->with(['message'=>'message']);
+    }
+
 }

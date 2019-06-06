@@ -21,6 +21,7 @@
         {{-- <a href="{{route('adminRestaurant.reportespedidos')}}" class="list-group-item list-group-item-action">Reportes Pedidos</a> --}}
 
         <a href="{{route('adminRestaurant.datos')}}" class="list-group-item list-group-item-action">Mis Datos</a>
+        <a href="{{route('admin-r.cuentaBancaria')}}" class="list-group-item list-group-item-action">Datos Bancarios</a>
 
     <a href="" class="list-group-item list-group-item-action pb-0"><strong id="labeldisponibilidad" class="mr-3">@if(session('estado_restaurant')==1){{'ABIERTO'}}@else{{'CERRADO'}}@endif</strong>
             <label class="switch ">
