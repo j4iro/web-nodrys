@@ -118,14 +118,15 @@
                     <input type="text" onkeypress="return validarNumero(event);" class="form-control" name="telephone"  placeholder="Telefono o celular" id="telephone" value="{{ $restaurante->telephone ?? '' }}" required  >
                 </div>
                 <div class="form-group col-12  col-md-6 ">
-                    <label for="type"><strong>Email de ingreso</strong></label>
-                    <input type="email" class="form-control" name="email_ingreso" value="{{ $user->email ?? '' }}" placeholder="Email de acceso al panel" id="address" required>
+                    <label for="ruc">RUC</label>
+                    <input type="text" onkeypress="return validarNumero(event);" class="form-control" name="ruc" value="{{ $restaurante->ruc ?? '' }}" placeholder="RUC" id="ruc" required>
                 </div>
+
             </div>
             <div class="form-row">
                 <div class="form-group col-12  col-md-6 ">
-                    <label for="ruc">RUC</label>
-                    <input type="text" onkeypress="return validarNumero(event);" class="form-control" name="ruc" value="{{ $restaurante->ruc ?? '' }}" placeholder="RUC" id="ruc" required>
+                    <label for="type"><strong>Email de ingreso</strong></label>
+                    <input type="email" class="form-control" name="email_ingreso" value="{{ $user->email ?? '' }}" placeholder="Email de acceso al panel" id="address" required>
                 </div>
             </div>
 

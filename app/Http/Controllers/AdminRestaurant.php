@@ -116,6 +116,9 @@ class AdminRestaurant extends Controller
 
 
     }
+    public function reportespersonalizados(){
+        return view('admin-restaurant.reportespersonalizados');
+    }
 
     public function saveCuentaBancaria(Request $request)
     {

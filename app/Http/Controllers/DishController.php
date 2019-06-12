@@ -39,7 +39,7 @@ class DishController extends Controller
         $sm="";
         if($this->verificar_restaurante_diferente($request->id)==false)
         {
-          $sm="No puedes hacer reserva en más de un restaurante. !GRACIAS POR SU COMPRESIÓN...!  ♥♥♥";
+          $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
         };
 
        $dishes = Dish::where('restaurant_id', $request->id)
@@ -50,7 +50,7 @@ class DishController extends Controller
                 $reserva = Dish::where('restaurant_id', $request->id)
                 ->where('category_dish','=','5')
                 ->where('state', '=',1)
-                ->first();          
+                ->first();
 
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
        ->join('categories','categories.id','=','restaurants.category_id')

@@ -170,7 +170,10 @@ function quitar_requireds() {
                     <?php $subtotal= $plato->price*$dish['unidades']; ?>
                     <?php $total += $subtotal; ?>
                     <th scope="row">{{number_format($subtotal,2,'.',' ')}}</th>
+                    @if($plato->name!="reserva")
                     <td><a href="{{route('carrito.deleteone',['indice'=>$indice])}}" class="btn btn-danger btn-sm">Quitar</a></td>
+                    @endif
+
                     </tr>
                 @endforeach
             @else

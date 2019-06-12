@@ -1,5 +1,7 @@
 @extends('layouts.app-r')
-
+@section('scripts')
+    <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
+@endsection
 @section('content')
 
 
@@ -23,13 +25,13 @@
                 <div class="row mt-2">
                         <div class="col-12">
                             <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
-                            <input type="text" placeholder="Número de tarjeta" class="form-control" name="num_card" value="{{ $card->num_card ?? '' }}" id="num_card" autofocus>
+                            <input type="text" onkeypress="return validarNumero(event);"   placeholder="Número de tarjeta" class="form-control" name="num_card" value="{{ $card->num_card ?? '' }}" id="num_card" autofocus>
                         </div>
                     </div>
 
                     <div class="row mt-2">
                         <div class="col-12">
-                            <input type="text" placeholder="Nombre en la tarjeta" class="form-control" value="{{ $card->owner ?? '' }}" name="owner" id="owner" >
+                            <input type="text" onkeypress="return validarLetras(event);"   placeholder="Nombre en la tarjeta" class="form-control" value="{{ $card->owner ?? '' }}" name="owner" id="owner" >
                         </div>
                     </div>
 
