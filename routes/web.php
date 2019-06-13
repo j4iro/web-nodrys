@@ -152,3 +152,6 @@ Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 
 //Controladores para enviar Email
 
+Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
+Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
+

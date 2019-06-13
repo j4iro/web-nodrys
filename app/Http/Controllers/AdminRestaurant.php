@@ -25,6 +25,10 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.reportespersonalizados');
     }
 
+    public function menus()
+    {
+        return view('admin-restaurant.menus');
+    }
 
 
     public function datos()
@@ -82,6 +86,23 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.datos_bancarios',compact('card'));
 
 
+    }
+
+    public function getDishes()
+    {
+        $restaurant = \Auth::user();
+        $id_restaurante=auth()->user()->id;
+        $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
+        // dd($dishes);
+
+        if(count($dishes)>0)
+        {
+            echo json_encode($dishes);
+        }
+        else
+        {
+            echo json_encode("no");
+        }
     }
 
     public function saveCuentaBancaria(Request $request)
