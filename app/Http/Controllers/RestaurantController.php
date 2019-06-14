@@ -20,9 +20,6 @@ class RestaurantController extends Controller
 
     public function buscar(Request $request)
     {
-
-
-
         $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')->where('restaurants.name',$request->name)
         ->orWhere('restaurants.name','like','%'.$request->name.'%')
         ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')

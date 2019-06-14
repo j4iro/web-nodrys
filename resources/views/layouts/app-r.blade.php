@@ -32,10 +32,10 @@
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
                 <strong>{{session('nombre_restaurante')}}
-                             
+
              </strong>
              <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
-                
+
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -132,7 +132,7 @@
 
                         llenaTabla(arrayOrders);
 
-                        
+
                     }else {
 
                     }

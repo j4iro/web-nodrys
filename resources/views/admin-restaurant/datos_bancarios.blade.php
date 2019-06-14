@@ -37,7 +37,7 @@
 
                     <div class="row mt-2">
                         <div class="col-8 ">
-                            <select name="country" class="form-control" id="country">
+                            <select name="country" class="form-control" id="country" required>
                                 <option value="" disabled selected>Pais</option>
                                 <option value="per" @if(isset($card->country) && "per"==$card->country) {{'selected'}} @endif >Perú</option>
                                 <option value="col" @if(isset($card->country) && "col"==$card->country) {{'selected'}} @endif >Colombia</option>
@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <div class="col-4">
-                            <input  placeholder="Código Postal" type="number" class="form-control" value="{{ $card->cod_postal ?? '' }}" name="cod_postal" id="cod_postal">
+                            <input  placeholder="Código Postal" type="number" class="form-control" value="{{ $card->cod_postal ?? '' }}" name="cod_postal" id="cod_postal" required>
                         </div>
                     </div>
 

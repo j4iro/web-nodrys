@@ -119,7 +119,7 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-completados/{tipo}', 'PdfController@reportePedidosCompletadosRestaurante')->name('adminRestaurant.pedidos-completados');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-pendientes/{tipo}', 'PdfController@reportePedidosPendientesRestaurante')->name('adminRestaurant.pedidos-pendientes');
     Route::get('/admin-restaurante/reportes/pdf/platos/{tipo}', 'PdfController@reportePlatosdeRestaurantes')->name('adminRestaurant.platos');
-    
+
     Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
 
     /*Reportes EXCEL para la sección administrativa*/
@@ -157,6 +157,7 @@ Route::get('/admin-restaurante/serve','OrderController@notif');
 
 
 
+
 Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'RestaurantController@filtroXcategoria']);
 Route::get('/admin-restaurante/platos/update_state_dish/{id?}/{state?}', ['as'=>'update_state_dish','uses'=>'DishController@update_state_dish']);
 
@@ -172,4 +173,9 @@ Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->
 Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset','Auth\ForgotPasswordController@reset');    
+Route::post('password/reset','Auth\ForgotPasswordController@reset');
+
+//Controladores para enviar Email
+
+Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
+Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');

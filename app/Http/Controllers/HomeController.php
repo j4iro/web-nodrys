@@ -9,6 +9,8 @@ use App\Category;
 use App\District;
 use App\RequestRestaurant;
 use App\Asigned_role;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EnvioSolicitud;
 
 class HomeController extends Controller
 {
@@ -144,9 +146,13 @@ class HomeController extends Controller
       // dd($request_restaurant);
       $request_restaurant->save();
 
+      //Envio de correo electronico
+      Mail::to($request->input('email'))->send(new EnvioSolicitud("Gran decicisón, el panel administrador de nodrys se pondrá en contacto con usted en menos de 24 horas para validar los datos ...."));
+
       return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente');
 
     }
+
     public function template(){
         return view('includes.app_new');
     }

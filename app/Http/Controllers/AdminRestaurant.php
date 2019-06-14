@@ -26,9 +26,9 @@ class AdminRestaurant extends Controller
 
     }
 
-    public function reportesClientes(){
-        session(['ventana'=>"otra"]);
-        return view('admin-restaurant.reportesclientes');
+    public function menus()
+    {
+        return view('admin-restaurant.menus');
     }
 
     public function reportesPedidos(){
@@ -116,8 +116,26 @@ class AdminRestaurant extends Controller
 
 
     }
+
     public function reportespersonalizados(){
         return view('admin-restaurant.reportespersonalizados');
+    }
+
+    public function getDishes()
+    {
+        $restaurant = \Auth::user();
+        $id_restaurante=auth()->user()->id;
+        $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
+        // dd($dishes);
+
+        if(count($dishes)>0)
+        {
+            echo json_encode($dishes);
+        }
+        else
+        {
+            echo json_encode("no");
+        }
     }
 
     public function saveCuentaBancaria(Request $request)
