@@ -181,7 +181,7 @@ class CreateAllTables extends Migration
             $table->timestamps();
         });
 
-        Schema::table('cards', function ($table) {
+        Schema::table('cards', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });
@@ -192,10 +192,23 @@ class CreateAllTables extends Migration
             $table->timestamps();
         });
 
-        Schema::table('favorites', function ($table) {
+        Schema::table('favorites', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('restaurant_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
+        });
+
+        Schema::create('menus', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('dia',50);
+            $table->timestamps();
+        });
+
+        Schema::table('menus', function (Blueprint $table) {
+            $table->unsignedInteger('dish_id');
+            $table->unsignedInteger('restaurant_id');
+            $table->foreign('dish_id')->references('id')->on('dishes');
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
     }
@@ -220,5 +233,6 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('orders');
         Schema::dropIfExists('dishes');
         Schema::dropIfExists('cards');
+        Schema::dropIfExists('menus');
     }
 }

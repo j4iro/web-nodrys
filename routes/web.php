@@ -154,4 +154,5 @@ Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 
 Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
+Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 

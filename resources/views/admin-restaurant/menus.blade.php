@@ -6,16 +6,29 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <script>
+    var dia;
     $(window).load(function() {
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
-            var recipient = button.data('whatever')
+            dia = button.data('whatever')
             var modal = $(this)
-            modal.find('.modal-title').text('Día ' + recipient)
+            modal.find('.modal-title').text('Día ' + dia)
             // modal.find('.modal-body input').val(recipient)
             traerPlatos()
         })
     });
+
+    function insertarPlatoAlMenu()
+    {
+        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/saveplatomenu";
+        $.get(finalUrl,
+        {
+            dia: dia,
+            dish_id: $('#comboplatos').val(),
+            restaurant_id: 1
+        });
+        // console.log(dia + dish_id + $('#comboplatos').val());
+    }
 
     function traerPlatos()
     {
@@ -137,7 +150,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+
                 <div class="form-row">
                     <div class="col-9 mb-3">
                         <select name="" id="comboplatos" class="form-control">
@@ -145,18 +158,19 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <button class="btn btn-primary ml-2">Agregar</button>
+                        <button class="btn btn-primary ml-2" onclick="insertarPlatoAlMenu();">Agregar</button>
                     </div>
 
                 </div>
 
                 <ul class="list-group shadow-sm" >
-                    {{-- <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Ceviche</li>
-                    <li class="list-group-item list-group-item-action">Causa</li> --}}
-                </ul>
-                {{-- <a href="" class="ml-auto text-danger">Quitar</a> --}}
 
-              </form>
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Ceviche  <a href="" class="ml-auto text-danger">Quitar</a>  </li>
+                    <li class="list-group-item list-group-item-action">Causa</li>
+                </ul>
+
+
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
