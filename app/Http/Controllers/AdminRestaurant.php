@@ -10,8 +10,10 @@ use App\Restaurant;
 use App\Dish;
 use App\Card;
 use App\Order;
-use Auth;
 
+use Auth;
+use App\Restaurant;
+use App\Menu;
 
 class AdminRestaurant extends Controller
 {
@@ -31,8 +33,22 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.menus');
     }
 
+
     public function reportesPedidos(){
         return view('admin-restaurant.reportespedidos');
+    }
+
+    public function saveplatomenu(Request $request)
+    {
+        // dd($request);
+        $menu = new Menu();
+
+        $menu->dia = $request->dia;
+        $menu->dish_id = $request->dish_id;
+        $menu->restaurant_id = $request->restaurant_id;
+        // $menu->created_at =
+
+        $menu->save();
     }
 
     public function datos()
@@ -126,6 +142,25 @@ class AdminRestaurant extends Controller
         $restaurant = \Auth::user();
         $id_restaurante=auth()->user()->id;
         $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
+        // dd($dishes);
+
+        if(count($dishes)>0)
+        {
+            echo json_encode($dishes);
+        }
+        else
+        {
+            echo json_encode("no");
+        }
+    }
+
+    public function getMenuDia()
+    {
+        $restaurant = \Auth::user();
+        $id_restaurante=auth()->user()->id;
+        $dishes = Menu::where('restaurant_id','=',$id_restaurante)
+        ->where('restaurant_id','=',$id_restaurante)
+        ->get();
         // dd($dishes);
 
         if(count($dishes)>0)
