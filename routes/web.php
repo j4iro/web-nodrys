@@ -4,15 +4,17 @@ session_start();
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Auth::routes(['verify'=>true]);
+
+Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
-Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes');
+Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes')->middleware('verified');
 Route::post('/comidas', 'HomeController@getDishOne')->name('platos.buscar');
 
 /*Rutas del perfil de usuario y editar sus datos*/
-Route::get('/configuracion','UserController@config')->name('config');
+Route::get('/configuracion','UserController@config')->name('config')->middleware('verified');
 Route::post('/user/update','UserController@update')->name('user.update');
 Route::get('/user/avatar/{filename}','UserController@getImage')->name('user.avatar');
 Route::get('/restaurant/avatar/{filename}','RestaurantController@getImage')->name('restaurant.image');
@@ -21,7 +23,7 @@ Route::get('/restaurante/{id}-{nombre}','DishController@dishes')->name('restaura
 
 
 /*Rutas del carrito de compras*/
-Route::get('/carrito','CarritoController@index')->name('carrito.index');
+Route::get('/carrito','CarritoController@index')->name('carrito.index')->middleware('verified');
 Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
 Route::get('/carrito/up/{indice}','CarritoController@up')->name('carrito.up');
 Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.down');
@@ -31,7 +33,7 @@ Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.
 Route::get('/utils/auth','UtilsController@auth')->name('utils.auth');
 
 /*Rutas para los pedidos de los clientes*/
-Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
+Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index')->middleware('verified');
 Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
 Route::get('/mis-pedidos/detalle/{id}','OrderController@detail_c')->name('pedidos.detail_c');
 
@@ -183,3 +185,8 @@ Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
 Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
+
+/*Pasarela de pagos y Ruc*/
+Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
+Route::get('/respuestaRuc',['as'=>'respuestaRuc','uses'=>'PeticionesController@respuestaRuc']);
+Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@respuestaDni']);

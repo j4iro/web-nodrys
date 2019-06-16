@@ -30,6 +30,7 @@
     Solicitud de registro
 @endsection
 @section('content')
+<script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <div class="container my-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -55,6 +56,19 @@
                 <div class="card-body">
                 <form method="POST" action="{{ route('solicitud.save') }}" enctype="multipart/form-data">
                         @csrf
+                       <div class="form-group row">
+                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('RUC') }}</label>
+                                 <div class="col-md-6">
+                                    <div class="input-group ">
+                                      <input type="text" class="form-control" placeholder="Consultar a Sunat" id="ruc" name="ruc" onkeypress="return validarNumero(event);" >
+                                              <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button" id="btnbuscar">
+                                                        <img id="ico" src="https://image.flaticon.com/icons/svg/116/116836.svg" width="20" height="20" alt="Lupa icono gratis" title="Lupa icono gratis">
+                                                    </button>
+                                              </div>
+                                    </div>
+                                 </div>
+                            </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
@@ -345,6 +359,55 @@ function onMapClick(e) {
     txtLati.value=coordenadas[0];
     txtLong.value=coordenadas[1];
 }
+
+
+    var obj;
+        $(document).ready(function(){
+            $('#btnbuscar').click(function(){
+                var ruc=$('#ruc').val();
+                if (ruc!='') {
+                    $.ajax({
+                        url:"{{route('respuestaRuc')}}",
+                        method:'GET',
+                        beforeSend:function(){
+                          document.getElementById('ico').src="images/gif/cargando.gif";
+                        },
+
+                        data:{ruc:ruc},
+                        dataType:'json',
+                        complete:function(data){
+                          //  document.getElementById('load').style.display="none";
+                        },
+                        success:function(data){
+
+                            console.log(data);
+                             obj=data.dataProcess;
+                            if (obj.lengt==undefined) {
+                                document.getElementById('ico').src="images/gif/ok.jpg";
+                                $('#ruc').val(obj.ruc);
+
+                            }
+
+                            if(obj.length==0){
+                                document.getElementById('ico').src="images/gif/incorrecto.png";
+                                alert('Error');
+                                $('#ruc').val('');
+                                location.reload();
+                            }
+                        },
+                        error:function(error_data){
+                                alert(error_data);
+                        }
+                    });
+                }else{
+                    alert('Escribe el ruc');
+                    $('#ruc').focus();
+                }
+
+            });
+        });
+
+
 
 </script>
 @endsection
