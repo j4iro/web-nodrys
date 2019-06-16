@@ -179,3 +179,7 @@ Route::post('password/reset','Auth\ForgotPasswordController@reset');
 
 Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
+
+Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
+Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
+Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
