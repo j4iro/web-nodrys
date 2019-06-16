@@ -243,3 +243,23 @@ li
    .mg-top{
        margin-top: 50px;
    }
+
+   .slide{
+       display:block;
+       transition: .5s;
+
+   }
+
+   @media only screen and (max-width: 600px) {
+       .slide{
+           position: fixed;
+           top:10vh;
+           left: -100%;
+           z-index: 9999;
+
+       }
+       .show_slide{
+           left: 0;
+       }
+
+}

@@ -31,7 +31,6 @@
                 <strong>{{session('nombre_restaurante')}}
 
              </strong>
-             <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
 
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -48,10 +47,11 @@
 
         <main class="py-4">
                 <div class="container-fluid mt-3">
+                    <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
                         <div class="row ">
-
-                        @include('includes/slidebar')
-
+                            <div id="slideMenu" class="col-12 col-md-3 col-lg-2 mb-3 slide">
+                                @include('includes/slidebar')
+                            </div>
                             <div class="col-12 col-md-9 col-lg-10 mb-3">
                                 @yield('content')
                             </div>
@@ -161,26 +161,10 @@
         console.log(finalUrl);
 
         var intervalo=setInterval(function() {
-            // alert('hello');
             $.get(finalUrl,function(e) {
-                // alert(e);
                 fun(e);
             })
         },1000);
-        // if(typeof(EventSource) !== "undefined") {
-        //
-        //
-        //     var source = new EventSource(finalUrl);
-        //
-        //     source.onmessage = function(event) {
-        //         // en este if evaluamos si tenemos registros de ordenes
-        //
-        //     };
-        // }
-        // else
-        // {
-        //     document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
-        // }
 
 
 
@@ -236,6 +220,11 @@
                      pedidos.innerHTML+=cadena;
                  }
     }
+
+    var bottonNavBar=document.querySelector('.navbar-toggler');
+    bottonNavBar.addEventListener('click',function() {
+        slideMenu.classList.toggle('show_slide');
+    });
 
 
              // alert(nose);
