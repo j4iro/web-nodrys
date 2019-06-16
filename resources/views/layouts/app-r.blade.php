@@ -112,59 +112,75 @@
         }
 
         var numOrdenes=0;
-        if(typeof(EventSource) !== "undefined") {
-
-            var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
-            var source = new EventSource(finalUrl);
-
-            source.onmessage = function(event) {
-                // en este if evaluamos si tenemos registros de ordenes
-                if (event.data!="") {
-
-                    var arrayOrders=event.data.split(";");
-                    var updatedNumOrders=arrayOrders.length;
-
-                    var tituloNotificacion="Hay nuevas Ordenes"
-                    if ('{{session('ventana')}}'=='inicio') {
-
-                        llenaTabla(arrayOrders);
 
 
-                    }else {
+        function fun(event) {
+            if (event!="") {
 
-                    }
+                var arrayOrders=event.split(";");
+                var updatedNumOrders=arrayOrders.length;
 
-                    // console.log(numOrdenes);
-                    // console.log(arrayOrders.length);
-                    if (numOrdenes!=updatedNumOrders) {
-                        if(numOrdenes>updatedNumOrders){
-                            tituloNotificacion="Una orden menos"
-                        }
-                        if(numOrdenes<updatedNumOrders){
-                            tituloNotificacion="Nueva Orden"
-                        }
-                        mostrarNotificacion(tituloNotificacion,"tiene "+arrayOrders.length+" ordenes pendientes");
-                    }
+                var tituloNotificacion="Hay nuevas Ordenes"
+                if ('{{session('ventana')}}'=='inicio') {
 
-                    // esto es importante para mostrar las notificaciones
-                    numOrdenes=arrayOrders.length;
+                    llenaTabla(arrayOrders);
+
 
                 }else {
-                    if ('{{session('ventana')}}'=='inicio') {
 
-                        pedidos.innerHTML="No hay registros";
-                    }else {
-
-                    }
-
-                    // significa que no hay registros
                 }
-            };
+
+                // console.log(numOrdenes);
+                // console.log(arrayOrders.length);
+                if (numOrdenes!=updatedNumOrders) {
+                    if(numOrdenes>updatedNumOrders){
+                        tituloNotificacion="Una orden menos"
+                    }
+                    if(numOrdenes<updatedNumOrders){
+                        tituloNotificacion="Nueva Orden"
+                    }
+                    mostrarNotificacion(tituloNotificacion,"tiene "+arrayOrders.length+" ordenes pendientes");
+                }
+
+                // esto es importante para mostrar las notificaciones
+                numOrdenes=arrayOrders.length;
+
+            }else {
+                if ('{{session('ventana')}}'=='inicio') {
+
+                    pedidos.innerHTML="No hay registros";
+                }else {
+
+                }
+
+                // significa que no hay registros
+            }
         }
-        else
-        {
-            document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
-        }
+
+        var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
+        console.log(finalUrl);
+
+        var intervalo=setInterval(function() {
+            // alert('hello');
+            $.get(finalUrl,function(e) {
+                // alert(e);
+                fun(e);
+            })
+        },1000);
+        // if(typeof(EventSource) !== "undefined") {
+        //
+        //
+        //     var source = new EventSource(finalUrl);
+        //
+        //     source.onmessage = function(event) {
+        //         // en este if evaluamos si tenemos registros de ordenes
+        //
+        //     };
+        // }
+        // else
+        // {
+        //     document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+        // }
 
 
 
@@ -186,8 +202,10 @@
                      var id=reservas[i][10];
                      var url={!! json_encode(url('/'))!!}+"/admin-restaurante/pedidos-pendientes/detalle/"+id;
                      var hora=reservas[i][5].split(":");
-                     var restante=((hora[0]*60+parseInt(hora[1]))+{{session('tolerancia')}})-(horaActual.getHours()*60+horaActual.getMinutes());
-                     //console.log(tolerancia.value);
+                     // console.log(hora);
+                     // var restante=((hora[0]*60+parseInt(hora[1]))+{{session('tolerancia')}})-(horaActual.getHours()*60+horaActual.getMinutes());
+                     var restante=((hora[0]*60+parseInt(hora[1])))-(horaActual.getHours()*60+horaActual.getMinutes());
+                     // console.log(tolerancia.value);
 
 
                      var estado=reservas[i][9];
