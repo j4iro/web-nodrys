@@ -48,13 +48,12 @@
                     <thead class="thead-light">
                         <tr>
                         <th scope="col">Código</th>
-                        <th scope="col" colspan="2">Restaurante</th>
+                        <th scope="col">Restaurante</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Fecha y hora de registro</th>
+                        <th scope="col">Contacto</th>
                         <th scope="col">Email</th>
                         <th scope="col">Telefono</th>
-                        <th scope="col">Puntos</th>
-                        <th scope="col">Categoria</th>
                         <th scope="col">Distrito</th>
                         <th scope="col">Opciones</th>
                         </tr>
@@ -64,26 +63,22 @@
                     @foreach ($solicitudes as $solicitud)
                         <tr>
                             <th scope="row"> SOL-{{$solicitud->id}}</th>
-                            <th scope="row">
-                                <img src="{{ route('restaurant.image',['filename'=>$solicitud->image]) }}" width="50" class="img-fluid img-thumbnail shadow-sm avatar">
-                            </th>
-                            <td>{{$solicitud->name}}</td>
+                            <td>{{$solicitud->name_restaurant}}</td>
                             <td>
                                 @if ($solicitud->state==1)
-                                    <strong class="text-danger">Nueva</strong>
+                                    <span class="badge badge-danger">Nueva</span>
                                 @else
-                                    <strong class="text-primary">Atendida</strong>
+                                    <span class="badge badge-primary">Atendida</span>
                                 @endif
                             </td>
                             <td>{{$solicitud->created_at}}</td>
-                            <td>{{$solicitud->email}}</td>
-                            <td>{{$solicitud->telephone}}</td>
-                            <td>{{$solicitud->points}}</td>
-                            <td>{{$solicitud->categoria}}</td>
+                            <td>{{$solicitud->name_owner}} {{$solicitud->surname_owner}}</td>
+                            <td>{{$solicitud->email_owner}}</td>
+                            <td>{{$solicitud->telephone_owner}}</td>
                             <td>{{$solicitud->distrito}}</td>
 
-                            <td>
-                                <a href="{{route('admin.restaurant.show-solicitud',["id" => $solicitud->id ])}}" class="btn btn-outline-primary btn-sm">
+                            <td class="text-center">
+                                <a href="{{route('admin.restaurant.show-solicitud',["id" => $solicitud->id ])}}" class="btn btn-primary btn-sm ">
                                     Ver
                                 </a>
                             </td>

@@ -20,10 +20,10 @@ class AdminController extends Controller
 
     public function index()
     {
-        $solicitudes = RequestRestaurant::join('categories','categories.id','=','requests_restaurants.category_id_name')
-        ->join('districts','districts.id','=','requests_restaurants.district_id_name')
-        ->select('requests_restaurants.*','categories.name as categoria','districts.name as distrito')
+        $solicitudes = RequestRestaurant::join('districts','districts.id','=','requests_restaurants.district_name')
+        ->select('requests_restaurants.*','districts.name as distrito')
         ->where('requests_restaurants.state','1')
+        ->orderBy('state', 'desc')
         ->get();
 
         return view('admin.index', [
@@ -34,10 +34,10 @@ class AdminController extends Controller
 
     public function listSolicitudesAceptadas()
     {
-        $solicitudes = RequestRestaurant::join('categories','categories.id','=','requests_restaurants.category_id_name')
-        ->join('districts','districts.id','=','requests_restaurants.district_id_name')
-        ->select('requests_restaurants.*','categories.name as categoria','districts.name as distrito')
+        $solicitudes = RequestRestaurant::join('districts','districts.id','=','requests_restaurants.district_name')
+        ->select('requests_restaurants.*','districts.name as distrito')
         ->where('requests_restaurants.state','0')
+        ->orderBy('state', 'desc')
         ->get();
 
         return view('admin.index', [
@@ -48,9 +48,8 @@ class AdminController extends Controller
 
     public function listTodasSolicitudes()
     {
-        $solicitudes = RequestRestaurant::join('categories','categories.id','=','requests_restaurants.category_id_name')
-        ->join('districts','districts.id','=','requests_restaurants.district_id_name')
-        ->select('requests_restaurants.*','categories.name as categoria','districts.name as distrito')
+        $solicitudes = RequestRestaurant::join('districts','districts.id','=','requests_restaurants.district_name')
+        ->select('requests_restaurants.*','districts.name as distrito')
         ->orderBy('state', 'desc')
         ->get();
 

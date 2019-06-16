@@ -117,36 +117,21 @@ class HomeController extends Controller
     {
         // dd($request);
       $request_restaurant = new RequestRestaurant();
-      $request_restaurant->name = $request->input('name');
-      $request_restaurant->description = $request->input('description');
-      $request_restaurant->category_id_name = $request->input('category_id_name');
-      $request_restaurant->district_id_name = $request->input('district_id_name');
-      $request_restaurant->slogan = $request->input('slogan');
-      $request_restaurant->address = $request->input('address');
-      $request_restaurant->email = $request->input('email');
-      $request_restaurant->telephone = $request->input('telephone');
-      $request_restaurant->points = $request->input('points');
-      $request_restaurant->ruc = $request->input('ruc');
-      $request_restaurant->latitude = $request->input('txtlati');
-      $request_restaurant->longitude = $request->input('txtlong');
-
-      //Guardar la imagen del plato
-      $image_path =  $request->file('image');
-
-      if ($image_path)
-      {
-        $image_path_name = time().$image_path->getClientOriginalName();
-        \Storage::disk('restaurants')->put($image_path_name, \File::get($image_path));
-         $request_restaurant->image = $image_path_name;
-      }
+      $request_restaurant->name_restaurant = $request->input('name_restaurant');
+      $request_restaurant->district_name = $request->input('district_name');
+      $request_restaurant->name_owner = $request->input('name_owner');
+      $request_restaurant->surname_owner = $request->input('surname_owner');
+      $request_restaurant->email_owner = $request->input('email_owner');
+      $request_restaurant->telephone_owner = $request->input('telephone_owner');
+      $request_restaurant->state = '1';
 
       // dd($request_restaurant);
       $request_restaurant->save();
 
       //Envio de correo electronico
-      Mail::to($request->input('email'))->send(new EnvioSolicitud("Gran decicisón, el panel administrador de nodrys se pondrá en contacto con usted en menos de 24 horas para validar los datos ...."));
+    //   Mail::to($request->input('email_owner'))->send(new EnvioSolicitud("Gran decicisón, el panel administrador de nodrys se pondrá en contacto con usted en menos de 24 horas para validar los datos ...."));
 
-      return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente');
+      return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente, le enviamos un correo a ' . $request_restaurant->email_owner. ' con todos los detalles.');
 
     }
 

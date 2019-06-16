@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Dish;
 use App\Restaurant;
+use App\Menu;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -14,17 +15,26 @@ class DishController extends Controller
 {
     public function dishes(Request $request)
     {
-       $dishes = Dish::where('restaurant_id', $request->id)
-                ->where('category_dish','<>','5')
-                ->get();
+        date_default_timezone_set('America/Lima');
+        $dias = array('domingo','lunes','martes','miercoles','jueves','viernes','sábado');
+
+        $menus = Menu::join('dishes','dishes.id','=','menus.dish_id')
+        ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+        ->select('menus.dia','dishes.name','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
+        ->where('menus.restaurant_id', $request->id)
+        ->where('dishes.category_dish','<>','5')
+        ->where(strtolower('menus.dia'),'=',$dias[date("w")])
+        ->get();
+
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
        ->join('categories','categories.id','=','restaurants.category_id')
        ->select('restaurants.*','districts.name as distrito','categories.name as categoria')
        ->where('restaurants.id', $request->id)->first();
 
         return view('dish.index',[
-            'dishes' => $dishes,
-            'restaurant'=>$restaurant
+            'dishes' => $menus,
+            'restaurant'=>$restaurant,
+            'dias' => $dias
         ]);
     }
 
