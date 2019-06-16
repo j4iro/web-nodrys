@@ -6,7 +6,9 @@ Auth::routes();
 
 Auth::routes(['verify'=>true]);
 
-Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
+// Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/', 'HomeController@index')->name('home');
+
 Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
@@ -172,10 +174,10 @@ Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('ca
 Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->name('calificar.consultarPe');
 // Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
 
-Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset','Auth\ForgotPasswordController@reset');
+// Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+// Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+// Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
+// Route::post('password/reset','Auth\ForgotPasswordController@reset');
 
 //Controladores para enviar Email
 
