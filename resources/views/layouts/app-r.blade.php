@@ -9,9 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Panel Restaurantes</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">
-    </script>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -79,9 +77,6 @@
     <script type="text/javascript">
 
     window.onload=function(){
-
-
-
         var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
         Notification.requestPermission();
 
@@ -167,6 +162,11 @@
         },1000);
 
 
+// muestra el slide
+        var bottonNavBar=document.querySelector('.navbar-toggler');
+        bottonNavBar.addEventListener('click',function() {
+            slideMenu.classList.toggle('show_slide');
+        });
 
 
 
@@ -221,10 +221,6 @@
                  }
     }
 
-    var bottonNavBar=document.querySelector('.navbar-toggler');
-    bottonNavBar.addEventListener('click',function() {
-        slideMenu.classList.toggle('show_slide');
-    });
 
 
              // alert(nose);

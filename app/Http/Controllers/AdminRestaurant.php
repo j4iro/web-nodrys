@@ -30,6 +30,7 @@ class AdminRestaurant extends Controller
     public function menus()
     {
         $id = session('id_restaurante');
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.menus',compact('id'));
     }
 

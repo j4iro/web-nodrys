@@ -1,24 +1,22 @@
 @extends('layouts.app-r')
-
 @section('scripts')
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    {{-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> --}}
 
     <script>
     var dia;
     var idRestaurant={{$id}};
-    $(window).load(function() {
+    // $(window).load(function() {
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             dia = button.data('whatever')
             var modal = $(this)
             modal.find('.modal-title').text('Día ' + dia)
-            // modal.find('.modal-body input').val(recipient)
+            modal.find('.modal-body input').val(recipient)
             traerPlatos();
             listarPlatoAlMenu();
-        })
-    });
+        });
+    // });
 
     function insertarPlatoAlMenu()
     {
