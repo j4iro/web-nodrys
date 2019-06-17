@@ -70,13 +70,13 @@ function llenarform()
 
 function limpiarformTarjeta()
 {
-        $('#num_card').val('');
-        $('#month').val('');
-        $('#year').val('');
-        $('#cvc').val('');
-        $('#owner').val('');
-        $('#country').val('');
-        $('#cod_postal').val('');
+    $('#num_card').val('');
+    $('#month').val('');
+    $('#year').val('');
+    $('#cvc').val('');
+    $('#owner').val('');
+    $('#country').val('');
+    $('#cod_postal').val('');
 }
 
 function poner_requireds() {
@@ -108,7 +108,6 @@ function quitar_requireds() {
 
 
 <div class="container mt-4">
-
     <!--Titulo del carrito-->
     <div class="row mt-3">
         <div class="col-12 ">
@@ -119,85 +118,110 @@ function quitar_requireds() {
             </strong>
         </div>
     </div>
-    <!--Titulo del carrito-->
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-10 col-lg-6">
 
 
-    <!--Tabla Carrito de compras-->
-    <div class="row mt-4">
-        <div class="col-12 col-sm-9">
+                @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
+                    <?php $total=0; ?>
+                    @foreach ($carrito as $indice=>$dish)
+                    <?php $plato = $dish['plato']; ?>
+                    <div class="card mt-2 rounded-lg shadow-sm p-2">
+                        <div class="row">
+                        <div class="col-4   d-flex align-items-center">
+                            <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" class="img-thumbnail shadow ">
+                        </div>
+                        <div class="col-4 col-sm-5 col-md-5 col-lg-5 pt-2 px-0">
+                            <div class="row ">
+                                <div class="col-12">
+                                    <img src="{{asset('images/icons/icono-comida-carrito.png')}}" width="20">
+                                    @if($plato->name=="reserva") {{'-'}} @else {{$plato->name}}  @endif
+                                </div>
+                                <div class="col-12">
+                                    <img src="{{asset('images/icons/icono-categoria-carrito.png')}}" width="20">
+                                    <span class="font-weight-light">{{$plato->categoria_plato}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <img src="{{asset('images/icons/icono-dinero-carrito.png')}}" width="20">
+                                    <?php $subtotal= $plato->price*$dish['unidades']; ?>
+                                    <?php $total += $subtotal; ?>
+                                    S/. {{number_format($subtotal,2,'.',' ')}}
+                                </div>
+                            </div>
+                            {{-- {{$plato->restaurante}} --}}
+                        </div>
+                        <div class="col-4  col-sm-3 col-md-3 col-lg-3 d-flex justify-content-between">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 text-center  ">
+                                    <a href="{{route('carrito.deleteone',['indice'=>$indice])}}" class="btn btn-danger btn-sm">Quitar</a>
+                                </div>
+                                <div class="col-12  d-flex justify-content-center align-items-center">
+                                    @if($plato->name!="reserva")
+                                <a href="{{route('carrito.up',['indice'=>$indice])}}" class="px-1 "><img src="{{asset('images/icons/btn-up.png')}}" width="25"> </a>
+                                    @endif
+                                    <strong>{{$dish['unidades']}}</strong>
+                                    @if($plato->name!="reserva")
+                                    <a href="{{route('carrito.down',['indice'=>$indice])}}" class="px-1 "><img src="{{asset('images/icons/btn-down.png')}}" width="25"></a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    @endforeach
 
-            <table class="table table-responsive table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Restaurante</th>
-                        <th scope="col">Tipo</th>
+                @else
+                    {{-- Carrito Vacio --}}
 
-                        <th scope="col">Plato</th>
+                    <div class="card mt-2 rounded-lg shadow-sm p-2">
+                        <div class="row">
+                            <div class="col-4   d-flex align-items-center">
+                                <img src="{{asset('images/icons/carrito-de-compras-icono.png')}}" class="img-thumbnail shadow ">
+                            </div>
+                            <div class="col-8 d-flex align-items-center justify-content-center">
+                                <blockquote class="blockquote mt-2">
+                                <p class="mb-0">Aún no has agregado productos a tu carrito de compras.</p>
+                                <a href="./"><footer class="blockquote-footer">Ir al inicio -></footer></a>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
 
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Sub Total</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+                @endif
 
-            @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
-                <?php $total=0; ?>
-                 @foreach ($carrito as $indice=>$dish)
-                 <?php $plato = $dish['plato']; ?>
-                    <tr>
-                    <th scope="row">
-                        <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" class="img-thumbnail shadow" width="50">
-                    </th>
-                    <td>{{$plato->restaurante}}</td>
-                    <td class="text-capitalize">{{$plato->categoria_plato}}</td>
-                    <td> @if($plato->name=="reserva") {{'-'}} @else {{$plato->name}}  @endif </td>
-                    <td>{{$plato->price}}</td>
-                    <th scope="row">
-                        @if($plato->name!="reserva")
-                        <a href="{{route('carrito.up',['indice'=>$indice])}}" class="btn btn-outline-success btn-sm rounded p-0 px-2 mb-1 mr-1">+</a>
-                        @endif
-                        {{$dish['unidades']}}
-                        @if($plato->name!="reserva")
-                        <a href="{{route('carrito.down',['indice'=>$indice])}}" class="btn btn-outline-success btn-sm rounded p-0 px-2 mb-1 ml-1">-</a>
-                        @endif
-                    </th>
-                    <?php $subtotal= $plato->price*$dish['unidades']; ?>
-                    <?php $total += $subtotal; ?>
-                    <th scope="row">{{number_format($subtotal,2,'.',' ')}}</th>
-                    <td><a href="{{route('carrito.deleteone',['indice'=>$indice])}}" class="btn btn-danger btn-sm">Quitar</a></td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                <th scope="row">-</th>
-                <th scope="row" colspan="6" class="text-center">Aún no has agregado productos</th>
-                <td>-</td>
-                </tr>
-            @endif
-
-            @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
-                <tr>
-                    <td><a href="{{route('carrito.deleteall')}}">Vaciar Carrito</a></td>
-                    <td colspan="4"></td>
-                    <th class="text-right">Total: S/.</th>
-                    <th>{{number_format($total,2,'.',' ')}}</th>
-                    <th>
-                        <a href="{{route('utils.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-sm" >Continuar</a>
-                    </th>
-                </tr>
-            @endif
-
-                </tbody>
-            </table>
+                @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
+                <div class="card mt-2 rounded-lg shadow-sm">
+                    <div class="row p-2">
+                        <div class="col-4 d-flex align-items-center justify-content-center">
+                        <a class="ml-2" href="{{route('carrito.deleteall')}}"><strong>Vaciar Carrito</strong></a>
+                        </div>
+                        <div class="col-4 d-flex align-items-center p-0">
+                            <img src="{{asset('images/icons/icono-dinero-carrito.png')}}" width="20">
+                            <strong class="ml-1">S/. {{number_format($total,2,'.',' ')}}</strong>
+                        </div>
+                        <div class="col-4 d-flex align-items-center justify-content-center">
+                            <a class="" href="{{route('carrito.index')}}"><strong>Seguir comprando</strong></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-2 mb-5 rounded-lg shadow-sm">
+                    <div class="row">
+                        <div class="col-12 ">
+                        <a href="{{route('utils.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-block">Continuar</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
         </div>
 
         <!--Formulario Ocasión Especial-->
-        <div class="col-12 mb-3 col-sm-3 @if (session('mostrarform')) {{''}} @else {{'d-none'}} @endif " id="formOcasionEspecial">
-            <div class="card shadow p-4 bg-light">
+
+        <div class="mt-1 col-12 mb-3 col-sm-12 col-md-12 col-lg-4 offset-lg-1  @if (session('mostrarform')) {{''}} @else {{'d-none'}} @endif" id="formOcasionEspecial">
+            <div class="card shadow p-4 ">
 
                 <div class="row">
                     <dt class="col-12">¿Alguna ocasión especial?</dt>
@@ -215,10 +239,6 @@ function quitar_requireds() {
                     </div>
                 </div>
 
-                {{-- <div class="row mt-2">
-                    <dt class="col-12">¿Cuantas personas asistirán?</dt>
-                </div> --}}
-
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿Cuantas personas asistirán?</dt>
@@ -229,7 +249,7 @@ function quitar_requireds() {
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿Qué día asistirán?</dt>
-                        <input type="date" class="form-control" name="fecha" required >
+                    <input type="date" class="form-control" name="fecha" value="{{date('Y-m-d')}}" required >
                     </div>
                 </div>
 
@@ -245,22 +265,12 @@ function quitar_requireds() {
                     </div>
                 </div>
 
-                {{-- <div class="row mt-3">
-                    <div class="col-6">
-                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
-                        <label for="rbtarjeta" class="form-check-label" >Tarjeta</label>
-                    </div>
-                    <div class="col-6">
-                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbefectivo">
-                        <label for="rbefectivo" class="form-check-label" >Efectivo</label>
-                    </div>
-                </div> --}}
-
                 <div class="row mt-3">
                     <div class="col-12">
                         <strong class="text-primary">Pagar con:</strong>
                     </div>
                 </div>
+
                 <div class="row mt-3">
                     <div class="col-6">
                         <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Tarjeta</a>
@@ -269,16 +279,12 @@ function quitar_requireds() {
                         <button type="submit"  class="btn btn-block  btn-danger ">Efectivo</button>
                     </div>
                 </div>
-                {{-- <div class="row mt-3">
-                </div> --}}
+
             </div>
         </div>
         <!--Formulario Ocasión Especial-->
 
-    </div>
-    <!--Tabla Carrito de compras-->
-
-
+</div>
 
       <!-- Modal Formulario de Pago -->
       <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -289,14 +295,6 @@ function quitar_requireds() {
                     <div class="row my-3">
                         <div class="col-12 col-sm-12">
 
-                                {{-- <div class="row">
-                                    <dt class="col-12">
-                                        <hr>
-                                        <input class="form-check-radio" type="radio" name="rbtarjeta" value id="rbtarjeta" checked>
-                                        <label for="rbtarjeta" id="numero_tarjeta" class="form-check-label">**** **** **** 8596</label>
-                                        <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
-                                    </dt>
-                                </div> --}}
 
                                 <div class="row">
                                     <dt class="col-12">
@@ -388,6 +386,7 @@ function quitar_requireds() {
         </div>
       </div>
     <!-- Modal Formulario de Pago -->
+
 </div>
 
 {{-- @include('includes/footer') --}}

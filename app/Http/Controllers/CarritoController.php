@@ -11,6 +11,7 @@ class CarritoController extends Controller
 {
     public function index()
     {
+        date_default_timezone_set('America/Lima');
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
         return view('carrito.index',[
             'carrito' => $carrito
