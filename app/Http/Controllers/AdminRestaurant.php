@@ -24,7 +24,6 @@ class AdminRestaurant extends Controller
     public function index()
     {
         return view('admin-restaurant.index');
-
     }
 
     public function menus()
@@ -44,20 +43,14 @@ class AdminRestaurant extends Controller
 
         $menu = new Menu();
         $menu->dia = $request->dia;
-
         $menu->dish_id = $request->dish_id;
         $menu->restaurant_id = $request->restaurant_id;
-        var_dump($request->dia);
-        var_dump($request->dish_id);
-        var_dump($request->restaurant_id);
-        var_dump($menu->toArray());
+        
         try {
             $menu->save();
         } catch (\Exception $e) {
             echo $e;
         }
-
-        die();
 
     }
 
