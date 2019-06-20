@@ -41,15 +41,24 @@ class AdminRestaurant extends Controller
 
     public function saveplatomenu(Request $request)
     {
-        // dd($request);
-        $menu = new Menu();
 
+        $menu = new Menu();
         $menu->dia = $request->dia;
+
         $menu->dish_id = $request->dish_id;
         $menu->restaurant_id = $request->restaurant_id;
-        // $menu->created_at =
+        var_dump($request->dia);
+        var_dump($request->dish_id);
+        var_dump($request->restaurant_id);
+        var_dump($menu->toArray());
+        try {
+            $menu->save();
+        } catch (\Exception $e) {
+            echo $e;
+        }
 
-        $menu->save();
+        die();
+
     }
 
     public function datos()
