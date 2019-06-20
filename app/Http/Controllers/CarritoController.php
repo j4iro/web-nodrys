@@ -11,8 +11,7 @@ class CarritoController extends Controller
 {
     public function index()
     {
-
-
+        date_default_timezone_set('America/Lima');
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
         return view('carrito.index',[
             'carrito' => $carrito
@@ -76,7 +75,7 @@ class CarritoController extends Controller
                 for ($i=0; $i < count($request->checkDish); $i++)
                 {
                     $id_plato = $request->checkDish[$i];
-                    
+
 
                     //Conseguir Datos del plato
                     $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')

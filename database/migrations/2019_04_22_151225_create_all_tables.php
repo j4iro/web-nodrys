@@ -55,17 +55,13 @@ class CreateAllTables extends Migration
 
         Schema::create('requests_restaurants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',200);
-            $table->text('description');
-            $table->text('slogan');
-            $table->text('address');
-            $table->string('email');
-            $table->string('telephone');
-            $table->integer('points');
-            $table->text('image');
+            $table->string('name_restaurant',200);
+            $table->string('district_name');
+            $table->string('name_owner');
+            $table->string('surname_owner');
+            $table->string('email_owner');
+            $table->string('telephone_owner');
             $table->boolean('state')->default(1);
-            $table->string('district_id_name');
-            $table->string('category_id_name');
             $table->timestamps();
         });
 
