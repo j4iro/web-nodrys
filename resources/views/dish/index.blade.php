@@ -32,6 +32,10 @@
       </style>
 @endsection
 
+@section('title')
+    {{"Restaurante ". $restaurant->name . " en Nodrys"}}
+@endsection
+
 <div class="container mt-5">
 
     <div class="row ">
@@ -80,12 +84,53 @@
     <center>
         <strong class="navbar-brand mt-3">¿Qué desea comer hoy {{$dias[date("w")]}}?</strong>
     </center>
+
     <div class="row ">
         @foreach ($dishes as $dish)
+            @if ($dish->dia=="miercoles")
+                <div class="col-6 col-md-4 col-lg-2 mb-4">
+                    <div class="card card-plato">
+                        @include('includes.image_dish')
+                        <div class="card-body p-0 px-3 pt-2 pb-3">
+                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
+                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+
+    <strong class="navbar-brand mt-3">Lunes</strong>
+    <div class="row ">
+        @foreach ($dishes as $dish)
+            @if ($dish->dia=="lunes")
+                <div class="col-6 col-md-4 col-lg-2 mb-4">
+                    <div class="card card-plato">
+                        @include('includes.image_dish')
+                        <div class="card-body p-0 px-3 pt-2 pb-3">
+                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
+                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+
+    <strong class="navbar-brand mt-3">Martes</strong>
+    <div class="row ">
+        @foreach ($dishes as $dish)
+        @if ($dish->dia=="martes")
             <div class="col-6 col-md-4 col-lg-2 mb-4">
                 <div class="card card-plato">
                     @include('includes.image_dish')
-
                     <div class="card-body p-0 px-3 pt-2 pb-3">
                         <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
                         <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
@@ -95,8 +140,50 @@
                     </div>
                 </div>
             </div>
+            @endif
         @endforeach
     </div>
+
+    <strong class="navbar-brand mt-3">Jueves</strong>
+    <div class="row ">
+        @foreach ($dishes as $dish)
+            @if ($dish->dia=="jueves")
+                <div class="col-6 col-md-4 col-lg-2 mb-4">
+                    <div class="card card-plato">
+                        @include('includes.image_dish')
+                        <div class="card-body p-0 px-3 pt-2 pb-3">
+                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
+                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+
+    <strong class="navbar-brand mt-3">Viernes</strong>
+    <div class="row ">
+        @foreach ($dishes as $dish)
+            @if ($dish->dia=="viernes")
+                <div class="col-6 col-md-4 col-lg-2 mb-4">
+                    <div class="card card-plato">
+                        @include('includes.image_dish')
+                        <div class="card-body p-0 px-3 pt-2 pb-3">
+                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
+                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+
     @if (count($dishes)!=0)
         <div class="row">
             <div class="col-3">

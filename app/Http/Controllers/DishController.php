@@ -23,7 +23,7 @@ class DishController extends Controller
         ->select('menus.dia','dishes.name','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
         ->where('menus.restaurant_id', $request->id)
         ->where('dishes.category_dish','<>','5')
-        ->where(strtolower('menus.dia'),'=',$dias[date("w")])
+        // ->where(strtolower('menus.dia'),'=',$dias[date("w")])
         ->get();
 
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')

@@ -9,6 +9,7 @@ use App\Category;
 use App\Category_dish;
 use App\User;
 use App\Asigned_role;
+use App\Menu;
 
 class InsertAllTablesSeeder extends Seeder
 {
@@ -731,6 +732,33 @@ class InsertAllTablesSeeder extends Seeder
             'image'=>'Arroz con conchas a la criolla.jpg',
             'category_dish'=>2,
             'restaurant_id'=>7
+        ]);
+
+        //Menus
+        Menu::create([
+            'dia'=>'lunes',
+            'dish_id'=>13,
+            'restaurant_id'=>5
+        ]);
+        Menu::create([
+            'dia'=>'martes',
+            'dish_id'=>14,
+            'restaurant_id'=>5
+        ]);
+        Menu::create([
+            'dia'=>'miercoles',
+            'dish_id'=>15,
+            'restaurant_id'=>5
+        ]);
+        Menu::create([
+            'dia'=>'jueves',
+            'dish_id'=>16,
+            'restaurant_id'=>5
+        ]);
+        Menu::create([
+            'dia'=>'viernes',
+            'dish_id'=>17,
+            'restaurant_id'=>5
         ]);
 
     }
