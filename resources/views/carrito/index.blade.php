@@ -102,6 +102,10 @@ function quitar_requireds() {
 
 @endsection
 
+@section('title')
+    {{"Carrito de compras"}}
+@endsection
+
 @section('content')
 <form method="POST" action="{{route('pedidos.add')}}">
 {{csrf_field()}}
@@ -114,6 +118,8 @@ function quitar_requireds() {
             <strong class="navbar-brand">Mi Carrito
                 @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                     <span class="badge badge-warning border border-secondary">{{count($_SESSION['carrito'])}}</span>
+                @else
+                    <span class="badge badge-warning border border-secondary">0</span>
                 @endif
             </strong>
         </div>
@@ -123,7 +129,6 @@ function quitar_requireds() {
 <div class="container">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-10 col-lg-6">
-
 
                 @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
                     <?php $total=0; ?>
