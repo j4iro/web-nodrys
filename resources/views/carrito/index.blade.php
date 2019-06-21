@@ -212,20 +212,22 @@ function quitar_requireds() {
                         </div>
                     </div>
                 </div>
-                <div class="card mt-2 mb-5 rounded-lg shadow-sm">
-                    <div class="row">
-                        <div class="col-12 ">
-                        <a href="{{route('utils.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-block">Continuar</a>
+                @guest
+                    <div class="card mt-2 mb-5 rounded-lg shadow-sm">
+                        <div class="row">
+                            <div class="col-12 ">
+                            <a href="{{route('utils.auth')}}" name="validarAuth" id="continuar_carrito" class="btn btn-primary btn-block">Continuar</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endguest
                 @endif
 
         </div>
 
         <!--Formulario Ocasión Especial-->
-
-        <div class="mt-1 col-12 mb-3 col-sm-12 col-md-12 col-lg-4 offset-lg-1  @if (session('mostrarform')) {{''}} @else {{'d-none'}} @endif" id="formOcasionEspecial">
+        @auth
+        <div class="mt-1 col-12 mb-3 col-sm-12 col-md-12 col-lg-4 offset-lg-1 " id="formOcasionEspecial">
             <div class="card shadow p-4 ">
 
                 <div class="row">
@@ -288,6 +290,7 @@ function quitar_requireds() {
             </div>
         </div>
         <!--Formulario Ocasión Especial-->
+        @endauth
 
 </div>
 

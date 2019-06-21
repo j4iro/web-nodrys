@@ -36,4 +36,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function redirectPath()
+    {
+        if (session()->has('next') && session('next')=='carrito') {
+            session()->forget('next');
+            return "/carrito";
+        }
+        else
+        {
+            return "/";
+        }
+    }
+
 }
