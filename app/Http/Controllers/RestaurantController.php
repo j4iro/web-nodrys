@@ -20,9 +20,12 @@ class RestaurantController extends Controller
 
     public function buscar(Request $request)
     {
+
+
+
         $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')->where('restaurants.name',$request->name)
         ->orWhere('restaurants.name','like','%'.$request->name.'%')
-        ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+        ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')
         ->get();
 
         $mje = 'Se muestran '.count($restaurants). ' resultados de "' .  $request->name . '".';
@@ -37,27 +40,29 @@ class RestaurantController extends Controller
             'distritos' => $distritos
         ]);
     }
-
+/*
     public function filtro(Request $request)
     {
+
+
         if(isset($request->categoria))
         {
             $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')
-            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')
             ->where('restaurants.category_id',$request->categoria)
             ->get();
         }
         if(isset($request->distrito))
         {
             $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')
-            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')
             ->where('restaurants.district_id',$request->distrito)
             ->get();
         }
         if(isset($request->distrito))
         {
             $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')
-            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')
             ->where('restaurants.district_id',$request->distrito)
             ->where('restaurants.category_id',$request->categoria)
             ->get();
@@ -66,13 +71,35 @@ class RestaurantController extends Controller
         $categorias = Category::all();
         $distritos = District::all();
 
-        //  dd($restaurants);
-
         return view('home',[
             'restaurants' => $restaurants,
             'categorias' => $categorias,
             'distritos' => $distritos
         ]);
     }
+*/
 
+    public function filtroXcategoria($categoria){
+
+      if($categoria)
+        {
+            $restaurants = Restaurant::join('categories','categories.id','=','restaurants.category_id')
+            ->select('restaurants.name','restaurants.address','restaurants.image','restaurants.id','categories.name as categoria')
+            ->where('restaurants.category_id',$categoria)
+            ->get();
+        }
+
+        $categorias = Category::all();
+        $distritos = District::all();
+
+        //  dd($restaurants);
+
+        return view('filtroXcategoria',[
+            'restaurants' => $restaurants,
+            'categorias' => $categorias,
+            'distritos' => $distritos
+        ]);
+
+
+    }
 }

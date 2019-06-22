@@ -9,7 +9,8 @@ use App\Card;
 use App\Util;
 use App\Restaurant;
 use App\User;
-
+use App\Valoration;
+use Auth;
 class OrderController extends Controller
 {
     public function __construct()
@@ -25,33 +26,89 @@ class OrderController extends Controller
         return $disponibilidad;
     }
 
-    public function index_r()
-    {
-        //Traigo los pedidos del restaurante identificado
-        //Conseguir restaurante identificado
+private function getOrders(){
+    //Traigo los pedidos del restaurante identificado
+    //Conseguir restaurante identificado
+    $id = session('id_user');
+    $datos = Restaurant::all()->where('user_id',$id)->first();
+    session(['id_restaurante'=>$datos->id]);
+    session(['nombre_restaurante'=>$datos->name]);
+    $id_restaurant =session('id_restaurante');
 
-        $id = session('id_user');
-        $datos = Restaurant::all()->where('user_id',$id)->first();
-        session(['id_restaurante'=>$datos->id]);
-        session(['nombre_restaurante'=>$datos->name]);
-        $id_restaurant =session('id_restaurante');
 
-        $orders = Order::join('users','users.id','=','orders.user_id')
-        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
-        ->where('orders.restaurant_id',$id_restaurant)
-        ->where('orders.state','pendiente')
-        ->get();
+    $orders = Order::join('users','users.id','=','orders.user_id')
+    ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id','orders.restaurant_id')
+    ->where('orders.restaurant_id',$id_restaurant)
+    ->where('orders.state','pendiente')
+    ->get();
 
-        session(['estado_restaurant'=>$this->disponibilidad()]);
+// dd($orders->toArray());
+
+    return $orders;
+}
+public function pagar_por_mes(){
+        $user_id = Auth::user()->id;//id_user
+         $restaurant_id = session('id_restaurante');//id_restaurant
+        //echo "hli".$restaurant_id;
+
+    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('COUNT(*) as totalComision')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','<>',1)
+    ->where('restaurants.id','=',$restaurant_id)
+    ->get();
+    
+    return $debeComision[0]->totalComision;
+}
+public function index_r()
+{
+        $time=null;
+        $orders=$this->getOrders();
+        if(count($orders->toArray())>0){
+            $id_restaurant=$orders->first()->restaurant_id;
+            // dd($id_restaurant);
+        
+            $restaurante=Restaurant::where("id","=",$id_restaurant)->first();
+            $time=$restaurante->time;
+        }
+
+        // dd($orders->first()->toArray());
+      
+
+        session(['estado_restaurant'=>$this->disponibilidad(),
+                    'ventana'=>"inicio",
+                    'tolerancia'=>$time,
+                    'debePagar'=>$this->pagar_por_mes()]
+                    );
 
         return view('admin-restaurant.index',[
             "pedidos" => $orders,
             "disponibilidad" =>$this->disponibilidad()
         ]);
-    }
+}
+    public function notif(){
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
 
+        //$time = date('r');
+        // echo "data: The server time is, otro\n\n";
+        $orders=$this->getOrders();
+        $ordenes=array();
+        $array=$orders->toArray();
+        foreach ($array as $reserva) {
+
+            array_push($ordenes,implode(",",$reserva));
+        }
+        // $cadena=implode ( ";" , $array );
+        $cadena=implode(";",$ordenes);
+
+        echo "data: {$cadena}\n\n";
+        flush();
+
+    }
     public function pedidos_completados()
     {
+        session(['ventana'=>"otra"]);
         $id_restaurant =session('id_restaurante');
         //Traigo los pedidos del restaurante identificado
         $orders = Order::join('users','users.id','=','orders.user_id')
@@ -70,11 +127,13 @@ class OrderController extends Controller
 
     public function qr()
     {
+        session(['ventana'=>"otra"]);
         return view ('admin-restaurant.confirmation');
     }
 
     public function index_c(Request $request)
     {
+
         //Conseguir usuario identificado
         $user = \Auth::user();
         $id_user = $user->id;
@@ -95,7 +154,8 @@ class OrderController extends Controller
     {
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+        ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish','categories_dishes.name as type')
         ->where('details_orders.order_id',$id)
         ->get();
 
@@ -106,47 +166,84 @@ class OrderController extends Controller
 
     public function detail_r($id)
     {
+
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','dishes.category_dish')
+
+        ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish')
         ->where('details_orders.order_id',$id)
         ->get();
 
         return view('pedidos.detail_r',[
             'pedidos' => $details
         ]);
+
     }
 
     public function confirmation(Request $request){
-        $cadena=$request->get('txtCode');
+
+      
+
+        $cadena=$request->get('orderData');
         $trozos = explode(",", $cadena);
+        
+        // dd($trozos[0]);
+        
+        $orden=Order::findOrFail($trozos[0]);
+        $user_id=$orden->toArray()["user_id"];
+        $cliente=User::where("id","=",$user_id)->first();
+
+        $restaurante=Restaurant::findOrFail($orden->toArray()["restaurant_id"])->toArray();
+
+        
+        $cliente->points+=$restaurante["points"];
+        $cliente->save();
+
         $order=Order::where('id','=',$trozos[0])->first();
+
 
         //si existe
         if (count((array)$order)>=1) {
             $order->state='confirmada';
             $order->save();
-            return redirect('admin/restaurant/escanear-qr')->with('order',$order);
-        }else {
-            //datos invalidos
-            //dd($cadena);
-            // dd('Esta reserva no existe');
-            return redirect('admin/restaurant/escanear-qr')->with('error','Esta reserva no existe');
+
+            $cadena=implode(",",$order->toArray());
+            
+            // return redirect('admin/restaurant/escanear-qr')->with('order',$order);
+            echo $cadena;
         }
+       
     }
 
     public function cancelar(Request $request)
     {
-        // dd($request);
-        $order = Order::where('id','=',$request->input('cod_reserva'))->first();
-        $order->state = 'cancelada';
-        $order->update();
-
-        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');;
+        $this->cancela_orden($request->input('cod_reserva'),"cancela");
+        return redirect()->route('pedidos.index')->with('respuesta','La reserva ha sido cancelada');
     }
+    public function vence_orden(Request $request){
+        $this->cancela_orden($request->input('cod_reserva'));
+    }
+
+    public function cancela_orden($id,$accion="otra")
+    {
+        $order = Order::where('id','=',$id)->first();
+
+        if ($accion=="cancela") {
+            $order->state = 'cancelada';
+            $order->update();
+
+        }else {
+            $order->state = 'vencida';
+            $order->update();
+            echo "OK";
+        }
+    }
+
 
     public function add(Request $request)
     {
+
+      
         // die();
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
@@ -218,6 +315,8 @@ class OrderController extends Controller
 
             $detail_order->order_id = $last_id_insertado;
             $detail_order->dish_id = $producto->id;
+            $detail_order->cant = $elemento['unidades'];
+
             $detail_order->save();
             // var_dump($producto->id);
         }

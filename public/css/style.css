@@ -63,6 +63,18 @@ form .avatar
     font-size: 0.8rem;
 }
 
+.slider-inicio
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    z-index:200;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: auto;
+
+}
+
 .bg-intro
 {
     height: 300px;
@@ -210,3 +222,20 @@ li
   .slider.round:before {
     border-radius: 50%;
   }
+  .help-container{
+      display: none;
+  }
+
+  .help-container.help-show{
+       display: block;
+   }
+   a{
+       cursor: pointer;
+   }
+   a:hover{
+       text-decoration: none;
+   }
+
+   .collapse.navbar-show{
+    display: block;
+   }

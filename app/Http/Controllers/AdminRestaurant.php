@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
-use App\Dish;
 use App\Card;
 use App\Order;
 use App\Restaurant;
 use App\Menu;
+use App\Dish;
+use App\User;
+use Auth;
+
 
 class AdminRestaurant extends Controller
 {
@@ -18,7 +24,11 @@ class AdminRestaurant extends Controller
 
     public function index()
     {
+
+
+
         return view('admin-restaurant.index');
+
     }
 
     public function reportespersonalizados()
@@ -43,25 +53,56 @@ class AdminRestaurant extends Controller
 
         $menu->save();
     }
+    public function reportesClientes(){
+        session(['ventana'=>"otra"]);
+        return view('admin-restaurant.reportesclientes');
+    }
+
+    public function reportesPedidos(){
+        return view('admin-restaurant.reportespedidos');
+    }
 
     public function datos()
     {
-        $id = session('id_restaurante');
+        session(['ventana'=>"otra"]);
+       $id = session('id_restaurante');
+
         $datos = Restaurant::join('users','users.id','=','restaurants.user_id')
         ->select('restaurants.*','users.email as email_acceso')
         ->where('restaurants.id',$id)
         ->first();
+
         return view('admin-restaurant.datos',["datos"=>$datos]);
     }
 
+   //$request=array_slice($request->toArray(), 1,7);
+     //    $request["image"]=$new_image_path_name;
+
     public function update(Request $request)
     {
-        //Conseguir restaurante identificado
-        $user = \Auth::user();
-        $datos=auth()->user()->id;//id_restaurant
-        $datos=Restaurant::all()->where('user_id','=',$datos);
 
-        return view('admin-restaurant.datos',compact('datos'));
+        $image_path = $request->file('image');
+        $new_image_path_name="";
+
+        if ($image_path)
+        {
+            //Coloco nombre único
+            $new_image_path_name = time().$image_path->getClientOriginalName();
+            //Guardo en la carpeta Storage (storage/app/users)
+            Storage::disk('restaurants')->put($new_image_path_name, File::get($image_path));
+
+        }
+
+        $request=array_slice($request->toArray(), 1,7);
+        $request["image"]=$new_image_path_name;
+
+         $user_id = Auth::user()->id;//id_user
+         $restaurant_id = session('id_restaurante');//id_restaurant
+          User::findOrFail($user_id)->update($request);
+         Restaurant::findOrFail($restaurant_id)->update($request);
+
+        return back();
+
     }
 
     public function cambiarDisponibilidad()
@@ -88,6 +129,7 @@ class AdminRestaurant extends Controller
 
     public function reportes()
     {
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.reportes-rapidos');
     }
 
@@ -176,4 +218,18 @@ class AdminRestaurant extends Controller
 
 
 
+    public function totalComision(){
+        $user_id = Auth::user()->id;//id_user
+         $restaurant_id = session('id_restaurante');//id_restaurant
+        //echo "hli".$restaurant_id;
+
+    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('COUNT(*) as totalComision')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','<>',1)
+    ->where('restaurants.id','=',$restaurant_id)
+    ->get();
+
+    return $debeComision[0]->totalComision;
+    }
 }

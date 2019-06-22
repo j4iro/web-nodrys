@@ -5,6 +5,7 @@
     @endsection
 
 @section('content')
+<script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <div class="container my-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -30,6 +31,19 @@
                 <div class="card-body">
                 <form method="POST" action="{{ route('solicitud.save') }}" enctype="multipart/form-data">
                         @csrf
+                       <div class="form-group row">
+                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('RUC') }}</label>
+                                 <div class="col-md-6">
+                                    <div class="input-group ">
+                                      <input type="text" class="form-control" placeholder="Consultar a Sunat" id="ruc" name="ruc" onkeypress="return validarNumero(event);" >
+                                              <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button" id="btnbuscar">
+                                                        <img id="ico" src="https://image.flaticon.com/icons/svg/116/116836.svg" width="20" height="20" alt="Lupa icono gratis" title="Lupa icono gratis">
+                                                    </button>
+                                              </div>
+                                    </div>
+                                 </div>
+                            </div>
 
                         <div class="form-group row">
                             <div class="col-md-12 text-center">
@@ -153,6 +167,5 @@
 </div>
 
 @include('includes/footer')
-
 
 @endsection

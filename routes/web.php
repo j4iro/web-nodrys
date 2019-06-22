@@ -4,22 +4,26 @@ session_start();
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Auth::routes(['verify'=>true]);
+
+Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
-Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes');
+Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes')->middleware('verified');
 Route::post('/comidas', 'HomeController@getDishOne')->name('platos.buscar');
 
 /*Rutas del perfil de usuario y editar sus datos*/
-Route::get('/configuracion','UserController@config')->name('config');
+Route::get('/configuracion','UserController@config')->name('config')->middleware('verified');
 Route::post('/user/update','UserController@update')->name('user.update');
 Route::get('/user/avatar/{filename}','UserController@getImage')->name('user.avatar');
 Route::get('/restaurant/avatar/{filename}','RestaurantController@getImage')->name('restaurant.image');
 Route::get('/platos/{filename}','DishController@getImage')->name('dish.image');
 Route::get('/restaurante/{id}-{nombre}','DishController@dishes')->name('restaurant.detalle');
 
+
 /*Rutas del carrito de compras*/
-Route::get('/carrito','CarritoController@index')->name('carrito.index');
+Route::get('/carrito','CarritoController@index')->name('carrito.index')->middleware('verified');
 Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
 Route::get('/carrito/up/{indice}','CarritoController@up')->name('carrito.up');
 Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.down');
@@ -29,7 +33,7 @@ Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.
 Route::get('/utils/auth','UtilsController@auth')->name('utils.auth');
 
 /*Rutas para los pedidos de los clientes*/
-Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
+Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index')->middleware('verified');
 Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
 Route::get('/mis-pedidos/detalle/{id}','OrderController@detail_c')->name('pedidos.detail_c');
 
@@ -58,7 +62,7 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
     /*Rutas para pedidos en la sección administrativa */
     Route::get('/admin-restaurante/pedidos-pendientes/detalle/{id}','OrderController@detail_r')->name('adminRestaurant.pedidos.detail');
     Route::get('/admin-restaurante/pedidos-completados', 'OrderController@pedidos_completados')->name('adminRestaurant.pedidos.completados');
-    Route::post('/admin-restaurante/confirmation', 'OrderController@confirmation')->name('adminRestaurant.pedidos.confirmation');
+    Route::get('/admin-restaurante/confirmation', 'OrderController@confirmation')->name('adminRestaurant.pedidos.confirmation');
 
 
     /* Ruta para el Codigo QR */
@@ -66,13 +70,15 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
 
 /* Ruta para Buscar restaurantes por su nombre */
 Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
-Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
+//Route::post('/filtro', 'RestaurantController@filtro')->name('restaurants.filtro');
 
 /*Rutas para el administrador master*/
-Route::get('/admin/home', 'AdminController@index')->name('admin.index');
+    Route::get('/admin/home', 'AdminController@index')->name('admin.index');
 
     Route::get('/admin/solicitudes/aceptadas', 'AdminController@listSolicitudesAceptadas')->name('admin.solicitudes.aceptadas');
     Route::get('/admin/solicitudes/historial', 'AdminController@listTodasSolicitudes')->name('admin.solicitudes.historial');
+    Route::get('/admin/cash',['as'=>'cashs','uses'=>'AdminController@cash']);
+     Route::get('/admin/pagarComision/{id?}', ['as'=>'pagarComision','uses'=>'AdminController@pagarComision']);
 
     /* Cruds restaurantes */
     Route::get('/admin/restaurantes/list', 'AdminController@showRestaurants')->name('admin.restaurants');
@@ -116,6 +122,8 @@ Route::get('/admin/home', 'AdminController@index')->name('admin.index');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-pendientes/{tipo}', 'PdfController@reportePedidosPendientesRestaurante')->name('adminRestaurant.pedidos-pendientes');
     Route::get('/admin-restaurante/reportes/pdf/platos/{tipo}', 'PdfController@reportePlatosdeRestaurantes')->name('adminRestaurant.platos');
 
+    Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
+
     /*Reportes EXCEL para la sección administrativa*/
     Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers')->name('admin.excel.clientes');
     Route::get('/admin/reportes/excel/restaurantes', 'ExcelController@reporteRestaurants')->name('admin.excel.restaurantes');
@@ -143,12 +151,12 @@ Route::post('/solicitud-unirse/save','HomeController@save_solicitud')->name('sol
 
 Route::get('/mis-pedidos/factura/{id}/{tipo}','PdfController@facturaPedidoCliente')->name('pedidos.factura.pdf');
 Route::post('/mis-pedidos/cancelar','OrderController@cancelar')->name('order.cancelar');
+Route::get('/mis-pedidos/vence_orden','OrderController@vence_orden')->name('order.vence');
 
 Route::get('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
+Route::get('/admin-restaurante/serve','OrderController@notif');
 // Route::post('/admin-restaurante/cambiar-disponibilidad','AdminRestaurant@cambiarDisponibilidad');
 
-Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
-Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 
 //Controladores para enviar Email
 
@@ -156,3 +164,25 @@ Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.me
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 
+
+Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'RestaurantController@filtroXcategoria']);
+Route::get('/admin-restaurante/platos/update_state_dish/{id?}/{state?}', ['as'=>'update_state_dish','uses'=>'DishController@update_state_dish']);
+
+
+
+//Ruta para la valoración
+Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
+Route::get('/Restaurant/MiCalifi','ValorationController@obtnerCali')->name('calificar.obtnerCali');
+Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('calificar.obtnerCaliR');
+// Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
+
+// Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+// Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+// Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
+// Route::post('password/reset','Auth\ForgotPasswordController@reset');
+
+
+/****************************PETICIOINES PASARELA,RUC,DNI*********************/
+Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
+Route::get('/respuestaRuc',['as'=>'respuestaRuc','uses'=>'PeticionesController@respuestaRuc']);
+Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@respuestaDni']);

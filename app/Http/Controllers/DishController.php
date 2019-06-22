@@ -13,6 +13,27 @@ use Illuminate\Support\Facades\File;
 
 class DishController extends Controller
 {
+   public function verificar_restaurante_diferente($id_restaurant)
+    {
+
+      $restaurant_id=isset($_SESSION['carrito'])?$_SESSION['carrito']:"0";
+      $id_restaurante_comparar=0;
+
+        if ($restaurant_id!="0") {
+          foreach ($restaurant_id as $id => $value) {
+             if($value['restaurante_id']!=$id_restaurant){
+               return false;
+             }else{
+               // dd('ss');
+             }
+
+           }
+
+        }
+
+        return true;
+    }
+
     public function dishes(Request $request)
     {
         date_default_timezone_set('America/Lima');
@@ -26,6 +47,22 @@ class DishController extends Controller
         // ->where(strtolower('menus.dia'),'=',$dias[date("w")])
         ->get();
 
+        $sm="";
+        if($this->verificar_restaurante_diferente($request->id)==false)
+        {
+          $sm="No puedes hacer reserva en más de un restaurante. !GRACIAS POR SU COMPRESIÓN...!  ♥♥♥";
+        };
+
+       $dishes = Dish::where('restaurant_id', $request->id)
+                ->where('category_dish','<>','5')
+                ->where('state', '=',1)
+                ->get();
+
+                $reserva = Dish::where('restaurant_id', $request->id)
+                ->where('category_dish','=','5')
+                ->where('state', '=',1)
+                ->first();
+
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
        ->join('categories','categories.id','=','restaurants.category_id')
        ->select('restaurants.*','districts.name as distrito','categories.name as categoria')
@@ -33,8 +70,11 @@ class DishController extends Controller
 
         return view('dish.index',[
             'dishes' => $menus,
+            'dias' => $dias,
+            'dishes' => $dishes,
             'restaurant'=>$restaurant,
-            'dias' => $dias
+            'sm'=>$sm,
+            'reserva' => $reserva
         ]);
     }
 
@@ -46,16 +86,25 @@ class DishController extends Controller
 
     public function new()
     {
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.nuevo-plato');
     }
 
     public function list()
     {
+
+        session(['ventana'=>"otra"]);
         $id_restaurant = session('id_restaurante');
         $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
         return view('admin-restaurant.list-plato',compact('dishes'));
-    }
 
+
+    }
+    public function update_state_dish($id,$state){
+    $estado=$state==1?["state"=>1]:["state"=>0];
+    Dish::findOrFail($id)->update($estado);
+
+    }
     public function edit($id)
     {
         $plato = Dish::findOrFail($id);

@@ -206,6 +206,7 @@ class PdfController extends Controller
 
     public function facturaPedidoCliente($id, $tipo)
     {
+       
         $nombrePDF = 'factura_pedido_'. $id;
         $vistaurl = 'reportes-pdf.factura_pedido_cliente';
 

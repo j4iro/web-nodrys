@@ -48,6 +48,8 @@ class CreateAllTables extends Migration
             $table->integer('user_id');
             $table->boolean('state')->default(1);
             $table->boolean('availability')->default(1);
+            $table->integer('time')->default(10);
+
             $table->timestamps();
         });
 
@@ -126,6 +128,7 @@ class CreateAllTables extends Migration
             $table->string('state');
             $table->decimal('total');
             $table->char('paid',2);
+            $table->boolean('comision')->default(0);
             $table->timestamps();
         });
 
@@ -143,6 +146,7 @@ class CreateAllTables extends Migration
             $table->integer('time');
             $table->text('description')->nullable();
             $table->text('image');
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
 
@@ -155,6 +159,7 @@ class CreateAllTables extends Migration
 
         Schema::create('details_orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('cant');
             $table->timestamps();
         });
 
@@ -207,6 +212,22 @@ class CreateAllTables extends Migration
             $table->foreign('dish_id')->references('id')->on('dishes');
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
+        Schema::create('valorations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('restaurant_id');
+            $table->decimal('score',4,2);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
+        });
+
+        Schema::create('adminstration_values', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->unsignedInteger('point_value');
+        });
+
     }
 
     /**
@@ -230,5 +251,9 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('dishes');
         Schema::dropIfExists('cards');
         Schema::dropIfExists('menus');
+        Schema::dropIfExists('valorations');
+        Schema::dropIfExists('adminstration_values');
+
+
     }
 }

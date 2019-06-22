@@ -7,8 +7,10 @@
 
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-    crossorigin=""></script>
+    crossorigin="">
 
+    </script>
+<script type="text/javascript" src="js/js/ajax.js"></script>
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">;
     </script> --}}
 
@@ -37,35 +39,91 @@
             transition: 0.5s;
         }
 
+
+        .slider{
+            width:100%;
+            height:400px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            position:relative;
+        }
+        .slider ul {
+        	display: flex;
+        	padding: 0;
+        	width: 400%;
+        	animation: cambio 20s infinite alternate linear;
+        }
+        .slider li {
+        	width: 100%;
+        	list-style: none;
+        }
+        .slider img {
+        	width: auto;
+            height:100%;
+            margin-top:-10%;
+            filter: grayscale(70%);
+            object-fit: cover;
+        }
+        @keyframes cambio {
+        	0% {margin-left: 0;}
+        	20% {margin-left: 0;}
+
+        	25% {margin-left: -100%;}
+        	45% {margin-left: -100%;}
+
+        	50% {margin-left: -200%;}
+        	70% {margin-left: -200%;}
+
+        	75% {margin-left: -300%;}
+        	100% {margin-left: -300%;}
+        }
     </style>
 @endsection
 
 @section('content')
 
 <form action="{{route('restaurant.buscar')}}" method="post">
-<div class="container-fluid ">
+<div class="container-fluid" style="padding:0">
             {{csrf_field()}}
-
-        <div class="row bg-intro  d-flex justify-content-center align-items-center">
-            <div class="col-12 col-sm-8 col-md-5 text-center">
-                <div class="input-group mb-2">
-                    <input type="text" name="name" class="form-control form-control-lg" required placeholder="Busca restaurantes por su nombre" >
-                    <div class="input-group-append">
-                        <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
+            <div class="slider">
+                <ul>
+                    <li>
+                        <img class="img-fluid" src="{{asset('images/slider/imagen1.jpg')}}" alt="">
+                    </li>
+                    <li>
+                        <img class="img-fluid"  src="{{asset('images/slider/imagen2.jpg')}}" alt="">
+                    </li>
+                    <li>
+                        <img class="img-fluid"  src="{{asset('images/slider/imagen3.jpg')}}" alt="">
+                    </li>
+                    <li>
+                        <img class="img-fluid"  src="{{asset('images/slider/imagen4.jpg')}}" alt="">
+                    </li>
+                </ul>
+                <div class="row slider-inicio d-flex justify-content-center align-items-center">
+                    <div class="col-12 col-sm-8 col-md-5 text-center">
+                        <div class="input-group mb-2">
+                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                        <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
+                        <br>
+                        <button id="btnShow" type="button"  class="btn btn-primary">
+                            Ver cercanos a mí
+                        </button>
                     </div>
                 </div>
-                <strong><a href="/solicitud-unirse">¿Tienes un restaurante? Registrate aquí</a></strong>
-                <br>
-                <button id="btnShow" type="button"  class="btn btn-primary mt-2">Ver cercanos a mí </button>
             </div>
-        </div>
+
 
 </div>
 </form>
 
 
-<div class="container my-4">
-    <form action="{{route('restaurants.filtro')}}" method="post">
+<div class="container my-4"  >
+    <form  method="post">
 
     <div class="row">
         <div class="col-12 ">
@@ -96,7 +154,7 @@
     <div class="row mb-4 mt-2">
             {{csrf_field()}}
         <div class="col-6 col-lg-3 pt-2">
-            <select name="categoria" class="form-control" id="">
+            <select name="categoria" class="form-control" id="btnCategoria" onchange="mostrar();" >
                 <option value="" disabled selected >Categorias</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
@@ -111,9 +169,7 @@
                 @endforeach
             </select>
         </div> --}}
-        <div class="col-6 col-lg-2  pt-2">
-            <button class="btn btn-outline-primary" name="filtrar" type="submit">Filtrar</button>
-        </div>
+
         </form>
     </div>
 
@@ -128,7 +184,7 @@
         </div>
     @endisset
 
-    <div class="row mt-1">
+    <div class="row mt-1" id="ajaxResultados" >
         @foreach ( $restaurants as $restaurant )
 
             <div class="col-12 col-md-6 col-lg-4 mb-4 ">
@@ -161,6 +217,7 @@
     </div>
 
 
+
 </div>
 
 
@@ -168,6 +225,7 @@
 
 <script type="text/javascript">
             var map = L.map('map');
+            map.scrollWheelZoom.disable();
             var marker=L.marker();
             var circle= L.circle();
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -222,6 +280,7 @@
                .setContent("<center><b>Hola!</b><br>Estas aquí</center>")
                .openOn(map);
 
+
             }
 
             @foreach ($restaurants as $restaurant)
@@ -236,10 +295,6 @@
                 marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
 
             @endforeach
-
-            window.loaded=function(){
-
-            }
 
 </script>
 

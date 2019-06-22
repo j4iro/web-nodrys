@@ -23,8 +23,29 @@ class CarritoController extends Controller
         Util::auth();
     }
 
+    public function verificar_restaurante_diferente($id_restaurant)
+    {
+
+      $restaurant_id=isset($_SESSION['carrito'])?$_SESSION['carrito']:"0";
+      $id_restaurante_comparar=0;
+
+        if ($restaurant_id!="0") {
+          foreach ($restaurant_id as $id => $value) {
+             if($value['restaurante_id']!=$id_restaurant){
+               return false;
+             }else{
+               // dd('ss');
+             }
+
+           }
+
+        }
+
+        return true;
+    }
     public function add(Request $request)
     {
+
         $solo_reserva = $request->input('solo_reserva');
         if(isset($solo_reserva))
         {
@@ -55,14 +76,20 @@ class CarritoController extends Controller
                 {
                     $id_plato = $request->checkDish[$i];
 
+
                     //Conseguir Datos del plato
                     $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
                     ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
                     ->select('dishes.*','categories_dishes.name as categoria_plato','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
                     ->where('dishes.id',$id_plato)->first();
 
-                    //Añadir al carrito
+                    if($this->verificar_restaurante_diferente($dish->restaurante_id)==false){
+                            return back();
+                    };
+
+
                     if (is_object($dish)) {
+
                         $_SESSION['carrito'][] = array(
                             "id_plato" => $dish->id,
                             "restaurante" => $dish->restaurante,
@@ -72,6 +99,7 @@ class CarritoController extends Controller
                             "plato" => $dish
                         );
                     }
+
                 }
             }
 

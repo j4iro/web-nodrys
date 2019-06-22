@@ -138,7 +138,7 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'Reserva',
             'description' => 'Reserva',
         ]);
-
+        
         // Usuario N1
         User::create([
             'name' => 'admin',
@@ -161,7 +161,7 @@ class InsertAllTablesSeeder extends Seeder
         // Usuario N2
         User::create([
             'name' => 'Beimer',
-            'surname' => 'Rodriguez Campos',
+            'surname' => 'Campos Mezones',
             'email' => 'beimer@gmail.com',
             'password' => bcrypt('123456'),
             'telephone' => '958632415',
@@ -190,7 +190,7 @@ class InsertAllTablesSeeder extends Seeder
         User::create([
             'name' => 'Cristhian',
             'surname' => 'Huayanay',
-            'email' => 'cristhian@gmail.com',
+            'email' => 'huayanayricard88@gmail.com',
             'password' => bcrypt('123456'),
             'telephone' => '975863241',
             'address' => 'Calle Torres Mz 8 Lte 95',
@@ -236,8 +236,8 @@ class InsertAllTablesSeeder extends Seeder
         User::create([
             'name' => 'user',
             'surname' => 'restaurante',
-            'email' => 'la-cucharita@nodrys.com',
-            'password' => bcrypt('lacuchara123'),
+            'email' => 'cucharita@nodrys.com',
+            'password' => bcrypt('cuchara123'),
             'telephone' => 'null',
             'address' => 'null',
             'image' => 'null',
@@ -483,6 +483,54 @@ class InsertAllTablesSeeder extends Seeder
             'image'=>'reserva-81818.png',
             'category_dish'=>5,
             'restaurant_id'=>1
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>2
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>3
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>4
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>5
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>6
+        ]);
+        Dish::create([
+            'name'=>'reserva',
+            'price'=>'3.30',
+            'time'=>'1',
+            'image'=>'reserva-81818.png',
+            'category_dish'=>5,
+            'restaurant_id'=>7
         ]);
 
         // Platos

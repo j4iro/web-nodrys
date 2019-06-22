@@ -13,10 +13,13 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
+
+      <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
+
+
       <style media="screen">
           #map{
               height: 400px;
-
           }
           .hubicacion_controls{
               display: none;
@@ -29,7 +32,117 @@
           .map_container{
             position: relative;
           }
+          input[type=checkbox]{
+              display: none;
+          }
+
+          input[type=radio]{
+              display:none;
+          }
+          .start{
+              cursor:pointer;
+              font-size:200%;
+              color:gray;
+          }
+          .clasificación{
+              direction:rtl;
+              unicode-bidi:bidi-override:
+          }
+          #contCalif{
+              pointer-events: none;
+          }
+          #contCalif ~label{
+              color:#FFCC00;
+          }
+          #contCalif input[type=radio]:checked~label{
+              event:none;
+              color:#FFCC00;
+          }
+
+          #contCalif2 label:hover, #contCalif2 label:hover~label{
+              color:#FFCC00;
+          }
+          #contCalif2 input[type=radio]:checked~label{
+              color:#FFCC00;
+          }
+
+
       </style>
+      <script type="text/javascript">
+
+
+          var id_user='<?php
+              if(\Auth::user()!=null)
+              {
+                  echo \Auth::user()->id;
+              }else{
+                  echo 'no-log';
+              }
+          ?>';//obtenemos id usuarios
+          var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
+
+          verCalifi();
+          verCalifiR();
+
+          //funcion para ver calificacion de mismo usuario
+          function verCalifi(){
+              if (id_user!='no-log') {
+                  var obtnerMiCalf={!!json_encode(route('calificar.obtnerCali'))!!};
+                  $.get(obtnerMiCalf,{
+                      user_id:id_user,
+                      restaurant_id:restaurant_id
+                  },function(resultados){
+                      if (resultados!="") {
+                          var score=parseInt(resultados);
+                          var check= document.getElementById('dar'+score);
+                          check.checked=true;
+                      }
+                  });
+              }
+
+          }
+
+          //funcion para ver puntaje del restaurante
+          function verCalifiR(){
+              var obtnerMiCalfR={!!json_encode(route('calificar.obtnerCaliR'))!!};
+              $.get(obtnerMiCalfR,{
+                  restaurant_id:restaurant_id
+              },function(resultados){
+                  if (resultados!='null') {
+                      document.getElementById('lblpuntaje').innerText=resultados+'/5';
+                      document.getElementById('rbd'+parseInt(resultados)).checked=true;
+                  }
+              });
+          }
+
+          //funcion para mostrar para valorar
+          function aparecerVa(){
+              if (document.getElementById('contCalif2').hidden==true) {
+                  document.getElementById('contCalif2').hidden=false;
+              }else{
+                  document.getElementById('contCalif2').hidden=true;
+              }
+          }
+
+          //funcion para calificar
+          function vaStart(id){
+              if (id_user!='no-log') {
+                  var valoracion=document.getElementById(id).value;
+                  var DarCalif={!!json_encode(route('calificar.store'))!!};
+                  $.get(DarCalif,{
+                      user_id:id_user,
+                      restaurant_id:restaurant_id,
+                      score:valoracion
+                  },function(resultados){
+                      verCalifiR();
+                      verCalifi();
+                  });
+              }else{
+                  window.location='../login';
+              }
+            }
+      </script>
+
 @endsection
 
 @section('title')
@@ -37,6 +150,13 @@
 @endsection
 
 <div class="container mt-5">
+
+                @if ($sm!="")
+                    <strong>
+                        <div class="alert alert-danger">{{$sm}}</div>
+                    </strong>
+
+                @endif
 
     <div class="row ">
         <div class="col-12 col-sm-6">
@@ -58,6 +178,9 @@
             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/phone-not-being-used-filled.png" width="16">
             {{$restaurant->telephone}}
             <br>
+
+            <form action="{{route('carrito.add')}}" method="post">
+
             <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
             {{$restaurant->categoria}}
             <br>
@@ -67,9 +190,44 @@
             @else
                 Cerrado
             @endif
+            <br>
+            <p>
+                    <strong style="float:left;margin-top:3%" class="navbar-brand pb-0">Puntuación</strong>
+                    <div id="contCalif" class="clasificación" >
+                        <strong id="lblpuntaje">0/5</strong>
+                        <input id="rbd5" type="radio" name="valoracion">
+                        <label class="start clasificación" for="rbd5">&#9733;</label>
+                        <input id="rbd4" type="radio" name="valoracion">
+                        <label class="start clasificación" for="rbd4">&#9733;</label>
+                        <input id="rbd3" type="radio" name="valoracion">
+                        <label class="start clasificación" for="rbd3">&#9733;</label>
+                        <input id="rbd2" type="radio" name="valoracion" >
+                        <label class="start clasificación" for="rbd2">&#9733;</label>
+                        <input id="rbd1" type="radio" name="valoracion" >
+                        <label class="start clasificación" for="rbd1">&#9733;</label>
+                    </div>
+            </p>
+            <p>
+                <strong style="float:left;cursor:pointer;margin-top:0%" class="navbar-brand pb-0" onclick="aparecerVa();">Danos tu calificación</strong>
+                <div  id="contCalif2" class="clasificación" hidden>
+                    <input id="dar5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar5">&#9733;</label>
+                    <input id="dar4" type="radio" name="tenedor" value="4" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar4">&#9733;</label>
+                    <input id="dar3" type="radio" name="tenedor" value="3" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar3">&#9733;</label>
+                    <input id="dar2" type="radio" name="tenedor" value="2" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar2">&#9733;</label>
+                    <input id="dar1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
+                    <label class="start clasificación" for="dar1">&#9733;</label>
+                </div>
+            </p>
+            <br>
+
             <form class="mt-3" action="{{route('carrito.add')}}" method="post">
+
                 {{csrf_field()}}
-                <input class="form-check-input d-none" type="checkbox" checked value="1" name="checkDish[]" >
+                <input class="form-check-input d-none" type="checkbox" checked value="{{$reserva->id}}" name="checkDish[]" >
                 <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
                 <input type="hidden" name="solo_reserva" value="1">
                 <input type="submit" class="btn btn-primary mt-2"  name="addcarrito" value="Solo reserva">
@@ -77,13 +235,18 @@
         </div>
     </div>
 
-
     <form action="{{route('carrito.add')}}" method="post">
     {{csrf_field()}}
 
-    <center>
-        <strong class="navbar-brand mt-3">¿Qué desea comer hoy {{$dias[date("w")]}}?</strong>
-    </center>
+    @if(count($dishes)==0)
+        <br>
+        <strong class="alert alert-success">El Restaurante aún no registró sus platos, PERO PUEDES RESERVAR EL LUGAR...!</strong>
+        <br>
+    @else
+        <center>
+            <strong class="navbar-brand mt-3">¿Qué desea comer hoy {{$dias[date("w")]}}?</strong>
+        </center>
+    @endif
 
     <div class="row ">
         @foreach ($dishes as $dish)
@@ -129,16 +292,17 @@
         @foreach ($dishes as $dish)
         @if ($dish->dia=="martes")
             <div class="col-6 col-md-4 col-lg-2 mb-4">
-                <div class="card card-plato">
-                    @include('includes.image_dish')
-                    <div class="card-body p-0 px-3 pt-2 pb-3">
-                        <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                        <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                        <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                        <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                        <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
+                <label for="{{$dish->id}}">
+                    <div class="card card-plato">
+                        <img id="{{$dish->id}}i" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
+                        <div id="{{$dish->id}}c" class="card-body p-0 px-3 pt-2 pb-3">
+                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
+                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
+                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
+                            <input class="form-check-input" onclick="seleccionar(this.id);" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
+                        </div>
                     </div>
-                </div>
+                </label>
             </div>
             @endif
         @endforeach
@@ -280,7 +444,7 @@
         var nomR='{{$restaurant->name}}';
         var latR={{$restaurant->latitude}};
         var lonR={{$restaurant->longitude}};
-        marker = L.marker([latR, lonR], {draggable: true}).addTo(map);
+        marker = L.marker([latR, lonR]).addTo(map);
         marker.bindPopup("<b>"+nomR+"</b>").openPopup();
         }
 

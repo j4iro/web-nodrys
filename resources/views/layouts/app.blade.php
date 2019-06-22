@@ -24,6 +24,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script> --}}
+    <script type="text/javascript" src="{{asset('js/jquery-3.4.0.min.js')}}"></script>
     @yield('scripts')
 </head>
 <body>
@@ -65,6 +67,9 @@
                                     @endif
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('help')}}"  class="nav-link">Ayuda</a>
+                            </li class="nav-item">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                             </li>
@@ -163,5 +168,12 @@
             @yield('content')
         </main>
     </div>
+    <script type="text/javascript">
+    var navbar_botton=document.querySelector(".navbar-toggler")
+    navbar_botton.addEventListener('click',function (){
+        navbarSupportedContent.classList.toggle("navbar-show");
+    });
+   
+    </script>
 </body>
 </html>
