@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Valoration;
+use App\Order;
 
 class ValorationController extends Controller
 {
@@ -27,39 +28,6 @@ class ValorationController extends Controller
         //
     }
 
-    /*
-
-    public function store(Request $request)
-    {
-        $valoration=new Valoration();
-        $valoration->user_id=$request->user_id;
-        $valoration->restaurant_id=$request->restaurant_id;
-        $valoration->score->$request->score;
-
-        $valoration->save();
-        print 'Okey';
-        // return redirect('dish.index')->with('message','Inserto Calificacion :)')
-    }
-
-    public function edit($id)
-    {
-        $valoration = Valoration::find($id);
-        return view('dish.index',['valoration'=>$valoration]);
-    }
-
-    public function update(ItemUpdateRequest $request, $id)
-    {
-        $valoration = Valoration::find($id);
-        $valoration->user_id = $request->user_id;
-        $valoration->restaurant_id = $request->restaurant_id;
-        $valoration->score = $request->score;
-
-        $valoration->save();
-
-        Session::flash('message', 'Editado Satisfactoriamente !');
-        return Redirect::to('dish.index');
-    }*/
-
     /**
      * Store a newly created resource in storage.
      *
@@ -68,6 +36,9 @@ class ValorationController extends Controller
      */
     public function store(Request $request)
     {
+        // $reservo=$this->consultReserva($request->user_id,$request->restaurant_id);
+        $reservo=$this->consultReserva($request);
+        if ($reservo=='true') {
             $datos=$this->consult($request->user_id,$request->restaurant_id);
             $valoration=new Valoration();
 
@@ -83,12 +54,42 @@ class ValorationController extends Controller
 
             if($datos){
                 $valoration->update();
-                echo "1";
             }else{
                 $valoration->save();
-                echo "0";
             }
+            echo '1';
+        }else{
+            echo '0';
+        }
 
+    }
+
+    // private function consultReserva($id_user,$id_restaurant){
+    //         $datos = Order::all()
+    //         ->where('user_id',$id_user)
+    //         ->where('restaurant_id',$id_restaurant)
+    //         ->where('state','completado')
+    //         ->first();
+    //
+    //         $var=true;
+    //         if ($datos==null) {
+    //             $var=false;
+    //         }
+    //         return $var;
+    // }
+
+    public function consultReserva(Request $request){
+            $datos = Order::all()
+            ->where('user_id',$request->user_id)
+            ->where('restaurant_id',$request->restaurant_id)
+            ->where('state','completado')
+            ->first();
+
+            $var='true';
+            if ($datos==null) {
+                $var='false';
+            }
+            return $var;
     }
 
     private function consult($id_user,$id_restaurant){

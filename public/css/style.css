@@ -228,6 +228,7 @@ li
 
   .help-container.help-show{
        display: block;
+
    }
    a{
        cursor: pointer;
@@ -238,4 +239,7 @@ li
 
    .collapse.navbar-show{
     display: block;
+   }
+   .mg-top{
+       margin-top: 50px;
    }

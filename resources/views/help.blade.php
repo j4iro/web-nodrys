@@ -32,118 +32,92 @@
 <div class="container my-4">
     <h1>¿Cómo te podemos ayudar?</h1>
     <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est consequatur voluptate maiores nulla ea consequuntur, et nihil eligendi cumque, temporibus incidunt obcaecati earum inventore pariatur a sint quo fugiat? Hic fugit unde velit quis, nobis ipsam non dolore similique, natus delectus incidunt at culpa explicabo ullam optio magni consequuntur maiores nihil modi nam deleniti facilis eos ducimus esse libero. Dolore, placeat. Similique ipsa et quasi praesentium repellat quam, odio maiores, illum quo officia illo, dolores consectetur sit architecto assumenda laudantium sint excepturi consequatur magni commodi laborum. Facere magni nulla, suscipit rerum ullam fuga, commodi quae soluta, asperiores repellat velit dolorum.
-
+        Porque pensamos en ti, te ofrecemos un manual visual para que aprendas a usar nuestra plaforma y puedas ser parte de la familia <strong>nodrys</strong>.
+        Aprovecha nuestro servicio de reservas y sacale provecho a nuestra plataforma, donde podras llevar un registro de tus reservas, ademas te garantizamos la reducción de tiempo en cuanto la atención, para que puedas realizar mas cosas.
     </p>
 </div>
 <div class="container card">
-<<<<<<< HEAD
+
     <a class="card-header" id="help_client">Cliente</a>
     <div class="card-body help-container" id="help_client_container">
-=======
-    <h2 class="card-header" id="help_client">Cliente</h2>
-    <div class="card-body" id="help_client_container">
->>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
+
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-4 mg-top">
             <h4>Crear una cuenta de usuario</h4>
-            <video class="help_videos" src="" poster="">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/anutwQfd2TA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            </video>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 mg-top">
             <h4>Realizar una reserva de lugar</h4>
-            <video class="help_videos" src="" poster="">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/zHziYDWxadc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            </video>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 mg-top" style="margin-top:50px">
             <h4>Realizar un pedido de platos</h4>
-            <video class="help_videos" src="" poster="">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/rEB2p_9H6WA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            </video>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 mg-top" style="margin-top:100px;margin-bottom:50px">
             <h4>Localizar restaurantes cercanos</h4>
-            <video class="help_videos" src="" poster="">
-
-            </video>
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/QLxT13Xp7S0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
     </div>
 
 </div>
 <div class="container card">
-<<<<<<< HEAD
+
     <a id="help_restaurant" class="card-header">Restaurante[Administrador]</a>
  <div id="help_restaurant_container" class="card-body help-container">
-=======
-    <h2 id="help_restaurant" class="card-header">Restaurante[Administrador]</h2>
- <div id="help_restaurant_container" class="card-body">
->>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
+
      <div class="row">
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>¿Cómo unirte a nodrys?</h4>
-         <video class="help_videos" src="" poster="">
 
-         </video>
+         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JxTxE-ZgOVU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>Agrega tus platos</h4>
-         <video class="help_videos" src="" poster="">
+         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VrZ4snt7T90" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-         </video>
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>Confirma las reservas</h4>
-         <video class="help_videos" src="" poster="">
+         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DK2sWTFnYPA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-         </video>
        </div>
-       <div class="col-sm-4">
+       <div class="col-sm-4 mg-top">
          <h4>Imprime tus reportes</h4>
-         <video class="help_videos" src="" poster="">
-
-         </video>
+         <iframe width="100%" height="100%" src="https://www.youtube.com/embed/OPK4_qfZ8rI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
        </div>
      </div>
  </div>
 </div>
 <div class="container card">
-<<<<<<< HEAD
+
     <a class="card-header" id="help_question">Preguntas Frecuentes</a>
     <div class="card-body help-container" id="help_questions_container">
         <div class="row">
-          <div class="col-sm-4" style="display:none;">
-=======
-    <h2 class="card-header" id="help_question">Preguntas Frecuentes</h2>
-    <div class="card-body" id="help_questions_container">
-        <div class="row">
-          <div class="col-sm-4 panel panel-default">
->>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
-            <h4>Crear una cuenta de usuario</h4>
+          <div class="col-sm-4">
+            <h4>¿Tiene un costo la reserva?</h4>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et m id est laborum.
+                Hemos establecido un costo de tan solo <strong> S/. 1.00 </strong> por cada reserva que desees realizar y esta incluida junto al pedido de platos que haz realizado. Esto se hace para que puedas llevar un buen registro de tus pedidos y reservas que haces, ademas de agilizar la atención que se te brindará.
             </p>
           </div>
           <div class="col-sm-4">
-            <h4>Realizar una reserva de lugar</h4>
+            <h4>Solo quieres realizar reserva</h4>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et m id est laborum.
+                Descuida si no deseeas adquirir de la compra de platos y solo desea realizar la reserva, lo puedes hacer solo dando clic en el boton <strong>Reservar.</strong>
             </p>
           </div>
           <div class="col-sm-4">
-            <h4>Realizar un pedido de platos</h4>
+            <h4>La reserva ¿Solo es para una persona?</h4>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et m id est laborum.
+                Tranquil@ no tomamos en cuenta la cantidad de personas que asistiran, el pago de la reserva solo es por el pedido sin tener encuenta la cantidad de pesonas que asistirán.
             </p>
           </div>
-          <div class="col-sm-4">
-            <h4>Localizar restaurantes cercanos</h4>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et m id est laborum.
-            </p>
-          </div>
+
         </div>
       </div>
     </div>
@@ -152,13 +126,7 @@
 <script type="text/javascript">
 
 
-<<<<<<< HEAD
 
-=======
-help_client_container.style.display="none";
-help_restaurant_container.style.display="none";
-help_questions_container.style.display="none";
->>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
 
 help_client.addEventListener('click',function () {
     muestra(help_client_container);
@@ -176,11 +144,8 @@ help_question.addEventListener('click',function () {
 });
 
 function muestra(objeto) {
-<<<<<<< HEAD
+
 objeto.classList.toggle('help-show');
-=======
-objeto.style.display="block";
->>>>>>> 1ddfcf249de54ae17bab0dcca23f3287afb453b8
 }
 
 </script>

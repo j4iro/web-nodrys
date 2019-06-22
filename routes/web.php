@@ -6,7 +6,9 @@ Auth::routes();
 
 Auth::routes(['verify'=>true]);
 
-Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
+// Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/', 'HomeController@index')->name('home');
+
 Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
@@ -174,6 +176,7 @@ Route::get('/admin-restaurante/platos/update_state_dish/{id?}/{state?}', ['as'=>
 Route::get('/Restaurant/califi','ValorationController@store')->name('calificar.store');
 Route::get('/Restaurant/MiCalifi','ValorationController@obtnerCali')->name('calificar.obtnerCali');
 Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('calificar.obtnerCaliR');
+Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->name('calificar.consultarPe');
 // Route::get('/Restaurant/calificaion','ValorationController@update')->name('calificar.update');
 
 // Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -181,8 +184,16 @@ Route::get('/Restaurant/MiCalifiR','ValorationController@obtnerCaliR')->name('ca
 // Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
 // Route::post('password/reset','Auth\ForgotPasswordController@reset');
 
+//Controladores para enviar Email
 
-/****************************PETICIOINES PASARELA,RUC,DNI*********************/
+Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
+Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
+
+Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
+Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
+Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
+
+/*Pasarela de pagos y Ruc*/
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
 Route::get('/respuestaRuc',['as'=>'respuestaRuc','uses'=>'PeticionesController@respuestaRuc']);
 Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@respuestaDni']);

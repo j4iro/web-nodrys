@@ -50,7 +50,7 @@ class DishController extends Controller
         $sm="";
         if($this->verificar_restaurante_diferente($request->id)==false)
         {
-          $sm="No puedes hacer reserva en más de un restaurante. !GRACIAS POR SU COMPRESIÓN...!  ♥♥♥";
+          $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
         };
 
        $dishes = Dish::where('restaurant_id', $request->id)

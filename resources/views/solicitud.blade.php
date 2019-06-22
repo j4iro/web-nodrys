@@ -1,9 +1,34 @@
 @extends('layouts.app')
 
-    @section('title')
-        Solicitud de registro
-    @endsection
+@section('scripts')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+       crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+      crossorigin=""></script>
+      <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
+      <style media="screen">
+          #map{
+              height: 400px;
 
+          }
+          .hubicacion_controls{
+              display: none;
+          }
+          .btnActual{
+              position: absolute;
+              z-index: 99;
+              right: 0;
+          }
+          .map_container{
+            position: relative;
+          }
+      </style>
+@endsection
+@section('title')
+    Solicitud de registro
+@endsection
 @section('content')
 <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <div class="container my-4">
@@ -19,7 +44,7 @@
                 </div>
             @else
                 <div class="alert alert-info" role="alert">
-                    <strong>¡Excelente Decisión!</strong> Para formar parte de la plataforma por favor complete el siguiente formulario, una vez la solicitud se envie, nos pondremos en contacto con usted por medio de <strong>E-mail</strong> o <strong>telefono</strong> para responderle su solicitud. Esto puede demorar <strong>24 horas</strong> aproximadamente. Gracias por su elección.
+                    <strong>¡Excelente Decisión!</strong> Para formar parte de la plataforma por favor complete el siguiente formulario, una vez la solicitud se envie, nos pondremos en contacto con usted por medio de <strong>E-mail</strong> o <strong>teléfono</strong> para responderle su solicitud. Esto puede demorar <strong>24 horas</strong> aproximadamente. Gracias por su elección.
                 </div>
             @endif
 

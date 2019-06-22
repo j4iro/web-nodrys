@@ -1,11 +1,22 @@
 @extends('layouts.app')
 @section('scripts')
 
+{{-- INTEGRACION DE LA PASERAL DE PAGOS  --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script src="https://checkout.culqi.com/v2"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{{-- LO DE PASARELA --}}
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
+<script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script type="text/javascript">
+
+Culqi.publicKey = 'pk_test_KZH8HrkmOItB9qVx';
+ var producto="";
+ var precio="";
+ var mij="nada";
+ var err="";
 
 $(window).load(function() {
     $('#modalPago').on('show.bs.modal', function () {
@@ -14,10 +25,30 @@ $(window).load(function() {
         //Peticion AJAX para traer datos de la tarjeta guardada
         traerDatosTarjeta();
     });
+    modalPago.click();
     $('#modalPago').on('hide.bs.modal', function () {
         checkpagarcontarjeta.checked=false;
         quitar_requireds();
     });
+
+    $('#buyButton').on('click', function(e) {
+
+        producto=$('#buyButton').attr('data-producto');
+        precio=$('#buyButton').attr('data-precio');
+
+           Culqi.settings({
+               title: producto,
+               currency: 'PEN',
+               description: producto,
+               amount: precio
+           });
+
+     Culqi.open();
+     e.preventDefault();
+
+    });
+
+
 });
 
 function traerDatosTarjeta()
@@ -168,9 +199,9 @@ function ejecutarTargeta(){
 
 
         }
-  };
+   };
 
-}
+
 </script>
 
 @endsection
@@ -354,7 +385,7 @@ function ejecutarTargeta(){
                 <div class="row mt-3">
                     <div class="col-6">
 
-                        <input type="button" id="buyButton" value="Pagar" onclick="ejecutarTargeta()" data-producto="Este es el producto " data-precio=1000 >
+                        <input type="button" id="buyButton" value="Pagar" data-producto="Este es el producto " data-precio=1000 >
 
                         {{-- <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Tarjeta</a> --}}
 
@@ -394,7 +425,7 @@ function ejecutarTargeta(){
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
-                                        <input type="text" placeholder="Número de tarjeta" class="form-control" name="num_card" id="num_card" >
+                                        <input type="text" onkeypress="return validarNumero(event);" placeholder="Número de tarjeta" class="form-control" name="num_card" id="num_card" >
                                     </div>
                                 </div>
 
@@ -423,7 +454,7 @@ function ejecutarTargeta(){
 
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <input type="text" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="owner" >
+                                        <input type="text" onkeypress="return validarLetras(event);" placeholder="Nombre en la tarjeta" class="form-control" name="owner" id="owner" >
                                     </div>
                                 </div>
 
@@ -482,5 +513,8 @@ function ejecutarTargeta(){
 
 </form>
 
+<script type="text/javascript">
+    //ejecutarTargeta();
+</script>
 
 @endsection

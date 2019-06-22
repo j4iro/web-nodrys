@@ -24,21 +24,22 @@ class AdminRestaurant extends Controller
 
     public function index()
     {
-
-
-
         return view('admin-restaurant.index');
-
     }
 
     public function reportespersonalizados()
     {
-        return view('admin-restaurant.reportespersonalizados');
-    }
 
+    }
     public function menus()
     {
-        return view('admin-restaurant.menus');
+        $id = session('id_restaurante');
+        return view('admin-restaurant.menus',compact('id'));
+    }
+
+
+    public function reportesPedidos(){
+        return view('admin-restaurant.reportespedidos');
     }
 
     public function saveplatomenu(Request $request)
@@ -143,6 +144,10 @@ class AdminRestaurant extends Controller
 
     }
 
+    public function reportespersonalizados(){
+        return view('admin-restaurant.reportespersonalizados');
+    }
+
     public function getDishes()
     {
         $restaurant = \Auth::user();
@@ -160,23 +165,21 @@ class AdminRestaurant extends Controller
         }
     }
 
-    public function getMenuDia()
+    public function getMenuDia(Request $request)
     {
-        $restaurant = \Auth::user();
-        $id_restaurante=auth()->user()->id;
-        $dishes = Menu::where('restaurant_id','=',$id_restaurante)
-        ->where('restaurant_id','=',$id_restaurante)
+        $datos = Menu::join('dishes','dishes.id','=','menus.dish_id')
+        ->select('menus.id','dishes.name')
+        ->where('menus.dia',$request->dia)
+        ->where('menus.restaurant_id',$request->restaurant_id)
         ->get();
-        // dd($dishes);
+        return json_encode($datos);
+    }
 
-        if(count($dishes)>0)
-        {
-            echo json_encode($dishes);
-        }
-        else
-        {
-            echo json_encode("no");
-        }
+    public function eliminarMenuDia(Request $request){
+        $datos = Menu::where('id',$request->menu_id)
+        ->first();
+        $datos->delete();
+        return "Se elimino";
     }
 
     public function saveCuentaBancaria(Request $request)
@@ -215,8 +218,6 @@ class AdminRestaurant extends Controller
         return redirect()->route('admin-r.cuentaBancaria')
         ->with(['message'=>'message']);
     }
-
-
 
     public function totalComision(){
         $user_id = Auth::user()->id;//id_user

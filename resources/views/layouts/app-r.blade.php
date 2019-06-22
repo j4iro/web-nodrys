@@ -12,9 +12,6 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">
     </script>
 
-
-
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -32,10 +29,10 @@
                     {{-- config('app.name', 'Laravel') --}}
                     <img class="p-0 img-fluid" src="{{asset('svg/logo.svg')}}" width="40" alt="Nodrys">
                 <strong>{{session('nombre_restaurante')}}
-                             
+
              </strong>
              <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
-                
+
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -83,6 +80,8 @@
 
     window.onload=function(){
 
+
+
         var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
         Notification.requestPermission();
 
@@ -129,6 +128,8 @@
                     if ('{{session('ventana')}}'=='inicio') {
 
                         llenaTabla(arrayOrders);
+
+
                     }else {
 
                     }
@@ -164,6 +165,10 @@
         {
             document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
         }
+
+
+
+
 
     }
 
@@ -223,9 +228,9 @@
                     cod_reserva:id_orden
                 },function (resultado) {
                     if(resultado=="OK"){
-                        alert("se han cancelado con exito");
+                        console.log("se han cancelado");
                     }else {
-                        alert(resultado);
+                        console.log(resultado);
                     }
                 });
 

@@ -105,6 +105,13 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right"></label>
+
+                            <div class="col-md-6">
+                                <label for="password-confirm"><a target="_new" href="{{asset('Términos y Condiciones de Uso.pdf') }}"> Al registratse acepta los Términos y uso de condiciones </a></label>
+                            </div>
+                        </div>
 
 
                         <div class="form-group row mb-0">

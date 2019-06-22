@@ -1,12 +1,13 @@
 @extends('layouts.app-r')
 
 @section('scripts')
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <script>
     var dia;
+    var idRestaurant={{$id}};
     $(window).load(function() {
         $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
@@ -14,7 +15,8 @@
             var modal = $(this)
             modal.find('.modal-title').text('Día ' + dia)
             // modal.find('.modal-body input').val(recipient)
-            traerPlatos()
+            traerPlatos();
+            listarPlatoAlMenu();
         })
     });
 
@@ -28,6 +30,37 @@
             restaurant_id: 1
         });
         // console.log(dia + dish_id + $('#comboplatos').val());
+        listarPlatoAlMenu();
+    }
+
+    function listarPlatoAlMenu()
+    {
+        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/listarplatomenu";
+
+        $.get(finalUrl,
+        {
+            restaurant_id: idRestaurant,
+            dia: dia
+        },function(resultados){
+            let platos = JSON.parse(resultados);
+            let items='';
+
+            platos.forEach( plato => {
+                // Ceviche
+                 items+= `<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></li>`
+            });
+            $('#ListaPlatos').html(items);
+        });
+    }
+
+    function eliminarPlatoMenu(id){
+        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/eliminarplatomenu";
+        $.get(finalUrl,
+        {
+            menu_id: id
+        });
+
+        listarPlatoAlMenu();
     }
 
     function traerPlatos()
@@ -62,7 +95,6 @@
 @endsection
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <strong class="navbar-brand p-0">Mis menús</strong>
@@ -163,10 +195,10 @@
 
                 </div>
 
-                <ul class="list-group shadow-sm" >
+                <ul id="ListaPlatos" class="list-group shadow-sm">
+                    {{-- <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Ceviche  <a href="" class="ml-auto text-danger">Quitar</a>  </li>
+                    <li class="list-group-item list-group-item-action">Causa</li> --}}
 
-                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Ceviche  <a href="" class="ml-auto text-danger">Quitar</a>  </li>
-                    <li class="list-group-item list-group-item-action">Causa</li>
                 </ul>
 
 

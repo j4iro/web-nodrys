@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('css/pdf.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('css/pdf.css')}}"> --}}
+    @include('includes.pdf')
     <style>
 
         /* @import url('https://fonts.googleapis.com/css?family=Acme'); */
