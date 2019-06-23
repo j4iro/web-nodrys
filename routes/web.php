@@ -12,7 +12,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/help', 'HomeController@help')->name('help');
 
 /*Rutas para listar los platos en la sección principal*/
-Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes')->middleware('verified');
+Route::get('/comidas', 'HomeController@getAllDishes')->name('getAllDishes');
 Route::post('/comidas', 'HomeController@getDishOne')->name('platos.buscar');
 
 /*Rutas del perfil de usuario y editar sus datos*/
@@ -22,10 +22,11 @@ Route::get('/user/avatar/{filename}','UserController@getImage')->name('user.avat
 Route::get('/restaurant/avatar/{filename}','RestaurantController@getImage')->name('restaurant.image');
 Route::get('/platos/{filename}','DishController@getImage')->name('dish.image');
 Route::get('/restaurante/{id}-{nombre}','DishController@dishes')->name('restaurant.detalle');
+Route::get('/restaurante/platosxdia/{dia}/{id}','DishController@platosxdia')->name('restaurant.platosxdia');
 
 
 /*Rutas del carrito de compras*/
-Route::get('/carrito','CarritoController@index')->name('carrito.index')->middleware('verified');
+Route::get('/carrito','CarritoController@index')->name('carrito.index');
 Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
 Route::get('/carrito/up/{indice}','CarritoController@up')->name('carrito.up');
 Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.down');
@@ -168,6 +169,7 @@ Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 
 
 Route::get('filtroXcategoria/{categoria?}', ['as'=>'filtroXcategoria','uses'=>'RestaurantController@filtroXcategoria']);
+Route::get('filtroXdistrito/{distrito?}', ['as'=>'filtroXdistrito','uses'=>'RestaurantController@filtroXdistrito']);
 Route::get('/admin-restaurante/platos/update_state_dish/{id?}/{state?}', ['as'=>'update_state_dish','uses'=>'DishController@update_state_dish']);
 
 

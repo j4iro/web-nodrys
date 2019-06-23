@@ -10,7 +10,7 @@
     crossorigin="">
 
     </script>
-<script type="text/javascript" src="js/js/ajax.js"></script>
+    <script type="text/javascript" src="js/js/ajax.js"></script>
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">;
     </script> --}}
 
@@ -123,7 +123,6 @@
 
 
 <div class="container my-4"  >
-    <form  method="post">
 
     <div class="row">
         <div class="col-12 ">
@@ -150,9 +149,12 @@
         </button>
     </div>
 
-
-    <div class="row mb-4 mt-2">
-            {{csrf_field()}}
+{{-- <div class="card p-3 shadow mb-4 mt-2"> --}}
+    <div class="row mb-4">
+        {{csrf_field()}}
+        <div class="col-2 col-lg-1 pt-3 ">
+            Filtra por
+        </div>
         <div class="col-6 col-lg-3 pt-2">
             <select name="categoria" class="form-control" id="btnCategoria" onchange="mostrar();" >
                 <option value="" disabled selected >Categorias</option>
@@ -161,17 +163,22 @@
                 @endforeach
             </select>
         </div>
-        {{-- <div class="col-6 col-lg-3 pt-2">
-            <select name="distrito" class="form-control" id="">
+        <div class="col-2 col-lg-1 pt-3 p-0">
+              o también por
+        </div>
+        <div class="col-6 col-lg-3 pt-2">
+            <select name="distrito" class="form-control" id="cboDistrito" onchange="mostrar_distrito();">
                 <option value="" disabled selected >Distritos</option>
                 @foreach ($distritos as $distrito)
                     <option value="{{$distrito->id}}">{{$distrito->name}}</option>
                 @endforeach
             </select>
-        </div> --}}
+        </div>
 
-        </form>
+
+        <hr>
     </div>
+{{-- </div> --}}
 
 
     @isset ($resultado)

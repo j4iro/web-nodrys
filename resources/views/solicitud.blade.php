@@ -1,54 +1,30 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-       crossorigin=""/>
-     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-      crossorigin=""></script>
       <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
-      <style media="screen">
-          #map{
-              height: 400px;
-
-          }
-          .hubicacion_controls{
-              display: none;
-          }
-          .btnActual{
-              position: absolute;
-              z-index: 99;
-              right: 0;
-          }
-          .map_container{
-            position: relative;
-          }
-      </style>
 @endsection
 @section('title')
-    Solicitud de registro
+    Solicitud de registro para unirse a Nodrys
 @endsection
+
 @section('content')
-<script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
+
 <div class="container my-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
 
             @if(session('resultado'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
                     <strong>{{session('resultado')}}</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
             @else
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-info shadow"  role="alert">
                     <strong>¡Excelente Decisión!</strong> Para formar parte de la plataforma por favor complete el siguiente formulario, una vez la solicitud se envie, nos pondremos en contacto con usted por medio de <strong>E-mail</strong> o <strong>teléfono</strong> para responderle su solicitud. Esto puede demorar <strong>24 horas</strong> aproximadamente. Gracias por su elección.
                 </div>
             @endif
-
-
 
             <div class="card shadow">
                 <div class="card-header">Solicitud</div>
@@ -56,19 +32,6 @@
                 <div class="card-body">
                 <form method="POST" action="{{ route('solicitud.save') }}" enctype="multipart/form-data">
                         @csrf
-                       <div class="form-group row">
-                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('RUC') }}</label>
-                                 <div class="col-md-6">
-                                    <div class="input-group ">
-                                      <input type="text" class="form-control" placeholder="Consultar a Sunat" id="ruc" name="ruc" onkeypress="return validarNumero(event);" >
-                                              <div class="input-group-append">
-                                                    <button class="btn btn-outline-secondary" type="button" id="btnbuscar">
-                                                        <img id="ico" src="https://image.flaticon.com/icons/svg/116/116836.svg" width="20" height="20" alt="Lupa icono gratis" title="Lupa icono gratis">
-                                                    </button>
-                                              </div>
-                                    </div>
-                                 </div>
-                            </div>
 
                         <div class="form-group row">
                             <div class="col-md-12 text-center">
@@ -96,7 +59,6 @@
                             <label for="district_name" class="col-md-4 col-form-label text-md-right">Distrito</label>
 
                             <div class="col-md-6">
-
                                 <select class="form-control" name="district_name" id="type" required>
 
                                     @foreach ($distritos as $distrito)
@@ -178,9 +140,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Enviar solicitud
-                                </button>
+                                <button type="submit" class="btn btn-primary btn-block">Enviar solicitud</button>
                             </div>
                         </div>
 

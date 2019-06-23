@@ -21,25 +21,6 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        {{-- <div class="row">
-                            <div class="col-12 text-center">
-                                    <h4 class="mb-4">Inicia Sesión</h4>
-                            </div>
-                        </div> --}}
-                             <div class="form-group row">
-                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('DNI') }}</label>
-                                 <div class="col-md-6">
-                                    <div class="input-group ">
-                                      <input type="text" class="form-control" placeholder="Consultar a Reniec +18" id="dni" onkeypress="return validarNumero(event);" >
-                                              <div class="input-group-append">
-                                                    <button class="btn btn-outline-secondary" type="button" id="btnbuscar">
-                                                        <img id="ico" src="https://image.flaticon.com/icons/svg/116/116836.svg" width="20" height="20" alt="Lupa icono gratis" title="Lupa icono gratis">
-                                                    </button>
-                                              </div>
-                                    </div>
-                                 </div>
-                            </div>
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
 
@@ -127,62 +108,4 @@
         </div>
     </div>
 </div>
-<script>
-
-var dd;
-        $(document).ready(function(){
-            $('#btnbuscar').click(function(){
-                var dni=$('#dni').val();
-                if (dni!='') {
-                    $.ajax({
-                        url:"{{route('respuestaDni')}}",
-                        method:'GET',
-                        beforeSend:function(){
-                             document.getElementById('ico').src="images/gif/cargando.gif";
-                        },
-
-                        data:{dni:dni},
-                        dataType:'json',
-                        complete:function(data){
-                           
-                        },
-                        success:function(data){
-                            
-                            console.log(data);
-                            var obj=data.dataProcess;
-
-                            if (obj!=0) {
-                                  document.getElementById('ico').src="images/gif/ok.jpg";
-                                $('#dni').val(obj.dni);
-                                $('#name').val(obj.nombres);
-                                $('#surname').val(obj.apellido_paterno+' '+obj.apellido_materno);
-                               
-                            
-
-                            }
-                            if(obj==0){
-                                
-                                document.getElementById('ico').src="images/gif/incorrecto.png";
-                                alert('Error');
-                             
-                                $('#dni').val('');
-                                $('#name').val(''); 
-                                $('#surname').val('');
-                                location.reload();
-                            }
-                        },
-                        error:function(error_data){
-                                alert(error_data);
-                        }
-                    });
-                }else{
-                    alert('Escribe el dni');
-                    $('#dni').focus();
-                }
-
-            });
-        });
-   
-
-</script>
 @endsection

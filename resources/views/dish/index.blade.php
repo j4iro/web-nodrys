@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
-@section('content')
-
 @if (session('vacio'))
     <?php echo "<script>alert('".session('vacio')."');</script>" ?>
 @endif
+
+@section('title')
+    {{"Restaurante ". $restaurant->name . " en Nodrys"}}
+@endsection
 
 @section('scripts')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -14,63 +16,90 @@
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
 
+
+    <style media="screen">
+        #map{
+            height: 400px;
+        }
+        .hubicacion_controls{
+            display: none;
+        }
+        .btnActual{
+            position: absolute;
+            z-index: 99;
+            right: 0;
+        }
+        .map_container{
+          position: relative;
+        }
+        input[type=checkbox]{
+            display: none;
+        }
+
+        input[type=radio]{
+            display:none;
+        }
+        .start{
+            cursor:pointer;
+            font-size:200%;
+            color:gray;
+        }
+        .clasificacion{
+            direction:rtl;
+            unicode-bidi:bidi-override;
+            margin-top: -15px;
+        }
+        .btn-warning
+        {
+            margin-top: -15px;
+
+        }
+        #contCalif{
+            pointer-events: none;
+        }
+        #contCalif ~label{
+            color:#FFCC00;
+        }
+        #contCalif input[type=radio]:checked~label{
+            event:none;
+            color:#FFCC00;
+        }
+
+        #contCalif2 label:hover, #contCalif2 label:hover~label{
+            color:#FFCC00;
+        }
+        #contCalif2 input[type=radio]:checked~label{
+            color:#FFCC00;
+        }
+
+        .card-dias
+        {
+            width: 150px;
+            cursor: pointer;
+        }
+
+        .cursor-pointer{
+        cursor: pointer;
+        }
+
+        @media screen and (max-width: 320px)
+        {
+            .card-dias
+            {
+                width: 140px;
+            }
+        }
+
+
+    </style>
+
+
+
       <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
+      <script type="text/javascript" src="{{asset('js/js/ajax.js')}}"></script>
 
 
-      <style media="screen">
-          #map{
-              height: 400px;
-          }
-          .hubicacion_controls{
-              display: none;
-          }
-          .btnActual{
-              position: absolute;
-              z-index: 99;
-              right: 0;
-          }
-          .map_container{
-            position: relative;
-          }
-          input[type=checkbox]{
-              display: none;
-          }
-
-          input[type=radio]{
-              display:none;
-          }
-          .start{
-              cursor:pointer;
-              font-size:200%;
-              color:gray;
-          }
-          .clasificacion{
-              direction:rtl;
-              unicode-bidi:bidi-override:
-          }
-          #contCalif{
-              pointer-events: none;
-          }
-          #contCalif ~label{
-              color:#FFCC00;
-          }
-          #contCalif input[type=radio]:checked~label{
-              event:none;
-              color:#FFCC00;
-          }
-
-          #contCalif2 label:hover, #contCalif2 label:hover~label{
-              color:#FFCC00;
-          }
-          #contCalif2 input[type=radio]:checked~label{
-              color:#FFCC00;
-          }
-
-
-      </style>
       <script type="text/javascript">
-
-
           var id_user='<?php
               if(\Auth::user()!=null)
               {
@@ -78,7 +107,8 @@
               }else{
                   echo 'no-log';
               }
-          ?>';//obtenemos id usuarios
+          ?>';
+          //obtenemos id usuarios
           var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
           var divCalif=  document.getElementById('contCalif2');
 
@@ -177,21 +207,20 @@
 
 @endsection
 
-@section('title')
-    {{"Restaurante ". $restaurant->name . " en Nodrys"}}
-@endsection
 
-<div class="container mt-5">
+
+@section('content')
+
+<div class="container mt-1">
     <div id="mensaje" class="alert alert-primary" role="alert" style="opacity:0">
-        Aún no ha experimentado de los servicios del restaurante, para calificar ¿Qué  esperas? Haz tu reserva!
+        Aún no has experimentado de los servicios del restaurante para calificar. ¿Qué  esperas? ¡Haz tu reserva!
     </div>
 
-                @if ($sm!="")
-                    <strong>
-                        <div class="alert alert-danger">{{$sm}}</div>
-                    </strong>
-
-                @endif
+    @if($sm!="")
+        <strong>
+            <div class="alert alert-danger">{{$sm}}</div>
+        </strong>
+    @endif
 
     <div class="row ">
         <div class="col-12 col-sm-6">
@@ -214,36 +243,47 @@
             {{$restaurant->telephone}}
             <br>
 
-            <form action="{{route('carrito.add')}}" method="post">
+            <div class="row">
+                <div class="col-6 pb-0">
+                    <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
+                    {{$restaurant->categoria}}
+                    <br>
+                    <img class="mb-1" src="https://img.icons8.com/ios/50/000000/clock-filled.png" width="16">
+                    @if ($restaurant->availability==1)
+                        Abierto
+                    @else
+                        Cerrado
+                    @endif
+                </div>
+                <div class="col-6 pb-0 d-flex justify-content-end">
+                    <form  action="{{route('carrito.add')}}" method="post">
+                        {{csrf_field()}}
+                        <input class="form-check-input d-none" type="checkbox" checked value="{{$reserva->id}}" name="checkDish[]" >
+                        <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
+                        <input type="hidden" name="solo_reserva" value="1">
+                        <input type="submit" class="btn btn-primary mt-2 "  name="addcarrito" value="Reservar lugar">
+                     </form>
+                </div>
+            </div>
 
-            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
-            {{$restaurant->categoria}}
-            <br>
-            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/clock-filled.png" width="16">
-            @if ($restaurant->availability==1)
-                Abierto
-            @else
-                Cerrado
-            @endif
-            <br>
-            <p>
-                    <strong style="float:left;margin-top:3%" class="navbar-brand pb-0">Puntuación</strong>
-                    <div id="contCalif" class="clasificacion" >
-                        <strong id="lblpuntaje">0/5</strong>
-                        <input id="rbd5" type="radio" name="valoracion">
-                        <label class="start clasificación" for="rbd5">&#9733;</label>
-                        <input id="rbd4" type="radio" name="valoracion">
-                        <label class="start clasificación" for="rbd4">&#9733;</label>
-                        <input id="rbd3" type="radio" name="valoracion">
-                        <label class="start clasificación" for="rbd3">&#9733;</label>
-                        <input id="rbd2" type="radio" name="valoracion" >
-                        <label class="start clasificación" for="rbd2">&#9733;</label>
-                        <input id="rbd1" type="radio" name="valoracion" >
-                        <label class="start clasificación" for="rbd1">&#9733;</label>
-                    </div>
-            </p>
+            <hr class="mt-0">
+            <div id="contCalif" class="clasificacion" >
+                <strong class="mb-2" id="lblpuntaje">0/5</strong>
+                <input id="rbd5" type="radio" name="valoracion">
+                <label class="start clasificación" for="rbd5">&#9733;</label>
+                <input id="rbd4" type="radio" name="valoracion">
+                <label class="start clasificación" for="rbd4">&#9733;</label>
+                <input id="rbd3" type="radio" name="valoracion">
+                <label class="start clasificación" for="rbd3">&#9733;</label>
+                <input id="rbd2" type="radio" name="valoracion" >
+                <label class="start clasificación" for="rbd2">&#9733;</label>
+                <input id="rbd1" type="radio" name="valoracion" >
+                <label class="start clasificación" for="rbd1">&#9733;</label>
+                <button id="DarCalificacion" class="btn btn-warning btn-sm" onclick="aparecerVa();">Danos tu calificación</button>
+            </div>
+
             <p  style="height:auto;">
-                <strong id="DarCalificacion" style="float:left;cursor:pointer" class="alert alert-primary" onclick="aparecerVa();">Danos tu calificación</strong>
+
                 <div  id="contCalif2" class="clasificacion"  style="opacity:0;float:left;">
                     <input id="dar5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
                     <label class="start clasificación" for="dar5">&#9733;</label>
@@ -256,137 +296,78 @@
                     <input id="dar1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
                     <label class="start clasificación" for="dar1">&#9733;</label>
                 </div>
-                <form  class="mt-3" action="{{route('carrito.add')}}" method="post">
-                    {{csrf_field()}}
-                    <input class="form-check-input d-none" type="checkbox" checked value="{{$reserva->id}}" name="checkDish[]" >
-                    <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
-                    <input type="hidden" name="solo_reserva" value="1">
-                    <input type="submit" class="btn btn-primary mt-2"  name="addcarrito" value="Solo reserva">
-            </form>
         </div>
     </div>
 
-    <form action="{{route('carrito.add')}}" method="post">
-    {{csrf_field()}}
 
-    @if(count($dishes)==0)
-        <br>
-        <strong class="alert alert-success">El Restaurante aún no registró sus platos, PERO PUEDES RESERVAR EL LUGAR...!</strong>
-        <br>
-    @else
-        <center>
-            <strong class="navbar-brand mt-3">¿Qué desea comer hoy {{$dias[date("w")]}}?</strong>
-        </center>
-    @endif
 
-    <div class="row ">
-        @foreach ($dishes as $dish)
-            @if ($dish->dia=="miercoles")
-                <div class="col-6 col-md-4 col-lg-2 mb-4">
-                    <div class="card card-plato">
-                        @include('includes.image_dish')
-                        <div class="card-body p-0 px-3 pt-2 pb-3">
-                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endforeach
+
+
+    <div class="row d-flex justify-content-between flex-wrap px-2" >
+
+            <button class="btn btn-light border border-dark card-dias" id="lunes" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Lunes
+            </button>
+
+            <button class="btn btn-light border border-dark card-dias" id="martes" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Martes
+            </button>
+
+            <button class="btn btn-light border border-dark card-dias" id="miércoles" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Miercoles
+            </button>
+
+            <button class="btn btn-light border border-dark card-dias" id="jueves" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Jueves
+            </button>
+
+            <button class="btn btn-light border border-dark card-dias" id="viernes" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Viernes
+            </button>
+
+            <button class="btn btn-light border border-dark card-dias" id="sábado" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Sabado
+            </button>
+
+            <button class="btn btn-light border border-dark card-dias" id="domingo" onclick="mostrardia(this.id,{{$restaurant->id}})">
+                Domingo
+            </button>
+
+    </div>
+    <script>
+        mostrardia('{{$dias[date('w')]}}','{{$restaurant->id}}');
+    </script>
+<form action="{{route('carrito.add')}}" method="post">
+{{csrf_field()}}
+
+<div class="row  bg-white mt-3 shadow-sm border border-ligth rounded">
+    <div class="col-12 my-2">
+            @if(count($dishes)==0)
+            <center>
+                <strong class="navbar-brand">El Restaurante aún no ha registrado platos, pero puedes RESERVAR el lugar </strong>
+            </center>
+        @else
+            <center>
+                <strong class="navbar-brand">¿Qué desea comer?</strong>
+            </center>
+        @endif
     </div>
 
-    <strong class="navbar-brand mt-3">Lunes</strong>
-    <div class="row ">
-        @foreach ($dishes as $dish)
-            @if ($dish->dia=="lunes")
-                <div class="col-6 col-md-4 col-lg-2 mb-4">
-                    <div class="card card-plato">
-                        @include('includes.image_dish')
-                        <div class="card-body p-0 px-3 pt-2 pb-3">
-                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endforeach
-    </div>
+    <div class="col-12">
+        <div class="row" id="rpta_platos">
 
-    <strong class="navbar-brand mt-3">Martes</strong>
-    <div class="row ">
-        @foreach ($dishes as $dish)
-        @if ($dish->dia=="martes")
-            <div class="col-6 col-md-4 col-lg-2 mb-4">
-                <label for="{{$dish->id}}">
-                    <div class="card card-plato">
-                        <img id="{{$dish->id}}i" src="{{ route('dish.image',['filename'=>$dish->image]) }}" class="card-img-top img-card-plato" alt="{{$dish->name}} en Nodrys">
-                        <div id="{{$dish->id}}c" class="card-body p-0 px-3 pt-2 pb-3">
-                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                            <input class="form-check-input" onclick="seleccionar(this.id);" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                        </div>
-                    </div>
-                </label>
-            </div>
-            @endif
-        @endforeach
-    </div>
-
-    <strong class="navbar-brand mt-3">Jueves</strong>
-    <div class="row ">
-        @foreach ($dishes as $dish)
-            @if ($dish->dia=="jueves")
-                <div class="col-6 col-md-4 col-lg-2 mb-4">
-                    <div class="card card-plato">
-                        @include('includes.image_dish')
-                        <div class="card-body p-0 px-3 pt-2 pb-3">
-                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endforeach
-    </div>
-
-    <strong class="navbar-brand mt-3">Viernes</strong>
-    <div class="row ">
-        @foreach ($dishes as $dish)
-            @if ($dish->dia=="viernes")
-                <div class="col-6 col-md-4 col-lg-2 mb-4">
-                    <div class="card card-plato">
-                        @include('includes.image_dish')
-                        <div class="card-body p-0 px-3 pt-2 pb-3">
-                            <h5 class="card-title card-title-plato mb-1">{{$dish->name}}</h5>
-                            <p class="card-text card-text-plato m-0">{{$dish->time}} Min.</p>
-                            <p class="card-text card-text-plato m-0">S/. {{$dish->price}}</p>
-                            <input class="form-check-input" type="checkbox" id="{{$dish->id}}" value="{{$dish->id}}" name="checkDish[]" >
-                            <label class="label-cliente d-none" for="{{$dish->id}}">Muestra precio</label>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endforeach
-    </div>
-
-    @if (count($dishes)!=0)
-        <div class="row">
-            <div class="col-3">
-                <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
-                <input type="submit" class="btn btn-primary"  name="addcarrito" value="Añadir al carrito">
-            </div>
         </div>
-    @endif
+    </div>
+
+    <div class="col-12 mb-3">
+        @if (count($dishes)!=0)
+            <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
+            <input type="submit" class="btn btn-primary btn-block"  name="addcarrito" value="Añadir al carrito">
+        @endif
+    </div>
+</div>
+
+
 
     <div class="row">
         <div class="col-3">
@@ -397,86 +378,90 @@
     </form>
 
     <strong class="navbar-brand mt-3">Encuentranos en</strong>
-{{-- mapa --}}
-<div id="contenedor_mapa" class="container p-0 shadow">
+    {{-- mapa --}}
+    <div id="contenedor_mapa" class="container p-0 shadow">
 
-        <div class="d-none">
-            Latitud : <input type="text" name="txtlati" id="txtlati">
-            Longitud : <input type="text" name="txtlong" id="txtlong">
-        </div>
+            <div class="d-none">
+                Latitud : <input type="text" name="txtlati" id="txtlati">
+                Longitud : <input type="text" name="txtlong" id="txtlong">
+            </div>
 
-        <div class="map_container">
-            <div id="map">
+            <div class="map_container">
+                <div id="map">
 
+                </div>
             </div>
         </div>
+        <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
+            <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
+        </button>
+
     </div>
-    <button id="btnActual" class="btn btn-primary btn-actual p-1 " type="button" class="btnActual" name="button" onclick="localizar()">
-        <img src="{{asset('images/icons/actualizacion-de-ubicacion.png')}}" width="25" height="inherid">
-    </button>
+    @include('includes/footer')
 
-</div>
+@endsection
 
-@include('includes/footer')
+
+
 
 <script>
 
-        var marker=L.marker();
-        var map = L.map('map');
-        map.scrollWheelZoom.disable();
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-            maxZoom: 18
-        }).addTo(map);
+
+var marker=L.marker();
+var map = L.map('map');
+map.scrollWheelZoom.disable();
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+    maxZoom: 18
+}).addTo(map);
+
+
+function localizar(){
+const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+setTimeout(() => {
+    navigator.geolocation.clearWatch(watcher);
+}, 10);
+}
+
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+}
+
+const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+
+setTimeout(() => {
+navigator.geolocation.clearWatch(watcher);
+}, 10);
 
 
 
-        function localizar(){
-        const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
-        setTimeout(() => {
-            navigator.geolocation.clearWatch(watcher);
-        }, 10);
-        }
+function mostrarUbicacion (ubicacion) {
+const lng = ubicacion.coords.longitude;
+const lat = ubicacion.coords.latitude;
+
+map.setView([{{$restaurant->latitude}},{{$restaurant->longitude}}],14);
+var circle = L.circle([lat, lng], {
+    color: '#0064FF',
+    fillColor: '#0075CC',
+    fillOpacity: 0.5,
+    radius: 50
+}).addTo(map);
+var circle = L.circle([lat, lng], {
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 0.5,
+    radius: 1
+}).addTo(map);
+
+circle.bindPopup("<b>Hola!</b><br>Estas aquí").openPopup();
+
+var nomR='{{$restaurant->name}}';
+var latR={{$restaurant->latitude}};
+var lonR={{$restaurant->longitude}};
+marker = L.marker([latR, lonR]).addTo(map);
+marker.bindPopup("<b>"+nomR+"</b>").openPopup();
+}
 
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(mostrarUbicacion);
-        }
-
-        const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
-
-        setTimeout(() => {
-        navigator.geolocation.clearWatch(watcher);
-        }, 10);
-
-
-
-        function mostrarUbicacion (ubicacion) {
-        const lng = ubicacion.coords.longitude;
-        const lat = ubicacion.coords.latitude;
-
-        map.setView([{{$restaurant->latitude}},{{$restaurant->longitude}}],14);
-        var circle = L.circle([lat, lng], {
-            color: '#0064FF',
-            fillColor: '#0075CC',
-            fillOpacity: 0.5,
-            radius: 50
-        }).addTo(map);
-        var circle = L.circle([lat, lng], {
-            color: 'red',
-            fillColor: 'red',
-            fillOpacity: 0.5,
-            radius: 1
-        }).addTo(map);
-
-        circle.bindPopup("<b>Hola!</b><br>Estas aquí").openPopup();
-
-        var nomR='{{$restaurant->name}}';
-        var latR={{$restaurant->latitude}};
-        var lonR={{$restaurant->longitude}};
-        marker = L.marker([latR, lonR]).addTo(map);
-        marker.bindPopup("<b>"+nomR+"</b>").openPopup();
-        }
-
-    </script>
-@endsection
+</script>
