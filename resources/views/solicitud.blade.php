@@ -1,26 +1,30 @@
 @extends('layouts.app')
-@section('title')
-    Solicitud de registro
+
+@section('scripts')
+      <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 @endsection
+@section('title')
+    Solicitud de registro para unirse a Nodrys
+@endsection
+
 @section('content')
+
 <div class="container my-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
 
             @if(session('resultado'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show " role="alert">
                     <strong>{{session('resultado')}}</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
             @else
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-info shadow"  role="alert">
                     <strong>¡Excelente Decisión!</strong> Para formar parte de la plataforma por favor complete el siguiente formulario, una vez la solicitud se envie, nos pondremos en contacto con usted por medio de <strong>E-mail</strong> o <strong>teléfono</strong> para responderle su solicitud. Esto puede demorar <strong>24 horas</strong> aproximadamente. Gracias por su elección.
                 </div>
             @endif
-
-
 
             <div class="card shadow">
                 <div class="card-header">Solicitud</div>
@@ -55,7 +59,6 @@
                             <label for="district_name" class="col-md-4 col-form-label text-md-right">Distrito</label>
 
                             <div class="col-md-6">
-
                                 <select class="form-control" name="district_name" id="type" required>
 
                                     @foreach ($distritos as $distrito)
@@ -137,9 +140,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Enviar solicitud
-                                </button>
+                                <button type="submit" class="btn btn-primary btn-block">Enviar solicitud</button>
                             </div>
                         </div>
 
@@ -151,6 +152,5 @@
 </div>
 
 @include('includes/footer')
-
 
 @endsection

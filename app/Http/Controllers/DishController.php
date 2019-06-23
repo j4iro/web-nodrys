@@ -34,24 +34,24 @@ class DishController extends Controller
         return true;
     }
 
+    public function platosxdia($dia , $id)
+    {
+        $platos=Menu::join('dishes','dishes.id','=','menus.dish_id')
+        ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
+        ->select('menus.dia','dishes.name','dishes.id','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
+        ->where('menus.restaurant_id', $id)
+        ->where('dishes.category_dish','<>','5')
+        ->where(strtolower('menus.dia'),'=',$dia)
+        ->get();
+        // dd($platos);
+
+        return view("dish.cardPlatos",[
+            'dishes' => $platos,
+            'idrestaurant' => $id
+        ]);
+    }
     public function dishes(Request $request)
     {
-        $sm="";
-        if($this->verificar_restaurante_diferente($request->id)==false)
-        {
-          $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
-        };
-
-       $dishes = Dish::where('restaurant_id', $request->id)
-                ->where('category_dish','<>','5')
-                ->where('state', '=',1)
-                ->get();
-
-                $reserva = Dish::where('restaurant_id', $request->id)
-                ->where('category_dish','=','5')
-                ->where('state', '=',1)
-                ->first();
-
         date_default_timezone_set('America/Lima');
         $dias = array('domingo','lunes','martes','miercoles','jueves','viernes','sábado');
 
@@ -63,6 +63,19 @@ class DishController extends Controller
         // ->where(strtolower('menus.dia'),'=',$dias[date("w")])
         ->get();
 
+        // dd($menus->toArray());
+
+        $sm="";
+        if($this->verificar_restaurante_diferente($request->id)==false)
+        {
+          $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
+        };
+
+
+        $reserva = Dish::where('restaurant_id', $request->id)
+        ->where('category_dish','=','5')
+        ->where('state', '=',1)
+        ->first();
 
        $restaurant = Restaurant::join('districts','districts.id','=','restaurants.district_id')
        ->join('categories','categories.id','=','restaurants.category_id')
@@ -70,12 +83,11 @@ class DishController extends Controller
        ->where('restaurants.id', $request->id)->first();
 
         return view('dish.index',[
-            'sm'=>$sm,
-            'reserva' => $reserva,
             'dishes' => $menus,
+            'dias' => $dias,
             'restaurant'=>$restaurant,
-            'dias' => $dias
-
+            'sm'=>$sm,
+            'reserva'=> $reserva
         ]);
     }
 
@@ -98,9 +110,8 @@ class DishController extends Controller
         $id_restaurant = session('id_restaurante');
         $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
         return view('admin-restaurant.list-plato',compact('dishes'));
-
-
     }
+
     public function update_state_dish($id,$state){
     $estado=$state==1?["state"=>1]:["state"=>0];
     Dish::findOrFail($id)->update($estado);

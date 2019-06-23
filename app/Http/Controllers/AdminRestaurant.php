@@ -6,13 +6,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
-use App\Restaurant;
-use App\Dish;
 use App\Card;
 use App\Order;
-
-use Auth;
+use App\Restaurant;
 use App\Menu;
+use App\Dish;
+use App\User;
+use Auth;
+
 
 class AdminRestaurant extends Controller
 {
@@ -26,6 +27,10 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.index');
     }
 
+    public function reportespersonalizados()
+    {
+
+    }
     public function menus()
     {
         $id = session('id_restaurante');
@@ -52,6 +57,14 @@ class AdminRestaurant extends Controller
             echo $e;
         }
 
+    }
+    public function reportesClientes(){
+        session(['ventana'=>"otra"]);
+        return view('admin-restaurant.reportesclientes');
+    }
+
+    public function reportesPedidos(){
+        return view('admin-restaurant.reportespedidos');
     }
 
     public function datos()
@@ -124,7 +137,6 @@ class AdminRestaurant extends Controller
         session(['ventana'=>"otra"]);
         return view('admin-restaurant.reportes-rapidos');
     }
-
 
     public function newCuentaBancaria()
     {
@@ -211,4 +223,18 @@ class AdminRestaurant extends Controller
         ->with(['message'=>'message']);
     }
 
+    public function totalComision(){
+        $user_id = Auth::user()->id;//id_user
+         $restaurant_id = session('id_restaurante');//id_restaurant
+        //echo "hli".$restaurant_id;
+
+    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+    ->selectRaw('COUNT(*) as totalComision')
+    ->where('orders.state','confirmada')
+    ->where('orders.comision','<>',1)
+    ->where('restaurants.id','=',$restaurant_id)
+    ->get();
+
+    return $debeComision[0]->totalComision;
+    }
 }

@@ -173,7 +173,7 @@
     navbar_botton.addEventListener('click',function (){
         navbarSupportedContent.classList.toggle("navbar-show");
     });
-
+   
     </script>
 </body>
 </html>

@@ -132,7 +132,7 @@ class HomeController extends Controller
       $request_restaurant->save();
 
       //Envio de correo electronico
-    //   Mail::to($request->input('email_owner'))->send(new EnvioSolicitud("Gran decicisón, el panel administrador de nodrys se pondrá en contacto con usted en menos de 24 horas para validar los datos ...."));
+      Mail::to($request->input('email_owner'))->send(new EnvioSolicitud("Gran decicisón, el panel administrador de nodrys se pondrá en contacto con usted en menos de 24 horas para validar los datos ...."));
 
       return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente, le enviamos un correo a ' . $request_restaurant->email_owner. ' con todos los detalles.');
 

@@ -200,7 +200,18 @@ class CreateAllTables extends Migration
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
 
+        Schema::create('menus', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('dia',50);
+            $table->timestamps();
+        });
 
+        Schema::table('menus', function (Blueprint $table) {
+            $table->unsignedInteger('dish_id');
+            $table->unsignedInteger('restaurant_id');
+            $table->foreign('dish_id')->references('id')->on('dishes');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
+        });
         Schema::create('valorations', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
@@ -217,19 +228,6 @@ class CreateAllTables extends Migration
             $table->unsignedInteger('point_value');
         });
 
-
-        Schema::create('menus', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('dia',50);
-            $table->timestamps();
-        });
-
-        Schema::table('menus', function (Blueprint $table) {
-            $table->unsignedInteger('dish_id');
-            $table->unsignedInteger('restaurant_id');
-            $table->foreign('dish_id')->references('id')->on('dishes');
-            $table->foreign('restaurant_id')->references('id')->on('restaurants');
-        });
     }
 
     /**
@@ -252,9 +250,10 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('orders');
         Schema::dropIfExists('dishes');
         Schema::dropIfExists('cards');
-
+        Schema::dropIfExists('menus');
         Schema::dropIfExists('valorations');
         Schema::dropIfExists('adminstration_values');
-        Schema::dropIfExists('menus');
+
+
     }
 }

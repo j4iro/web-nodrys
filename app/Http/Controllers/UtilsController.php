@@ -10,13 +10,14 @@ class UtilsController extends Controller
     {
         $logeado = \Auth::user() ? true : false;
 
-        if ($logeado) 
+        if ($logeado)
         {
-            return redirect()->route('carrito.index')->with('mostrarform',true);
+            return redirect()->route('carrito.index');
         }
         else
         {
-            return redirect('/login'); 
+            session(['next'=>'carrito']);
+            return redirect('/login');
         }
     }
 }

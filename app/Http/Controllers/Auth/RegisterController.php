@@ -40,6 +40,17 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function redirectPath()
+    {
+        if (session()->has('next') && session('next')=='carrito') {
+            session()->forget('next');
+            return "/carrito";
+        }else
+        {
+            return "/";
+        }
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *

@@ -13,7 +13,7 @@
             <div class="card shadow p-lg-2">
                 {{-- <div class="card-header">{{ __('Login') }}</div> --}}
 
-                <div class="card-body text-center ">
+                <div class="card-body text-center pb-0">
                     <h4 class="mb-4">Inicia Sesión</h4>
 
 
@@ -77,6 +77,17 @@
                                 </button>
                             </div>
                         </div>
+                        o
+
+                        <div class="form-group row">
+                                <div class="col-md-12 text-center">
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link" href="./register">
+                                            {{ __('Registrate aquí') }}
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
 
                     </form>
                 </div>

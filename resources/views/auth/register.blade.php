@@ -21,12 +21,6 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        {{-- <div class="row">
-                            <div class="col-12 text-center">
-                                    <h4 class="mb-4">Inicia Sesión</h4>
-                            </div>
-                        </div> --}}
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
 
@@ -114,16 +108,4 @@
         </div>
     </div>
 </div>
-<script>
-
-
-    // function soloNumeros(e){
-    //     var key = window.event ? e.which : e.keyCode;
-    //     if (key < 48 || key > 57) {
-    //         e.preventDefault();
-    //         console.log(key);
-    //     }
-    // }
-
-</script>
 @endsection
