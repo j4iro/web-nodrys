@@ -45,7 +45,7 @@ class AdminRestaurant extends Controller
         $menu->dia = $request->dia;
         $menu->dish_id = $request->dish_id;
         $menu->restaurant_id = $request->restaurant_id;
-        
+
         try {
             $menu->save();
         } catch (\Exception $e) {

@@ -9,15 +9,62 @@
     var idRestaurant={{$id}};
     $(window).load(function() {
         traerPlatos();
+        var diaActual=new Date().getDay();
+        switch (diaActual) {
+            case 0:
+                btnDomingo.click();
+                break;
+            case 1:
+                btnLunes.click();
+                    break;
+            case 2:
+                btnMartes.click();
+                    break;
+            case 3:
+                btnMiercoles.click();
+                    break;
+            case 4:
+                btnJueves.click();
+                    break;
+            case 5:
+                btnViernes.click();
+                    break;
+            case 6:
+                btnSabado.click();
+                    break;
+            default:
+
+        }
+        console.log(diaActual);
 
 
     });
     var DIA;
     function changeDay(dia){
         DIA=dia.value;
+        btnLunes.classList.remove('btn-primary');
+        btnLunes.classList.add('btn-light');
+        btnMartes.classList.remove('btn-primary');
+        btnMartes.classList.add('btn-light');
+        btnMiercoles.classList.remove('btn-primary');
+        btnMiercoles.classList.add('btn-light');
+        btnJueves.classList.remove('btn-primary');
+        btnJueves.classList.add('btn-light');
+        btnViernes.classList.remove('btn-primary');
+        btnViernes.classList.add('btn-light');
+        btnSabado.classList.remove('btn-primary');
+        btnSabado.classList.add('btn-light');
+        btnDomingo.classList.remove('btn-primary');
+        btnDomingo.classList.add('btn-light');
+
+        dia.classList.remove('btn-light');
+        dia.classList.toggle('btn-primary');
+        listarPlatoAlMenu();
+
     }
     function inserta(value) {
         insertarPlatoAlMenu(DIA,value.value);
+        listarPlatoAlMenu();
     }
     function insertarPlatoAlMenu(dia,platoId)
     {
@@ -41,16 +88,17 @@
         $.get(finalUrl,
         {
             restaurant_id: idRestaurant,
-            dia: dia
+            dia:DIA
         },function(resultados){
             let platos = JSON.parse(resultados);
             let items='';
 
             platos.forEach( plato => {
                 // Ceviche
-                 items+= `<button class="d-flex justify-content-between align-items-center">${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
+                 items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
             });
-            $('#ListaPlatos').html(items);
+            platosMenu.innerHTML=items;
+            // $('#ListaPlatos').html(items);
         });
     }
 
@@ -72,12 +120,13 @@
         {
             let platos;
             platos = JSON.parse(data);
-// console.log(data)
             if(platos!='no')
             {
                 let template  = ''
                 platos.forEach( plato => {
-                    template += `<li class='list-group-item d-flex justify-content-between'>${plato.name}<button onclick='inserta(this)' class='btn' value='${plato.id}'>+</button></li>`
+                    // items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
+
+                    template += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${plato.id}'>+</button> ${plato.name}</li>`
 
                     }
                 );
@@ -94,32 +143,49 @@
 
 
 
-
     </script>
 
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <strong class="navbar-brand p-0">Mis menús</strong>
-            <hr>
-        </div>
-    </div>
+    <style media="screen">
+
+    </style>
+    <style media="screen">
+        .seccion-container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+        }
+        .borde{
+            border: 1px solid red;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .seccion{
+            width: 200px;
+        }
+        .btn{
+            width: 150px;
+            margin:5px 0;
+        }
+    </style>
+
     {{-- parte de Beimer --}}
-    <div class="d-flex">
-        <button onclick="changeDay(this)" value="Domingo" class="btn btn-primary">Domingo</button>
-        <button onclick="changeDay(this)" value="Lunes" class="btn btn-primary">Lunes</button>
-        <button onclick="changeDay(this)" value="Martes" class="btn btn-primary">Martes</button>
-        <button onclick="changeDay(this)" value="Miercoles" class="btn btn-primary">Miercoles</button>
-        <button onclick="changeDay(this)" value="Jueves" class="btn btn-primary">Jueves</button>
-        <button onclick="changeDay(this)" value="Viernes" class="btn btn-primary">Viernes</button>
-        <button onclick="changeDay(this)" value="Sabado" class="btn btn-primary">Sabado</button>
+    <div class="d-md-flex justify-content-between m-2">
+        <button onclick="changeDay(this)" id="btnDomingo" value="Domingo" class="btn btn-ligth border border-dark">Domingo</button>
+        <button onclick="changeDay(this)" id="btnLunes" value="Lunes" class="btn btn-light border border-dark">Lunes</button>
+        <button onclick="changeDay(this)" id="btnMartes" value="Martes" class="btn btn-light border border-dark">Martes</button>
+        <button onclick="changeDay(this)" id="btnMiercoles" value="Miercoles" class="btn btn-light border border-dark">Miercoles</button>
+        <button onclick="changeDay(this)" id="btnJueves" value="Jueves" class="btn btn-light border border-dark">Jueves</button>
+        <button onclick="changeDay(this)" id="btnViernes" value="Viernes" class="btn btn-light border border-dark">Viernes</button>
+        <button onclick="changeDay(this)" id="btnSabado" value="Sabado" class="btn btn-light border border-dark">Sabado</button>
     </div>
     <div class="row">
-        <div class="card col-4 list-group" id="ListaPlatos">
+        <div class="col-sm-6" id="ListaPlatos">
         </div>
-        <div class="card col-6">
+        <div class="col-sm-6" id="platosMenu">
 
         </div>
     </div>
