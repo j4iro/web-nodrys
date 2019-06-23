@@ -38,7 +38,7 @@ class DishController extends Controller
     {
         $platos=Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
-        ->select('menus.dia','dishes.name','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
+        ->select('menus.dia','dishes.name','dishes.id','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
         ->where('menus.restaurant_id', $id)
         ->where('dishes.category_dish','<>','5')
         ->where(strtolower('menus.dia'),'=',$dia)
@@ -46,7 +46,8 @@ class DishController extends Controller
         // dd($platos);
 
         return view("dish.cardPlatos",[
-            'dishes' => $platos
+            'dishes' => $platos,
+            'idrestaurant' => $id
         ]);
     }
     public function dishes(Request $request)

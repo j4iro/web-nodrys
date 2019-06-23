@@ -16,6 +16,9 @@
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""></script>
 
+      <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
+      <script type="text/javascript" src="{{asset('js/js/ajax.js')}}"></script>
+
 
     <style media="screen">
         #map{
@@ -90,120 +93,9 @@
             }
         }
 
-
     </style>
 
 
-
-      <script type="text/javascript" src={{asset('js/seleccion.js') }} rel="stylesheet"></script>
-      <script type="text/javascript" src="{{asset('js/js/ajax.js')}}"></script>
-
-
-      <script type="text/javascript">
-          var id_user='<?php
-              if(\Auth::user()!=null)
-              {
-                  echo \Auth::user()->id;
-              }else{
-                  echo 'no-log';
-              }
-          ?>';
-          //obtenemos id usuarios
-          var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
-          var divCalif=  document.getElementById('contCalif2');
-
-          verCalifi();
-          verCalifiR();
-
-          //funcion para ver calificacion de mismo usuario
-          function verCalifi(){
-              if (id_user!='no-log') {
-                  var obtnerMiCalf={!!json_encode(route('calificar.obtnerCali'))!!};
-                  $.get(obtnerMiCalf,{
-                      user_id:id_user,
-                      restaurant_id:restaurant_id
-                  },function(resultados){
-                      if (resultados!="") {
-                          var score=parseInt(resultados);
-                          var check= document.getElementById('dar'+score);
-                          check.checked=true;
-                      }
-                  });
-              }
-          }
-
-          //funcion para ver puntaje del restaurante
-          function verCalifiR(){
-              var obtnerMiCalfR={!!json_encode(route('calificar.obtnerCaliR'))!!};
-              $.get(obtnerMiCalfR,{
-                  restaurant_id:restaurant_id
-              },function(resultados){
-                  if (resultados!='null') {
-                      document.getElementById('lblpuntaje').innerText=resultados+'/5';
-                      document.getElementById('rbd'+parseInt(resultados)).checked=true;
-                  }
-              });
-          }
-
-          //funcion para mostrar para valorar
-          function aparecerVa(){
-              if (id_user!='no-log') {
-                  var validarP={!!json_encode(route('calificar.consultarPe'))!!};
-                  $.get(validarP,{
-                      user_id:id_user,
-                      restaurant_id:restaurant_id
-                  },function(resultados){
-                      if (resultados=='true') {
-                          var divCalif=  document.getElementById('contCalif2');
-                          if (divCalif.style.opacity=='0') {
-                              divCalif.style="opacity:1;transition:2s;float:left;";
-                          }else{
-                              divCalif.style="opacity:0;transition:2s;float:left;";
-                          }
-                      }else{
-                          var mensaje=document.getElementById('mensaje');
-                          mensaje.style="opacity:1;transition:1s";
-                          var intervalo=setInterval(function () {
-                            mensaje.style="opacity:0;transition:1s";
-                        }, 9000);
-                      }
-                  });
-              }else{
-                  window.location='../login';
-              }
-
-          }
-
-          //funcion para calificar
-          function vaStart(id){
-              if (id_user!='no-log') {
-                  var valoracion=document.getElementById(id).value;
-                  var DarCalif={!!json_encode(route('calificar.store'))!!};
-                  $.get(DarCalif,{
-                      user_id:id_user,
-                      restaurant_id:restaurant_id,
-                      score:valoracion
-                  },function(resultados){
-                      verCalifiR();
-                      verCalifi();
-                      var divCali=document.getElementById('contCalif2').style='opacity:0;transition:1s;float:left;';
-                      if (resultados!='1') {
-                          aparecerVa();
-
-                          var mensaje=document.getElementById('mensaje');
-                          mensaje.style="opacity:1;transition:1s";
-                            var intervalo=setInterval(function () {
-                                mensaje.style="opacity:0;transition:1s";
-                            }, 9000);
-                      }
-                  });
-              }else{
-                  window.location='../login';
-              }
-            }
-
-
-      </script>
 
 @endsection
 
@@ -216,11 +108,19 @@
         Aún no has experimentado de los servicios del restaurante para calificar. ¿Qué  esperas? ¡Haz tu reserva!
     </div>
 
+
+
     @if($sm!="")
         <strong>
             <div class="alert alert-danger">{{$sm}}</div>
         </strong>
     @endif
+
+    @guest
+        <input type="hidden" name="" id="iduser" value="no log">
+    @else
+        <input type="hidden" name="" algo="hola" id="iduser" value="{{\Auth::user()->id}}">
+    @endguest
 
     <div class="row ">
         <div class="col-12 col-sm-6">
@@ -284,7 +184,7 @@
 
             <p  style="height:auto;">
 
-                <div  id="contCalif2" class="clasificacion"  style="opacity:0;float:left;">
+                <div  id="contCalif2" class="clasificacion"  >
                     <input id="dar5" type="radio" name="tenedor" value="5" onclick="vaStart(this.id);">
                     <label class="start clasificación" for="dar5">&#9733;</label>
                     <input id="dar4" type="radio" name="tenedor" value="4" onclick="vaStart(this.id);">
@@ -296,6 +196,7 @@
                     <input id="dar1" type="radio" name="tenedor" value="1" onclick="vaStart(this.id);">
                     <label class="start clasificación" for="dar1">&#9733;</label>
                 </div>
+            </p>
         </div>
     </div>
 
@@ -359,12 +260,7 @@
         </div>
     </div>
 
-    <div class="col-12 mb-3">
-        @if (count($dishes)!=0)
-            <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
-            <input type="submit" class="btn btn-primary btn-block"  name="addcarrito" value="Añadir al carrito">
-        @endif
-    </div>
+
 </div>
 
 
@@ -399,69 +295,176 @@
     </div>
     @include('includes/footer')
 
+    <script type="text/javascript">
+
+
+        var id_user=document.getElementById('iduser').value;
+
+        if(id_user=='no log'){
+            id_user='no-log';
+        }
+
+        //obtenemos id usuarios
+        var restaurant_id={{$restaurant->id}};//obtenemos id usuarios
+        var divCalif=  document.getElementById('contCalif2');
+
+        verCalifi();
+        verCalifiR();
+
+        //funcion para ver calificacion de mismo usuario
+        function verCalifi(){
+            if (id_user!='no-log') {
+                var obtnerMiCalf={!!json_encode(route('calificar.obtnerCali'))!!};
+                $.get(obtnerMiCalf,{
+                    user_id:id_user,
+                    restaurant_id:restaurant_id
+                },function(resultados){
+                    if (resultados!="") {
+                        var score=parseInt(resultados);
+                        var check= document.getElementById('dar'+score);
+                        check.checked=true;
+                    }
+                });
+            }
+        }
+
+        //funcion para ver puntaje del restaurante
+        function verCalifiR(){
+            var obtnerMiCalfR={!!json_encode(route('calificar.obtnerCaliR'))!!};
+            $.get(obtnerMiCalfR,{
+                restaurant_id:restaurant_id
+            },function(resultados){
+                if (resultados!='null') {
+                    document.getElementById('lblpuntaje').innerText=resultados+'/5';
+                    document.getElementById('rbd'+parseInt(resultados)).checked=true;
+                }
+            });
+        }
+
+        //funcion para mostrar para valorar
+        function aparecerVa(){
+            if (id_user!='no-log') {
+                var validarP={!!json_encode(route('calificar.consultarPe'))!!};
+                $.get(validarP,{
+                    user_id:id_user,
+                    restaurant_id:restaurant_id
+                },function(resultados){
+                    if (resultados=='true') {
+                        var divCalif=  document.getElementById('contCalif2');
+                        if (divCalif.style.opacity=='0') {
+                            divCalif.style="opacity:1;transition:2s;float:left;";
+                        }else{
+                            divCalif.style="opacity:0;transition:2s;float:left;";
+                        }
+                    }else{
+                        var mensaje=document.getElementById('mensaje');
+                        mensaje.style="opacity:1;transition:1s";
+                        var intervalo=setInterval(function () {
+                          mensaje.style="opacity:0;transition:1s";
+                      }, 9000);
+                    }
+                });
+            }else{
+                window.location='../login';
+            }
+
+        }
+
+        //funcion para calificar
+        function vaStart(id){
+            if (id_user!='no-log') {
+                var valoracion=document.getElementById(id).value;
+                var DarCalif={!!json_encode(route('calificar.store'))!!};
+                $.get(DarCalif,{
+                    user_id:id_user,
+                    restaurant_id:restaurant_id,
+                    score:valoracion
+                },function(resultados){
+                    verCalifiR();
+                    verCalifi();
+                    var divCali=document.getElementById('contCalif2').style='opacity:0;transition:1s;float:left;';
+                    if (resultados!='1') {
+                        aparecerVa();
+
+                        var mensaje=document.getElementById('mensaje');
+                        mensaje.style="opacity:1;transition:1s";
+                          var intervalo=setInterval(function () {
+                              mensaje.style="opacity:0;transition:1s";
+                          }, 9000);
+                    }
+                });
+            }else{
+                window.location='../login';
+            }
+          }
+
+
+    </script>
+    <script>
+
+
+            var marker=L.marker();
+            var map = L.map('map');
+            map.scrollWheelZoom.disable();
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                maxZoom: 18
+            }).addTo(map);
+
+
+            function localizar(){
+            const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+            setTimeout(() => {
+                navigator.geolocation.clearWatch(watcher);
+            }, 10);
+            }
+
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+            }
+
+            const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+
+            setTimeout(() => {
+            navigator.geolocation.clearWatch(watcher);
+            }, 10);
+
+
+
+            function mostrarUbicacion (ubicacion) {
+            const lng = ubicacion.coords.longitude;
+            const lat = ubicacion.coords.latitude;
+
+            map.setView([{{$restaurant->latitude}},{{$restaurant->longitude}}],14);
+            var circle = L.circle([lat, lng], {
+                color: '#0064FF',
+                fillColor: '#0075CC',
+                fillOpacity: 0.5,
+                radius: 50
+            }).addTo(map);
+            var circle = L.circle([lat, lng], {
+                color: 'red',
+                fillColor: 'red',
+                fillOpacity: 0.5,
+                radius: 1
+            }).addTo(map);
+
+            circle.bindPopup("<b>Hola!</b><br>Estas aquí").openPopup();
+
+            var nomR='{{$restaurant->name}}';
+            var latR={{$restaurant->latitude}};
+            var lonR={{$restaurant->longitude}};
+            marker = L.marker([latR, lonR]).addTo(map);
+            marker.bindPopup("<b>"+nomR+"</b>").openPopup();
+            }
+
+
+            </script>
+
+
+
 @endsection
 
 
 
-
-<script>
-
-
-var marker=L.marker();
-var map = L.map('map');
-map.scrollWheelZoom.disable();
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-    maxZoom: 18
-}).addTo(map);
-
-
-function localizar(){
-const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
-setTimeout(() => {
-    navigator.geolocation.clearWatch(watcher);
-}, 10);
-}
-
-
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(mostrarUbicacion);
-}
-
-const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
-
-setTimeout(() => {
-navigator.geolocation.clearWatch(watcher);
-}, 10);
-
-
-
-function mostrarUbicacion (ubicacion) {
-const lng = ubicacion.coords.longitude;
-const lat = ubicacion.coords.latitude;
-
-map.setView([{{$restaurant->latitude}},{{$restaurant->longitude}}],14);
-var circle = L.circle([lat, lng], {
-    color: '#0064FF',
-    fillColor: '#0075CC',
-    fillOpacity: 0.5,
-    radius: 50
-}).addTo(map);
-var circle = L.circle([lat, lng], {
-    color: 'red',
-    fillColor: 'red',
-    fillOpacity: 0.5,
-    radius: 1
-}).addTo(map);
-
-circle.bindPopup("<b>Hola!</b><br>Estas aquí").openPopup();
-
-var nomR='{{$restaurant->name}}';
-var latR={{$restaurant->latitude}};
-var lonR={{$restaurant->longitude}};
-marker = L.marker([latR, lonR]).addTo(map);
-marker.bindPopup("<b>"+nomR+"</b>").openPopup();
-}
-
-
-</script>
