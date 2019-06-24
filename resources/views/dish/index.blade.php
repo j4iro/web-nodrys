@@ -81,9 +81,7 @@
             cursor: pointer;
         }
 
-        .cursor-pointer{
-        cursor: pointer;
-        }
+
 
         @media screen and (max-width: 320px)
         {
