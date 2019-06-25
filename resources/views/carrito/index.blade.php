@@ -241,12 +241,12 @@ function ejecutarTargeta(){
                     <div class="card mt-2 rounded-lg shadow-sm p-2">
                         <div class="row">
                         <div class="col-4   d-flex align-items-center">
-                            <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" class="img-thumbnail shadow ">
+                            <img src="{{ route('dish.image',['filename'=>$plato->image]) }}" width="140" class="img-thumbnail shadow ">
                         </div>
                         <div class="col-4 col-sm-5 col-md-5 col-lg-5 pt-2 px-0">
                             <div class="row ">
                                 <div class="col-12">
-                                    <img src="{{asset('images/icons/icono-comida-carrito.png')}}" width="20">
+                                    <img src="{{asset('images/icons/icono-comida-carrito.png')}}" width="20" >
                                     @if($plato->name=="reserva") {{'-'}} @else {{$plato->name}}  @endif
                                 </div>
                                 <div class="col-12">
