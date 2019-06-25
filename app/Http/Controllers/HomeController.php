@@ -99,7 +99,9 @@ class HomeController extends Controller
         $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
         ->select('dishes.*','restaurants.name as restaurante','restaurants.id as restaurante_id')
         ->where('dishes.category_dish','<>','5')
+        ->inRandomOrder()
         ->get();
+
         return view('dish.getAll',[
             'platos' => $platos
         ]);

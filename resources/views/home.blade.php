@@ -195,7 +195,7 @@
         @foreach ( $restaurants as $restaurant )
 
             <div class="col-12 col-md-6 col-lg-4 mb-4 ">
-                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" class="a-card-restaurant">
+                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(str_replace(" ","-",trim($restaurant->name)))])}}" class="a-card-restaurant">
                 <div class="card card-restaurant ">
                     @include('includes.image_restaurante')
                     <div class="card-body p-0 px-3 pt-2 ">
