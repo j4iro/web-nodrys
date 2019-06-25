@@ -346,8 +346,9 @@
                 restaurant_id:restaurant_id
             },function(resultados){
                 if (resultados!='null') {
-                    document.getElementById('lblpuntaje').innerText=resultados+'/5';
                     document.getElementById('rbd'+parseInt(resultados)).checked=true;
+                }else{
+                    document.getElementById('rbd5').checked=true;
                 }
             });
         }
