@@ -243,3 +243,7 @@ li
    .mg-top{
        margin-top: 50px;
    }
+
+   .cursor-pointer{
+    cursor: pointer;
+    }

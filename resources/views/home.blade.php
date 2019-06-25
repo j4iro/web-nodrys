@@ -103,7 +103,7 @@
                 <div class="row slider-inicio d-flex justify-content-center align-items-center">
                     <div class="col-12 col-sm-8 col-md-5 text-center">
                         <div class="input-group mb-2">
-                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
+                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" required>
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
                             </div>

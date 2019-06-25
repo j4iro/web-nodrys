@@ -331,6 +331,7 @@ function ejecutarTargeta(){
 
         <!--Formulario Ocasión Especial-->
         @auth
+        @if (isset($_SESSION['carrito']) && count($_SESSION['carrito'])>=1)
         <div class="mt-1 col-12 mb-3 col-sm-12 col-md-12 col-lg-4 offset-lg-1 " id="formOcasionEspecial">
             <div class="card shadow p-4 ">
 
@@ -399,6 +400,7 @@ function ejecutarTargeta(){
             </div>
         </div>
         <!--Formulario Ocasión Especial-->
+        @endif
         @endauth
 
 </div>
