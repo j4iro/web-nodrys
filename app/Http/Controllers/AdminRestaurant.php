@@ -27,10 +27,6 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.index');
     }
 
-    public function reportespersonalizados()
-    {
-
-    }
     public function menus()
     {
         $id = session('id_restaurante');
@@ -61,10 +57,6 @@ class AdminRestaurant extends Controller
     public function reportesClientes(){
         session(['ventana'=>"otra"]);
         return view('admin-restaurant.reportesclientes');
-    }
-
-    public function reportesPedidos(){
-        return view('admin-restaurant.reportespedidos');
     }
 
     public function datos()

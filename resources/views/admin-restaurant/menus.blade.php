@@ -2,13 +2,14 @@
 @section('scripts')
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
     <script>
-
     var dia;
     var idRestaurant={{$id}};
+    var arrayPlatos=getDishes();
+    var arrayPlatosMenu=[];
+
     $(window).load(function() {
-        traerPlatos();
+        // console.log(arrayPlatos[0]);
         var diaActual=new Date().getDay();
         switch (diaActual) {
             case 0:
@@ -35,9 +36,6 @@
             default:
 
         }
-        console.log(diaActual);
-
-
     });
     var DIA;
     function changeDay(dia){
@@ -56,92 +54,112 @@
         btnSabado.classList.add('btn-light');
         btnDomingo.classList.remove('btn-primary');
         btnDomingo.classList.add('btn-light');
-
         dia.classList.remove('btn-light');
         dia.classList.toggle('btn-primary');
-        listarPlatoAlMenu();
+
+        getMenuDishes();
+
+
 
     }
+
     function inserta(value) {
         insertarPlatoAlMenu(DIA,value.value);
         listarPlatoAlMenu();
     }
+
     function insertarPlatoAlMenu(dia,platoId)
     {
         var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/saveplatomenu";
-
         $.get(finalUrl,
-        {   dia:dia,
+        {
+            dia:dia,
             dish_id:platoId,
             restaurant_id:idRestaurant
         },function(e) {
-            console.log(e);
+            // console.log(e);
         });
-        // console.log(dia + dish_id + $('#comboplatos').val());
-        // listarPlatoAlMenu();
+        getMenuDishes();
+
     }
 
-    function listarPlatoAlMenu()
+// NOTE: listan los platos que etan en el menu del dia elegido
+function listarPlatoAlMenu()
     {
         var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/listarplatomenu";
 
-        $.get(finalUrl,
-        {
-            restaurant_id: idRestaurant,
-            dia:DIA
-        },function(resultados){
-            let platos = JSON.parse(resultados);
-            let items='';
-
-            platos.forEach( plato => {
-                // Ceviche
-                 items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
-            });
-            platosMenu.innerHTML=items;
-            // $('#ListaPlatos').html(items);
-        });
     }
 
-    function eliminarPlatoMenu(id){
-        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/eliminarplatomenu";
-        $.get(finalUrl,
-        {
-            menu_id: id
-        });
-
-        listarPlatoAlMenu();
-    }
-
-    function traerPlatos()
+function eliminarPlatoMenu(id){
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/eliminarplatomenu";
+    $.get(finalUrl,
     {
-        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/getplatos";
+        menu_id: id
+    });
+    getMenuDishes();
+}
 
-        $.get(finalUrl, function(data)
-        {
-            let platos;
-            platos = JSON.parse(data);
-            if(platos!='no')
-            {
-                let template  = ''
-                platos.forEach( plato => {
-                    // items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
-
-                    template += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${plato.id}'>+</button> ${plato.name}</li>`
-
-                    }
-                );
-                 ListaPlatos.innerHTML=template;
+// NOTE: lista todos los platos
+function getDishes() {
+    var arrayPlatos=[];
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/getplatos";
+    $.get(finalUrl, function(data)
+    {
+        let platos = JSON.parse(data);
+        platos.forEach(
+            plato=>{
+                arrayPlatos.push(plato);
             }
-            else
-            {
-                //No hay platos
+        )
+    });
+    return arrayPlatos;
+}
+
+function getMenuDishes() {
+    var arrayPlatosMenu=[];
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/listarplatomenu";
+    $.get(finalUrl,
+    {
+        restaurant_id: idRestaurant,
+        dia:DIA
+    },function(resultados){
+        let platosMenu = JSON.parse(resultados);
+        let itemsMenu='';
+        let itemsPlatos='';
+
+        for(var i=0;i<platosMenu.length;i++){
+            arrayPlatosMenu[i]=platosMenu[i].name;
+            itemsMenu+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${platosMenu[i].name}<a id="${platosMenu[i].id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
+        }
+        for(var i=0;i<arrayPlatos.length;i++){
+            if(arrayPlatosMenu.indexOf(arrayPlatos[i].name)==-1){
+                itemsPlatos += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${arrayPlatos[i].id}'>+</button> ${arrayPlatos[i].name}</li>`
             }
 
-        });
+        }
+
+        platosMenuDiv.innerHTML=itemsMenu;
+        ListaPlatos.innerHTML=itemsPlatos;
+
+    });
+}
+
+    function traerPlatos(arrayPlatosMenu)
+    {
+        // for(var i=0;i<arrayPlatos.length;i++){
+        //     console.log(i+'.-'+arrayPlatos[i].name);
+        // }
+
+        //arrayPlatos.forEach(function(element) {
+          // console.log(element);
+          // console.log(arrayPlatosMenu);
+        //});
+        // console.log(arrayPlatos);
+
+        //          items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
+        //         template += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${plato.id}'>+</button> ${plato.name}</li>`
+
     }
-
-
-
 
     </script>
 
@@ -185,7 +203,7 @@
     <div class="row">
         <div class="col-sm-6" id="ListaPlatos">
         </div>
-        <div class="col-sm-6" id="platosMenu">
+        <div class="col-sm-6" id="platosMenuDiv">
 
         </div>
     </div>
