@@ -1,215 +1,213 @@
 @extends('layouts.app-r')
-
 @section('scripts')
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <script>
     var dia;
     var idRestaurant={{$id}};
-    $(window).load(function() {
-        $('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            dia = button.data('whatever')
-            var modal = $(this)
-            modal.find('.modal-title').text('Día ' + dia)
-            // modal.find('.modal-body input').val(recipient)
-            traerPlatos();
-            listarPlatoAlMenu();
-        })
-    });
+    var arrayPlatos=getDishes();
+    var arrayPlatosMenu=[];
 
-    function insertarPlatoAlMenu()
+    $(window).load(function() {
+        // console.log(arrayPlatos[0]);
+        var diaActual=new Date().getDay();
+        switch (diaActual) {
+            case 0:
+                btnDomingo.click();
+                break;
+            case 1:
+                btnLunes.click();
+                    break;
+            case 2:
+                btnMartes.click();
+                    break;
+            case 3:
+                btnMiercoles.click();
+                    break;
+            case 4:
+                btnJueves.click();
+                    break;
+            case 5:
+                btnViernes.click();
+                    break;
+            case 6:
+                btnSabado.click();
+                    break;
+            default:
+
+        }
+    });
+    var DIA;
+    function changeDay(dia){
+        DIA=dia.value;
+        btnLunes.classList.remove('btn-primary');
+        btnLunes.classList.add('btn-light');
+        btnMartes.classList.remove('btn-primary');
+        btnMartes.classList.add('btn-light');
+        btnMiercoles.classList.remove('btn-primary');
+        btnMiercoles.classList.add('btn-light');
+        btnJueves.classList.remove('btn-primary');
+        btnJueves.classList.add('btn-light');
+        btnViernes.classList.remove('btn-primary');
+        btnViernes.classList.add('btn-light');
+        btnSabado.classList.remove('btn-primary');
+        btnSabado.classList.add('btn-light');
+        btnDomingo.classList.remove('btn-primary');
+        btnDomingo.classList.add('btn-light');
+        dia.classList.remove('btn-light');
+        dia.classList.toggle('btn-primary');
+
+        getMenuDishes();
+
+
+
+    }
+
+    function inserta(value) {
+        insertarPlatoAlMenu(DIA,value.value);
+        listarPlatoAlMenu();
+    }
+
+    function insertarPlatoAlMenu(dia,platoId)
     {
         var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/saveplatomenu";
         $.get(finalUrl,
         {
-            dia: dia,
-            dish_id: $('#comboplatos').val(),
-            restaurant_id: 1
+            dia:dia,
+            dish_id:platoId,
+            restaurant_id:idRestaurant
+        },function(e) {
+            // console.log(e);
         });
-        // console.log(dia + dish_id + $('#comboplatos').val());
-        listarPlatoAlMenu();
+        getMenuDishes();
+
     }
 
-    function listarPlatoAlMenu()
+// NOTE: listan los platos que etan en el menu del dia elegido
+function listarPlatoAlMenu()
     {
         var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/listarplatomenu";
 
-        $.get(finalUrl,
-        {
-            restaurant_id: idRestaurant,
-            dia: dia
-        },function(resultados){
-            let platos = JSON.parse(resultados);
-            let items='';
-
-            platos.forEach( plato => {
-                // Ceviche
-                 items+= `<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></li>`
-            });
-            $('#ListaPlatos').html(items);
-        });
     }
 
-    function eliminarPlatoMenu(id){
-        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/eliminarplatomenu";
-        $.get(finalUrl,
-        {
-            menu_id: id
-        });
-
-        listarPlatoAlMenu();
-    }
-
-    function traerPlatos()
+function eliminarPlatoMenu(id){
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/eliminarplatomenu";
+    $.get(finalUrl,
     {
-        var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/getplatos";
+        menu_id: id
+    });
+    getMenuDishes();
+}
 
-        $.get(finalUrl, function(data)
-        {
-            let platos;
-            platos = JSON.parse(data);
-
-            if(platos!='no')
-            {
-                let template  = ''
-                platos.forEach( plato => {
-                    template += `<option value="${plato.id}">${plato.name}</option>`
-                    // template += `<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">${plato.name}</li>`
-                    }
-                );
-                 template += `<option value="" disabled selected>Elija un plato</option>`;
-                $('#comboplatos').html(template);
+// NOTE: lista todos los platos
+function getDishes() {
+    var arrayPlatos=[];
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/getplatos";
+    $.get(finalUrl, function(data)
+    {
+        let platos = JSON.parse(data);
+        platos.forEach(
+            plato=>{
+                arrayPlatos.push(plato);
             }
-            else
-            {
-                //No hay platos
+        )
+    });
+    return arrayPlatos;
+}
+
+function getMenuDishes() {
+    var arrayPlatosMenu=[];
+    var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/listarplatomenu";
+    $.get(finalUrl,
+    {
+        restaurant_id: idRestaurant,
+        dia:DIA
+    },function(resultados){
+        let platosMenu = JSON.parse(resultados);
+        let itemsMenu='';
+        let itemsPlatos='';
+
+        for(var i=0;i<platosMenu.length;i++){
+            arrayPlatosMenu[i]=platosMenu[i].name;
+            itemsMenu+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${platosMenu[i].name}<a id="${platosMenu[i].id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
+        }
+        for(var i=0;i<arrayPlatos.length;i++){
+            if(arrayPlatosMenu.indexOf(arrayPlatos[i].name)==-1){
+                itemsPlatos += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${arrayPlatos[i].id}'>+</button> ${arrayPlatos[i].name}</li>`
             }
 
-        });
+        }
+
+        platosMenuDiv.innerHTML=itemsMenu;
+        ListaPlatos.innerHTML=itemsPlatos;
+
+    });
+}
+
+    function traerPlatos(arrayPlatosMenu)
+    {
+        // for(var i=0;i<arrayPlatos.length;i++){
+        //     console.log(i+'.-'+arrayPlatos[i].name);
+        // }
+
+        //arrayPlatos.forEach(function(element) {
+          // console.log(element);
+          // console.log(arrayPlatosMenu);
+        //});
+        // console.log(arrayPlatos);
+
+        //          items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
+        //         template += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${plato.id}'>+</button> ${plato.name}</li>`
+
     }
+
     </script>
 
 @endsection
 
 @section('content')
+    <style media="screen">
+
+    </style>
+    <style media="screen">
+        .seccion-container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+        }
+        .borde{
+            border: 1px solid red;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .seccion{
+            width: 200px;
+        }
+        .btn{
+            width: 150px;
+            margin:5px 0;
+        }
+    </style>
+
+    {{-- parte de Beimer --}}
+    <div class="d-md-flex justify-content-between m-2">
+        <button onclick="changeDay(this)" id="btnDomingo" value="Domingo" class="btn btn-ligth border border-dark">Domingo</button>
+        <button onclick="changeDay(this)" id="btnLunes" value="Lunes" class="btn btn-light border border-dark">Lunes</button>
+        <button onclick="changeDay(this)" id="btnMartes" value="Martes" class="btn btn-light border border-dark">Martes</button>
+        <button onclick="changeDay(this)" id="btnMiercoles" value="Miercoles" class="btn btn-light border border-dark">Miercoles</button>
+        <button onclick="changeDay(this)" id="btnJueves" value="Jueves" class="btn btn-light border border-dark">Jueves</button>
+        <button onclick="changeDay(this)" id="btnViernes" value="Viernes" class="btn btn-light border border-dark">Viernes</button>
+        <button onclick="changeDay(this)" id="btnSabado" value="Sabado" class="btn btn-light border border-dark">Sabado</button>
+    </div>
     <div class="row">
-        <div class="col-12">
-            <strong class="navbar-brand p-0">Mis menús</strong>
-            <hr>
+        <div class="col-sm-6" id="ListaPlatos">
+        </div>
+        <div class="col-sm-6" id="platosMenuDiv">
+
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Lunes</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Lunes">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Martes</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Martes">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Miercoles</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Miercoles">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Jueves</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Jueves">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Viernes</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Viernes">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Sábado</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Sábado">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-        <div class="col-3">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-                <div class="card-header">Domingo</div>
-                <div class="card-body text-dark">
-                  <h5 class="card-title"><a href="#modal" data-toggle="modal" data-target="#exampleModal" data-whatever="Domingo">Editar</a></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-        </div>
-    </div>
-
-
-    {{-- MODAL --}}
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              {{-- <h5 class="modal-title" id="exampleModalLabel">Día </h5> --}}
-              <strong class="modal-title navbar-brand p-0"></strong>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="form-row">
-                    <div class="col-9 mb-3">
-                        <select name="" id="comboplatos" class="form-control">
-                            <option value="" disabled selected>Elija un plato</option>
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary ml-2" onclick="insertarPlatoAlMenu();">Agregar</button>
-                    </div>
-
-                </div>
-
-                <ul id="ListaPlatos" class="list-group shadow-sm">
-                    {{-- <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Ceviche  <a href="" class="ml-auto text-danger">Quitar</a>  </li>
-                    <li class="list-group-item list-group-item-action">Causa</li> --}}
-
-                </ul>
-
-
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              {{-- <button type="button" class="btn btn-primary">Guardar</button> --}}
-            </div>
-          </div>
-        </div>
-      </div>
+    {{-- *************************** --}}
 
 @endsection

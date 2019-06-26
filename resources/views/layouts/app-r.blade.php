@@ -9,9 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Panel Restaurantes</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">
-    </script>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -31,7 +29,6 @@
                 <strong>{{session('nombre_restaurante')}}
 
              </strong>
-             <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
 
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -48,10 +45,11 @@
 
         <main class="py-4">
                 <div class="container-fluid mt-3">
+                    <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
                         <div class="row ">
-
-                        @include('includes/slidebar')
-
+                            <div id="slideMenu" class="col-12 col-md-3 col-lg-2 mb-3 slide">
+                                @include('includes/slidebar')
+                            </div>
                             <div class="col-12 col-md-9 col-lg-10 mb-3">
                                 @yield('content')
                             </div>
@@ -79,9 +77,6 @@
     <script type="text/javascript">
 
     window.onload=function(){
-
-
-
         var icono = {!! json_encode(asset('images/favicon/favicon.png')) !!};
         Notification.requestPermission();
 
@@ -112,61 +107,66 @@
         }
 
         var numOrdenes=0;
-        if(typeof(EventSource) !== "undefined") {
-
-            var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
-            var source = new EventSource(finalUrl);
-
-            source.onmessage = function(event) {
-                // en este if evaluamos si tenemos registros de ordenes
-                if (event.data!="") {
-
-                    var arrayOrders=event.data.split(";");
-                    var updatedNumOrders=arrayOrders.length;
-
-                    var tituloNotificacion="Hay nuevas Ordenes"
-                    if ('{{session('ventana')}}'=='inicio') {
-
-                        llenaTabla(arrayOrders);
 
 
-                    }else {
+        function fun(event) {
+            if (event!="") {
 
-                    }
+                var arrayOrders=event.split(";");
+                var updatedNumOrders=arrayOrders.length;
 
-                    // console.log(numOrdenes);
-                    // console.log(arrayOrders.length);
-                    if (numOrdenes!=updatedNumOrders) {
-                        if(numOrdenes>updatedNumOrders){
-                            tituloNotificacion="Una orden menos"
-                        }
-                        if(numOrdenes<updatedNumOrders){
-                            tituloNotificacion="Nueva Orden"
-                        }
-                        mostrarNotificacion(tituloNotificacion,"tiene "+arrayOrders.length+" ordenes pendientes");
-                    }
+                var tituloNotificacion="Hay nuevas Ordenes"
+                if ('{{session('ventana')}}'=='inicio') {
 
-                    // esto es importante para mostrar las notificaciones
-                    numOrdenes=arrayOrders.length;
+                    llenaTabla(arrayOrders);
+
 
                 }else {
-                    if ('{{session('ventana')}}'=='inicio') {
 
-                        pedidos.innerHTML="No hay registros";
-                    }else {
-
-                    }
-
-                    // significa que no hay registros
                 }
-            };
-        }
-        else
-        {
-            document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+
+                // console.log(numOrdenes);
+                // console.log(arrayOrders.length);
+                if (numOrdenes!=updatedNumOrders) {
+                    if(numOrdenes>updatedNumOrders){
+                        tituloNotificacion="Una orden menos"
+                    }
+                    if(numOrdenes<updatedNumOrders){
+                        tituloNotificacion="Nueva Orden"
+                    }
+                    mostrarNotificacion(tituloNotificacion,"tiene "+arrayOrders.length+" ordenes pendientes");
+                }
+
+                // esto es importante para mostrar las notificaciones
+                numOrdenes=arrayOrders.length;
+
+            }else {
+                if ('{{session('ventana')}}'=='inicio') {
+
+                    pedidos.innerHTML="No hay registros";
+                }else {
+
+                }
+
+                // significa que no hay registros
+            }
         }
 
+        var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
+        console.log(finalUrl);
 
+        var intervalo=setInterval(function() {
+            $.get(finalUrl,function(e) {
+                fun(e);
+            })
+        },1000);
+
+
+// muestra el slide
+        var bottonNavBar=document.querySelector('.navbar-toggler');
+        bottonNavBar.addEventListener('click',function() {
+            slideMenu.classList.toggle('show_slide');
+        });
 
 
 
@@ -186,8 +186,10 @@
                      var id=reservas[i][10];
                      var url={!! json_encode(url('/'))!!}+"/admin-restaurante/pedidos-pendientes/detalle/"+id;
                      var hora=reservas[i][5].split(":");
-                     var restante=((hora[0]*60+parseInt(hora[1]))+{{session('tolerancia')}})-(horaActual.getHours()*60+horaActual.getMinutes());
-                     //console.log(tolerancia.value);
+                     // console.log(hora);
+                     // var restante=((hora[0]*60+parseInt(hora[1]))+{{session('tolerancia')}})-(horaActual.getHours()*60+horaActual.getMinutes());
+                     var restante=((hora[0]*60+parseInt(hora[1])))-(horaActual.getHours()*60+horaActual.getMinutes());
+                     // console.log(tolerancia.value);
 
 
                      var estado=reservas[i][9];
@@ -218,6 +220,7 @@
                      pedidos.innerHTML+=cadena;
                  }
     }
+
 
 
              // alert(nose);

@@ -1,4 +1,3 @@
-<div class="col-12 col-md-3 col-lg-2 mb-3">
     <div class="list-group list-group-slidebar border border-info rounded shadow-sm">
         <a href="{{route('admin-r.menus')}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Menús
         <a href="{{route('adminRestaurant.plato.list')}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Mis Platos
@@ -37,4 +36,3 @@
             @csrf
         </form>
     </div>
-</div>

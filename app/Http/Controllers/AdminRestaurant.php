@@ -27,13 +27,10 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.index');
     }
 
-    public function reportespersonalizados()
-    {
-
-    }
     public function menus()
     {
         $id = session('id_restaurante');
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.menus',compact('id'));
     }
 
@@ -44,23 +41,22 @@ class AdminRestaurant extends Controller
 
     public function saveplatomenu(Request $request)
     {
-        // dd($request);
-        $menu = new Menu();
 
+        $menu = new Menu();
         $menu->dia = $request->dia;
         $menu->dish_id = $request->dish_id;
         $menu->restaurant_id = $request->restaurant_id;
-        // $menu->created_at =
 
-        $menu->save();
+        try {
+            $menu->save();
+        } catch (\Exception $e) {
+            echo $e;
+        }
+
     }
     public function reportesClientes(){
         session(['ventana'=>"otra"]);
         return view('admin-restaurant.reportesclientes');
-    }
-
-    public function reportesPedidos(){
-        return view('admin-restaurant.reportespedidos');
     }
 
     public function datos()
