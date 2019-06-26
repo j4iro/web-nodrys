@@ -1,53 +1,27 @@
 @extends('layouts.app')
 @section('scripts')
 
-{{-- INTEGRACION DE LA PASERAL DE PAGOS  --}}
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<script src="https://checkout.culqi.com/v2"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-{{-- LO DE PASARELA --}}
+
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src={{asset('js/validaciones.js') }} rel="stylesheet"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script type="text/javascript">
 
-Culqi.publicKey = 'pk_test_KZH8HrkmOItB9qVx';
- var producto="";
- var precio="";
- var mij="nada";
- var err="";
 
 $(window).load(function() {
     $('#modalPago').on('show.bs.modal', function () {
         checkpagarcontarjeta.checked=true;
         poner_requireds();
         //Peticion AJAX para traer datos de la tarjeta guardada
+        console.log('smith puto')
         traerDatosTarjeta();
     });
-    modalPago.click();
+
     $('#modalPago').on('hide.bs.modal', function () {
         checkpagarcontarjeta.checked=false;
         quitar_requireds();
     });
-
-    $('#buyButton').on('click', function(e) {
-
-        producto=$('#buyButton').attr('data-producto');
-        precio=$('#buyButton').attr('data-precio');
-
-           Culqi.settings({
-               title: producto,
-               currency: 'PEN',
-               description: producto,
-               amount: precio
-           });
-
-     Culqi.open();
-     e.preventDefault();
-
-    });
-
 
 });
 
@@ -131,76 +105,6 @@ function quitar_requireds() {
     $('#country').removeAttr("required");
     $('#cod_postal').removeAttr("required");
 }
-
-
-function ejecutarTargeta(){
-     Culqi.publicKey = 'pk_test_KZH8HrkmOItB9qVx';
-      var producto="";
-      var precio="";
-      var mij="nada";
-      var err="";
-      $('#buyButton').on('click', function(e) {
-
-         producto=$(this).attr('data-producto');
-         precio=$(this).attr('data-precio');
-
-            Culqi.settings({
-                title: producto,
-                currency: 'PEN',
-                description: producto,
-                amount: precio
-            });
-
-      Culqi.open();
-      e.preventDefault();
-
-     });
-       function culqi() {
-        if (Culqi.token) { // ¡Objeto Token creado exitosamente!
-
-                var token = Culqi.token.id;
-                var email = Culqi.token.email;
-
-                  $.ajax({
-                            url: 'respuesta_pasarela',
-                            method: 'get',
-                            data:{producto:producto,precio:precio,token:token,email:email},
-                            dataType: 'JSON',
-                            success:function(data)
-                            {
-
-                              var codReferencia='sp';
-                              if (data.capture==true) {
-                                 codReferencia=data.reference_code;
-                                 alert(" Pago por reserva exitosa \nCódigo de referencia: "+codReferencia);
-
-                              }else{
-                               mij=JSON.parse(data);
-                               alert(mij.user_message);
-                              }
-
-                              console.log(data);
-
-                             },
-                            error:function(error_data)
-                            {
-                             console.log(error_data);
-                             err=error_data;
-                            alert(JSON.parse(err.responseJSON.message).user_message);
-
-                            }
-                            });
-
-        }
-        else { // ¡Hubo algún problema!
-            // Mostramos JSON de objeto error en consola
-         console.log(Culqi.error);
-        //alert(Culqi.error.user_message);
-
-
-        }
-   };
-
 
 </script>
 
@@ -385,15 +289,10 @@ function ejecutarTargeta(){
 
                 <div class="row mt-3">
                     <div class="col-6">
-
-                        <input type="button" id="buyButton" value="Pagar" data-producto="Este es el producto " data-precio=1000 >
-
-                        {{-- <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Tarjeta</a> --}}
-
+                        <a href="" data-toggle="modal" data-target="#modalPago" class="btn btn-block  btn-primary ">Tarjeta</a>
                     </div>
                     <div class="col-6">
                         <button type="submit"  class="btn btn-block  btn-danger ">Efectivo</button>
-
                     </div>
                 </div>
 

@@ -113,10 +113,7 @@
 
 @section('content')
 
-<div class="container mt-1">
-
-
-
+<div class="container mt-4">
 
     @if($sm!="")
         <strong>
