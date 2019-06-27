@@ -199,3 +199,7 @@ Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuD
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
 Route::get('/respuestaRuc',['as'=>'respuestaRuc','uses'=>'PeticionesController@respuestaRuc']);
 Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@respuestaDni']);
+
+
+Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
+Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');

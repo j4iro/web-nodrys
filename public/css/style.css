@@ -247,3 +247,9 @@ li
    .cursor-pointer{
     cursor: pointer;
     }
+
+    .img-carrito
+    {
+        max-width: 100px;
+        max-height: 100px;
+    }
