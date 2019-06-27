@@ -101,9 +101,6 @@
         }
 
     </style>
-
-
-
 @endsection
 @section('content')
 
@@ -176,21 +173,28 @@
                         Cerrado
                     @endif
                 </div>
+
                 <div class="col-6 pb-0 d-flex justify-content-end">
                     <form  action="{{route('carrito.add')}}" method="post">
                         {{csrf_field()}}
                         <input class="form-check-input d-none" type="checkbox" checked value="{{$reserva->id}}" name="checkDish[]" >
                         <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
                         <input type="hidden" name="solo_reserva" value="1">
-                        <input type="submit" class="btn btn-primary mt-2 "  name="addcarrito" value="Reservar lugar">
+                        <input id="Reservar" type="submit" class="btn btn-primary mt-2 "  name="addcarrito" value="Reservar lugar">
                      </form>
+                </div>
+                <div class="col-4 pb-0">
+                    <p>Capacidad: {{$restaurant->capacity}}</p>
+                </div>
+                <div class="col-4 pb-0">
+                    <p>Disponible: <strong id="afoDisponible">{{$restaurant->capacity}}</strong></p>
                 </div>
             </div>
 
             <hr >
-            <div class="row">
+            <div class="row d-none" id="contval">
                 <div class="col-3">
-                    <button class="btn btn-warning btn-sm" onclick="aparecerVa();">Danos tu calificación</button>
+                    <button class="btn btn-warning btn-sm">Danos tu calificación</button>
                 </div>
                 <div class="col-4">
                     <div  id="contCalif2" class="clasificacion2"  >
@@ -229,7 +233,7 @@
         </button>
 
         <button class="btn btn-light border border-dark btn-dias" id="miércoles" onclick="mostrardia(this.id,{{$restaurant->id}})">
-            Miercoles
+            Miércoles
         </button>
 
         <button class="btn btn-light border border-dark btn-dias" id="jueves" onclick="mostrardia(this.id,{{$restaurant->id}})">
@@ -241,7 +245,7 @@
         </button>
 
         <button class="btn btn-light border border-dark btn-dias" id="sábado" onclick="mostrardia(this.id,{{$restaurant->id}})">
-            Sabado
+            Sábado
         </button>
 
         <button class="btn btn-light border border-dark btn-dias" id="domingo" onclick="mostrardia(this.id,{{$restaurant->id}})">
@@ -266,8 +270,6 @@
 
 
 </div>
-
-
 
     <div class="row">
         <div class="col-3">
@@ -301,7 +303,7 @@
 
     <script>
             mostrardia('{{$dias[date('w')]}}','{{$restaurant->id}}');
-        </script>
+    </script>
 
     <script type="text/javascript">
 
@@ -338,6 +340,7 @@
 
         //funcion para ver puntaje del restaurante
         function verCalifiR(){
+
             var obtnerMiCalfR={!!json_encode(route('calificar.obtnerCaliR'))!!};
             $.get(obtnerMiCalfR,{
                 restaurant_id:restaurant_id
@@ -359,24 +362,15 @@
                     restaurant_id:restaurant_id
                 },function(resultados){
                     if (resultados=='true') {
-                        var divCalif=  document.getElementById('contCalif2');
-                        if (divCalif.style.opacity=='0') {
-                            divCalif.style="opacity:1;transition:2s;float:left;";
-                        }else{
-                            divCalif.style="opacity:0;transition:2s;float:left;";
-                        }
+                        contval.classList.remove('d-none');
+
                     }else{
-                        var mensaje=document.getElementById('mensaje');
-                        mensaje.style="opacity:1;transition:1s";
-                        var intervalo=setInterval(function () {
-                          mensaje.style="opacity:0;transition:1s";
-                      }, 9000);
+                        contval.classList.add('d-none');
                     }
                 });
             }else{
                 window.location='../login';
             }
-
         }
 
         //funcion para calificar
@@ -392,8 +386,6 @@
                     verCalifiR();
                     verCalifi();
                     if (resultados!='1') {
-                        aparecerVa();
-
                         var mensaje=document.getElementById('mensaje');
                         if(mensaje.classList.contains('d-none')){
                             mensaje.classList.remove('d-none');
@@ -408,6 +400,27 @@
             }
           }
 
+          var intervalo=setInterval(function () {
+              aparecerVa();
+              aforoDisponible({{$restaurant->capacity}});
+          }, 1000);
+
+          function aforoDisponible(aforoTotal){
+              var aforoDisponible={!!json_encode(route('aforo.aforoDisponible'))!!};
+              $.get(aforoDisponible,{
+                  restaurant_id:restaurant_id,
+                  aforo:aforoTotal
+              },function(resultados){
+                  afoDisponible.innerText=resultados;
+                  if (resultados==0) {
+                      Añadir.disabled=true;
+                      Reservar.disabled=true;
+                  }else{
+                      Añadir.disabled=false;
+                      Reservar.disabled=false;
+                  }
+              });
+          }
 
     </script>
     <script>

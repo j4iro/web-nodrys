@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Dish;
 use App\Restaurant;
 use App\Menu;
+use App\Order;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -53,7 +54,7 @@ class DishController extends Controller
     public function dishes(Request $request)
     {
         date_default_timezone_set('America/Lima');
-        $dias = array('domingo','lunes','martes','miercoles','jueves','viernes','sábado');
+        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado');
 
         $menus = Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
@@ -70,7 +71,6 @@ class DishController extends Controller
         {
           $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
         };
-
 
         $reserva = Dish::where('restaurant_id', $request->id)
         ->where('category_dish','=','5')
@@ -178,4 +178,32 @@ class DishController extends Controller
       }
 
     }
+    /*
+    $datos = Valoration::all()
+    ->where('restaurant_id',$request->restaurant_id);
+    */
+    public function aforoDisponible(Request $request){
+
+            $date = new \DateTime();
+            $fecha=$date->format('Y-m-d');
+            $datos = Order::all()
+            ->where('restaurant_id',$request->restaurant_id)
+            ->where('date',$fecha)
+            ->where('state','pendiente');
+
+            if ($datos!='[]') {
+                $nPersonas=0;
+                foreach ($datos as $key => $value) {
+                    $nPersonas+=$value['n_people'];
+                }
+                return (($request->aforo)-$nPersonas);
+            }else{
+                return ($request->aforo);
+            }
+
+    }
+
+
+
+
 }
