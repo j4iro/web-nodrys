@@ -280,7 +280,7 @@ class AdminController extends Controller
       $restaurant->ruc=$request->input('ruc');
       $restaurant->latitude=$request->input('latitud');
       $restaurant->longitude=$request->input('longitud');
-
+        $restaurant->capacity=$request->input('capacity');
 
 
       //Guardar la imagen del plato

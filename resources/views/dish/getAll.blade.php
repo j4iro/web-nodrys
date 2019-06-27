@@ -76,6 +76,14 @@
         @endforeach
     </div>
 
+    {{-- <div class="row">
+        <div class="col-3">
+            <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
+            <input type="submit" class="btn btn-primary"  name="addcarrito" value="Añadir al carrito">
+        </div>
+    </div>
+    </form> --}}
+
 
 </div>
 

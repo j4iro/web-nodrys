@@ -1,11 +1,10 @@
 @extends('layouts.app-r')
 @section('content')
 <div class="row">
-    <div class="col-7">
+    <div class="col-sm-7">
         <div class="preview-container">
             <video id="preview"></video>
                 <div class="cameras">
-                    <h4>Cameras</h4>
                     <div id="camerasList">
                     </div>
                 </div>
@@ -21,7 +20,7 @@
 
 
 </div>
-<div class="col-3 card">
+<div class="card col-sm-3">
 
         <h2 class="card-header">Ultima Orden confirmada</h2>
         <table class="table card-body">

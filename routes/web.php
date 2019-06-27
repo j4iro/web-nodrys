@@ -36,7 +36,7 @@ Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.
 Route::get('/utils/auth','UtilsController@auth')->name('utils.auth');
 
 /*Rutas para los pedidos de los clientes*/
-Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index')->middleware('verified');
+Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
 Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
 Route::get('/mis-pedidos/detalle/{id}','OrderController@detail_c')->name('pedidos.detail_c');
 
@@ -203,3 +203,5 @@ Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@r
 
 Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
 Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
+/*Aforo*/
+Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');

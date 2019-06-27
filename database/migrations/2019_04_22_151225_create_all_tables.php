@@ -49,6 +49,7 @@ class CreateAllTables extends Migration
             $table->boolean('state')->default(1);
             $table->boolean('availability')->default(1);
             $table->integer('time')->default(10);
+            $table->integer('capacity')->nullable();
 
             $table->timestamps();
         });

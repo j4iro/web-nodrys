@@ -108,7 +108,7 @@ public function index_r()
         ->where('orders.date',$today)
         ->get();
         // echo "data: The server time is, otro\n\n";
-    
+
         $ordenes=array();
         $array=$orders->toArray();
         foreach ($array as $reserva) {
@@ -118,7 +118,7 @@ public function index_r()
         // $cadena=implode ( ";" , $array );
         $cadena=implode(";",$ordenes);
 
-        echo "data: {$cadena}\n\n";
+        echo $cadena;
         flush();
 
     }

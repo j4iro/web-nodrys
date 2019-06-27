@@ -128,6 +128,10 @@
                     <label for="type"><strong>Email de ingreso</strong></label>
                     <input type="email" class="form-control" name="email_ingreso" value="{{ $user->email ?? '' }}" placeholder="Email de acceso al panel" id="address" required>
                 </div>
+                <div class="form-group col-12  col-md-6 ">
+                    <label for="type"><strong>Aforo</strong></label>
+                    <input type="number" class="form-control" name="capacity" value="" placeholder="capadidad" id="capacity" required>
+                </div>
             </div>
 
             <div class="form-row">
