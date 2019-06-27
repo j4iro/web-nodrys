@@ -365,8 +365,6 @@
                         contval.classList.add('d-none');
                     }
                 });
-            }else{
-                window.location='../login';
             }
         }
 
