@@ -14,9 +14,12 @@ class CarritoController extends Controller
         date_default_timezone_set('America/Lima');
         $url_anterior = \URL::previous();
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
+        $dia_reserva = isset($_SESSION['dia_reserva']) ? $_SESSION['dia_reserva'] : null;
+
         return view('carrito.index',[
             'carrito' => $carrito,
-            'url_anterior' => $url_anterior
+            'url_anterior' => $url_anterior,
+            'dia_reserva' => $dia_reserva
         ]);
     }
 

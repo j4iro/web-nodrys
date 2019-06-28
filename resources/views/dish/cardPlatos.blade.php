@@ -38,7 +38,8 @@
 @if (count($dishes)!=0)
     <div class="col-12 mb-3">
         <input type="hidden" name="id_restaurant" value="{{$idrestaurant}}">
-        <input id="Añadir" type="submit" class="btn btn-primary btn-block"  name="addcarrito" value="Añadir al carrito">
+        <input type="hidden" name="dia_reserva" value="{{$idrestaurant}}">
+        <input id="Añadir2" type="submit" class="btn btn-primary btn-block"  name="addcarrito" value="Añadir al carrito">
     </div>
 @else
     <input id="Añadir" type="hidden">

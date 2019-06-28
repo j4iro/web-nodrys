@@ -51,17 +51,66 @@ class DishController extends Controller
             'idrestaurant' => $id
         ]);
     }
+
+    function getMonthDays($Month, $Year)
+    {
+        //Si la extensión que mencioné está instalada, usamos esa.
+        if( is_callable("cal_days_in_month"))
+        {
+            return cal_days_in_month(CAL_GREGORIAN, $Month, $Year);
+        }
+        else
+        {
+            //Lo hacemos a mi manera.
+            return date("d",mktime(0,0,0,$Month+1,0,$Year));
+        }
+    }
+
+    function getArrayDiasSemana($posicionDia, $diaActual)
+    {
+        $array = array($posicionDia => $diaActual);
+        for($i = $posicionDia; $i<=6;$i++)
+        {
+            array_push($array, $diaActual+1);
+        }
+
+        for($i = $posicionDia; $i<=0;$i--)
+        {
+            array_push($array, $diaActual-1);
+        }
+
+        return $array();
+    }
+
     public function dishes(Request $request)
     {
         date_default_timezone_set('America/Lima');
-        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado');
+
+        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado'); //Entrada
+        $nombre_dia_actual = $dias[date('w')]; //jueves
+        $nro_dia_actual = date('d'); //27
+
+        $numeros_dias = array(23,24,25,26,27,28,29); //Salida
+
+        $nro_mes_actual = date('m');
+        $nro_ano_actual = date('Y');
+
+        switch($nombre_dia_actual)
+        {
+            case 'domingo':
+            $fecha_reserva = date('Y-m-d');
+            $lunes = date('d')+1;break;
+            $martes = date('d')+2;break;
+
+        }
+
+        // $numeros_del_mes =
 
         $menus = Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
         ->select('menus.dia','dishes.name','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
         ->where('menus.restaurant_id', $request->id)
         ->where('dishes.category_dish','<>','5')
-        // ->where(strtolower('menus.dia'),'=',$dias[date("w")])
         ->get();
 
         // dd($menus->toArray());

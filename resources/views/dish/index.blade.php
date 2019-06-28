@@ -216,10 +216,6 @@
         </div>
     </div>
 
-
-
-
-
     <div class="row d-flex justify-content-between flex-wrap px-3 mt-5" >
         <button class="btn btn-light border border-dark btn-dias" id="lunes" onclick="mostrardia(this.id,{{$restaurant->id}})">
             Lunes
@@ -248,7 +244,6 @@
         <button class="btn btn-light border border-dark btn-dias" id="domingo" onclick="mostrardia(this.id,{{$restaurant->id}})">
             Domingo
         </button>
-
     </div>
 
 
@@ -257,15 +252,11 @@
 {{csrf_field()}}
 
 <div class="row  bg-white mt-3 mx-0 shadow-sm border border-ligth rounded">
-
-
     <div class="col-12">
         <div class="row" id="rpta_platos">
 
         </div>
     </div>
-
-
 </div>
 
     <div class="row">
