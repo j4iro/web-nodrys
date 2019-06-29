@@ -97,9 +97,11 @@ class HomeController extends Controller
     public function getAllDishes()
     {
         $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
-        ->select('dishes.*','restaurants.name as restaurante')
+        ->select('dishes.*','restaurants.name as restaurante','restaurants.id as restaurante_id')
         ->where('dishes.category_dish','<>','5')
+        ->inRandomOrder()
         ->get();
+
         return view('dish.getAll',[
             'platos' => $platos
         ]);
@@ -118,23 +120,26 @@ class HomeController extends Controller
 
     public function save_solicitud(Request $request)
     {
-        // dd($request);
+      // dd($request);
       $request_restaurant = new RequestRestaurant();
       $request_restaurant->name_restaurant = $request->input('name_restaurant');
       $request_restaurant->district_name = $request->input('district_name');
       $request_restaurant->name_owner = $request->input('name_owner');
       $request_restaurant->surname_owner = $request->input('surname_owner');
-      $request_restaurant->email_owner = $request->input('email_owner');
+      $destinatario = $request->input('email_owner');
+      $request_restaurant->email_owner = $destinatario;
       $request_restaurant->telephone_owner = $request->input('telephone_owner');
       $request_restaurant->state = '1';
-
-      // dd($request_restaurant);
       $request_restaurant->save();
 
-      //Envio de correo electronico
-      Mail::to($request->input('email_owner'))->send(new EnvioSolicitud("Gran decicisón, el panel administrador de nodrys se pondrá en contacto con usted en menos de 24 horas para validar los datos ...."));
+      $data = array('contenido'=>"Hola  ". $request_restaurant->name_owner .", tu solicitud ha sido enviada exitosamente hacia los encargados de la plataforma. Una vez ellos la evaluen, se pondrán en contacto con usted por medio del numero ". $request_restaurant->telephone_owner . " o mediante este email para pedirle los datos de su restaurante. Muchas gracias.");
 
-      return  redirect()->route('show.solicitud')->with('resultado','Su solicitud se ha enviado exitosamente, le enviamos un correo a ' . $request_restaurant->email_owner. ' con todos los detalles.');
+      Mail::send('correos.enviosolicitud',$data,function($mensaje) use ($destinatario){
+          $mensaje->from('soporte@nodrys.com','Equipo de soporte de Nodrys');
+          $mensaje->to(trim($destinatario))->subject('Envio de solicitud');
+      });
+
+      return  redirect()->route('show.solicitud')->with('resultado','Su solicitud ha sido enviada, le enviamos un correo a ' . $request_restaurant->email_owner. '. Por favor verifique su bandeja');
 
     }
 

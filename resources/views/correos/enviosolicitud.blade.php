@@ -1,8 +1,9 @@
+
 <div class="row">
-    <div class="col">
-        <h1>Mensaje de confirmación</h1>
+    <div class="col-12">
+        <h2>Solicitud recibida</h2>
         <p>
-            {{$mensaje}}
+            {{$contenido}}
         </p>
     </div>
 </div>

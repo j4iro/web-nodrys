@@ -36,7 +36,7 @@ Route::get('/carrito/delete-all','CarritoController@delete_all')->name('carrito.
 Route::get('/utils/auth','UtilsController@auth')->name('utils.auth');
 
 /*Rutas para los pedidos de los clientes*/
-Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index')->middleware('verified');
+Route::get('/mis-pedidos','OrderController@index_c')->name('pedidos.index');
 Route::post('/mis-pedidos/add','OrderController@add')->name('pedidos.add');
 Route::get('/mis-pedidos/detalle/{id}','OrderController@detail_c')->name('pedidos.detail_c');
 
@@ -199,3 +199,20 @@ Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuD
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
 Route::get('/respuestaRuc',['as'=>'respuestaRuc','uses'=>'PeticionesController@respuestaRuc']);
 Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@respuestaDni']);
+
+
+Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
+Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
+/*Aforo*/
+Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
+
+Route::get('/home',function()
+{
+    date_default_timezone_set("America/Lima");
+    $fecha_actual = date("d-m-Y");
+
+    echo date("d-m-Y",strtotime($fecha_actual."+ 2 days")).'<br>';
+
+    $fecha=date("l, d-m-Y (H:i:s)");
+    echo $fecha;
+});

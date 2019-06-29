@@ -103,7 +103,7 @@
                 <div class="row slider-inicio d-flex justify-content-center align-items-center">
                     <div class="col-12 col-sm-8 col-md-5 text-center">
                         <div class="input-group mb-2">
-                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" >
+                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Busca restaurantes por su nombre" required>
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-lg" name="buscar" type="submit">Buscar</button>
                             </div>
@@ -195,7 +195,7 @@
         @foreach ( $restaurants as $restaurant )
 
             <div class="col-12 col-md-6 col-lg-4 mb-4 ">
-                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}" class="a-card-restaurant">
+                <a href="{{ route('restaurant.detalle',["id"=>$restaurant->id,"nombre"=>strtolower(str_replace(" ","-",trim($restaurant->name)))])}}" class="a-card-restaurant">
                 <div class="card card-restaurant ">
                     @include('includes.image_restaurante')
                     <div class="card-body p-0 px-3 pt-2 ">
@@ -215,6 +215,7 @@
                             @endif
                             <br>
                             <img class="mb-1" src="https://img.icons8.com/ios-glyphs/30/000000/marker.png" width="15"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
+                            <p>Capacidad de Personas: <strong id="afoDisponible">{{$restaurant->capacity}}</strong></p>
                     </div>
                 </div>
                 </a>
