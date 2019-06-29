@@ -393,18 +393,21 @@
 
           function aforoDisponible(aforoTotal){
               var aforoDisponible={!!json_encode(route('aforo.aforoDisponible'))!!};
+              var hour = new Date();
               $.get(aforoDisponible,{
                   restaurant_id:restaurant_id,
-                  aforo:aforoTotal
+                  aforo:aforoTotal,
+                  hora:hour.getHours()+':'+hour.getMinutes()
               },function(resultados){
-                  afoDisponible.innerText=resultados;
-                  if (resultados==0) {
-                      Añadir.disabled=true;
-                      Reservar.disabled=true;
-                  }else{
-                      Añadir.disabled=false;
-                      Reservar.disabled=false;
-                  }
+                  console.log(resultados);
+                  // afoDisponible.innerText=resultados;
+                  // if (resultados==0) {
+                  //     Añadir.disabled=true;
+                  //     Reservar.disabled=true;
+                  // }else{
+                  //     Añadir.disabled=false;
+                  //     Reservar.disabled=false;
+                  // }
               });
           }
 
