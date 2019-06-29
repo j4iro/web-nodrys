@@ -10,7 +10,7 @@ use App\Order;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-// use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class DishController extends Controller
 {
@@ -44,29 +44,30 @@ class DishController extends Controller
         ->where('dishes.category_dish','<>','5')
         ->where(strtolower('menus.dia'),'=',$dia)
         ->get();
-        // dd($platos);
+        // ddr($platos);
+        switch($dia)
+        {
+            case "domingo":
+            $dia_reserva = "2019-06-30";
+            break;
+            case "lunes":
+        }
+
 
         return view("dish.cardPlatos",[
             'dishes' => $platos,
-            'idrestaurant' => $id
+            'idrestaurant' => $id,
+            'dia_reserva' => $dia_reserva
         ]);
     }
 
-    function getMonthDays($Month, $Year)
+    function addToDate($daysToAdd,$date='')
     {
-        //Si la extensión que mencioné está instalada, usamos esa.
-        if( is_callable("cal_days_in_month"))
-        {
-            return cal_days_in_month(CAL_GREGORIAN, $Month, $Year);
-        }
-        else
-        {
-            //Lo hacemos a mi manera.
-            return date("d",mktime(0,0,0,$Month+1,0,$Year));
-        }
-    }
+        $date = ($date == '') ? date('d-m-Y') : $date;
+        return date('d-m-Y', strtotime($date."$daysToAdd days"));
+     }
 
-    function getArrayDiasSemana($posicionDia, $diaActual)
+    function getArrayDiasSemana($posicionDia,$suma)
     {
         $array = array($posicionDia => $diaActual);
         for($i = $posicionDia; $i<=6;$i++)
@@ -78,7 +79,6 @@ class DishController extends Controller
         {
             array_push($array, $diaActual-1);
         }
-
         return $array();
     }
 
@@ -90,19 +90,11 @@ class DishController extends Controller
         $nombre_dia_actual = $dias[date('w')]; //jueves
         $nro_dia_actual = date('d'); //27
 
-        $numeros_dias = array(23,24,25,26,27,28,29); //Salida
+        // $numeros_dias = array(23,24,25,26,27,28,29); //Salida
 
         $nro_mes_actual = date('m');
         $nro_ano_actual = date('Y');
 
-        switch($nombre_dia_actual)
-        {
-            case 'domingo':
-            $fecha_reserva = date('Y-m-d');
-            $lunes = date('d')+1;break;
-            $martes = date('d')+2;break;
-
-        }
 
         // $numeros_del_mes =
 
@@ -231,49 +223,15 @@ class DishController extends Controller
     $datos = Valoration::all()
     ->where('restaurant_id',$request->restaurant_id);
     */
-    public function aforoDisponible(Request $request){
-        $date = new \DateTime();
-        $fecha=$date->format('Y-m-d');
-        $hora=$request->hora;
-         // echo $fecha.' - '.$hora;
-        //
-        // $datos = Order::all()
-        // ->where('restaurant_id','6')
-        // ->where('date','2019-06-26')
-        // ->where('state','completado')
-        // ->raw('hour >= DATE_ADD(10:20,INTERVAL 45 MINUTE )');
-        // return $datos;
-         $datos = Order::select('*')
-         ->whereRaw('"23:45" < DATE_ADD(hour,INTERVAL 45 MINUTE )')
-         ->get();
-        // ->where('restaurant_id',6)
-        // ->where('date','2019-06-26')
-        // ->where('state','completado')
-        // ->whereRaw('23:45','< DATE_ADD(hour,INTERVAL 45 MINUTE )');
-        return $datos;
-            // $date = new \DateTime();
-            // $fecha=$date->format('Y-m-d');
-            // $datos = Order::all()
-            // ->where('restaurant_id',$request->restaurant_id)
-            // ->where('date',$fecha)
-            // ->where('state','pendiente');
-            //
-            // if ($datos!='[]') {
-            //     $nPersonas=0;
-            //     foreach ($datos as $key => $value) {
-            //         $nPersonas+=$value['n_people'];
-            //     }
-            //     return (($request->aforo)-$nPersonas);
-            // }else{
-            //     return ($request->aforo);
-            // }
+    public function aforoDisponible(Request $request)
+    {
+        $id_restaurante = $request->restaurant_id;
+        $fecha_actual = date('Y-m-d');
+        $hora_actual = date('H:m');
 
+        $aforo = DB::select("SELECT * FROM orders AS o WHERE o.restaurant_id='$id_restaurante' AND o.DATE='$fecha_actual' AND  o.state='completado' AND '$hora_actual'< (DATE_ADD(o.hour,INTERVAL 45 MINUTE ))");
+
+        return $aforo;
     }
-
-    // CEO
-    // 	DISEÑADOR FRONT-END
-    // 	ANALISTA PROGRAMADOR BACK-END
-    // 	ANALISTA BASE DE DATOS
-
 
 }
