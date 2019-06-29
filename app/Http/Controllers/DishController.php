@@ -183,27 +183,48 @@ class DishController extends Controller
     ->where('restaurant_id',$request->restaurant_id);
     */
     public function aforoDisponible(Request $request){
-
-            $date = new \DateTime();
-            $fecha=$date->format('Y-m-d');
-            $datos = Order::all()
-            ->where('restaurant_id',$request->restaurant_id)
-            ->where('date',$fecha)
-            ->where('state','pendiente');
-
-            if ($datos!='[]') {
-                $nPersonas=0;
-                foreach ($datos as $key => $value) {
-                    $nPersonas+=$value['n_people'];
-                }
-                return (($request->aforo)-$nPersonas);
-            }else{
-                return ($request->aforo);
-            }
+        $date = new \DateTime();
+        $fecha=$date->format('Y-m-d');
+        $hora=$request->hora;
+         // echo $fecha.' - '.$hora;
+        //
+        // $datos = Order::all()
+        // ->where('restaurant_id','6')
+        // ->where('date','2019-06-26')
+        // ->where('state','completado')
+        // ->raw('hour >= DATE_ADD(10:20,INTERVAL 45 MINUTE )');
+        // return $datos;
+         $datos = Order::select('*')
+         ->whereRaw('"23:45" < DATE_ADD(hour,INTERVAL 45 MINUTE )')
+         ->get();
+        // ->where('restaurant_id',6)
+        // ->where('date','2019-06-26')
+        // ->where('state','completado')
+        // ->whereRaw('23:45','< DATE_ADD(hour,INTERVAL 45 MINUTE )');
+        return $datos;
+            // $date = new \DateTime();
+            // $fecha=$date->format('Y-m-d');
+            // $datos = Order::all()
+            // ->where('restaurant_id',$request->restaurant_id)
+            // ->where('date',$fecha)
+            // ->where('state','pendiente');
+            //
+            // if ($datos!='[]') {
+            //     $nPersonas=0;
+            //     foreach ($datos as $key => $value) {
+            //         $nPersonas+=$value['n_people'];
+            //     }
+            //     return (($request->aforo)-$nPersonas);
+            // }else{
+            //     return ($request->aforo);
+            // }
 
     }
 
-
+    // CEO
+    // 	DISEÑADOR FRONT-END
+    // 	ANALISTA PROGRAMADOR BACK-END
+    // 	ANALISTA BASE DE DATOS
 
 
 }
