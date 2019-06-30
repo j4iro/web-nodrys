@@ -194,6 +194,8 @@ Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
 Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
+// Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
+Route::get('/admin-restaurante/totalComision/','adminRestaurant@totalComision')->name('totalComision');
 
 /*Pasarela de pagos y Ruc*/
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
