@@ -309,6 +309,11 @@
         verCalifi();
         verCalifiR();
 
+        function simularClick()
+        {
+            Reservar.click();
+        }
+
         //funcion para ver calificacion de mismo usuario
         function verCalifi(){
             if (id_user!='no-log') {
@@ -399,7 +404,7 @@
                   aforo:aforoTotal,
                   hora:hour.getHours()+':'+hour.getMinutes()
               },function(resultados){
-                  console.log(resultados);
+                //   console.log(resultados);
                   // afoDisponible.innerText=resultados;
                   // if (resultados==0) {
                   //     Añadir.disabled=true;
@@ -410,6 +415,7 @@
                   // }
               });
           }
+
 
     </script>
     <script>
@@ -473,6 +479,7 @@
 
 
             </script>
+
 
 
 

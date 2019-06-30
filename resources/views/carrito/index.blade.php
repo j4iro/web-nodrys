@@ -198,7 +198,6 @@ function quitar_requireds() {
                                 <blockquote class="blockquote mt-2">
                                 <p class="mb-0">Aún no has agregado productos a tu carrito de compras.</p>
                                 <a href="./"><footer class="blockquote-footer">Ir al inicio -></footer></a>
-                                {{$url_anterior}}
                                 </blockquote>
                             </div>
                         </div>

@@ -1,12 +1,12 @@
-<div class="col-12 my-2">
+<div class="col-12 my-2 text-center">
     @if(count($dishes)==0)
-        <center>
+        {{-- <div class="alert alert-warning"> --}}
             <strong class="navbar-brand">El restaurante aún no ha registrado platos para este día, pero puedes reservar tu lugar favorito. </strong>
-        </center>
+            <br>
+            <a id="btnReservar2" onclick="simularClick();"  class="btn btn-primary mb-2 text-white"><strong>Reservar mi lugar favorito</strong></a>
+        {{-- </div> --}}
     @else
-        <center>
-            <strong class="navbar-brand">¿Qué desea comer?</strong>
-        </center>
+        <strong class="navbar-brand">¿Qué deseas comer el día {{substr($dia_reserva,0,2)}} de {{$nombre_mes}}?</strong>
     @endif
 </div>
 
@@ -38,7 +38,7 @@
 @if (count($dishes)!=0)
     <div class="col-12 mb-3">
         <input type="hidden" name="id_restaurant" value="{{$idrestaurant}}">
-        <input type="hidden" name="dia_reserva" value="{{$idrestaurant}}">
+        <input type="text" name="dia_reserva" value="{{$dia_reserva}}">
         <input id="Añadir2" type="submit" class="btn btn-primary btn-block"  name="addcarrito" value="Añadir al carrito">
     </div>
 @else
