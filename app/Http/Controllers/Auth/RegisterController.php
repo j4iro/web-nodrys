@@ -47,7 +47,7 @@ class RegisterController extends Controller
             return "/carrito";
         }else
         {
-            return "/";
+            return "/nextRedirectHome";
         }
     }
 

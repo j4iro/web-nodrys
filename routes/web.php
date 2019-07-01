@@ -208,6 +208,8 @@ Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 /*Aforo*/
 Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
 
+Route::get('/nextRedirectHome','HomeController@nextRedirectHome')->name('nextRedirectHome')->middleware('verified');
+
 Route::get('/home',function()
 {
     date_default_timezone_set("America/Lima");

@@ -138,7 +138,7 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'Reserva',
             'description' => 'Reserva',
         ]);
-        
+
         // Usuario N1
         User::create([
             'name' => 'admin',
@@ -658,7 +658,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Juane peruano',
             'price'=>'19.88',
             'time'=>'10',
-            'image'=>'juanePeruano.jpg',
+            'image'=>'juane_peruano.jpg',
             'category_dish'=>1,
             'restaurant_id'=>5
         ]);
@@ -666,7 +666,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Lomo saltado',
             'price'=>'18.30',
             'time'=>'10',
-            'image'=>'lomoSaltso.jpg',
+            'image'=>'lomo_saltado.jpg',
             'category_dish'=>1,
             'restaurant_id'=>5
         ]);
