@@ -94,6 +94,11 @@ class HomeController extends Controller
         ]);
     }
 
+    public function nextRedirectHome()
+    {
+        $this->redirect('./');
+    }
+
     public function getAllDishes()
     {
         $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')

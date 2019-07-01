@@ -215,7 +215,6 @@
                             @endif
                             <br>
                             <img class="mb-1" src="https://img.icons8.com/ios-glyphs/30/000000/marker.png" width="15"> {{$restaurant->distrito}} - {{$restaurant->address}}</p>
-                            <p>Capacidad de Personas: <strong id="afoDisponible">{{$restaurant->capacity}}</strong></p>
                     </div>
                 </div>
                 </a>

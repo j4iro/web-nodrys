@@ -148,9 +148,9 @@
             {{$restaurant->description}}
             <br>
             <hr>
-            <img class="mb-1" src="https://img.icons8.com/ios/50/000000/discount-filled.png" width="16">
+            {{-- <img class="mb-1" src="https://img.icons8.com/ios/50/000000/discount-filled.png" width="16">
             Gana <strong>{{$restaurant->points}}</strong> puntos por hacer tu reserva aquí
-            <br>
+            <br> --}}
             <img class="mb-1" src="https://img.icons8.com/ios-glyphs/30/000000/marker.png" width="16">
             {{$restaurant->address}} - <strong>{{$restaurant->distrito}}</strong>
             <br>
@@ -161,7 +161,7 @@
             <div class="row">
                 <div class="col-6 pb-0">
                     <img class="mb-1" src="https://img.icons8.com/ios/50/000000/category-filled.png" width="16">
-                    {{$restaurant->categoria}}
+                    Categoria {{$restaurant->categoria}}
                     <br>
                     <img class="mb-1" src="https://img.icons8.com/ios/50/000000/clock-filled.png" width="16">
                     @if ($restaurant->availability==1)
@@ -180,15 +180,15 @@
                         <input id="Reservar" type="submit" class="btn btn-primary mt-2 "  name="addcarrito" value="Reservar lugar">
                      </form>
                 </div>
-                <div class="col-4 pb-0">
+                {{-- <div class="col-4 pb-0">
                     <p>Capacidad: {{$restaurant->capacity}}</p>
                 </div>
                 <div class="col-4 pb-0">
                     <p>Disponible: <strong id="afoDisponible">{{$restaurant->capacity}}</strong></p>
-                </div>
+                </div> --}}
             </div>
 
-            <hr >
+            {{-- <hr > --}}
             <div class="row d-none" id="contval">
                 <div class="col-3">
                     <button class="btn btn-warning btn-sm">Danos tu calificación</button>
@@ -309,6 +309,11 @@
         verCalifi();
         verCalifiR();
 
+        function simularClick()
+        {
+            Reservar.click();
+        }
+
         //funcion para ver calificacion de mismo usuario
         function verCalifi(){
             if (id_user!='no-log') {
@@ -399,7 +404,7 @@
                   aforo:aforoTotal,
                   hora:hour.getHours()+':'+hour.getMinutes()
               },function(resultados){
-                  console.log(resultados);
+                //   console.log(resultados);
                   // afoDisponible.innerText=resultados;
                   // if (resultados==0) {
                   //     Añadir.disabled=true;
@@ -410,6 +415,7 @@
                   // }
               });
           }
+
 
     </script>
     <script>
@@ -473,6 +479,7 @@
 
 
             </script>
+
 
 
 

@@ -14,7 +14,15 @@ class CarritoController extends Controller
         date_default_timezone_set('America/Lima');
         $url_anterior = \URL::previous();
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
-        $dia_reserva = isset($_SESSION['dia_reserva']) ? $_SESSION['dia_reserva'] : null;
+
+        if(session()->has('dia_reserva'))
+        {
+            $dia_reserva = session('dia_reserva');
+        }
+        else
+        {
+            $dia_reserva = date('Y-m-d');
+        }
 
         return view('carrito.index',[
             'carrito' => $carrito,
@@ -55,9 +63,14 @@ class CarritoController extends Controller
     {
 
         $solo_reserva = $request->input('solo_reserva');
+
         if(isset($solo_reserva))
         {
             unset($_SESSION['carrito']);
+        }
+        else
+        {
+            session(['dia_reserva'=> $request->input('dia_reserva')]);
         }
 
         if (isset($request->checkDish) && count($request->checkDish)>0)
@@ -149,6 +162,7 @@ class CarritoController extends Controller
 
     public function delete_all_and_add_reseva()
     {
+        session()->forget('dia_reserva');
         unset($_SESSION['carrito']);
         return redirect()->route('carrito.index');
     }

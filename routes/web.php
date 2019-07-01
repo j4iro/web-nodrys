@@ -195,6 +195,8 @@ Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRe
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
 Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
+// Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
+Route::get('/admin-restaurante/totalComision/','adminRestaurant@totalComision')->name('totalComision');
 
 /*Pasarela de pagos y Ruc*/
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);
@@ -206,6 +208,8 @@ Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
 Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 /*Aforo*/
 Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
+
+Route::get('/nextRedirectHome','HomeController@nextRedirectHome')->name('nextRedirectHome')->middleware('verified');
 
 Route::get('/home',function()
 {

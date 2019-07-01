@@ -35,8 +35,12 @@ class DishController extends Controller
         return true;
     }
 
-    public function platosxdia($dia , $id)
+    public function platosxdia($dia, $id)
     {
+        $dias = array('lunes','martes','miércoles','jueves','viernes','sábado','domingo');
+        $dias_ingles = array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'); //date(w)
+        $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto", "Septiempre", "Octubre", "Noviembre","Diciembre");
+
         $platos=Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
         ->select('menus.dia','dishes.name','dishes.id','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
@@ -44,20 +48,47 @@ class DishController extends Controller
         ->where('dishes.category_dish','<>','5')
         ->where(strtolower('menus.dia'),'=',$dia)
         ->get();
-        // ddr($platos);
-        switch($dia)
+
+        while ($dia_array_ingles = current($dias_ingles))
         {
-            case "domingo":
-            $dia_reserva = "2019-06-30";
-            break;
-            case "lunes":
+            if ($dia_array_ingles == date('l')){
+               $posicionDiaActual =  key($dias_ingles); //5
+               //echo $posicionDiaActual . '<br>';
+            }
+            next($dias_ingles);
         }
+
+        while ($dia_array = current($dias))
+        {
+            if ($dia_array == $dia){
+               $posicionDiaQueViene =  key($dias); //6
+              //echo $posicionDiaQueViene. '<br>'; //6
+            }
+            next($dias);
+        }
+
+        if($posicionDiaQueViene>$posicionDiaActual){
+            $dia_reserva = $this->addToDate($posicionDiaQueViene-$posicionDiaActual);
+        }
+        else if($posicionDiaQueViene==$posicionDiaActual){
+            $dia_reserva = date('d-m-Y');
+        }
+        else{
+            $dia_reserva = $this->addToDate(6-$posicionDiaActual+$posicionDiaQueViene+1);
+        }
+        // echo $dia_reserva;
+        // echo date("m",strtotime($dia_reserva));
+        // echo "<br>";
+        // // die();
+        // echo $meses[(int)date("m",strtotime($dia_reserva))];
+        // die();
 
 
         return view("dish.cardPlatos",[
             'dishes' => $platos,
             'idrestaurant' => $id,
-            'dia_reserva' => $dia_reserva
+            'dia_reserva' => $dia_reserva,
+            'nombre_mes' => $meses[(int)date("m",strtotime($dia_reserva))-1]
         ]);
     }
 
