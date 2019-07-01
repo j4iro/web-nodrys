@@ -162,6 +162,15 @@ class AdminRestaurant extends Controller
         }
     }
 
+    function getDishForDayAndRestaurant(Request $request){
+        $datos=Menu::where('dish_id',$request->idPlato)
+        ->where('restaurant_id',$request->idRestaurante)
+        ->where('dia',$request->dia)
+        ->get();
+        if(count($datos)>0){
+            echo 'OK';
+        }
+    }
     public function getMenuDia(Request $request)
     {
         $datos = Menu::join('dishes','dishes.id','=','menus.dish_id')
