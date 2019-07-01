@@ -10,7 +10,7 @@ use App\Order;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-// use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class DishController extends Controller
 {
@@ -44,24 +44,65 @@ class DishController extends Controller
         ->where('dishes.category_dish','<>','5')
         ->where(strtolower('menus.dia'),'=',$dia)
         ->get();
-        // dd($platos);
+        // ddr($platos);
+        switch($dia)
+        {
+            case "domingo":
+            $dia_reserva = "2019-06-30";
+            break;
+            case "lunes":
+        }
+
 
         return view("dish.cardPlatos",[
             'dishes' => $platos,
-            'idrestaurant' => $id
+            'idrestaurant' => $id,
+            'dia_reserva' => $dia_reserva
         ]);
     }
+
+    function addToDate($daysToAdd,$date='')
+    {
+        $date = ($date == '') ? date('d-m-Y') : $date;
+        return date('d-m-Y', strtotime($date."$daysToAdd days"));
+     }
+
+    function getArrayDiasSemana($posicionDia,$suma)
+    {
+        $array = array($posicionDia => $diaActual);
+        for($i = $posicionDia; $i<=6;$i++)
+        {
+            array_push($array, $diaActual+1);
+        }
+
+        for($i = $posicionDia; $i<=0;$i--)
+        {
+            array_push($array, $diaActual-1);
+        }
+        return $array();
+    }
+
     public function dishes(Request $request)
     {
         date_default_timezone_set('America/Lima');
-        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado');
+
+        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado'); //Entrada
+        $nombre_dia_actual = $dias[date('w')]; //jueves
+        $nro_dia_actual = date('d'); //27
+
+        // $numeros_dias = array(23,24,25,26,27,28,29); //Salida
+
+        $nro_mes_actual = date('m');
+        $nro_ano_actual = date('Y');
+
+
+        // $numeros_del_mes =
 
         $menus = Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
         ->select('menus.dia','dishes.name','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
         ->where('menus.restaurant_id', $request->id)
         ->where('dishes.category_dish','<>','5')
-        // ->where(strtolower('menus.dia'),'=',$dias[date("w")])
         ->get();
 
         // dd($menus->toArray());
@@ -182,49 +223,15 @@ class DishController extends Controller
     $datos = Valoration::all()
     ->where('restaurant_id',$request->restaurant_id);
     */
-    public function aforoDisponible(Request $request){
-        $date = new \DateTime();
-        $fecha=$date->format('Y-m-d');
-        $hora=$request->hora;
-         // echo $fecha.' - '.$hora;
-        //
-        // $datos = Order::all()
-        // ->where('restaurant_id','6')
-        // ->where('date','2019-06-26')
-        // ->where('state','completado')
-        // ->raw('hour >= DATE_ADD(10:20,INTERVAL 45 MINUTE )');
-        // return $datos;
-         $datos = Order::select('*')
-         ->whereRaw('"23:45" < DATE_ADD(hour,INTERVAL 45 MINUTE )')
-         ->get();
-        // ->where('restaurant_id',6)
-        // ->where('date','2019-06-26')
-        // ->where('state','completado')
-        // ->whereRaw('23:45','< DATE_ADD(hour,INTERVAL 45 MINUTE )');
-        return $datos;
-            // $date = new \DateTime();
-            // $fecha=$date->format('Y-m-d');
-            // $datos = Order::all()
-            // ->where('restaurant_id',$request->restaurant_id)
-            // ->where('date',$fecha)
-            // ->where('state','pendiente');
-            //
-            // if ($datos!='[]') {
-            //     $nPersonas=0;
-            //     foreach ($datos as $key => $value) {
-            //         $nPersonas+=$value['n_people'];
-            //     }
-            //     return (($request->aforo)-$nPersonas);
-            // }else{
-            //     return ($request->aforo);
-            // }
+    public function aforoDisponible(Request $request)
+    {
+        $id_restaurante = $request->restaurant_id;
+        $fecha_actual = date('Y-m-d');
+        $hora_actual = date('H:m');
 
+        $aforo = DB::select("SELECT * FROM orders AS o WHERE o.restaurant_id='$id_restaurante' AND o.DATE='$fecha_actual' AND  o.state='completado' AND '$hora_actual'< (DATE_ADD(o.hour,INTERVAL 45 MINUTE ))");
+
+        return $aforo;
     }
-
-    // CEO
-    // 	DISEÑADOR FRONT-END
-    // 	ANALISTA PROGRAMADOR BACK-END
-    // 	ANALISTA BASE DE DATOS
-
 
 }

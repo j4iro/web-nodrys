@@ -12,9 +12,14 @@ class CarritoController extends Controller
     public function index()
     {
         date_default_timezone_set('America/Lima');
+        $url_anterior = \URL::previous();
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
+        $dia_reserva = isset($_SESSION['dia_reserva']) ? $_SESSION['dia_reserva'] : null;
+
         return view('carrito.index',[
-            'carrito' => $carrito
+            'carrito' => $carrito,
+            'url_anterior' => $url_anterior,
+            'dia_reserva' => $dia_reserva
         ]);
     }
 
@@ -29,20 +34,23 @@ class CarritoController extends Controller
       $restaurant_id=isset($_SESSION['carrito'])?$_SESSION['carrito']:"0";
       $id_restaurante_comparar=0;
 
-        if ($restaurant_id!="0") {
-          foreach ($restaurant_id as $id => $value) {
-             if($value['restaurante_id']!=$id_restaurant){
+        if ($restaurant_id!="0")
+        {
+          foreach ($restaurant_id as $id => $value)
+          {
+             if($value['restaurante_id']!=$id_restaurant)
+             {
                return false;
-             }else{
+             }
+             else
+             {
                // dd('ss');
              }
-
-           }
-
+            }
         }
-
         return true;
     }
+
     public function add(Request $request)
     {
 

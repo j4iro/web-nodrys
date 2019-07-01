@@ -131,7 +131,7 @@
 
             document.querySelector('#'+dia).classList.toggle('btn-primary');
             document.querySelector('#'+dia).classList.toggle('text-white');
-
+			alert(dia);
             peticion_http3=inicializa_xhr();
             if (peticion_http3)
             {

@@ -190,6 +190,7 @@ Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->
 
 Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
+Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRestaurant')->name('admin-r.menus.exists');
 
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
@@ -201,5 +202,18 @@ Route::get('/respuestaRuc',['as'=>'respuestaRuc','uses'=>'PeticionesController@r
 Route::get('/respuestaDni',['as'=>'respuestaDni','uses'=>'PeticionesController@respuestaDni']);
 
 
+Route::get('/carrito/datos-tarjeta','UserController@getDatosTarjeta');
+Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 /*Aforo*/
 Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
+
+Route::get('/home',function()
+{
+    date_default_timezone_set("America/Lima");
+    $fecha_actual = date("d-m-Y");
+
+    echo date("d-m-Y",strtotime($fecha_actual."+ 2 days")).'<br>';
+
+    $fecha=date("l, d-m-Y (H:i:s)");
+    echo $fecha;
+});
