@@ -62,9 +62,26 @@
 
 
     }
+// NOTE: esta funcion verifica si el plato existe en el menu que se esta escribiendo
+function verifica(dia,platoId){
+    var existe=false;
+    var url={!! json_encode(url('/')) !!}+ "/admin-restaurante/menus/exists";
+    $.get(url,
+    {
+        idPlato:platoId,
+        idRestaurante:idRestaurant,
+        dia:dia
+    },function(e) {
+        existe=e=='OK'?true:false;
+        if (existe) {
 
+        }else {
+            insertarPlatoAlMenu(dia,platoId);
+        }
+    });
+}
     function inserta(value) {
-        insertarPlatoAlMenu(DIA,value.value);
+        verifica(DIA,value.value);
         listarPlatoAlMenu();
     }
 
@@ -143,52 +160,10 @@ function getMenuDishes() {
 
     });
 }
-
-    function traerPlatos(arrayPlatosMenu)
-    {
-        // for(var i=0;i<arrayPlatos.length;i++){
-        //     console.log(i+'.-'+arrayPlatos[i].name);
-        // }
-
-        //arrayPlatos.forEach(function(element) {
-          // console.log(element);
-          // console.log(arrayPlatosMenu);
-        //});
-        // console.log(arrayPlatos);
-
-        //          items+= `<button class="btn d-flex justify-content-between align-items-center w-100" m>${plato.name}<a id="${plato.id}" onclick="eliminarPlatoMenu(this.id);" class="ml-auto text-danger">Quitar</a></button>`
-        //         template += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${plato.id}'>+</button> ${plato.name}</li>`
-
-    }
-
-    </script>
+</script>
 
 @endsection
-
 @section('content')
-    <style media="screen">
-
-    </style>
-    <style media="screen">
-        .seccion-container{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-
-        }
-        .borde{
-            border: 1px solid red;
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .seccion{
-            width: 200px;
-        }
-        .btn{
-            width: 150px;
-            margin:5px 0;
-        }
-    </style>
 
     {{-- parte de Beimer --}}
     <div class="d-md-flex justify-content-between m-2">
@@ -207,7 +182,4 @@ function getMenuDishes() {
 
         </div>
     </div>
-
-    {{-- *************************** --}}
-
 @endsection

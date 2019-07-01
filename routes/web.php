@@ -190,6 +190,7 @@ Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->
 
 Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
+Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRestaurant')->name('admin-r.menus.exists');
 
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
