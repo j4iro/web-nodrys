@@ -252,7 +252,6 @@ public function index_r()
     public function add(Request $request)
     {
 
-      
         // die();
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();
