@@ -786,27 +786,27 @@ class InsertAllTablesSeeder extends Seeder
         Menu::create([
             'dia'=>'lunes',
             'dish_id'=>13,
-            'restaurant_id'=>5
+            'restaurant_id'=>4
         ]);
         Menu::create([
             'dia'=>'martes',
             'dish_id'=>14,
-            'restaurant_id'=>5
+            'restaurant_id'=>4
         ]);
         Menu::create([
             'dia'=>'miercoles',
             'dish_id'=>15,
-            'restaurant_id'=>5
+            'restaurant_id'=>4
         ]);
         Menu::create([
             'dia'=>'jueves',
             'dish_id'=>16,
-            'restaurant_id'=>5
+            'restaurant_id'=>1
         ]);
         Menu::create([
             'dia'=>'viernes',
             'dish_id'=>17,
-            'restaurant_id'=>5
+            'restaurant_id'=>1
         ]);
 
     }

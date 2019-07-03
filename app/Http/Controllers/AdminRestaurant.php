@@ -146,10 +146,12 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.reportespersonalizados');
     }
 
-    public function getDishes()
+    public function getDishes(Request $request)
     {
         $restaurant = \Auth::user();
-        $id_restaurante=auth()->user()->id;
+        // $id_restaurante=auth()->user()->id;//esto no captura el id del restaurant
+        $id_restaurante=$request->restaurant_id;
+
         $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
         // dd($dishes);
 
