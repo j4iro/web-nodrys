@@ -96,7 +96,7 @@ class HomeController extends Controller
 
     public function nextRedirectHome()
     {
-        $this->redirect('./');
+        return redirect()->route('home');
     }
 
     public function getAllDishes()

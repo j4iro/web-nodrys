@@ -153,13 +153,13 @@
         }
 
         var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
-        console.log(finalUrl);
+        // console.log(finalUrl);
 
         var intervalo=setInterval(function() {
             $.get(finalUrl,function(e) {
                 fun(e);
             })
-        },1000);
+        },2000);
 
 
 // muestra el slide

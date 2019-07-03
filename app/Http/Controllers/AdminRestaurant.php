@@ -136,6 +136,7 @@ class AdminRestaurant extends Controller
         $restaurant = \Auth::user();
         $id_restaurante=auth()->user()->id;
         $card = Card::where('user_id','=',$id_restaurante)->first();
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.datos_bancarios',compact('card'));
 
 
@@ -220,7 +221,7 @@ class AdminRestaurant extends Controller
         {
             $card->update();
         }
-
+        session(['ventana'=>"otra"]);
         return redirect()->route('admin-r.cuentaBancaria')
         ->with(['message'=>'message']);
     }
@@ -258,6 +259,7 @@ class AdminRestaurant extends Controller
         ->where('restaurants.id','=',$restaurant_id)
         ->get();
             // dd($porPagar);
+            session(['ventana'=>"otra"]);
         return view('admin-restaurant.porpagar',compact('porPagar'));
         }
 }
