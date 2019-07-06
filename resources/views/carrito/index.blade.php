@@ -14,7 +14,7 @@ $(window).load(function() {
         checkpagarcontarjeta.checked=true;
         poner_requireds();
         //Peticion AJAX para traer datos de la tarjeta guardada
-        console.log('smith puto')
+        // console.log('modal load')
         traerDatosTarjeta();
     });
 
