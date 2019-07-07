@@ -32,6 +32,48 @@
 
                     </tbody>
                 </table>
+                <div class="row m-1 p-1 border">
+                    <div class="col-md-6">
+                        cliente apellidos(ocacion especial)<br>
+                        <span><b>Nro. Personas: </b>2</span><br>
+                        <b>+51 999999999</b>
+                    </div>
+                    <div class="col-md-4">
+                        <b>hora: </b>00:00:00 <br>
+                        <b>restan: </b>00 min
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-center align-items-centr">
+                        <button type="button" name="button" class="btn btn-outline-primary">details</button>
+                    </div>
+                </div>
+                <div class="row m-1 p-1 border">
+                    <div class="col-md-6">
+                        cliente apellidos(ocacion especial)<br>
+                        <span><b>Nro. Personas: </b>2</span><br>
+                        <b>+51 999999999</b>
+                    </div>
+                    <div class="col-md-4">
+                        <b>hora: </b>00:00:00 <br>
+                        <b>restan: </b>00 min
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-center align-items-centr">
+                        <button type="button" name="button" class="btn btn-outline-primary">details</button>
+                    </div>
+                </div>
+                <div class="row m-1 p-1 border">
+                    <div class="col-md-6">
+                        cliente apellidos(ocacion especial)<br>
+                        <span><b>Nro. Personas: </b>2</span><br>
+                        <b>+51 999999999</b>
+                    </div>
+                    <div class="col-md-4">
+                        <b>hora: </b>00:00:00 <br>
+                        <b>restan: </b>00 min
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-center align-items-centr">
+                        <button type="button" name="button" class="btn btn-outline-primary">details</button>
+                    </div>
+                </div>
 
             </div>
         </div>

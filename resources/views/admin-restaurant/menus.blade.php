@@ -1,6 +1,5 @@
 @extends('layouts.app-r')
 @section('scripts')
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script>
     var dia;
