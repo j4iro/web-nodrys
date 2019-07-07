@@ -234,6 +234,7 @@ class AdminController extends Controller
       $user->image = "null";
       $user->points = 0;
       $user->state = 1;
+      $user->email_verified_at='2019-07-06 11:50:39';
       $user->district_id = $request->input('district_id');
 
 
@@ -363,7 +364,9 @@ class AdminController extends Controller
 
     public function showDatosSolicitud($id)
     {
-        $restaurante = RequestRestaurant::findOrFail($id);
+        $restaurante = RequestRestaurant::where('id','=',$id)
+        ->select('requests_restaurants.name_restaurant as name','requests_restaurants.district_name as district_id')
+        ->first();
         $distritos = District::all();
         $categorias = Category::all();
 

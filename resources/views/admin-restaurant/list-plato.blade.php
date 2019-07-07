@@ -46,15 +46,10 @@
                         <td>{{$dish->price}}</td>
                         <td>{{$dish->time}}</td>
                         <td>
-                            {{-- <div class="btn-group" role="group" aria-label="Basic example"> --}}
                                 <a href="{{route('adminRestaurant.plato.edit',["id" => $dish->id ])}}" class="btn btn-outline-primary btn-sm">
                                     <img src="https://img.icons8.com/ultraviolet/40/000000/edit.png" width="18">
                                 </a>
-                             {{--    <a href="{{route('adminRestaurant.plato.delete',["id" => $dish->id ])}}" class="btn btn-outline-danger btn-sm">
-                                    <img src="https://img.icons8.com/color/48/000000/cancel.png"  width="18">
-                                </a> --}}
 
-                            {{-- </div> --}}
                         </td>
                         <td>
                             <label class="switch" >
@@ -65,8 +60,9 @@
                     </tr>
                     @endforeach
 
-
                 </tbody>
+
             </table>
+            {{$dishes->links()}}
 
 @endsection

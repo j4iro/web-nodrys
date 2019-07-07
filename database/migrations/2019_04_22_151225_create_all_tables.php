@@ -188,19 +188,6 @@ class CreateAllTables extends Migration
             $table->foreign('user_id')->references('id')->on('users');
         });
 
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->increments('id');
-            $table->boolean('state')->default(1);
-            $table->timestamps();
-        });
-
-        Schema::table('favorites', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('restaurant_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('restaurant_id')->references('id')->on('restaurants');
-        });
-
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('dia',50);
@@ -225,8 +212,9 @@ class CreateAllTables extends Migration
 
         Schema::create('adminstration_values', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre',150);
+            $table->integer('valor');
             $table->timestamps();
-            $table->unsignedInteger('point_value');
         });
 
     }
@@ -240,7 +228,6 @@ class CreateAllTables extends Migration
     {
         Schema::dropIfExists('districts');
         Schema::dropIfExists('categories');
-        Schema::dropIfExists('favorites');
         Schema::dropIfExists('restaurants');
         Schema::dropIfExists('requests_restaurants');
         Schema::dropIfExists('users');

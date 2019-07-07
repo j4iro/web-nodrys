@@ -7,6 +7,7 @@ use App\Dish;
 use App\Restaurant;
 use App\Menu;
 use App\Order;
+use App\Category_dish;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -35,8 +36,12 @@ class DishController extends Controller
         return true;
     }
 
-    public function platosxdia($dia , $id)
+    public function platosxdia($dia, $id)
     {
+        $dias = array('lunes','martes','miércoles','jueves','viernes','sábado','domingo');
+        $dias_ingles = array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'); //date(w)
+        $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto", "Septiempre", "Octubre", "Noviembre","Diciembre");
+
         $platos=Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
         ->select('menus.dia','dishes.name','dishes.id','dishes.price','dishes.time','dishes.image','categories_dishes.name as categoria')
@@ -44,20 +49,47 @@ class DishController extends Controller
         ->where('dishes.category_dish','<>','5')
         ->where(strtolower('menus.dia'),'=',$dia)
         ->get();
-        // ddr($platos);
-        switch($dia)
+
+        while ($dia_array_ingles = current($dias_ingles))
         {
-            case "domingo":
-            $dia_reserva = "2019-06-30";
-            break;
-            case "lunes":
+            if ($dia_array_ingles == date('l')){
+               $posicionDiaActual =  key($dias_ingles); //5
+               //echo $posicionDiaActual . '<br>';
+            }
+            next($dias_ingles);
         }
+
+        while ($dia_array = current($dias))
+        {
+            if ($dia_array == $dia){
+               $posicionDiaQueViene =  key($dias); //6
+              //echo $posicionDiaQueViene. '<br>'; //6
+            }
+            next($dias);
+        }
+
+        if($posicionDiaQueViene>$posicionDiaActual){
+            $dia_reserva = $this->addToDate($posicionDiaQueViene-$posicionDiaActual);
+        }
+        else if($posicionDiaQueViene==$posicionDiaActual){
+            $dia_reserva = date('d-m-Y');
+        }
+        else{
+            $dia_reserva = $this->addToDate(6-$posicionDiaActual+$posicionDiaQueViene+1);
+        }
+        // echo $dia_reserva;
+        // echo date("m",strtotime($dia_reserva));
+        // echo "<br>";
+        // // die();
+        // echo $meses[(int)date("m",strtotime($dia_reserva))];
+        // die();
 
 
         return view("dish.cardPlatos",[
             'dishes' => $platos,
             'idrestaurant' => $id,
-            'dia_reserva' => $dia_reserva
+            'dia_reserva' => $dia_reserva,
+            'nombre_mes' => $meses[(int)date("m",strtotime($dia_reserva))-1]
         ]);
     }
 
@@ -108,10 +140,10 @@ class DishController extends Controller
         // dd($menus->toArray());
 
         $sm="";
-        if($this->verificar_restaurante_diferente($request->id)==false)
-        {
-          $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
-        };
+        // if($this->verificar_restaurante_diferente($request->id)==false)
+        // {
+        //   $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
+        // };
 
         $reserva = Dish::where('restaurant_id', $request->id)
         ->where('category_dish','=','5')
@@ -140,8 +172,11 @@ class DishController extends Controller
 
     public function new()
     {
+
         session(['ventana'=>"otra"]);
-        return view('admin-restaurant.nuevo-plato');
+        $categorias_platos=Category_dish::where('id','<>','5')->get();
+        // dd($categorias)->toarray();
+        return view('admin-restaurant.nuevo-plato',compact('categorias_platos'));
     }
 
     public function list()
@@ -149,7 +184,8 @@ class DishController extends Controller
 
         session(['ventana'=>"otra"]);
         $id_restaurant = session('id_restaurante');
-        $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
+        $dishes= Dish::where('restaurant_id', $id_restaurant)
+                       ->where('category_dish','<>','5')->paginate(7);
         return view('admin-restaurant.list-plato',compact('dishes'));
     }
 
@@ -161,7 +197,8 @@ class DishController extends Controller
     public function edit($id)
     {
         $plato = Dish::findOrFail($id);
-        return view('admin-restaurant.nuevo-plato',compact('plato'));
+        $categorias_platos=Category_dish::where('id','<>','5')->get();
+        return view('admin-restaurant.nuevo-plato',compact('plato','categorias_platos'));
     }
 
     public function delete($id)

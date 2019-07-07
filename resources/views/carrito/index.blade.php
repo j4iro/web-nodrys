@@ -14,7 +14,7 @@ $(window).load(function() {
         checkpagarcontarjeta.checked=true;
         poner_requireds();
         //Peticion AJAX para traer datos de la tarjeta guardada
-        console.log('smith puto')
+        // console.log('modal load')
         traerDatosTarjeta();
     });
 
@@ -150,8 +150,11 @@ function quitar_requireds() {
                         <div class="col-4 col-sm-5 col-md-5 col-lg-5 pt-2 px-0">
                             <div class="row ">
                                 <div class="col-12">
+
+                                    @if($plato->name!="reserva")
                                     <img class="mb-1" src="{{asset('images/icons/icono-comida-carrito.png')}}" width="20" >
-                                    @if($plato->name=="reserva") {{'-'}} @else {{$plato->name}}  @endif
+                                    {{$plato->name}}
+                                    @endif
                                 </div>
                                 <div class="col-12">
                                     <img class="mb-1" src="{{asset('images/icons/icono-categoria-carrito.png')}}" width="20">
@@ -198,7 +201,6 @@ function quitar_requireds() {
                                 <blockquote class="blockquote mt-2">
                                 <p class="mb-0">Aún no has agregado productos a tu carrito de compras.</p>
                                 <a href="./"><footer class="blockquote-footer">Ir al inicio -></footer></a>
-                                {{$url_anterior}}
                                 </blockquote>
                             </div>
                         </div>
@@ -266,7 +268,7 @@ function quitar_requireds() {
                 <div class="row mt-2">
                     <div class="col-12">
                         <dt class="mb-2">¿Qué día asistirán?</dt>
-                    <input type="date" class="form-control" name="fecha" value="{{date('Y-m-d')}}" required >
+                    <input type="date" class="form-control" name="fecha" value="{{$dia_reserva}}" required>
                     </div>
                 </div>
 

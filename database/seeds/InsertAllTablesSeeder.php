@@ -138,7 +138,7 @@ class InsertAllTablesSeeder extends Seeder
             'name' => 'Reserva',
             'description' => 'Reserva',
         ]);
-        
+
         // Usuario N1
         User::create([
             'name' => 'admin',
@@ -658,7 +658,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Juane peruano',
             'price'=>'19.88',
             'time'=>'10',
-            'image'=>'juanePeruano.jpg',
+            'image'=>'juane_peruano.jpg',
             'category_dish'=>1,
             'restaurant_id'=>5
         ]);
@@ -666,7 +666,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Lomo saltado',
             'price'=>'18.30',
             'time'=>'10',
-            'image'=>'lomoSaltso.jpg',
+            'image'=>'lomo_saltado.jpg',
             'category_dish'=>1,
             'restaurant_id'=>5
         ]);
@@ -727,7 +727,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Pulpo a la brasa con yuca al carbon',
             'price'=>'26.99',
             'time'=>'21',
-            'image'=>'PULPO A LAS BRASAS CON YUCA AL CARBÓN.jpg',
+            'image'=>'PULPO A LAS BRASAS CON YUCA AL CARBON.jpg',
             'category_dish'=>2,
             'restaurant_id'=>6
         ]);
@@ -735,7 +735,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Tiradito pesca del día y pulpo',
             'price'=>'18.99',
             'time'=>'19',
-            'image'=>'TIRADITO PESCA DEL DÍA Y PULPO.jpg',
+            'image'=>'Tiradito_pesca_del_dia_y_pulpo.jpg',
             'category_dish'=>2,
             'restaurant_id'=>6
         ]);
@@ -753,7 +753,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Cebiche de lenguado clásico ',
             'price'=>'15.99',
             'time'=>'12',
-            'image'=>'Cebiche de lenguado clásico.jpg',
+            'image'=>'Cebiche de lenguado clasico.jpg',
             'category_dish'=>1,
             'restaurant_id'=>7
         ]);
@@ -761,7 +761,7 @@ class InsertAllTablesSeeder extends Seeder
             'name'=>'Arroz con pato a la sartén',
             'price'=>'22.99',
             'time'=>'17',
-            'image'=>'Arroz con pato a la sartén.jpg',
+            'image'=>'Arroz con pato a la sarten.jpg',
             'category_dish'=>2,
             'restaurant_id'=>7
         ]);
@@ -786,27 +786,27 @@ class InsertAllTablesSeeder extends Seeder
         Menu::create([
             'dia'=>'lunes',
             'dish_id'=>13,
-            'restaurant_id'=>5
+            'restaurant_id'=>4
         ]);
         Menu::create([
             'dia'=>'martes',
             'dish_id'=>14,
-            'restaurant_id'=>5
+            'restaurant_id'=>4
         ]);
         Menu::create([
             'dia'=>'miercoles',
             'dish_id'=>15,
-            'restaurant_id'=>5
+            'restaurant_id'=>4
         ]);
         Menu::create([
             'dia'=>'jueves',
             'dish_id'=>16,
-            'restaurant_id'=>5
+            'restaurant_id'=>1
         ]);
         Menu::create([
             'dia'=>'viernes',
             'dish_id'=>17,
-            'restaurant_id'=>5
+            'restaurant_id'=>1
         ]);
 
     }

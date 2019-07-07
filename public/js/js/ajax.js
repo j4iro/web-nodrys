@@ -17,32 +17,38 @@
 
 		function mostrar(){
 
-			peticion_http=inicializa_xhr();
-			if (peticion_http) {
-				peticion_http.onreadystatechange=procesaRespuesta;
-				peticion_http.open("GET","filtroXcategoria/"+crea_query_string(),true);
+            if(crea_query_string()=="todos"){
+                window.location="./";
+            }else{
+                peticion_http=inicializa_xhr();
+                if (peticion_http) {
+                    peticion_http.onreadystatechange=procesaRespuesta;
+                    peticion_http.open("GET","filtroXcategoria/"+crea_query_string(),true);
 
-				//peticion_http.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-				//var query_string=crea_query_string();
-				peticion_http.send(null);
-
-			}
+                    //peticion_http.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                    //var query_string=crea_query_string();
+                    peticion_http.send(null);
+                }
+            }
 
         }
 
 		function mostrar_distrito(){
-
+            let id_distrito=document.getElementById('cboDistrito').value;
+            if(id_distrito=="todos"){
+                window.location="./";
+            }else{
 			peticion_http=inicializa_xhr();
 			if (peticion_http) {
 				peticion_http.onreadystatechange=procesaRespuestaDistrito;
-				peticion_http.open("GET","filtroXdistrito/"+document.getElementById('cboDistrito').value,true);
+				peticion_http.open("GET","filtroXdistrito/"+id_distrito,true);
 
 				//peticion_http.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				//var query_string=crea_query_string();
 				peticion_http.send(null);
 
 			}
-
+        }
 		}
 
 		function procesaRespuesta(){
@@ -131,7 +137,7 @@
 
             document.querySelector('#'+dia).classList.toggle('btn-primary');
             document.querySelector('#'+dia).classList.toggle('text-white');
-			alert(dia);
+			// alert(dia);
             peticion_http3=inicializa_xhr();
             if (peticion_http3)
             {

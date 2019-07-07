@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'smtp.nodrys.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'soporte@nodrys.com'),
         'name' => env('MAIL_FROM_NAME', 'Nodrys Team'),
     ],
 

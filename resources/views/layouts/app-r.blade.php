@@ -45,7 +45,7 @@
 
         <main class="py-4">
                 <div class="container-fluid mt-3">
-                    <div class="badge badge-primary">{{"Comisión S/.".number_format(session('debePagar'),2)}}</div>
+
                         <div class="row ">
                             <div id="slideMenu" class="col-12 col-md-3 col-lg-2 mb-3 slide">
                                 @include('includes/slidebar')
@@ -153,13 +153,13 @@
         }
 
         var finalUrl = {!! json_encode(url('/')) !!}+"/admin-restaurante/serve";
-        console.log(finalUrl);
+        // console.log(finalUrl);
 
         var intervalo=setInterval(function() {
             $.get(finalUrl,function(e) {
                 fun(e);
             })
-        },1000);
+        },2000);
 
 
 // muestra el slide

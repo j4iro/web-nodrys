@@ -26,43 +26,46 @@ class OrderController extends Controller
         return $disponibilidad;
     }
 
-private function getOrders(){
-    //Traigo los pedidos del restaurante identificado
-    //Conseguir restaurante identificado
+    private function getOrders(){
+        //Traigo los pedidos del restaurante identificado
+        //Conseguir restaurante identificado
 
 
-    $id = session('id_user');
-    $datos = Restaurant::all()->where('user_id',$id)->first();
-    session(['id_restaurante'=>$datos->id]);
-    session(['nombre_restaurante'=>$datos->name]);
-    $id_restaurant =session('id_restaurante');
+        $id = session('id_user');
+        $datos = Restaurant::all()->where('user_id',$id)->first();
+        session(['id_restaurante'=>$datos->id]);
+        session(['nombre_restaurante'=>$datos->name]);
+        $id_restaurant =session('id_restaurante');
 
 
-    $orders = Order::join('users','users.id','=','orders.user_id')
-    ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id','orders.restaurant_id')
-    ->where('orders.restaurant_id',$id_restaurant)
-    ->where('orders.state','pendiente')
-    ->get();
+        $orders = Order::join('users','users.id','=','orders.user_id')
+        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id','orders.restaurant_id')
+        ->where('orders.restaurant_id',$id_restaurant)
+        ->where('orders.state','pendiente')
+        ->get();
 
-// dd($orders->toArray());
-    return $orders;
-}
-public function pagar_por_mes(){
-        $user_id = Auth::user()->id;//id_user
-         $restaurant_id = session('id_restaurante');//id_restaurant
-        //echo "hli".$restaurant_id;
+    // dd($orders->toArray());
+        return $orders;
+    }
 
-    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
-    ->selectRaw('COUNT(*) as totalComision')
-    ->where('orders.state','confirmada')
-    ->where('orders.comision','<>',1)
-    ->where('restaurants.id','=',$restaurant_id)
-    ->get();
+    public function pagar_por_mes()
+    {
+            $user_id = Auth::user()->id;//id_user
+            $restaurant_id = session('id_restaurante');//id_restaurant
+            //echo "hli".$restaurant_id;
 
-    return $debeComision[0]->totalComision;
-}
-public function index_r()
-{
+        $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+        ->selectRaw('COUNT(*) as totalComision')
+        ->where('orders.state','confirmada')
+        ->where('orders.comision','<>',1)
+        ->where('restaurants.id','=',$restaurant_id)
+        ->get();
+
+        return $debeComision[0]->totalComision;
+    }
+
+    public function index_r()
+    {
         $time=null;
         $orders=$this->getOrders();
         if(count($orders->toArray())>0){
@@ -75,7 +78,6 @@ public function index_r()
 
         // dd($orders->first()->toArray());
 
-
         session(['estado_restaurant'=>$this->disponibilidad(),
                     'ventana'=>"inicio",
                     'tolerancia'=>$time,
@@ -86,7 +88,8 @@ public function index_r()
             "pedidos" => $orders,
             "disponibilidad" =>$this->disponibilidad()
         ]);
-}
+    }
+
     public function notif(){
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
@@ -252,7 +255,6 @@ public function index_r()
     public function add(Request $request)
     {
 
-      
         // die();
         date_default_timezone_set('America/Lima');
         $now = new \Carbon\Carbon();

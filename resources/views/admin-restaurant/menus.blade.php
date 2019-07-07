@@ -8,6 +8,7 @@
     var arrayPlatos=getDishes();
     var arrayPlatosMenu=[];
 
+
     $(window).load(function() {
         // console.log(arrayPlatos[0]);
         var diaActual=new Date().getDay();
@@ -74,7 +75,7 @@ function verifica(dia,platoId){
     },function(e) {
         existe=e=='OK'?true:false;
         if (existe) {
-console.log('existe');
+            // console.log("existe");
         }else {
             insertarPlatoAlMenu(dia,platoId);
         }
@@ -120,7 +121,9 @@ function eliminarPlatoMenu(id){
 function getDishes() {
     var arrayPlatos=[];
     var finalUrl = {!! json_encode(url('/')) !!}+ "/admin-restaurante/getplatos";
-    $.get(finalUrl, function(data)
+    $.get(finalUrl,{
+        restaurant_id:idRestaurant
+    }, function(data)
     {
         let platos = JSON.parse(data);
         platos.forEach(
@@ -152,7 +155,6 @@ function getMenuDishes() {
             if(arrayPlatosMenu.indexOf(arrayPlatos[i].name)==-1){
                 itemsPlatos += `<li class='btn d-flex'><button onclick='inserta(this)' class='badge badge-success' value='${arrayPlatos[i].id}'>+</button> ${arrayPlatos[i].name}</li>`
             }
-
         }
 
         platosMenuDiv.innerHTML=itemsMenu;

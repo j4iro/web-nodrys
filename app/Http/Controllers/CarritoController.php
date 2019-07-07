@@ -14,7 +14,15 @@ class CarritoController extends Controller
         date_default_timezone_set('America/Lima');
         $url_anterior = \URL::previous();
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
-        $dia_reserva = isset($_SESSION['dia_reserva']) ? $_SESSION['dia_reserva'] : null;
+
+        if(session()->has('dia_reserva'))
+        {
+            $dia_reserva = session('dia_reserva');
+        }
+        else
+        {
+            $dia_reserva = date('Y-m-d');
+        }
 
         return view('carrito.index',[
             'carrito' => $carrito,
@@ -50,40 +58,55 @@ class CarritoController extends Controller
         }
         return true;
     }
-
+    public function eliminar() {
+        unset($_SESSION['carrito']);
+        return back();
+    }
     public function add(Request $request)
     {
 
         $solo_reserva = $request->input('solo_reserva');
+
         if(isset($solo_reserva))
         {
             unset($_SESSION['carrito']);
         }
+        else
+        {
+            session(['dia_reserva'=> $request->input('dia_reserva')]);
+        }
 
-        if (isset($request->checkDish) && count($request->checkDish)>0)
+        if (isset($request->checkDish) && count($request->checkDish)>0) //El carrito ya existe
         {
             if(isset($_SESSION['carrito']))
             {
                 $counter = 0;
-                for ($i=0; $i < count($request->checkDish); $i++)
+                $items = count($request->checkDish);
+                // $productos_agregados = array();
+                for ($i=0; $i < $items ; $i++)
                 {
+                    // echo count($request->checkDish);
                     $id_plato = $request->checkDish[$i];
                     foreach($_SESSION['carrito'] as $indice=>$elemento)
                     {
                         if ($elemento['id_plato']==$id_plato) {
                             $_SESSION['carrito'][$indice]['unidades']++;
                             $counter++;
+                            //echo "aumentado 1";
                         }
+
                     }
                 }
             }
 
-            if (!isset($counter) || $counter==0)
+
+            if (!isset($counter) || $counter==0) //El carrito no existe y se va a agregar por primera vez
             {
-                for ($i=0; $i < count($request->checkDish); $i++)
+                // echo "contador en cero";
+                $items = count($request->checkDish);
+                for ($i=0; $i < $items ; $i++)
                 {
                     $id_plato = $request->checkDish[$i];
-
 
                     //Conseguir Datos del plato
                     $dish = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
@@ -91,10 +114,11 @@ class CarritoController extends Controller
                     ->select('dishes.*','categories_dishes.name as categoria_plato','restaurants.name as restaurante', 'restaurants.id as restaurante_id')
                     ->where('dishes.id',$id_plato)->first();
 
-                    if($this->verificar_restaurante_diferente($dish->restaurante_id)==false){
-                            return back();
-                    };
+                    if($this->verificar_restaurante_diferente($dish->restaurante_id)==false)
+                    {
+                        return back()->with('mensaje','No puedes tener platos de restaurantes distintos en tu carrito. Si desea continuar debes borrar los productos añadidos. ');
 
+                    };
 
                     if (is_object($dish)) {
 
@@ -106,10 +130,11 @@ class CarritoController extends Controller
                             "unidades" => 1,
                             "plato" => $dish
                         );
+                        // echo "agregado 2";
                     }
-
                 }
             }
+            // die;
 
             return redirect()->route('carrito.index');
         }
@@ -149,6 +174,7 @@ class CarritoController extends Controller
 
     public function delete_all_and_add_reseva()
     {
+        session()->forget('dia_reserva');
         unset($_SESSION['carrito']);
         return redirect()->route('carrito.index');
     }

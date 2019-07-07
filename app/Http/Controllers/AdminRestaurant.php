@@ -13,6 +13,7 @@ use App\Menu;
 use App\Dish;
 use App\User;
 use Auth;
+use DB;
 
 
 class AdminRestaurant extends Controller
@@ -135,6 +136,7 @@ class AdminRestaurant extends Controller
         $restaurant = \Auth::user();
         $id_restaurante=auth()->user()->id;
         $card = Card::where('user_id','=',$id_restaurante)->first();
+        session(['ventana'=>"otra"]);
         return view('admin-restaurant.datos_bancarios',compact('card'));
 
 
@@ -144,11 +146,15 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.reportespersonalizados');
     }
 
-    public function getDishes()
+    public function getDishes(Request $request)
     {
         $restaurant = \Auth::user();
-        $id_restaurante=auth()->user()->id;
-        $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
+        // $id_restaurante=auth()->user()->id;//esto no captura el id del restaurant
+        $id_restaurante=$request->restaurant_id;
+
+        $dishes = Dish::where('restaurant_id','=',$id_restaurante)
+                        ->where('state','=',1)
+                        ->where('category_dish','<>','5')->get();
         // dd($dishes);
 
         if(count($dishes)>0)
@@ -219,23 +225,45 @@ class AdminRestaurant extends Controller
         {
             $card->update();
         }
-
+        session(['ventana'=>"otra"]);
         return redirect()->route('admin-r.cuentaBancaria')
         ->with(['message'=>'message']);
     }
 
-    public function totalComision(){
+    public function totalComision()
+    {
         $user_id = Auth::user()->id;//id_user
-         $restaurant_id = session('id_restaurante');//id_restaurant
-        //echo "hli".$restaurant_id;
+        $restaurant_id = session('id_restaurante');//id_restaurant
 
-    $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
-    ->selectRaw('COUNT(*) as totalComision')
-    ->where('orders.state','confirmada')
-    ->where('orders.comision','<>',1)
-    ->where('restaurants.id','=',$restaurant_id)
-    ->get();
+        // $debeComision=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+        // ->select(DB::raw('SUM(orders.total) as totalComision'))
+        // ->where('orders.state','confirmada')
+        // ->where('orders.comision','<>',1)
+        // ->where('restaurants.id','=',$restaurant_id)
+        //   ->groupBy('restaurants.id')
+        // ->get();
 
-    return $debeComision[0]->totalComision;
-    }
+
+
+        $porPagar=Order::join('restaurants','restaurants.id','=','orders.restaurant_id')
+        ->join('users','users.id','=','orders.user_id')
+        ->select(
+                 'users.name as name',
+                 'users.surname as surname',
+                 'users.email as email',
+                 'users.telephone as telephone',
+                 'users.address as address',
+                 'orders.date as date',
+                 'orders.hour as hour',
+                 'orders.n_people as npeople',
+                 'orders.oca_special as ocasion',
+                 'orders.total as subtotal')
+        ->where('orders.state','confirmada')
+        ->where('orders.comision','<>',1)
+        ->where('restaurants.id','=',$restaurant_id)
+        ->get();
+            // dd($porPagar);
+            session(['ventana'=>"otra"]);
+        return view('admin-restaurant.porpagar',compact('porPagar'));
+        }
 }
