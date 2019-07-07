@@ -161,6 +161,7 @@
                 @foreach ($categorias as $categoria)
                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                 @endforeach
+                <option value="todos">Todos</option>
             </select>
         </div>
         <div class="col-2 col-lg-1 pt-3 p-0">
@@ -172,6 +173,7 @@
                 @foreach ($distritos as $distrito)
                     <option value="{{$distrito->id}}">{{$distrito->name}}</option>
                 @endforeach
+                <option value="todos">Todos</option>
             </select>
         </div>
 
@@ -221,6 +223,9 @@
             </div>
 
         @endforeach
+        <div class="col-12 d-flex d-flex justify-content-center">
+                {{$restaurants->links()}}
+        </div>
     </div>
 
 

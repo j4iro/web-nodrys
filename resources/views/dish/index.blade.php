@@ -106,9 +106,15 @@
 
 <div class="container mt-4">
 
-    @if($sm!="")
+    @if(session('mensaje'))
         <strong>
-            <div class="alert alert-danger mt-3">{{$sm}}</div>
+            <form action="{{route('carrito.eliminar')}}" method="post" >
+                {{csrf_field()}}
+                <div class="alert alert-warning mt-3">
+                    {{session('mensaje')}}
+                    <input type="submit" value="Continuar" class="btn btn-link" name="aceptar">
+                </div>
+            </form>
         </strong>
     @endif
 

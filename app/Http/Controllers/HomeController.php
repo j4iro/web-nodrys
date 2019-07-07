@@ -9,6 +9,7 @@ use App\Category;
 use App\District;
 use App\RequestRestaurant;
 use App\Asigned_role;
+use App\Menu;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioSolicitud;
 
@@ -63,10 +64,12 @@ class HomeController extends Controller
         ->join('districts','districts.id','=','restaurants.district_id')
         ->select('restaurants.*','categories.name as categoria', 'districts.name as distrito')
         ->where('restaurants.state','=','1')
-        ->get();
+        ->paginate(6);
 
-        $categorias = Category::all();
-        $distritos = District::all();
+        $categorias = \DB::select('SELECT C.id as id, C.NAME as name , COUNT(*) FROM restaurants AS R INNER JOIN categories AS C ON R.category_id=C.id GROUP BY C.id,C.name');
+        $distritos = \DB::select('SELECT D.id as id, D.NAME  as name, COUNT(*) FROM restaurants AS R INNER JOIN districts AS D ON R.district_id=D.id GROUP BY D.id,D.name');
+
+        // dd($distritos);
 
         return view('home',[
             'restaurants' => $restaurants,
@@ -101,11 +104,13 @@ class HomeController extends Controller
 
     public function getAllDishes()
     {
-        $platos = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
-        ->select('dishes.*','restaurants.name as restaurante','restaurants.id as restaurante_id')
-        ->where('dishes.category_dish','<>','5')
-        ->inRandomOrder()
-        ->get();
+
+        $platos = Menu::join('restaurants','restaurants.id','=','menus.restaurant_id')
+        ->join('dishes','dishes.id','=','menus.dish_id')
+        ->select('dishes.*','restaurants.name as restaurante','menus.restaurant_id as restaurante_id')
+        ->where('menus.dia','Sabado')
+        ->paginate(12);
+
 
         return view('dish.getAll',[
             'platos' => $platos

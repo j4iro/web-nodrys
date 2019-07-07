@@ -152,7 +152,9 @@ class AdminRestaurant extends Controller
         // $id_restaurante=auth()->user()->id;//esto no captura el id del restaurant
         $id_restaurante=$request->restaurant_id;
 
-        $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
+        $dishes = Dish::where('restaurant_id','=',$id_restaurante)
+                        ->where('state','=',1)
+                        ->where('category_dish','<>','5')->get();
         // dd($dishes);
 
         if(count($dishes)>0)

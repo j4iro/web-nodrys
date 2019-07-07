@@ -7,6 +7,7 @@ use App\Dish;
 use App\Restaurant;
 use App\Menu;
 use App\Order;
+use App\Category_dish;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -139,10 +140,10 @@ class DishController extends Controller
         // dd($menus->toArray());
 
         $sm="";
-        if($this->verificar_restaurante_diferente($request->id)==false)
-        {
-          $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
-        };
+        // if($this->verificar_restaurante_diferente($request->id)==false)
+        // {
+        //   $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
+        // };
 
         $reserva = Dish::where('restaurant_id', $request->id)
         ->where('category_dish','=','5')
@@ -171,8 +172,11 @@ class DishController extends Controller
 
     public function new()
     {
+
         session(['ventana'=>"otra"]);
-        return view('admin-restaurant.nuevo-plato');
+        $categorias_platos=Category_dish::where('id','<>','5')->get();
+        // dd($categorias)->toarray();
+        return view('admin-restaurant.nuevo-plato',compact('categorias_platos'));
     }
 
     public function list()
@@ -180,7 +184,8 @@ class DishController extends Controller
 
         session(['ventana'=>"otra"]);
         $id_restaurant = session('id_restaurante');
-        $dishes= Dish::where('restaurant_id', $id_restaurant)->get();
+        $dishes= Dish::where('restaurant_id', $id_restaurant)
+                       ->where('category_dish','<>','5')->paginate(7);
         return view('admin-restaurant.list-plato',compact('dishes'));
     }
 
@@ -192,7 +197,8 @@ class DishController extends Controller
     public function edit($id)
     {
         $plato = Dish::findOrFail($id);
-        return view('admin-restaurant.nuevo-plato',compact('plato'));
+        $categorias_platos=Category_dish::where('id','<>','5')->get();
+        return view('admin-restaurant.nuevo-plato',compact('plato','categorias_platos'));
     }
 
     public function delete($id)

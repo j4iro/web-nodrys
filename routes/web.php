@@ -28,6 +28,7 @@ Route::get('/restaurante/platosxdia/{dia}/{id}','DishController@platosxdia')->na
 /*Rutas del carrito de compras*/
 Route::get('/carrito','CarritoController@index')->name('carrito.index');
 Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
+Route::post('/carrito/eliminar','CarritoController@eliminar')->name('carrito.eliminar');
 Route::get('/carrito/up/{indice}','CarritoController@up')->name('carrito.up');
 Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.down');
 Route::get('/carrito/delete-one/{indice}','CarritoController@delete_one')->name('carrito.deleteone');

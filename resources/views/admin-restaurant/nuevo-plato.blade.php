@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group col-12  col-md-6 ">
                     <label for="description">Descripción</label>
-                    <input type="text" class="form-control" name="description" value="{{ $plato->description ?? '' }}" placeholder="Descripción" id="description" required>
+                    <input type="text" class="form-control" name="description" value="{{ $plato->description ?? '' }}" placeholder="Descripción" id="description" >
                 </div>
             </div>
 
@@ -67,15 +67,10 @@
                     <label for="type">Tipo</label>
                     <select class="form-control" name="category_dish" id="type">
 
-                        {{-- @if (isset($plato))
-                            <option value="segundo" @if($plato->type=='segundo'){{'selected'}} @endif >Segundo</option>
-                            <option value="entrada" @if($plato->type=='entrada'){{'selected'}} @endif >Entrada</option>
-                            <option value="bebida" @if($plato->type=='bebida'){{'selected'}} @endif >Bebida</option>
-                        @else --}}
-                            <option value="1" >Segundo</option>
-                            <option value="2" >Entrada</option>
-                            <option value="3" >Bebida</option>
-                        {{-- @endif --}}
+                        @foreach ($categorias_platos as $categoria_plato )
+                    <option value="{{$categoria_plato->id}}" >{{$categoria_plato->name}}</option>
+                        @endforeach
+
 
 
                     </select>
