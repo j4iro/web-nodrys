@@ -240,10 +240,15 @@ li
    .collapse.navbar-show{
     display: block;
    }
+
    .mg-top{
        margin-top: 50px;
    }
 
+   .display-help
+   {
+       font-size: 3rem;
+   }
 
    .cursor-pointer{
     cursor: pointer;

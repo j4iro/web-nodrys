@@ -126,7 +126,7 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-pendientes/{tipo}', 'PdfController@reportePedidosPendientesRestaurante')->name('adminRestaurant.pedidos-pendientes');
     Route::get('/admin-restaurante/reportes/pdf/platos/{tipo}', 'PdfController@reportePlatosdeRestaurantes')->name('adminRestaurant.platos');
 
-    Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
+    Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'AdminRestaurant@totalComision']);
 
     /*Reportes EXCEL para la sección administrativa*/
     Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers')->name('admin.excel.clientes');
@@ -187,8 +187,8 @@ Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->
 // Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
 // Route::post('password/reset','Auth\ForgotPasswordController@reset');
 
-//Controladores para enviar Email
 
+Route::get('/admin-restaurante/help','AdminRestaurant@help')->name('admin-r.help');
 Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
 Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRestaurant')->name('admin-r.menus.exists');
@@ -196,8 +196,6 @@ Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRe
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
 Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
-// Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
-Route::get('/admin-restaurante/totalComision/','adminRestaurant@totalComision')->name('totalComision');
 
 /*Pasarela de pagos y Ruc*/
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);

@@ -219,7 +219,7 @@ function quitar_requireds() {
                             <strong class="ml-1">S/. {{number_format($total,2,'.',' ')}}</strong>
                         </div>
                         <div class="col-4 d-flex align-items-center justify-content-center">
-                            <a class="" href="{{($url_anterior)}}"><strong>Seguir comprando</strong></a>
+                            <a href="./restaurante/{{session('seguircomprando')}}"><strong>Seguir comprando</strong></a>
                         </div>
                     </div>
                 </div>
