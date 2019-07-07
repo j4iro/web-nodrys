@@ -74,7 +74,7 @@ function verifica(dia,platoId){
     },function(e) {
         existe=e=='OK'?true:false;
         if (existe) {
-
+console.log('existe');
         }else {
             insertarPlatoAlMenu(dia,platoId);
         }
