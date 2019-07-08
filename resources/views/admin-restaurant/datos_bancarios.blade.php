@@ -10,9 +10,6 @@
     @if(session('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>¡Genial!</strong> Tus datos se han guardado correctamente.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
         </div>
     @endif
 
@@ -25,13 +22,13 @@
                 <div class="row mt-2">
                         <div class="col-12">
                             <input type="checkbox" class="d-none" name="pagarcontarjeta" id="checkpagarcontarjeta">
-                            <input type="text" onkeypress="return validarNumero(event);"   placeholder="Número de tarjeta" class="form-control" name="num_card" value="{{ $card->num_card ?? '' }}" id="num_card" autofocus>
+                            <input type="text" onkeypress="return validarNumero(event);"   placeholder="Número de tarjeta" class="form-control" name="num_card" value="{{ $card->num_card ?? '' }}" id="num_card" autofocus required>
                         </div>
                     </div>
 
                     <div class="row mt-2">
                         <div class="col-12">
-                            <input type="text" onkeypress="return validarLetras(event);"   placeholder="Nombre en la tarjeta" class="form-control" value="{{ $card->owner ?? '' }}" name="owner" id="owner" >
+                            <input type="text" onkeypress="return validarLetras(event);"   placeholder="Nombre en la tarjeta" class="form-control" value="{{ $card->owner ?? '' }}" name="owner" id="owner" required>
                         </div>
                     </div>
 

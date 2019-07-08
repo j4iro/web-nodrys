@@ -35,7 +35,6 @@ class AdminRestaurant extends Controller
         return view('admin-restaurant.menus',compact('id'));
     }
 
-
     public function reportesPedidos(){
         return view('admin-restaurant.reportespedidos');
     }
@@ -62,7 +61,7 @@ class AdminRestaurant extends Controller
 
     public function datos()
     {
-        session(['ventana'=>"otra"]);
+      session(['ventana'=>"otra"]);
        $id = session('id_restaurante');
 
         $datos = Restaurant::join('users','users.id','=','restaurants.user_id')
@@ -80,7 +79,7 @@ class AdminRestaurant extends Controller
     {
 
         $image_path = $request->file('image');
-        $new_image_path_name="";
+        $request = array_slice($request->toArray(), 1,7);
 
         if ($image_path)
         {
@@ -88,15 +87,12 @@ class AdminRestaurant extends Controller
             $new_image_path_name = time().$image_path->getClientOriginalName();
             //Guardo en la carpeta Storage (storage/app/users)
             Storage::disk('restaurants')->put($new_image_path_name, File::get($image_path));
-
+            $request["image"] = $new_image_path_name;
         }
-
-        $request=array_slice($request->toArray(), 1,7);
-        $request["image"]=$new_image_path_name;
 
          $user_id = Auth::user()->id;//id_user
          $restaurant_id = session('id_restaurante');//id_restaurant
-          User::findOrFail($user_id)->update($request);
+         User::findOrFail($user_id)->update($request);
          Restaurant::findOrFail($restaurant_id)->update($request);
 
         return back();
@@ -138,8 +134,6 @@ class AdminRestaurant extends Controller
         $card = Card::where('user_id','=',$id_restaurante)->first();
         session(['ventana'=>"otra"]);
         return view('admin-restaurant.datos_bancarios',compact('card'));
-
-
     }
 
     public function reportespersonalizados(){
@@ -152,7 +146,9 @@ class AdminRestaurant extends Controller
         // $id_restaurante=auth()->user()->id;//esto no captura el id del restaurant
         $id_restaurante=$request->restaurant_id;
 
-        $dishes = Dish::where('restaurant_id','=',$id_restaurante)->get();
+        $dishes = Dish::where('restaurant_id','=',$id_restaurante)
+                        ->where('state','=',1)
+                        ->where('category_dish','<>','5')->get();
         // dd($dishes);
 
         if(count($dishes)>0)
@@ -165,6 +161,12 @@ class AdminRestaurant extends Controller
         }
     }
 
+    public function help()
+    {
+        session(['ventana'=>"otra"]);
+        return view('admin-restaurant.help');
+    }
+
     function getDishForDayAndRestaurant(Request $request){
         $datos=Menu::where('dish_id',$request->idPlato)
         ->where('restaurant_id',$request->idRestaurante)
@@ -174,6 +176,7 @@ class AdminRestaurant extends Controller
             echo 'OK';
         }
     }
+
     public function getMenuDia(Request $request)
     {
         $datos = Menu::join('dishes','dishes.id','=','menus.dish_id')

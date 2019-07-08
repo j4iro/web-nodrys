@@ -106,7 +106,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-            <!--Formulario de Pago-->                
+            <!--Formulario de Pago-->
                 <form method="post" action="{{route('order.cancelar')}}">
                 {{csrf_field()}}
                     <div class="row my-3">
@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-4">
-                                        <input type="text" readonly class="form-control" name="cod_reserva" id="cod_reserva"/>
+                                        <input type="hidden" readonly class="form-control" name="cod_reserva" id="cod_reserva"/>
                                     </div>
                                 </div>
                                 <div class="row mt-2">

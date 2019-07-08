@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+Comidas en Nodrys
+@endsection
 @section('scripts')
     <style media="screen">
         input[type=checkbox]{
@@ -74,15 +77,15 @@
             </a>
         </div>
         @endforeach
-    </div>
 
-    {{-- <div class="row">
-        <div class="col-3">
-            <input type="hidden" name="id_restaurant" value="{{$restaurant->id}}">
-            <input type="submit" class="btn btn-primary"  name="addcarrito" value="Añadir al carrito">
+    </div>
+</form>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+                {{$platos->links()}}
         </div>
     </div>
-    </form> --}}
+
 
 
 </div>

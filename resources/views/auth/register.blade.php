@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title')
+Registro en Nodrys
+@endsection
 @section('scripts')
 
 @endsection

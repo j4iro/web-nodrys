@@ -28,6 +28,7 @@ Route::get('/restaurante/platosxdia/{dia}/{id}','DishController@platosxdia')->na
 /*Rutas del carrito de compras*/
 Route::get('/carrito','CarritoController@index')->name('carrito.index');
 Route::post('/carrito/add','CarritoController@add')->name('carrito.add');
+Route::post('/carrito/eliminar','CarritoController@eliminar')->name('carrito.eliminar');
 Route::get('/carrito/up/{indice}','CarritoController@up')->name('carrito.up');
 Route::get('/carrito/down/{indice}','CarritoController@down')->name('carrito.down');
 Route::get('/carrito/delete-one/{indice}','CarritoController@delete_one')->name('carrito.deleteone');
@@ -52,7 +53,7 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
     Route::get('/admin-restaurante/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
     Route::post('/admin-restaurante/update','AdminRestaurant@update')->name('adminRestaurant.update');
     Route::get('/admin-restaurante/reportes-personalizados','AdminRestaurant@reportesPersonalizados')->name('adminRestaurant.reportespersonalizados');
-    Route::get('/admin-restaurante/reportes-personalizados/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizados');
+    Route::get('/admin-restaurante/reportes-personalizados/get/{fecini}/{fecfin}/{descargar}','PdfController@getreportespersonalizados');
 
     /*Rutas para mantenimiento de platos en la sección administrativa */
     Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
@@ -125,7 +126,7 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
     Route::get('/admin-restaurante/reportes/pdf/pedidos-pendientes/{tipo}', 'PdfController@reportePedidosPendientesRestaurante')->name('adminRestaurant.pedidos-pendientes');
     Route::get('/admin-restaurante/reportes/pdf/platos/{tipo}', 'PdfController@reportePlatosdeRestaurantes')->name('adminRestaurant.platos');
 
-    Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
+    Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'AdminRestaurant@totalComision']);
 
     /*Reportes EXCEL para la sección administrativa*/
     Route::get('/admin/reportes/excel/usuarios', 'ExcelController@reporteUsers')->name('admin.excel.clientes');
@@ -139,12 +140,11 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
     Route::get('/admin-restaurante/reportes/excel/pedidos-p', 'ExcelController@reportePedidosP')->name('admin-r.excel.pedidos-p');
     Route::get('/admin-restaurante/reportes/excel/platos', 'ExcelController@reportePlatos')->name('admin-r.excel.platos');
 
-    Route::get('/admin/reportes-pedidos','AdminController@reportespedidos')->name('admin.reportespersonalizados');
-    Route::get('/admin/reportes-clientes','AdminController@reportesclientes')->name('admin.reportesclientes');
+    Route::get('/admin/reportes-clientes','AdminController@reportesclientesDistrito')->name('admin.reportesclientesDistritos');
+    Route::get('/admin/reportes-pedidos','AdminController@reportesPedidos')->name('admin.reportesPedidos');
 
     Route::get('/admin/reportes-clientes/get/{distrito}/{pdf}','PdfController@getreportesclientes')->name('admin.getreportesclientes');
-
-    Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizadosAdmin');
+    Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PdfController@getreportespersonalizadosAdmin');
 
     Route::get('/admin-restaurante/cuenta-bancaria','AdminRestaurant@newCuentaBancaria')->name('admin-r.cuentaBancaria');
     Route::post('/admin-restaurante/cuenta-bancaria/save','AdminRestaurant@saveCuentaBancaria')->name('admin-r.cuentaBancaria.save');
@@ -186,8 +186,8 @@ Route::get('/Restaurant/ConsultarMisPe','ValorationController@consultReserva')->
 // Route::get('password/reset/{token}','Auth\ForgotPasswordController@showResetForm')->name('password.reset');
 // Route::post('password/reset','Auth\ForgotPasswordController@reset');
 
-//Controladores para enviar Email
 
+Route::get('/admin-restaurante/help','AdminRestaurant@help')->name('admin-r.help');
 Route::get('/admin-restaurante/menus','AdminRestaurant@menus')->name('admin-r.menus');
 Route::get('/admin-restaurante/getplatos','AdminRestaurant@getDishes');
 Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRestaurant')->name('admin-r.menus.exists');
@@ -195,8 +195,6 @@ Route::get('/admin-restaurante/menus/exists','AdminRestaurant@getDishForDayAndRe
 Route::get('/admin-restaurante/saveplatomenu','AdminRestaurant@saveplatomenu');
 Route::get('/admin-restaurante/listarplatomenu','AdminRestaurant@getMenuDia');
 Route::get('/admin-restaurante/eliminarplatomenu','AdminRestaurant@eliminarMenuDia');
-// Route::get('/admin-restaurante/totalComision/', ['as'=>'totalComision','uses'=>'adminRestaurant@totalComision']);
-Route::get('/admin-restaurante/totalComision/','adminRestaurant@totalComision')->name('totalComision');
 
 /*Pasarela de pagos y Ruc*/
 Route::get('/respuesta_pasarela', ['as'=>'respuesta_pasarela','uses'=>'PeticionesController@respuesta_pasarela']);

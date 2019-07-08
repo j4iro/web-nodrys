@@ -48,6 +48,7 @@
         $("#btndescargarpdf").attr("href", finalUrl)
         $("#btndescargarpdf").attr("target", "_blank")
         // $("#btndescargarpdf").click();
+
     }
 
 </script>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title')
+Inicia sesión en Nodrys
+@endsection
 @section('content')
 
 <div class="container my-3">

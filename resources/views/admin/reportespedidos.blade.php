@@ -10,7 +10,7 @@
         fechaini = $('#fecini').val();
         fechafin = $('#fecfin').val();
         var finalUrl = {!! json_encode(url('/')) !!}+ "/admin/reportes-pedidos/get/" + $('#fecini').val() +"/" + $('#fecfin').val() +'/' +  false ;
-        console.log(finalUrl);
+        // console.log(finalUrl);
         $.get(finalUrl,function(data)
         {
             let filas = JSON.parse(data);
@@ -50,8 +50,7 @@
         // $.get(finalUrl,function(data){});
         $("#btndescargarpdf").attr("href", finalUrl)
         $("#btndescargarpdf").attr("target", "_blank")
-        $("#btndescargarpdf").click();
-
+        // $("#btndescargarpdf").click();
     }
 
 </script>
