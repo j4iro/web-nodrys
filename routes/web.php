@@ -208,3 +208,8 @@ Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
 
 Route::get('/nextRedirectHome','HomeController@nextRedirectHome')->name('nextRedirectHome')->middleware('verified');
+
+
+
+Route::get('/admin-restaurante/contrasena', 'AdminRestaurant@contrasena')->name('adminRestaurant.contrasena');
+Route::post('/admin-restaurante/guardarcontrasena', 'AdminRestaurant@guardarcontrasena')->name('adminRestaurant.guardarcontrasena');

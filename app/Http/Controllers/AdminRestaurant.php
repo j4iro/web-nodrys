@@ -14,6 +14,7 @@ use App\Dish;
 use App\User;
 use Auth;
 use DB;
+use Hash;
 
 
 class AdminRestaurant extends Controller
@@ -267,4 +268,41 @@ class AdminRestaurant extends Controller
             session(['ventana'=>"otra"]);
         return view('admin-restaurant.porpagar',compact('porPagar'));
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function contrasena(){
+       return view('admin-restaurant.formulariocambiarcontrasena');
+    }
+
+    public function guardarcontrasena(Request $request){
+
+        $contrasenaescorrecto=Hash::check($request->actual_p, Auth::user()->password);
+
+        if($contrasenaescorrecto)
+        {
+          if(($request->nueva_p==$request->repite_p)&&
+             ($request->repite_p!=null) && $request->nueva_p!=null){
+                $newPasword=['password'=>bcrypt($request->repite_p)];
+                User::findOrFail(Auth::user()->id)->update($newPasword);
+          }else{
+               return back()->with('errors','La confirmmacion de contraseña es incorrecta');
+          }
+
+              return back()->with('errors','La contraseña se guardó correctamente');
+        }else{
+              return back()->with('errors','La contraseña actual es incorrecta');
+        }
+
+    }
 }
