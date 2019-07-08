@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+Nodrys
+@endsection
 @section('scripts')
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -8,21 +11,12 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
     crossorigin="">
-
     </script>
-    <script type="text/javascript" src="js/js/ajax.js"></script>
-    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js">;
-    </script> --}}
 
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script type="text/javascript" src="js/js/ajax.js"></script>
 
     <style media="screen">
 
-        /* .btnActual{
-            position: absolute;
-            z-index: 99;
-            right: 0;
-        } */
         #map{
             height: 400px;
             /* transition: 0.5s; */
@@ -236,77 +230,77 @@
 @include('includes/footer')
 
 <script type="text/javascript">
-            var map = L.map('map');
-            map.scrollWheelZoom.disable();
-            var marker=L.marker();
-            var circle= L.circle();
-            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-              maxZoom: 25
-            }).addTo(map);
+    var map = L.map('map');
+    map.scrollWheelZoom.disable();
+    var marker=L.marker();
+    var circle= L.circle();
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 25
+    }).addTo(map);
 
-            var mapContenedor=document.querySelector('#map');
+    var mapContenedor=document.querySelector('#map');
 
-            var btnShow=document.querySelector('#btnShow');
-            var btnActual=document.querySelector('#btnActual');
+    var btnShow=document.querySelector('#btnShow');
+    var btnActual=document.querySelector('#btnActual');
 
-            btnShow.addEventListener('click',function(){
-                        mapContenedor.classList.toggle('show');
-                        btnActual.classList.toggle('show');
-                        localizar();
-
-
-
-            });
-
-            btnShow.click();
-            function localizar(){
-                if (navigator.geolocation) {
-                     navigator.geolocation.getCurrentPosition(mostrarUbicacion);
-                }
-                const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
-                setTimeout(() => {
-                  navigator.geolocation.clearWatch(watcher);
-              }, 10);
-            }
-
-            function mostrarUbicacion (ubicacion) {
-               const lng = ubicacion.coords.longitude;
-               const lat = ubicacion.coords.latitude;
-               map.setView([lat,lng],14);
-               map.removeLayer(circle);
-               circle = L.circle([lat, lng], {
-                   color: '#0064FF',
-                   fillColor: '#0075CC',
-                   fillOpacity: 0.5,
-                   radius: 1000
-               }).addTo(map);
-               var cir = L.circle([lat, lng], {
-                   color: 'red',
-                   fillColor: 'red',
-                   fillOpacity: 0.5,
-                   radius: 1
-               }).addTo(map);
-               var popup = L.popup()
-               .setLatLng([lat, lng])
-               .setContent("<center><b>Hola!</b><br>Estas aquí</center>")
-               .openOn(map);
+    btnShow.addEventListener('click',function(){
+                mapContenedor.classList.toggle('show');
+                btnActual.classList.toggle('show');
+                localizar();
 
 
-            }
 
-            @foreach ($restaurants as $restaurant)
+    });
 
-                var n="{{$restaurant->name}}";
-                var lat={{$restaurant->latitude}};
-                var lon={{$restaurant->longitude}};
-                var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
-                var ruta='{{ route("restaurant.detalle",["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}';
+    btnShow.click();
+    function localizar(){
+        if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+        }
+        const watcher = navigator.geolocation.watchPosition(mostrarUbicacion);
+        setTimeout(() => {
+            navigator.geolocation.clearWatch(watcher);
+        }, 10);
+    }
 
-                marker = L.marker([lat,lon]).addTo(map);
-                marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
+    function mostrarUbicacion (ubicacion) {
+        const lng = ubicacion.coords.longitude;
+        const lat = ubicacion.coords.latitude;
+        map.setView([lat,lng],14);
+        map.removeLayer(circle);
+        circle = L.circle([lat, lng], {
+            color: '#0064FF',
+            fillColor: '#0075CC',
+            fillOpacity: 0.5,
+            radius: 1000
+        }).addTo(map);
+        var cir = L.circle([lat, lng], {
+            color: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.5,
+            radius: 1
+        }).addTo(map);
+        var popup = L.popup()
+        .setLatLng([lat, lng])
+        .setContent("<center><b>Hola!</b><br>Estas aquí</center>")
+        .openOn(map);
 
-            @endforeach
+
+    }
+
+    @foreach ($restaurants as $restaurant)
+
+        var n="{{$restaurant->name}}";
+        var lat={{$restaurant->latitude}};
+        var lon={{$restaurant->longitude}};
+        var img='{{route('restaurant.image',["filename"=>$restaurant->image])}}';
+        var ruta='{{ route("restaurant.detalle",["id"=>$restaurant->id,"nombre"=>strtolower(implode("-",explode(" ",$restaurant->name)))])}}';
+
+        marker = L.marker([lat,lon]).addTo(map);
+        marker.bindPopup("<a href='"+ruta+"'><img width='150px' src='"+img+"' alt='no image'/></a> <br /><b>"+n+"</b>").openPopup();
+
+    @endforeach
 
 </script>
 

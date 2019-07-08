@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+Comidas en Nodrys
+@endsection
 @section('scripts')
     <style media="screen">
         input[type=checkbox]{

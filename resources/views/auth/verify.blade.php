@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title')
+Nodrys
+@endsection
 @section('content')
 <div class="container mt-2">
 

@@ -15,26 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class DishController extends Controller
 {
-   public function verificar_restaurante_diferente($id_restaurant)
-    {
-
-      $restaurant_id=isset($_SESSION['carrito'])?$_SESSION['carrito']:"0";
-      $id_restaurante_comparar=0;
-
-        if ($restaurant_id!="0") {
-          foreach ($restaurant_id as $id => $value) {
-             if($value['restaurante_id']!=$id_restaurant){
-               return false;
-             }else{
-               // dd('ss');
-             }
-
-           }
-
-        }
-
-        return true;
-    }
 
     public function platosxdia($dia, $id)
     {
@@ -77,12 +57,6 @@ class DishController extends Controller
         else{
             $dia_reserva = $this->addToDate(6-$posicionDiaActual+$posicionDiaQueViene+1);
         }
-        // echo $dia_reserva;
-        // echo date("m",strtotime($dia_reserva));
-        // echo "<br>";
-        // // die();
-        // echo $meses[(int)date("m",strtotime($dia_reserva))];
-        // die();
 
 
         return view("dish.cardPlatos",[
@@ -122,13 +96,8 @@ class DishController extends Controller
         $nombre_dia_actual = $dias[date('w')]; //jueves
         $nro_dia_actual = date('d'); //27
 
-        // $numeros_dias = array(23,24,25,26,27,28,29); //Salida
-
         $nro_mes_actual = date('m');
         $nro_ano_actual = date('Y');
-
-
-        // $numeros_del_mes =
 
         $menus = Menu::join('dishes','dishes.id','=','menus.dish_id')
         ->join('categories_dishes','categories_dishes.id','=','dishes.category_dish')
@@ -136,14 +105,6 @@ class DishController extends Controller
         ->where('menus.restaurant_id', $request->id)
         ->where('dishes.category_dish','<>','5')
         ->get();
-
-        // dd($menus->toArray());
-
-        $sm="";
-        // if($this->verificar_restaurante_diferente($request->id)==false)
-        // {
-        //   $sm="No puedes hacer reserva en más de un restaurante. ¡GRACIAS POR SU COMPRENSIÓN!  ♥♥♥";
-        // };
 
         $reserva = Dish::where('restaurant_id', $request->id)
         ->where('category_dish','=','5')
@@ -155,11 +116,13 @@ class DishController extends Controller
        ->select('restaurants.*','districts.name as distrito','categories.name as categoria')
        ->where('restaurants.id', $request->id)->first();
 
+        session(['seguircomprando'=>"$restaurant->id". "-" . strtolower(str_replace(" ","-",trim($restaurant->name)))]);
+        // echo session('seguircomprando');
+
         return view('dish.index',[
             'dishes' => $menus,
             'dias' => $dias,
             'restaurant'=>$restaurant,
-            'sm'=>$sm,
             'reserva'=> $reserva
         ]);
     }
@@ -172,16 +135,13 @@ class DishController extends Controller
 
     public function new()
     {
-
         session(['ventana'=>"otra"]);
         $categorias_platos=Category_dish::where('id','<>','5')->get();
-        // dd($categorias)->toarray();
         return view('admin-restaurant.nuevo-plato',compact('categorias_platos'));
     }
 
     public function list()
     {
-
         session(['ventana'=>"otra"]);
         $id_restaurant = session('id_restaurante');
         $dishes= Dish::where('restaurant_id', $id_restaurant)
@@ -209,10 +169,7 @@ class DishController extends Controller
 
     public function save(Request $request)
     {
-
-
-        $id_restau = session('id_restaurante');
-
+       $id_restau = session('id_restaurante');
 
       //Instanciar a la tabla platos para setear mas adelante
       if ($request->input('editar')=='editar')
@@ -232,7 +189,7 @@ class DishController extends Controller
       $dish->time = $request->input('time');
       $dish->category_dish = $request->input('category_dish');
       $id_restaurante = session('id_restaurante');
-    //   $dish->restaurant_id = $id_restaurante;
+      //$dish->restaurant_id = $id_restaurante;
 
       //Guardar la imagen del plato
       $image_path =  $request->file('image');
@@ -256,10 +213,7 @@ class DishController extends Controller
       }
 
     }
-    /*
-    $datos = Valoration::all()
-    ->where('restaurant_id',$request->restaurant_id);
-    */
+
     public function aforoDisponible(Request $request)
     {
         $id_restaurante = $request->restaurant_id;

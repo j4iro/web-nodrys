@@ -237,8 +237,6 @@ class AdminController extends Controller
       $user->email_verified_at='2019-07-06 11:50:39';
       $user->district_id = $request->input('district_id');
 
-
-
       //Comprobar si han escrito contraseñas para un cambio
       $pwd = $request->input('password');
       $pwd2 = $request->input('repeatpassword');
@@ -281,7 +279,7 @@ class AdminController extends Controller
       $restaurant->ruc=$request->input('ruc');
       $restaurant->latitude=$request->input('latitud');
       $restaurant->longitude=$request->input('longitud');
-        $restaurant->capacity=$request->input('capacity');
+      $restaurant->capacity=$request->input('capacity');
 
 
       //Guardar la imagen del plato
@@ -336,17 +334,23 @@ class AdminController extends Controller
       }
     }
 
-    public function reportespedidos()
+    public function reportesclientesDistrito()
     {
         $distritos = District::where('districts.name','<>','otro')->get();
         return view('admin.reportesclientesdistrito',[
             'distritos' => $distritos
         ]);
     }
+    public function reportesPedidos()
+    {
+        $distritos = District::where('districts.name','<>','otro')->get();
+        return view('admin.reportespedidos',[
+            'distritos' => $distritos
+        ]);
+    }
 
     public function editRestaurant($id)
     {
-
         $restaurante = Restaurant::findOrFail($id);
         $distritos = District::all();
         $categorias = Category::all();
@@ -412,11 +416,10 @@ class AdminController extends Controller
      'totalComision'=>$totalComision
      ]);
    }
+
    public function pagarComision($id)
    {
       Order::findOrFail($id)->update(['comision'=>1]);
-
-
    }
 
 }

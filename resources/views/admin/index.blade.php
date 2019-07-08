@@ -19,9 +19,12 @@
     });
 
     function notificar(titulo,mensaje) {
-        if (Notification.permission!=="granted") {
+        if (Notification.permission!=="granted")
+        {
             Notification.requestPermission();
-        }else {
+        }
+        else
+        {
             var notificacion=new Notification(titulo,{
                 icon:"{{asset('images/favicon/favicon.png')}}",
                 body:mensaje
@@ -31,8 +34,6 @@
             }
         }
     }
-
-
 
     </script>
 @endsection
@@ -78,9 +79,11 @@
                             <td>{{$solicitud->distrito}}</td>
 
                             <td class="text-center">
-                                <a href="{{route('admin.restaurant.show-solicitud',["id" => $solicitud->id ])}}" class="btn btn-primary btn-sm ">
-                                    Ver
-                                </a>
+                                @if ($solicitud->state==1)
+                                <a href="{{route('admin.restaurant.show-solicitud',["id" => $solicitud->id ])}}" class="btn btn-primary btn-sm ">Ver</a>
+                                @else
+                                -
+                                @endif
                             </td>
                         </tr>
                     @endforeach

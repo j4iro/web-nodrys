@@ -94,11 +94,11 @@
                      }
 
                      else if(Notification.permission == "default") {
-                         alert("Primero da los permisos de notificación");
+                         console.log("Primero da los permisos de notificación");
                      }
 
                      else {
-                         alert("Bloqueaste los permisos de notificación");
+                         console.log('Bloqueaste los permisos de notificación');
                      }
             }
             n.onclick=function(){
