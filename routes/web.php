@@ -53,7 +53,7 @@ Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRes
     Route::get('/admin-restaurante/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
     Route::post('/admin-restaurante/update','AdminRestaurant@update')->name('adminRestaurant.update');
     Route::get('/admin-restaurante/reportes-personalizados','AdminRestaurant@reportesPersonalizados')->name('adminRestaurant.reportespersonalizados');
-    Route::get('/admin-restaurante/reportes-personalizados/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizados');
+    Route::get('/admin-restaurante/reportes-personalizados/get/{fecini}/{fecfin}/{descargar}','PdfController@getreportespersonalizados');
 
     /*Rutas para mantenimiento de platos en la sección administrativa */
     Route::get('/admin-restaurante/platos/nuevo','DishController@new')->name('adminRestaurant.plato.new');
@@ -140,12 +140,11 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
     Route::get('/admin-restaurante/reportes/excel/pedidos-p', 'ExcelController@reportePedidosP')->name('admin-r.excel.pedidos-p');
     Route::get('/admin-restaurante/reportes/excel/platos', 'ExcelController@reportePlatos')->name('admin-r.excel.platos');
 
-    Route::get('/admin/reportes-pedidos','AdminController@reportespedidos')->name('admin.reportespersonalizados');
-    Route::get('/admin/reportes-clientes','AdminController@reportesclientes')->name('admin.reportesclientes');
+    Route::get('/admin/reportes-clientes','AdminController@reportesclientesDistrito')->name('admin.reportesclientesDistritos');
+    Route::get('/admin/reportes-pedidos','AdminController@reportesPedidos')->name('admin.reportesPedidos');
 
-    Route::get('/admin/reportes-clientes/get/{distrito}/{pdf}','PDFController@getreportesclientes')->name('admin.getreportesclientes');
-
-    Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizadosAdmin');
+    Route::get('/admin/reportes-clientes/get/{distrito}/{pdf}','PdfController@getreportesclientes')->name('admin.getreportesclientes');
+    Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PdfController@getreportespersonalizadosAdmin');
 
     Route::get('/admin-restaurante/cuenta-bancaria','AdminRestaurant@newCuentaBancaria')->name('admin-r.cuentaBancaria');
     Route::post('/admin-restaurante/cuenta-bancaria/save','AdminRestaurant@saveCuentaBancaria')->name('admin-r.cuentaBancaria.save');
@@ -209,5 +208,4 @@ Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
 
 Route::get('/nextRedirectHome','HomeController@nextRedirectHome')->name('nextRedirectHome')->middleware('verified');
-
 

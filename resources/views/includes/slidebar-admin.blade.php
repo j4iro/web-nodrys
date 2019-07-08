@@ -37,8 +37,8 @@
       <span class="caret list-group-item list-group-item-action dropdown-toggle">Reportes</span>
       <ul class="nested dropdown-menu">
           <a class="dropdown-item" href="{{route('admin.reportes')}}">Predeterminados</a>
-          <a class="dropdown-item" href="{{route('admin.reportespersonalizados')}}">Pedidos</a>
-          <a class="dropdown-item" href="{{route('admin.reportespersonalizados')}}">Clientes</a>
+          <a class="dropdown-item" href="{{route('admin.reportesclientesDistritos')}}">Clientes</a>
+          <a class="dropdown-item" href="{{route('admin.reportesPedidos')}}">Pedidos</a>
       </ul>
   </li>
   <li class="btn-group dropright">

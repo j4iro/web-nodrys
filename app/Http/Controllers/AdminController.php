@@ -334,10 +334,17 @@ class AdminController extends Controller
       }
     }
 
-    public function reportespedidos()
+    public function reportesclientesDistrito()
     {
         $distritos = District::where('districts.name','<>','otro')->get();
         return view('admin.reportesclientesdistrito',[
+            'distritos' => $distritos
+        ]);
+    }
+    public function reportesPedidos()
+    {
+        $distritos = District::where('districts.name','<>','otro')->get();
+        return view('admin.reportespedidos',[
             'distritos' => $distritos
         ]);
     }
