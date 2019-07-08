@@ -142,7 +142,7 @@ Route::post('/','RestaurantController@buscar')->name('restaurant.buscar');
     Route::get('/admin/reportes-pedidos','AdminController@reportespedidos')->name('admin.reportespersonalizados');
     Route::get('/admin/reportes-clientes','AdminController@reportesclientes')->name('admin.reportesclientes');
 
-    Route::get('/admin/reportes-clientes/get/{distrito}/{pdf}','PDFController@getreportesclientes')->name('admin.getreportesclientes');
+    Route::get('/admin/reportes-clientes/get/{distrito}/{pdf}','PdfController@getreportesclientes')->name('admin.getreportesclientes');
 
     Route::get('/admin/reportes-pedidos/get/{fecini}/{fecfin}/{descargar}','PDFController@getreportespersonalizadosAdmin');
 
@@ -210,5 +210,3 @@ Route::get('/carrito/datos-tarjeta/n/{id}','UserController@getDatosTarjetaOne');
 Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.aforoDisponible');
 
 Route::get('/nextRedirectHome','HomeController@nextRedirectHome')->name('nextRedirectHome')->middleware('verified');
-
-

@@ -130,7 +130,7 @@
                 </div>
                 <div class="form-group col-12  col-md-6 ">
                     <label for="type"><strong>Aforo</strong></label>
-                    <input type="number" class="form-control" name="capacity" value="" placeholder="capadidad" id="capacity" required>
+                    <input type="number" class="form-control" name="capacity" value="{{ $restaurante->capacity ?? '0' }}" placeholder="capadidad" id="capacity" required>
                 </div>
             </div>
 

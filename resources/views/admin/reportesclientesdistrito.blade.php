@@ -47,8 +47,7 @@
         // $.get(finalUrl,function(data){});
         $("#btndescargarpdf").attr("href", finalUrl)
         $("#btndescargarpdf").attr("target", "_blank")
-        $("#btndescargarpdf").click();
-
+        // $("#btndescargarpdf").click();
     }
 
 </script>
