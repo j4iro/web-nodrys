@@ -108,7 +108,9 @@
 
         var numOrdenes=0;
 
-
+function muestraOrdenesFechas(others){
+    others.innerHTML+=others;
+}
         function fun(event) {
             if (event!="") {
 
@@ -118,7 +120,8 @@
                 var tituloNotificacion="Hay nuevas Ordenes"
                 if ('{{session('ventana')}}'=='inicio') {
 
-                    llenaTabla(arrayOrders);
+                    // llenaTabla(arrayOrders);
+                    pedidos.innerHTML=event;
 
 
                 }else {
@@ -158,6 +161,23 @@
         var intervalo=setInterval(function() {
             $.get(finalUrl,function(e) {
                 fun(e);
+            })
+        },2000);
+
+        var url= {!! json_encode(url('/')) !!}+"/admin-restaurante/others";
+
+        var others=setInterval(function() {
+            $.get(url,function(e) {
+                if ('{{session('ventana')}}'=='inicio') {
+
+                    // llenaTabla(arrayOrders);
+                    pedidos2.innerHTML=e;
+
+
+                }else {
+
+                }
+
             })
         },2000);
 

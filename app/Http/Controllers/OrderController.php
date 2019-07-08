@@ -90,6 +90,8 @@ class OrderController extends Controller
         ]);
     }
 
+
+
     public function notif(){
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
@@ -114,14 +116,73 @@ class OrderController extends Controller
 
         $ordenes=array();
         $array=$orders->toArray();
-        foreach ($array as $reserva) {
+        foreach ($array as $reserva) {?>
+            <div class="row m-1 p-1 border">
+                <div class="col-md-6">
+                    <?=$reserva['name'].' '.$reserva['surname'] ?>(<?=$reserva['oca_special'] ?>)<br>
+                    <span><b>Nro. Personas: </b><?=$reserva['n_people'] ?></span><br>
+                    <b><?=$reserva['telephone'] ?></b>
+                </div>
+                <div class="col-md-4">
+                    <b>hora: </b><?=$reserva['hour'] ?><br>
+                    <b>restan: </b>00 min
+                </div>
+                <div class="col-md-2 d-flex justify-content-center align-items-centr">
+                    <button type="button" name="button" class="btn btn-outline-primary">details</button>
+                </div>
+            </div>
 
-            array_push($ordenes,implode(",",$reserva));
+        <?php   // array_push($ordenes,implode(",",$reserva));
         }
         // $cadena=implode ( ";" , $array );
-        $cadena=implode(";",$ordenes);
+        // $cadena=implode(";",$ordenes);
+        //
+        // echo $cadena;
+        flush();
 
-        echo $cadena;
+    }
+    public function othersOrders(){
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+
+        //$time = date('r');
+        $id = session('id_user');
+        $datos = Restaurant::all()->where('user_id',$id)->first();
+        session(['id_restaurante'=>$datos->id]);
+        session(['nombre_restaurante'=>$datos->name]);
+        $id_restaurant =session('id_restaurante');
+
+
+        $today=Date("Y-m-d");
+
+        $orders = Order::join('users','users.id','=','orders.user_id')
+        ->select('users.image','users.name','users.surname','users.telephone','orders.date','orders.hour','orders.oca_special','orders.n_people','orders.total','orders.state','orders.id')
+        ->where('orders.restaurant_id',$id_restaurant)
+        ->where('orders.state','pendiente')
+        ->where('orders.date','!=',$today)
+        ->get();
+        // echo "data: The server time is, otro\n\n";
+
+        $ordenes=array();
+        $array=$orders->toArray();
+        foreach ($array as $reserva) {
+        ?>
+        <div class="row m-1 p-1 border">
+            <div class="col-md-6">
+                <?=$reserva['name'].' '.$reserva['surname'] ?>(<?=$reserva['oca_special'] ?>)<br>
+                <span><b>Nro. Personas: </b><?=$reserva['n_people'] ?></span><br>
+                <b><?=$reserva['telephone'] ?></b>
+            </div>
+            <div class="col-md-4">
+                <b>hora: </b><?=$reserva['hour'] ?><br>
+                <b>restan: </b>00 min
+            </div>
+            <div class="col-md-2 d-flex justify-content-center align-items-centr">
+                <button type="button" name="button" class="btn btn-outline-primary">details</button>
+            </div>
+        </div>
+        <?php
+        }
         flush();
 
     }
