@@ -25,7 +25,7 @@
                 <label for="actual_p" class="col-md-4 col-form-label text-md-right">Contraseña Actual</label>
 
                 <div class="col-md-6">
-                    <input id="actual_p"  type="text"  class="form-control" name="actual_p" >
+                    <input id="actual_p"  type="password"  class="form-control" name="actual_p" >
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
                 <label for="nueva_p" class="col-md-4 col-form-label text-md-right">Nueva contraseña</label>
 
                 <div class="col-md-6">
-                    <input id="nueva_p"  type="text" class="form-control"  name="nueva_p" >
+                    <input id="nueva_p"  type="password" class="form-control"  name="nueva_p" >
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
                 <label for="repite_p" class="col-md-4 col-form-label text-md-right">Repita la contraseña</label>
 
                 <div class="col-md-6">
-                    <input id="repite_p"  type="text" class="form-control" name="repite_p"  >
+                    <input id="repite_p"  type="password" class="form-control" name="repite_p"  >
                 </div>
             </div>
 

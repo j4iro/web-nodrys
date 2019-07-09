@@ -248,7 +248,6 @@ class OrderController extends Controller
     {
         //Traigo los detalles del pedido que llega
         $details = DetailOrder::join('dishes','dishes.id','=','details_orders.dish_id')
-
         ->select('details_orders.dish_id','dishes.name','dishes.image','dishes.price','details_orders.cant','dishes.category_dish')
         ->where('details_orders.order_id',$id)
         ->get();
