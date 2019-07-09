@@ -12,7 +12,10 @@
     @endif
 
     <div class="card shadow">
-    <div class="card-header"><strong>Configuración de mis datos</strong></div>
+    <div class="card-header d-flex justify-content-between">
+        <strong>Configuración de mis datos</strong>
+        <a class="font-weight-bold" href="{{route('adminRestaurant.form_password')}}">Cambiar contraseña</a>
+    </div>
 
         <div class="card-body">
         <form method="POST" action="{{ route('adminRestaurant.update') }}" enctype="multipart/form-data">

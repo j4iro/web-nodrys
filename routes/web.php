@@ -209,3 +209,6 @@ Route::get('/Restaurant/aforo','DishController@aforoDisponible')->name('aforo.af
 
 Route::get('/nextRedirectHome','HomeController@nextRedirectHome')->name('nextRedirectHome')->middleware('verified');
 
+Route::get('/admin-restaurante/update-password', 'AdminRestaurant@form_password')->name('adminRestaurant.form_password');
+Route::post('/admin-restaurante/savepassword', 'AdminRestaurant@savepassword')->name('adminRestaurant.savepassword');
+

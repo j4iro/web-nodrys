@@ -54,7 +54,6 @@
           <a class="dropdown-item" href="{{route('admin.distritos.list')}}">Listar</a>
           <a class="dropdown-item" href="{{route('admin.distritos.new')}}">Agregar</a>
       </ul>
-
   </li>
   <li class="btn-group dropright">
     <a class="list-group-item list-group-item-action" href="{{route('cashs')}}">Caja</a>
