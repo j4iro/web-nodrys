@@ -49,6 +49,7 @@ Route::get('/favoritos','FavoritosController@index')->name('favoritos.index');
 
 /*Rutas para la seccion administrativa de los restaurantes*/
 Route::get('/admin-restaurante/home', 'OrderController@index_r')->name('adminRestaurant.index');
+Route::get('/admin-restaurante/others', 'OrderController@othersOrders');
 
     Route::get('/admin-restaurante/datos', 'AdminRestaurant@datos')->name('adminRestaurant.datos');
     Route::post('/admin-restaurante/update','AdminRestaurant@update')->name('adminRestaurant.update');
