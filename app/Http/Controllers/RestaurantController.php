@@ -25,7 +25,7 @@ class RestaurantController extends Controller
         ->where('restaurants.name',$request->name)
         ->orWhere('restaurants.name','like','%'.$request->name.'%')
         ->select('restaurants.name','restaurants.address','districts.name as distrito','restaurants.image','restaurants.id','restaurants.latitude','restaurants.longitude','categories.name as categoria')
-        ->get();
+        ->paginate(6);
 
         $mje = 'Se muestran '.count($restaurants). ' resultados de "' .  $request->name . '".';
 

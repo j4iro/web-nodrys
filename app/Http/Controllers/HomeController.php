@@ -37,8 +37,7 @@ class HomeController extends Controller
 
             if ($datos_restaurante_logueado==null)
             {
-                //Si el objeto es nulo hay que comprobar si es admin
-                //Obtener registros de la tabla asignar_roles
+                //Si el objeto es nulo hay que comprobar si es admin, obtener registros de la tabla asignar_roles
                 $registros_asign_roles = Asigned_role::all();
                 //Recorrer la tabla
                 foreach ($registros_asign_roles as $registro_asign_rol)
@@ -67,30 +66,36 @@ class HomeController extends Controller
         $categorias = \DB::select('SELECT C.id as id, C.NAME as name , COUNT(*) FROM restaurants AS R INNER JOIN categories AS C ON R.category_id=C.id GROUP BY C.id,C.name');
         $distritos = \DB::select('SELECT D.id as id, D.NAME  as name, COUNT(*) FROM restaurants AS R INNER JOIN districts AS D ON R.district_id=D.id GROUP BY D.id,D.name');
 
-        // dd($distritos);
+        //  dd($restaurants);
 
         return view('home',[
             'restaurants' => $restaurants,
             'categorias' => $categorias,
-            'distritos' => $distritos,
+            'distritos' => $distritos
         ]);
     }
+
     public function help(){
         return view('help');
     }
 
     public function getDishOne(Request $request)
     {
-        $dishes = Dish::join('restaurants','restaurants.id','=','dishes.restaurant_id')
-        ->select('dishes.*','restaurants.name as restaurante')
-        ->where('dishes.name',$request->name)
-        ->orWhere('dishes.name','like','%'.$request->name.'%')
-        ->get();
+        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado'); //Entrada
+        $nombre_dia_actual = $dias[date('w')];
 
-        $mje = 'Se muestran '.count($dishes). ' resultados de "' .  $request->name . '".';
+        $platos = Menu::join('restaurants','restaurants.id','=','menus.restaurant_id')
+        ->join('dishes','dishes.id','=','menus.dish_id')
+        ->select('dishes.*','restaurants.name as restaurante','menus.restaurant_id as restaurante_id')
+        ->where(strtolower('menus.dia'),$nombre_dia_actual)
+        ->where('dishes.name',trim($request->name))
+        ->orWhere('dishes.name','like','%'.trim($request->name).'%')
+        ->paginate(12);
+
+        $mje = 'Se muestran '.count($platos). ' resultados de "' .  $request->name . '".';
 
         return view('dish.getAll',[
-            'platos' => $dishes,
+            'platos' => $platos,
             'resultado' => $mje
         ]);
     }
@@ -102,13 +107,14 @@ class HomeController extends Controller
 
     public function getAllDishes()
     {
+        $dias = array('domingo','lunes','martes','miércoles','jueves','viernes','sábado'); //Entrada
+        $nombre_dia_actual = $dias[date('w')];
 
         $platos = Menu::join('restaurants','restaurants.id','=','menus.restaurant_id')
         ->join('dishes','dishes.id','=','menus.dish_id')
         ->select('dishes.*','restaurants.name as restaurante','menus.restaurant_id as restaurante_id')
-        ->where('menus.dia','Sabado')
+        ->where(strtolower('menus.dia'),$nombre_dia_actual)
         ->paginate(12);
-
 
         return view('dish.getAll',[
             'platos' => $platos

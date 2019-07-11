@@ -146,10 +146,10 @@ Nodrys
 {{-- <div class="card p-3 shadow mb-4 mt-2"> --}}
     <div class="row mb-4">
         {{csrf_field()}}
-        <div class="col-2 col-lg-1 pt-3 ">
+        <div class="text-center col-6 col-md-2 col-lg-1 pt-3 ">
             Filtra por
         </div>
-        <div class="col-6 col-lg-3 pt-2">
+        <div class="col-6 col-md-6 col-lg-3 pt-2">
             <select name="categoria" class="form-control" id="btnCategoria" onchange="mostrar();" >
                 <option value="" disabled selected >Categorias</option>
                 @foreach ($categorias as $categoria)
@@ -158,10 +158,10 @@ Nodrys
                 <option value="todos">Todos</option>
             </select>
         </div>
-        <div class="col-2 col-lg-1 pt-3 p-0">
+        <div class="text-center col-6 col-md-2 col-lg-1 pt-3 p-0">
               o también por
         </div>
-        <div class="col-6 col-lg-3 pt-2">
+        <div class="col-6 col-md-6 col-lg-3 pt-2">
             <select name="distrito" class="form-control" id="cboDistrito" onchange="mostrar_distrito();">
                 <option value="" disabled selected >Distritos</option>
                 @foreach ($distritos as $distrito)

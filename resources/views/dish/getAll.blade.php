@@ -17,7 +17,7 @@ Comidas en Nodrys
 @endif
 
 <div class="container-fluid">
-    <form action="{{route('carrito.add')}}" method="post">
+    <form action="{{route('platos.buscar')}}" method="post">
             {{csrf_field()}}
         <div class="row bg-intro d-flex justify-content-center align-items-center">
             <div class="col-12 col-sm-8 col-md-5">
