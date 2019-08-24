@@ -40,6 +40,17 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function redirectPath()
+    {
+        if (session()->has('next') && session('next')=='carrito') {
+            session()->forget('next');
+            return "/carrito";
+        }else
+        {
+            return "/nextRedirectHome";
+        }
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -65,13 +76,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'role' => 'user',
             'name' => $data['name'],
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'image' => 'avatar_default.png',
             'points' => 0,
+            'district_id' => 1,
             'state' => 1,
         ]);
     }

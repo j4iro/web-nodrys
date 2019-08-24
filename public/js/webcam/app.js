@@ -1,57 +1,17 @@
 
 window.onload=function()
 {
-    // PARTE QUE MUEVE LA LINEA
-       var num=0,op=0;
-       var linea=document.getElementById('line');
-       var i=setInterval(function () {
-
-        if (num==100) {op=1;}
-        if (num==0) {op=0;}
-        // console.log(num);
-
-          linea.style.top=num+"%";
-          op==1?num--:num++;
-
-        }, 10);
+    
 }
 
     var app={
         activeCameraId: null
     };
     var cams=null;
+    var txtCode=document.querySelector('#txtCode');
+    var btnConfirma=document.querySelector('#btnConfirma');
 
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-        scanner.addListener('scan', function (content) {
-       	 // aqui seria donde pondriamos insertar
-          // alert(content);
-          // console.log(content);
-          var scansList=document.querySelector('#scans');
-          var li=document.createElement('li');
-          li.innerHTML=content;
-          scansList.appendChild(li);
-          // clearInterval(i);
-        });
-
-        Instascan.Camera.getCameras().then(function (cameras) {
-       	  // console.log(cameras);
-          cams=cameras;
-          printCameras(cameras);
-
-         if(cameras.length > 0){
-             selectCamera(cameras[0]);
-         }
-         else
-         {
-             console.error('No cameras found.')
-         }
-
-
-        }).catch(function (e) {
-          console.error(e);
-        });
-
-
+    // aqui iria lo que falta que se cargue
 
     function selectCamera(camera){
 

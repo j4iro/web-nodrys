@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\Notificaciones;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'role','name','surname', 'email', 'password','image','points','state'
+        'role','name','surname', 'email', 'password','image','points','state','district_id'
     ];
 
     /**
@@ -53,6 +54,33 @@ class User extends Authenticatable
     public function favorites()
     {
         return $this->hasMany('App\Favorite');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'asigned_roles');
+    }
+
+    public function hasRoles(array $roles){
+        //dd($this->roles->toArray());
+        foreach ($roles as $role) {
+            foreach ($this->roles as $userRole) {
+                if($userRole->name===$role){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new Notificaciones($token));
     }
 
 }

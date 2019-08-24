@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     protected $table = 'restaurants';
+    protected $fillable = ['name','description','slogan','address','assessment','telephone','points','image','ruc','user_id','state','district_id','category_id','latitude','longitude'];
     
     //Relación uno a muchos (Un restaurante tiene muchos platos)
     //Medio RARO

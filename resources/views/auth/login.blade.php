@@ -1,7 +1,10 @@
 @extends('layouts.app')
-
+@section('title')
+Inicia sesión en Nodrys
+@endsection
 @section('content')
-<div class="container">
+
+<div class="container my-3">
     <div class="row">
         <div class="col-12 text-center">
             <img class="img-fluid" src="{{asset('svg/logo.svg')}}" width="80" alt="">
@@ -12,10 +15,10 @@
             <div class="card shadow p-lg-2">
                 {{-- <div class="card-header">{{ __('Login') }}</div> --}}
 
-                <div class="card-body text-center ">
+                <div class="card-body text-center pb-0">
                     <h4 class="mb-4">Inicia Sesión</h4>
-                    
-                    
+
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -76,7 +79,18 @@
                                 </button>
                             </div>
                         </div>
-                        
+                        o
+
+                        <div class="form-group row">
+                                <div class="col-md-12 text-center">
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link" href="./register">
+                                            {{ __('Registrate aquí') }}
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+
                     </form>
                 </div>
             </div>
